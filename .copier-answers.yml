@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier
+_commit: v0.4.2-38-ge32366a
+_src_path: gh:linkml/linkml-project-copier
+add_example: true
+copyright_year: '2026'
+email: noel.mcloughlin@gmail.com
+full_name: Noel McLoughlin
+gh_action_docs_preview: true
+gh_action_pypi: true
+github_org: lmodel
+license: Apache-2.0
+project_description: FIX Performance (FIXP) protocol - LinkML Schema
+project_name: fixp
+project_slug: fixp
+

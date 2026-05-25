@@ -1,0 +1,7 @@
+# Spec source: 07UsageExamples.md Appendix A.2 - Establish over a Recoverable
+# flow with KeepAliveInterval=10 and NextSeqNo=1.
+session_id: 550e8400-e29b-41d4-a716-446655440000
+timestamp: 1716595560000000000
+keepalive_interval: 10
+next_seq_no: 1
+credentials: dHJhZGVyMTIz

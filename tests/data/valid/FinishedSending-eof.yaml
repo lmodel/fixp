@@ -1,0 +1,4 @@
+# Spec source: 07UsageExamples.md - FinishedSending; LastSeqNo is the highest
+# application sequence number the initiator has sent.
+session_id: 550e8400-e29b-41d4-a716-446655440000
+last_seq_no: 4711

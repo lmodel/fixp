@@ -1,0 +1,4 @@
+# Negative case: required slot 'client_flow' omitted.
+session_id: 550e8400-e29b-41d4-a716-446655440000
+timestamp: 1716595200000000000
+credentials: dHJhZGVyMTIz

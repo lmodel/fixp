@@ -1,0 +1,6 @@
+# Spec source: 07UsageExamples.md - RetransmitRequest to replay 100 messages
+# starting at sequence number 5.
+session_id: 550e8400-e29b-41d4-a716-446655440000
+timestamp: 1716595680000000000
+from_seq_no: 5
+count: 100

@@ -1,0 +1,6 @@
+# Spec source: 07UsageExamples.md - NegotiationReject for malformed Session ID.
+# Spec: 'Session ID does not follow UUID or GUID semantics as per RFC 4122'.
+session_id: 00000000-0000-0000-0000-000000000000
+request_timestamp: 1716595500000000000
+negotiation_reject_code: UNSPECIFIED
+reason: Invalid SessionID Format

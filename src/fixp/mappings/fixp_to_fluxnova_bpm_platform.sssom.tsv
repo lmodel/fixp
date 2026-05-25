@@ -1,0 +1,21 @@
+# mapping_set_id: https://w3id.org/lmodel/fixp/mappings/fixp_to_fluxnova_bpm_platform.sssom.tsv
+# mapping_set_description: FIXP cross-vocabulary mappings to the FluxNova BPM platform (BPMN, BPM core, common) vocabulary family.
+# license: Apache-2.0
+# see_also:
+# - https://w3id.org/lmodel/fluxnova-bpm-platform
+# - https://github.com/lmodel/fluxnova-bpm-platform/tree/main/src/fluxnova_bpm_platform/schema
+# curie_map:
+#   fixp: https://w3id.org/lmodel/fixp/elements/
+#   fluxnova_bpm_platform: https://w3id.org/lmodel/fluxnova-bpm-platform/elements/
+#   semapv: https://w3id.org/semapv/vocab/
+#   skos: http://www.w3.org/2004/02/skos/core#
+subject_id	subject_label	subject_type	predicate_id	object_id	mapping_justification
+fixp:session_id	session_id	rdf property	skos:relatedMatch	fluxnova_bpm_platform:id	semapv:ManualMappingCuration
+fixp:timestamp	timestamp	rdf property	skos:exactMatch	fluxnova_bpm_platform:timestamp	semapv:ManualMappingCuration
+fixp:request_timestamp	request_timestamp	rdf property	skos:closeMatch	fluxnova_bpm_platform:timestamp	semapv:ManualMappingCuration
+fixp:effective_time	effective_time	rdf property	skos:relatedMatch	fluxnova_bpm_platform:create_time	semapv:ManualMappingCuration
+fixp:version	version	rdf property	skos:exactMatch	fluxnova_bpm_platform:version	semapv:ManualMappingCuration
+fixp:classification	classification	rdf property	skos:closeMatch	fluxnova_bpm_platform:category	semapv:ManualMappingCuration
+fixp:next_seq_no	next_seq_no	rdf property	skos:closeMatch	fluxnova_bpm_platform:sequence_counter	semapv:ManualMappingCuration
+fixp:from_seq_no	from_seq_no	rdf property	skos:relatedMatch	fluxnova_bpm_platform:sequence_counter	semapv:ManualMappingCuration
+fixp:last_seq_no	last_seq_no	rdf property	skos:relatedMatch	fluxnova_bpm_platform:sequence_counter	semapv:ManualMappingCuration

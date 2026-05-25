@@ -1,0 +1,5 @@
+# Negative case: 'GRACEFUL' is not in TerminationCodeCodeSet
+# (FINISHED | UNSPECIFIED_ERROR | RE_REQUEST_OUT_OF_BOUNDS | RE_REQUEST_IN_PROGRESS).
+session_id: 550e8400-e29b-41d4-a716-446655440000
+termination_code: GRACEFUL
+reason: bogus code

@@ -1,0 +1,5 @@
+# Spec source: 07UsageExamples.md Appendix A.3 - Negotiate (Idempotent).
+session_id: 550e8400-e29b-41d4-a716-446655440002
+timestamp: 1716595320000000000
+client_flow: IDEMPOTENT
+credentials: dHJhZGVyMTIz

@@ -1,0 +1,5 @@
+# Spec source: 07UsageExamples.md - NegotiationReject FlowTypeNotSupported.
+session_id: 550e8400-e29b-41d4-a716-446655440004
+request_timestamp: 1716595440000000000
+negotiation_reject_code: FLOW_TYPE_NOT_SUPPORTED
+reason: Client Recoverable Flow Prohibited

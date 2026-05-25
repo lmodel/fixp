@@ -1,0 +1,5 @@
+# Spec source: spec section 5 (multicast) - Topic with an Idempotent flow.
+session_id: 550e8400-e29b-41d4-a716-446655440007
+flow: IDEMPOTENT
+keepalive_interval: 1000
+classification: bWFya2V0LWRhdGEtZXF1aXR5

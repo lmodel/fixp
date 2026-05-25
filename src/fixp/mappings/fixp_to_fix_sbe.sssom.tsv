@@ -1,0 +1,23 @@
+# mapping_set_id: https://w3id.org/lmodel/fixp/mappings/fixp_to_fix_sbe.sssom.tsv
+# mapping_set_description: FIXP cross-vocabulary mappings to the FIX Simple Binary Encoding (SBE) vocabulary family.
+# license: Apache-2.0
+# see_also:
+# - https://w3id.org/lmodel/fix-sbe
+# - https://github.com/lmodel/fix-sbe/tree/main/src/fix_sbe/schema
+# curie_map:
+#   fixp: https://w3id.org/lmodel/fixp/elements/
+#   fix_sbe: https://w3id.org/lmodel/fix-sbe/elements/
+#   semapv: https://w3id.org/semapv/vocab/
+#   skos: http://www.w3.org/2004/02/skos/core#
+subject_id	subject_label	subject_type	predicate_id	object_id	mapping_justification
+fixp:SbeObjectComposite	SbeObjectComposite	owl class	skos:closeMatch	fix_sbe:CompositeDataTypeV1	semapv:ManualMappingCuration
+fixp:SbeCharacterStringComposite	SbeCharacterStringComposite	owl class	skos:closeMatch	fix_sbe:CompositeDataTypeV1	semapv:ManualMappingCuration
+fixp:SbeMessageHeaderComposite	SbeMessageHeaderComposite	owl class	skos:closeMatch	fix_sbe:CompositeDataTypeV1	semapv:ManualMappingCuration
+fixp:FixpSessionMessage	FixpSessionMessage	owl class	skos:broadMatch	fix_sbe:MessageV1	semapv:ManualMappingCuration
+fixp:MessageTemplate	MessageTemplate	owl class	skos:relatedMatch	fix_sbe:MessageSchemaV1	semapv:ManualMappingCuration
+fixp:SbeFlowType	SbeFlowType	owl class	skos:relatedMatch	fix_sbe:EnumTypeV1	semapv:ManualMappingCuration
+fixp:SbeNegotiationRejectCode	SbeNegotiationRejectCode	owl class	skos:relatedMatch	fix_sbe:EnumTypeV1	semapv:ManualMappingCuration
+fixp:SbeEstablishmentRejectCode	SbeEstablishmentRejectCode	owl class	skos:relatedMatch	fix_sbe:EnumTypeV1	semapv:ManualMappingCuration
+fixp:SbeRetransmitRejectCode	SbeRetransmitRejectCode	owl class	skos:relatedMatch	fix_sbe:EnumTypeV1	semapv:ManualMappingCuration
+fixp:SbeTerminationCode	SbeTerminationCode	owl class	skos:relatedMatch	fix_sbe:EnumTypeV1	semapv:ManualMappingCuration
+fixp:FixpSessionExchange	FixpSessionExchange	owl class	skos:relatedMatch	fix_sbe:MessageSchemaV1	semapv:ManualMappingCuration

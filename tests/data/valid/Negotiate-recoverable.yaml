@@ -1,0 +1,6 @@
+# Spec source: upstream-releases/fixp-specification/v1-1/doc/07UsageExamples.md
+#   Appendix A.1 - Negotiate with Recoverable client flow.
+session_id: 550e8400-e29b-41d4-a716-446655440000
+timestamp: 1716595200000000000
+client_flow: RECOVERABLE
+credentials: dHJhZGVyMTIz

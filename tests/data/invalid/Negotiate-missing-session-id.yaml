@@ -1,0 +1,3 @@
+# Negative case: required slot 'session_id' omitted.
+timestamp: 1716595200000000000
+client_flow: RECOVERABLE

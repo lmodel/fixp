@@ -1,0 +1,22 @@
+# mapping_set_id: https://w3id.org/lmodel/fixp/mappings/fixp_to_cdm.sssom.tsv
+# mapping_set_description: FIXP cross-vocabulary mappings to the Common Domain Model (FINOS CDM) vocabulary family.
+# license: Apache-2.0
+# see_also:
+# - https://w3id.org/lmodel/common-domain-model
+# - https://github.com/lmodel/common-domain-model/tree/main/src/common_domain_model/schema
+# curie_map:
+#   fixp: https://w3id.org/lmodel/fixp/elements/
+#   common_domain_model: https://w3id.org/lmodel/common-domain-model/elements/
+#   semapv: https://w3id.org/semapv/vocab/
+#   skos: http://www.w3.org/2004/02/skos/core#
+#   spdx: https://spdx.org/rdf/3.0.1/terms/
+subject_id	subject_label	subject_type	predicate_id	object_id	mapping_justification
+fixp:timestamp	timestamp	rdf property	skos:closeMatch	common_domain_model:eventTime	semapv:ManualMappingCuration
+fixp:timestamp	timestamp	rdf property	skos:broadMatch	common_domain_model:dateTime	semapv:ManualMappingCuration
+fixp:effective_time	effective_time	rdf property	skos:exactMatch	common_domain_model:effectiveTime	semapv:ManualMappingCuration
+fixp:session_id	session_id	rdf property	skos:relatedMatch	common_domain_model:eventIdentifier	semapv:ManualMappingCuration
+fixp:reason	reason	rdf property	skos:closeMatch	common_domain_model:rejectedReason	semapv:ManualMappingCuration
+fixp:FixpSessionMessage	FixpSessionMessage	owl class	skos:closeMatch	common_domain_model:MessageInformation	semapv:ManualMappingCuration
+fixp:FixpSessionMessage	FixpSessionMessage	owl class	skos:broadMatch	common_domain_model:WorkflowStep	semapv:ManualMappingCuration
+fixp:FixpSessionExchange	FixpSessionExchange	owl class	skos:relatedMatch	common_domain_model:Workflow	semapv:ManualMappingCuration
+fixp:session_id	session_id	rdf property	skos:relatedMatch	common_domain_model:messageId	semapv:ManualMappingCuration

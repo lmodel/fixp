@@ -1,0 +1,2 @@
+# Negative case: 'next_seq_no' is the only slot on Sequence and is required.
+session_id: 550e8400-e29b-41d4-a716-446655440000

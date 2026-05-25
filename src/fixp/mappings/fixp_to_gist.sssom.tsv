@@ -1,0 +1,32 @@
+# mapping_set_id: https://w3id.org/lmodel/fixp/mappings/fixp_to_gist.sssom.tsv
+# mapping_set_description: Mappings from FIXP to gist_linkml (lmodel/gist umbrella schema, v14.1.0).
+# license: CC-BY-4.0
+# see_also:
+# - https://w3id.org/lmodel/gist/
+# - https://github.com/lmodel/gist/tree/main/src/gist/schema
+# curie_map:
+#   fixp: https://w3id.org/lmodel/fixp/
+#   gist_linkml: https://w3id.org/lmodel/gist/
+#   semapv: https://w3id.org/semapv/vocab/
+#   skos: http://www.w3.org/2004/02/skos/core#
+subject_id	subject_label	subject_type	predicate_id	object_id	mapping_justification
+fixp:session_id	session_id	rdf property	skos:closeMatch	gist_linkml:idText	semapv:ManualMappingCuration
+fixp:session_id	session_id	rdf property	skos:relatedMatch	gist_linkml:isIdentifiedBy	semapv:ManualMappingCuration
+fixp:timestamp	timestamp	rdf property	skos:closeMatch	gist_linkml:isRecordedAt	semapv:ManualMappingCuration
+fixp:timestamp	timestamp	rdf property	skos:broadMatch	gist_linkml:atDateTime	semapv:ManualMappingCuration
+fixp:request_timestamp	request_timestamp	rdf property	skos:closeMatch	gist_linkml:atDateTime	semapv:ManualMappingCuration
+fixp:effective_time	effective_time	rdf property	skos:closeMatch	gist_linkml:startDateTime	semapv:ManualMappingCuration
+fixp:effective_time	effective_time	rdf property	skos:relatedMatch	gist_linkml:plannedStartDateTime	semapv:ManualMappingCuration
+fixp:classification	classification	rdf property	skos:closeMatch	gist_linkml:isCategorizedBy	semapv:ManualMappingCuration
+fixp:reason	reason	rdf property	skos:relatedMatch	gist_linkml:description	semapv:ManualMappingCuration
+fixp:next_seq_no	next_seq_no	rdf property	skos:relatedMatch	gist_linkml:sequence	semapv:ManualMappingCuration
+fixp:from_seq_no	from_seq_no	rdf property	skos:relatedMatch	gist_linkml:sequence	semapv:ManualMappingCuration
+fixp:last_seq_no	last_seq_no	rdf property	skos:relatedMatch	gist_linkml:sequence	semapv:ManualMappingCuration
+fixp:count	count	rdf property	skos:relatedMatch	gist_linkml:numericValue	semapv:ManualMappingCuration
+fixp:version	version	rdf property	skos:relatedMatch	gist_linkml:isSupersededBy	semapv:ManualMappingCuration
+fixp:FixpSessionMessage	FixpSessionMessage	owl class	skos:broadMatch	gist_linkml:Message	semapv:ManualMappingCuration
+fixp:MessageTemplate	MessageTemplate	owl class	skos:closeMatch	gist_linkml:Template	semapv:ManualMappingCuration
+fixp:FixpSessionExchange	FixpSessionExchange	owl class	skos:broadMatch	gist_linkml:Event	semapv:ManualMappingCuration
+fixp:Negotiate	Negotiate	owl class	skos:relatedMatch	gist_linkml:Offer	semapv:ManualMappingCuration
+fixp:Establish	Establish	owl class	skos:relatedMatch	gist_linkml:Commitment	semapv:ManualMappingCuration
+fixp:Sequence	Sequence	owl class	skos:relatedMatch	gist_linkml:OrderedCollection	semapv:ManualMappingCuration

@@ -1,0 +1,5 @@
+# Spec source: 07UsageExamples.md Appendix A.2 - Negotiate (Unsequenced).
+session_id: 550e8400-e29b-41d4-a716-446655440001
+timestamp: 1716595260000000000
+client_flow: UNSEQUENCED
+credentials: dHJhZGVyMTIz

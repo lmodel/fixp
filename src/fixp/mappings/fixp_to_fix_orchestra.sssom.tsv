@@ -1,0 +1,54 @@
+# mapping_set_id: https://w3id.org/lmodel/fixp/mappings/fixp_to_fix_orchestra.sssom.tsv
+# mapping_set_description: FIXP cross-vocabulary mappings to the FIX Orchestra vocabulary family.
+# license: Apache-2.0
+# see_also:
+# - https://w3id.org/lmodel/fix-orchestra
+# - https://w3id.org/lmodel/fix-orchestra/dc
+# curie_map:
+#   fixp: https://w3id.org/lmodel/fixp/elements/
+#   fix_orchestra: https://w3id.org/lmodel/fix-orchestra/elements/
+#   semapv: https://w3id.org/semapv/vocab/
+#   skos: http://www.w3.org/2004/02/skos/core#
+subject_id	subject_label	subject_type	predicate_id	object_id	mapping_justification
+
+fixp:FIXInt	FIXInt	rdfs datatype	skos:exactMatch	fix_orchestra:FIXInt	semapv:ManualMappingCuration
+fixp:FIXLength	FIXLength	rdfs datatype	skos:exactMatch	fix_orchestra:FIXLength	semapv:ManualMappingCuration
+fixp:FIXTagNum	FIXTagNum	rdfs datatype	skos:exactMatch	fix_orchestra:FIXTagNum	semapv:ManualMappingCuration
+fixp:FIXSeqNum	FIXSeqNum	rdfs datatype	skos:exactMatch	fix_orchestra:FIXSeqNum	semapv:ManualMappingCuration
+fixp:FIXNumInGroup	FIXNumInGroup	rdfs datatype	skos:exactMatch	fix_orchestra:FIXNumInGroup	semapv:ManualMappingCuration
+fixp:FIXDayOfMonth	FIXDayOfMonth	rdfs datatype	skos:exactMatch	fix_orchestra:FIXDayOfMonth	semapv:ManualMappingCuration
+fixp:FIXFloat	FIXFloat	rdfs datatype	skos:exactMatch	fix_orchestra:FIXFloat	semapv:ManualMappingCuration
+fixp:FIXQty	FIXQty	rdfs datatype	skos:exactMatch	fix_orchestra:FIXQty	semapv:ManualMappingCuration
+fixp:FIXPrice	FIXPrice	rdfs datatype	skos:exactMatch	fix_orchestra:FIXPrice	semapv:ManualMappingCuration
+fixp:FIXPriceOffset	FIXPriceOffset	rdfs datatype	skos:exactMatch	fix_orchestra:FIXPriceOffset	semapv:ManualMappingCuration
+fixp:FIXAmt	FIXAmt	rdfs datatype	skos:exactMatch	fix_orchestra:FIXAmt	semapv:ManualMappingCuration
+fixp:FIXPercentage	FIXPercentage	rdfs datatype	skos:exactMatch	fix_orchestra:FIXPercentage	semapv:ManualMappingCuration
+fixp:FIXChar	FIXChar	rdfs datatype	skos:exactMatch	fix_orchestra:FIXChar	semapv:ManualMappingCuration
+fixp:FIXBoolean	FIXBoolean	rdfs datatype	skos:exactMatch	fix_orchestra:FIXBoolean	semapv:ManualMappingCuration
+fixp:FIXString	FIXString	rdfs datatype	skos:exactMatch	fix_orchestra:FIXString	semapv:ManualMappingCuration
+fixp:FIXMultipleCharValue	FIXMultipleCharValue	rdfs datatype	skos:exactMatch	fix_orchestra:FIXMultipleCharValue	semapv:ManualMappingCuration
+fixp:FIXMultipleStringValue	FIXMultipleStringValue	rdfs datatype	skos:exactMatch	fix_orchestra:FIXMultipleStringValue	semapv:ManualMappingCuration
+fixp:FIXCountry	FIXCountry	rdfs datatype	skos:exactMatch	fix_orchestra:FIXCountry	semapv:ManualMappingCuration
+fixp:FIXCurrency	FIXCurrency	rdfs datatype	skos:exactMatch	fix_orchestra:FIXCurrency	semapv:ManualMappingCuration
+fixp:FIXExchange	FIXExchange	rdfs datatype	skos:exactMatch	fix_orchestra:FIXExchange	semapv:ManualMappingCuration
+fixp:FIXMonthYear	FIXMonthYear	rdfs datatype	skos:exactMatch	fix_orchestra:FIXMonthYear	semapv:ManualMappingCuration
+fixp:FIXUTCTimestamp	FIXUTCTimestamp	rdfs datatype	skos:exactMatch	fix_orchestra:FIXUTCTimestamp	semapv:ManualMappingCuration
+fixp:FIXUTCTimeOnly	FIXUTCTimeOnly	rdfs datatype	skos:exactMatch	fix_orchestra:FIXUTCTimeOnly	semapv:ManualMappingCuration
+fixp:FIXUTCDateOnly	FIXUTCDateOnly	rdfs datatype	skos:exactMatch	fix_orchestra:FIXUTCDateOnly	semapv:ManualMappingCuration
+fixp:FIXLocalMktDate	FIXLocalMktDate	rdfs datatype	skos:exactMatch	fix_orchestra:FIXLocalMktDate	semapv:ManualMappingCuration
+fixp:FIXTZTimeOnly	FIXTZTimeOnly	rdfs datatype	skos:exactMatch	fix_orchestra:FIXTZTimeOnly	semapv:ManualMappingCuration
+fixp:FIXTZTimestamp	FIXTZTimestamp	rdfs datatype	skos:exactMatch	fix_orchestra:FIXTZTimestamp	semapv:ManualMappingCuration
+fixp:FIXData	FIXData	rdfs datatype	skos:exactMatch	fix_orchestra:FIXData	semapv:ManualMappingCuration
+fixp:FIXPattern	FIXPattern	rdfs datatype	skos:exactMatch	fix_orchestra:FIXPattern	semapv:ManualMappingCuration
+fixp:FIXTenor	FIXTenor	rdfs datatype	skos:exactMatch	fix_orchestra:FIXTenor	semapv:ManualMappingCuration
+fixp:FIXReserved100Plus	FIXReserved100Plus	rdfs datatype	skos:exactMatch	fix_orchestra:FIXReserved100Plus	semapv:ManualMappingCuration
+fixp:FIXReserved1000Plus	FIXReserved1000Plus	rdfs datatype	skos:exactMatch	fix_orchestra:FIXReserved1000Plus	semapv:ManualMappingCuration
+fixp:FIXReserved4000Plus	FIXReserved4000Plus	rdfs datatype	skos:exactMatch	fix_orchestra:FIXReserved4000Plus	semapv:ManualMappingCuration
+fixp:FIXXMLData	FIXXMLData	rdfs datatype	skos:exactMatch	fix_orchestra:FIXXMLData	semapv:ManualMappingCuration
+fixp:FIXLanguage	FIXLanguage	rdfs datatype	skos:exactMatch	fix_orchestra:FIXLanguage	semapv:ManualMappingCuration
+fixp:FIXLocalMktTime	FIXLocalMktTime	rdfs datatype	skos:exactMatch	fix_orchestra:FIXLocalMktTime	semapv:ManualMappingCuration
+fixp:FIXXID	FIXXID	rdfs datatype	skos:exactMatch	fix_orchestra:FIXXID	semapv:ManualMappingCuration
+fixp:FIXXIDREF	FIXXIDREF	rdfs datatype	skos:exactMatch	fix_orchestra:FIXXIDREF	semapv:ManualMappingCuration
+fixp:FixpSessionMessage	FixpSessionMessage	owl class	skos:broadMatch	fix_orchestra:MessageType	semapv:ManualMappingCuration
+fixp:MessageTemplate	MessageTemplate	owl class	skos:closeMatch	fix_orchestra:MessageType	semapv:ManualMappingCuration
+fixp:FixpSessionExchange	FixpSessionExchange	owl class	skos:relatedMatch	fix_orchestra:MessageType	semapv:ManualMappingCuration

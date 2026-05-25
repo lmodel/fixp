@@ -1,0 +1,5 @@
+# Negative case: client_flow value 'FAST' is not a permissible value of
+# ClientFlowCodeSet (RECOVERABLE | IDEMPOTENT | UNSEQUENCED | NONE).
+session_id: 550e8400-e29b-41d4-a716-446655440000
+timestamp: 1716595200000000000
+client_flow: FAST

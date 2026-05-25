@@ -1,0 +1,6 @@
+# Spec source: 07UsageExamples.md - EstablishmentReject for an Establish that
+# arrived without a prior successful Negotiate.
+session_id: 550e8400-e29b-41d4-a716-446655440005
+request_timestamp: 1716595620000000000
+establishment_reject_code: UNNEGOTIATED
+reason: Establishment Not Allowed Without Negotiation

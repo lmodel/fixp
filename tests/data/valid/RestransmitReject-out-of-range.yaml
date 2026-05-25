@@ -1,0 +1,6 @@
+# Spec source: 07UsageExamples.md - RestransmitReject when the requested
+# sequence range falls outside the retransmission window.
+session_id: 550e8400-e29b-41d4-a716-446655440010
+request_timestamp: 1716595800000000000
+retransmit_reject_code: OUT_OF_RANGE
+reason: from_seq_no precedes earliest retained message
