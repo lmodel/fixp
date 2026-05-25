@@ -1,0 +1,18 @@
+{
+   "common_domain_model": "https://w3id.org/lmodel/common-domain-model/elements/",
+   "dc": "http://purl.org/dc/elements/1.1/",
+   "dcterms": "http://purl.org/dc/terms/",
+   "fix_orchestra": "https://w3id.org/lmodel/fix-orchestra/elements/",
+   "fix_sbe": "https://w3id.org/lmodel/fix-sbe/elements/",
+   "fixp": "https://w3id.org/lmodel/fixp/",
+   "fixr": "http://fixprotocol.io/2020/orchestra/repository/",
+   "fluxnova_bpm_platform": "https://w3id.org/lmodel/fluxnova-bpm-platform/elements/",
+   "gist_linkml": "https://w3id.org/lmodel/gist/",
+   "linkml": "https://w3id.org/linkml/",
+   "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+   "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+   "sbe": "http://fixprotocol.io/2016/sbe/",
+   "schema": "http://schema.org/",
+   "skos": "http://www.w3.org/2004/02/skos/core#",
+   "xsd": "http://www.w3.org/2001/XMLSchema#"
+}

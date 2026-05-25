@@ -1,0 +1,304 @@
+# metamodel_version: 1.11.0
+# version: FIX.5.0SP2
+enum ClientFlowCodeSet
+  {
+    RECOVERABLE
+    IDEMPOTENT
+    UNSEQUENCED
+    NONE
+  }
+
+enum ClientFlowFieldEnum
+  {
+    RECOVERABLE
+    IDEMPOTENT
+    UNSEQUENCED
+    NONE
+  }
+
+enum EstablishmentRejectCodeCodeSet
+  {
+    UNNEGOTIATED
+    ALREADY_ESTABLISHED
+    SESSION_BLOCKED
+    KEEPALIVE_INTERVAL
+    CREDENTIALS
+    UNSPECIFIED
+  }
+
+enum EstablishmentRejectCodeFieldEnum
+  {
+    UNNEGOTIATED
+    ALREADY_ESTABLISHED
+    SESSION_BLOCKED
+    KEEPALIVE_INTERVAL
+    CREDENTIALS
+    UNSPECIFIED
+  }
+
+enum FlowCodeSet
+  {
+    RECOVERABLE
+    IDEMPOTENT
+  }
+
+enum FlowFieldEnum
+  {
+    RECOVERABLE
+    IDEMPOTENT
+  }
+
+enum NegotiationRejectCodeCodeSet
+  {
+    CREDENTIALS
+    FLOW_TYPE_NOT_SUPPORTED
+    DUPLICATE_ID
+    UNSPECIFIED
+  }
+
+enum NegotiationRejectCodeFieldEnum
+  {
+    CREDENTIALS
+    FLOW_TYPE_NOT_SUPPORTED
+    DUPLICATE_ID
+    UNSPECIFIED
+  }
+
+enum RetransmitRejectCodeCodeSet
+  {
+    OUT_OF_RANGE
+    INVALID_SESSION
+    REQUEST_LIMIT_EXCEEDED
+  }
+
+enum RetransmitRejectCodeFieldEnum
+  {
+    OUT_OF_RANGE
+    INVALID_SESSION
+    REQUEST_LIMIT_EXCEEDED
+  }
+
+enum SbeEstablishmentRejectCode
+  {
+    UNNEGOTIATED
+    ALREADY_ESTABLISHED
+    SESSION_BLOCKED
+    KEEPALIVE_INTERVAL
+    CREDENTIALS
+    UNSPECIFIED
+  }
+
+enum SbeFlowType
+  {
+    RECOVERABLE
+    IDEMPOTENT
+    UNSEQUENCED
+    NONE
+  }
+
+enum SbeNegotiationRejectCode
+  {
+    CREDENTIALS
+    FLOW_TYPE_NOT_SUPPORTED
+    DUPLICATE_ID
+    UNSPECIFIED
+  }
+
+enum SbeRetransmitRejectCode
+  {
+    OUT_OF_RANGE
+    INVALID_SESSION
+    REQUEST_LIMIT_EXCEEDED
+  }
+
+enum SbeTerminationCode
+  {
+    FINISHED
+    UNSPECIFIED_ERROR
+    RE_REQUEST_OUT_OF_BOUNDS
+    RE_REQUEST_IN_PROGRESS
+  }
+
+enum TerminationCodeCodeSet
+  {
+    FINISHED
+    UNSPECIFIED_ERROR
+    RE_REQUEST_OUT_OF_BOUNDS
+    RE_REQUEST_IN_PROGRESS
+  }
+
+enum TerminationCodeFieldEnum
+  {
+    FINISHED
+    UNSPECIFIED_ERROR
+    RE_REQUEST_OUT_OF_BOUNDS
+    RE_REQUEST_IN_PROGRESS
+  }
+
+type Applied
+  {
+    fromSeqNo: FIXInt!
+    count: FIXInt!
+  }
+
+type Context
+  {
+    sessionId: FIXString!
+    nextSeqNo: FIXInt!
+  }
+
+type Establish
+  {
+    sessionId: FIXString!
+    timestamp: FIXInt!
+    keepaliveInterval: FIXInt!
+    nextSeqNo: FIXInt
+    credentials: FIXData
+  }
+
+type EstablishmentAck
+  {
+    sessionId: FIXString!
+    requestTimestamp: FIXInt!
+    keepaliveInterval: FIXInt!
+    nextSeqNo: FIXInt
+  }
+
+type EstablishmentReject
+  {
+    sessionId: FIXString!
+    requestTimestamp: FIXInt!
+    establishmentRejectCode: EstablishmentRejectCodeFieldEnum!
+    reason: FIXString
+  }
+
+type FinishedReceiving
+  {
+    sessionId: FIXString!
+  }
+
+type FinishedSending
+  {
+    sessionId: FIXString!
+    lastSeqNo: FIXInt!
+  }
+
+type FixpSessionExchange
+  {
+    messages: [FixpSessionMessage]
+    title: String
+    creator: String
+    publisher: String
+    rights: String
+    date: String
+  }
+
+interface FixpSessionMessage
+  {
+  }
+
+type MessageTemplate
+  {
+    flow: FlowFieldEnum!
+    effectiveTime: FIXInt!
+    version: FIXData
+    template: FIXData!
+  }
+
+type Negotiate
+  {
+    sessionId: FIXString!
+    timestamp: FIXInt!
+    clientFlow: ClientFlowFieldEnum!
+    credentials: FIXData
+  }
+
+type NegotiationReject
+  {
+    sessionId: FIXString!
+    requestTimestamp: FIXInt!
+    negotiationRejectCode: NegotiationRejectCodeFieldEnum!
+    reason: FIXString
+  }
+
+type NegotiationResponse
+  {
+    sessionId: FIXString!
+    requestTimestamp: FIXInt!
+    serverFlow: ClientFlowCodeSet!
+    credentials: FIXData
+  }
+
+type NotApplied
+  {
+    fromSeqNo: FIXInt!
+    count: FIXInt!
+  }
+
+type RestransmitReject
+  {
+    sessionId: FIXString!
+    requestTimestamp: FIXInt!
+    retransmitRejectCode: RetransmitRejectCodeFieldEnum!
+    reason: FIXString
+  }
+
+type Retransmission
+  {
+    sessionId: FIXString!
+    requestTimestamp: FIXInt!
+    nextSeqNo: FIXInt!
+    count: FIXInt!
+  }
+
+type RetransmitRequest
+  {
+    sessionId: FIXString!
+    timestamp: FIXInt!
+    fromSeqNo: FIXInt!
+    count: FIXInt!
+  }
+
+type SbeCharacterStringComposite
+  {
+    length: Int
+    varData: String
+  }
+
+type SbeMessageHeaderComposite
+  {
+    blockLength: Int
+    templateId: Int
+    schemaId: Int
+    schemaVersion: Int
+  }
+
+type SbeObjectComposite
+  {
+    length: Int
+    varData: Int
+  }
+
+type Sequence
+  {
+    nextSeqNo: FIXInt!
+  }
+
+type Terminate
+  {
+    sessionId: FIXString!
+    terminationCode: TerminationCodeFieldEnum!
+    reason: FIXString
+  }
+
+type Topic
+  {
+    sessionId: FIXString!
+    flow: FlowFieldEnum!
+    keepaliveInterval: FIXInt!
+    classification: FIXData!
+  }
+
+type UnsequencedHeartbeat
+  {
+  }

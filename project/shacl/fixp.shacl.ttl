@@ -1,0 +1,622 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix fixp: <https://w3id.org/lmodel/fixp/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+fixp:Applied a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'Applied'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'FromSeqNo' (tag 13)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:from_seq_no ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'Count' (tag 14)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:count ] ;
+    sh:targetClass fixp:Applied .
+
+fixp:Context a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'Context'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'NextSeqNo' (tag 11)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:next_seq_no ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ] ;
+    sh:targetClass fixp:Context .
+
+fixp:Establish a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'Establish'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'Timestamp' (tag 2)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:timestamp ],
+        [ sh:datatype fixp:FIXData ;
+            sh:description "FIX field 'Credentials' (tag 4)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path fixp:credentials ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'KeepaliveInterval' (tag 9)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path fixp:keepalive_interval ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'NextSeqNo' (tag 11)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:next_seq_no ] ;
+    sh:targetClass fixp:Establish .
+
+fixp:EstablishmentAck a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'EstablishmentAck'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'NextSeqNo' (tag 11)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:next_seq_no ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'KeepaliveInterval' (tag 9)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path fixp:keepalive_interval ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'RequestTimestamp' (tag 5)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:request_timestamp ] ;
+    sh:targetClass fixp:EstablishmentAck .
+
+fixp:EstablishmentReject a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'EstablishmentReject'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "FIX field 'EstablishmentRejectCode' (tag 12)." ;
+            sh:in ( "UNNEGOTIATED" "ALREADY_ESTABLISHED" "SESSION_BLOCKED" "KEEPALIVE_INTERVAL" "CREDENTIALS" "UNSPECIFIED" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path fixp:establishment_reject_code ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'RequestTimestamp' (tag 5)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:request_timestamp ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'Reason' (tag 8)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:reason ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ] ;
+    sh:targetClass fixp:EstablishmentReject .
+
+fixp:FinishedReceiving a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'FinishedReceiving'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ] ;
+    sh:targetClass fixp:FinishedReceiving .
+
+fixp:FinishedSending a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'FinishedSending'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'LastSeqNo' (tag 17)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:last_seq_no ] ;
+    sh:targetClass fixp:FinishedSending .
+
+fixp:FixpSessionExchange a sh:NodeShape ;
+    rdfs:comment "Top-level container for a FIXP session exchange - holds an ordered list of session messages plus optional metadata." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Date associated with this exchange document." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path dcterms:date ],
+        [ sh:datatype xsd:string ;
+            sh:description "Publisher of this exchange document." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path dcterms:publisher ],
+        [ sh:class fixp:FixpSessionMessage ;
+            sh:description "Ordered sequence of FIXP session messages." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path fixp:messages ],
+        [ sh:datatype xsd:string ;
+            sh:description "Creator of this exchange document." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path dcterms:creator ],
+        [ sh:datatype xsd:string ;
+            sh:description "Title of this exchange document." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path dcterms:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "Rights statement for this exchange document." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path dcterms:rights ] ;
+    sh:targetClass fixp:FixpSessionExchange .
+
+fixp:MessageTemplate a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'MessageTemplate'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXData ;
+            sh:description "FIX field 'Version' (tag 20)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path fixp:version ],
+        [ sh:datatype fixp:FIXData ;
+            sh:description "FIX field 'Template' (tag 22)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:template ],
+        [ sh:description "FIX field 'Flow' (tag 18)." ;
+            sh:in ( "RECOVERABLE" "IDEMPOTENT" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path fixp:flow ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'EffectiveTime' (tag 19)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:effective_time ] ;
+    sh:targetClass fixp:MessageTemplate .
+
+fixp:Negotiate a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'Negotiate'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'Timestamp' (tag 2)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:timestamp ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ],
+        [ sh:datatype fixp:FIXData ;
+            sh:description "FIX field 'Credentials' (tag 4)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:credentials ],
+        [ sh:description "FIX field 'ClientFlow' (tag 3)." ;
+            sh:in ( "RECOVERABLE" "IDEMPOTENT" "UNSEQUENCED" "NONE" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path fixp:client_flow ] ;
+    sh:targetClass fixp:Negotiate .
+
+fixp:NegotiationReject a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'NegotiationReject'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'Reason' (tag 8)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:reason ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'RequestTimestamp' (tag 5)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:request_timestamp ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ],
+        [ sh:description "FIX field 'NegotiationRejectCode' (tag 7)." ;
+            sh:in ( "CREDENTIALS" "FLOW_TYPE_NOT_SUPPORTED" "DUPLICATE_ID" "UNSPECIFIED" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path fixp:negotiation_reject_code ] ;
+    sh:targetClass fixp:NegotiationReject .
+
+fixp:NegotiationResponse a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'NegotiationResponse'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXData ;
+            sh:description "FIX field 'Credentials' (tag 4)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:credentials ],
+        [ sh:description "FIX field 'ServerFlow' (tag 6)." ;
+            sh:in ( "RECOVERABLE" "IDEMPOTENT" "UNSEQUENCED" "NONE" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path fixp:server_flow ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'RequestTimestamp' (tag 5)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:request_timestamp ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ] ;
+    sh:targetClass fixp:NegotiationResponse .
+
+fixp:NotApplied a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'NotApplied'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'Count' (tag 14)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:count ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'FromSeqNo' (tag 13)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:from_seq_no ] ;
+    sh:targetClass fixp:NotApplied .
+
+fixp:RestransmitReject a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'RestransmitReject'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'RequestTimestamp' (tag 5)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:request_timestamp ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ],
+        [ sh:description "FIX field 'RetransmitRejectCode' (tag 15)." ;
+            sh:in ( "OUT_OF_RANGE" "INVALID_SESSION" "REQUEST_LIMIT_EXCEEDED" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path fixp:retransmit_reject_code ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'Reason' (tag 8)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:reason ] ;
+    sh:targetClass fixp:RestransmitReject .
+
+fixp:Retransmission a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'Retransmission'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'Count' (tag 14)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:count ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'RequestTimestamp' (tag 5)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:request_timestamp ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'NextSeqNo' (tag 11)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path fixp:next_seq_no ] ;
+    sh:targetClass fixp:Retransmission .
+
+fixp:RetransmitRequest a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'RetransmitRequest'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'Count' (tag 14)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:count ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'Timestamp' (tag 2)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:timestamp ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ],
+        [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'FromSeqNo' (tag 13)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path fixp:from_seq_no ] ;
+    sh:targetClass fixp:RetransmitRequest .
+
+fixp:SbeCharacterStringComposite a sh:NodeShape ;
+    rdfs:comment "Variable length text" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "SBE member 'varData' (primitiveType=char, semanticType=String)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:var_data ],
+        [ sh:datatype xsd:integer ;
+            sh:description "SBE member 'length' (primitiveType=uint16, semanticType=Length)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:length ] ;
+    sh:targetClass fixp:SbeCharacterStringComposite .
+
+fixp:SbeMessageHeaderComposite a sh:NodeShape ;
+    rdfs:comment "Message identifiers and length of message root" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "SBE member 'blockLength' (primitiveType=uint16)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:block_length ],
+        [ sh:datatype xsd:integer ;
+            sh:description "SBE member 'schemaId' (primitiveType=uint16)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path fixp:schema_id ],
+        [ sh:datatype xsd:integer ;
+            sh:description "SBE member 'version' (primitiveType=uint16)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:schema_version ],
+        [ sh:datatype xsd:integer ;
+            sh:description "SBE member 'templateId' (primitiveType=uint16)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:template_id ] ;
+    sh:targetClass fixp:SbeMessageHeaderComposite .
+
+fixp:SbeObjectComposite a sh:NodeShape ;
+    rdfs:comment "Variable length data, also know as octect string" ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "SBE member 'varData' (primitiveType=uint8, semanticType=data)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path fixp:var_data ],
+        [ sh:datatype xsd:integer ;
+            sh:description "SBE member 'length' (primitiveType=uint16, semanticType=Length)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:length ] ;
+    sh:targetClass fixp:SbeObjectComposite .
+
+fixp:Sequence a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'Sequence'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'NextSeqNo' (tag 11)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:next_seq_no ] ;
+    sh:targetClass fixp:Sequence .
+
+fixp:Terminate a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'Terminate'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'Reason' (tag 8)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path fixp:reason ],
+        [ sh:description "FIX field 'TerminationCode' (tag 16)." ;
+            sh:in ( "FINISHED" "UNSPECIFIED_ERROR" "RE_REQUEST_OUT_OF_BOUNDS" "RE_REQUEST_IN_PROGRESS" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path fixp:termination_code ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ] ;
+    sh:targetClass fixp:Terminate .
+
+fixp:Topic a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'Topic'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype fixp:FIXInt ;
+            sh:description "FIX field 'KeepaliveInterval' (tag 9)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path fixp:keepalive_interval ],
+        [ sh:datatype fixp:FIXData ;
+            sh:description "FIX field 'Classification' (tag 10)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path fixp:classification ],
+        [ sh:description "FIX field 'Flow' (tag 18)." ;
+            sh:in ( "RECOVERABLE" "IDEMPOTENT" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path fixp:flow ],
+        [ sh:datatype fixp:FIXString ;
+            sh:description "FIX field 'SessionId' (tag 1)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path fixp:session_id ] ;
+    sh:targetClass fixp:Topic .
+
+fixp:UnsequencedHeartbeat a sh:NodeShape ;
+    rdfs:comment "FIXP session message 'UnsequencedHeartbeat'." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass fixp:UnsequencedHeartbeat .
+
+fixp:FixpSessionMessage a sh:NodeShape ;
+    rdfs:comment "Abstract base class for every FIXP session message." ;
+    sh:closed false ;
+    sh:ignoredProperties ( fixp:count fixp:request_timestamp fixp:reason fixp:negotiation_reject_code fixp:termination_code fixp:version fixp:classification fixp:session_id fixp:credentials fixp:timestamp fixp:server_flow fixp:last_seq_no fixp:retransmit_reject_code fixp:next_seq_no fixp:flow fixp:client_flow fixp:from_seq_no fixp:effective_time rdf:type fixp:keepalive_interval fixp:template fixp:establishment_reject_code ) ;
+    sh:targetClass fixp:FixpSessionMessage .
+

@@ -1,0 +1,880 @@
+{
+    "$defs": {
+        "Applied": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'Applied'.",
+            "properties": {
+                "count": {
+                    "description": "FIX field 'Count' (tag 14).",
+                    "type": "integer"
+                },
+                "from_seq_no": {
+                    "description": "FIX field 'FromSeqNo' (tag 13).",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "from_seq_no",
+                "count"
+            ],
+            "title": "Applied",
+            "type": "object"
+        },
+        "ClientFlowCodeSet": {
+            "description": "FIX Orchestra codeSet 'ClientFlowCodeSet' (id=3, type=int).",
+            "enum": [
+                "RECOVERABLE",
+                "IDEMPOTENT",
+                "UNSEQUENCED",
+                "NONE"
+            ],
+            "title": "ClientFlowCodeSet",
+            "type": "string"
+        },
+        "ClientFlowFieldEnum": {
+            "description": "Inline FIX field enumeration for field 'ClientFlow' (id=3).",
+            "enum": [
+                "RECOVERABLE",
+                "IDEMPOTENT",
+                "UNSEQUENCED",
+                "NONE"
+            ],
+            "title": "ClientFlowFieldEnum",
+            "type": "string"
+        },
+        "Context": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'Context'.",
+            "properties": {
+                "next_seq_no": {
+                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "next_seq_no"
+            ],
+            "title": "Context",
+            "type": "object"
+        },
+        "Establish": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'Establish'.",
+            "properties": {
+                "credentials": {
+                    "description": "FIX field 'Credentials' (tag 4).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "keepalive_interval": {
+                    "description": "FIX field 'KeepaliveInterval' (tag 9).",
+                    "type": "integer"
+                },
+                "next_seq_no": {
+                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                },
+                "timestamp": {
+                    "description": "FIX field 'Timestamp' (tag 2).",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "session_id",
+                "timestamp",
+                "keepalive_interval"
+            ],
+            "title": "Establish",
+            "type": "object"
+        },
+        "EstablishmentAck": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'EstablishmentAck'.",
+            "properties": {
+                "keepalive_interval": {
+                    "description": "FIX field 'KeepaliveInterval' (tag 9).",
+                    "type": "integer"
+                },
+                "next_seq_no": {
+                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "request_timestamp": {
+                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "request_timestamp",
+                "keepalive_interval"
+            ],
+            "title": "EstablishmentAck",
+            "type": "object"
+        },
+        "EstablishmentReject": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'EstablishmentReject'.",
+            "properties": {
+                "establishment_reject_code": {
+                    "$ref": "#/$defs/EstablishmentRejectCodeFieldEnum",
+                    "description": "FIX field 'EstablishmentRejectCode' (tag 12)."
+                },
+                "reason": {
+                    "description": "FIX field 'Reason' (tag 8).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "request_timestamp": {
+                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "request_timestamp",
+                "establishment_reject_code"
+            ],
+            "title": "EstablishmentReject",
+            "type": "object"
+        },
+        "EstablishmentRejectCodeCodeSet": {
+            "description": "FIX Orchestra codeSet 'EstablishmentRejectCodeCodeSet' (id=12, type=int).",
+            "enum": [
+                "UNNEGOTIATED",
+                "ALREADY_ESTABLISHED",
+                "SESSION_BLOCKED",
+                "KEEPALIVE_INTERVAL",
+                "CREDENTIALS",
+                "UNSPECIFIED"
+            ],
+            "title": "EstablishmentRejectCodeCodeSet",
+            "type": "string"
+        },
+        "EstablishmentRejectCodeFieldEnum": {
+            "description": "Inline FIX field enumeration for field 'EstablishmentRejectCode' (id=12).",
+            "enum": [
+                "UNNEGOTIATED",
+                "ALREADY_ESTABLISHED",
+                "SESSION_BLOCKED",
+                "KEEPALIVE_INTERVAL",
+                "CREDENTIALS",
+                "UNSPECIFIED"
+            ],
+            "title": "EstablishmentRejectCodeFieldEnum",
+            "type": "string"
+        },
+        "FinishedReceiving": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'FinishedReceiving'.",
+            "properties": {
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id"
+            ],
+            "title": "FinishedReceiving",
+            "type": "object"
+        },
+        "FinishedSending": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'FinishedSending'.",
+            "properties": {
+                "last_seq_no": {
+                    "description": "FIX field 'LastSeqNo' (tag 17).",
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "last_seq_no"
+            ],
+            "title": "FinishedSending",
+            "type": "object"
+        },
+        "FixpSessionExchange": {
+            "additionalProperties": false,
+            "description": "Top-level container for a FIXP session exchange - holds an ordered list of session messages plus optional metadata.",
+            "properties": {
+                "creator": {
+                    "description": "Creator of this exchange document.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "date": {
+                    "description": "Date associated with this exchange document.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "messages": {
+                    "description": "Ordered sequence of FIXP session messages.",
+                    "items": {
+                        "$ref": "#/$defs/FixpSessionMessage"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "publisher": {
+                    "description": "Publisher of this exchange document.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "rights": {
+                    "description": "Rights statement for this exchange document.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "description": "Title of this exchange document.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "FixpSessionExchange",
+            "type": "object"
+        },
+        "FixpSessionMessage": {
+            "additionalProperties": false,
+            "description": "Abstract base class for every FIXP session message.",
+            "title": "FixpSessionMessage",
+            "type": "object"
+        },
+        "FlowCodeSet": {
+            "description": "FIX Orchestra codeSet 'FlowCodeSet' (id=18, type=int).",
+            "enum": [
+                "RECOVERABLE",
+                "IDEMPOTENT"
+            ],
+            "title": "FlowCodeSet",
+            "type": "string"
+        },
+        "FlowFieldEnum": {
+            "description": "Inline FIX field enumeration for field 'Flow' (id=18).",
+            "enum": [
+                "RECOVERABLE",
+                "IDEMPOTENT"
+            ],
+            "title": "FlowFieldEnum",
+            "type": "string"
+        },
+        "MessageTemplate": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'MessageTemplate'.",
+            "properties": {
+                "effective_time": {
+                    "description": "FIX field 'EffectiveTime' (tag 19).",
+                    "type": "integer"
+                },
+                "flow": {
+                    "$ref": "#/$defs/FlowFieldEnum",
+                    "description": "FIX field 'Flow' (tag 18)."
+                },
+                "template": {
+                    "description": "FIX field 'Template' (tag 22).",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "FIX field 'Version' (tag 20).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "flow",
+                "effective_time",
+                "template"
+            ],
+            "title": "MessageTemplate",
+            "type": "object"
+        },
+        "Negotiate": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'Negotiate'.",
+            "properties": {
+                "client_flow": {
+                    "$ref": "#/$defs/ClientFlowFieldEnum",
+                    "description": "FIX field 'ClientFlow' (tag 3)."
+                },
+                "credentials": {
+                    "description": "FIX field 'Credentials' (tag 4).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                },
+                "timestamp": {
+                    "description": "FIX field 'Timestamp' (tag 2).",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "session_id",
+                "timestamp",
+                "client_flow"
+            ],
+            "title": "Negotiate",
+            "type": "object"
+        },
+        "NegotiationReject": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'NegotiationReject'.",
+            "properties": {
+                "negotiation_reject_code": {
+                    "$ref": "#/$defs/NegotiationRejectCodeFieldEnum",
+                    "description": "FIX field 'NegotiationRejectCode' (tag 7)."
+                },
+                "reason": {
+                    "description": "FIX field 'Reason' (tag 8).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "request_timestamp": {
+                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "request_timestamp",
+                "negotiation_reject_code"
+            ],
+            "title": "NegotiationReject",
+            "type": "object"
+        },
+        "NegotiationRejectCodeCodeSet": {
+            "description": "FIX Orchestra codeSet 'NegotiationRejectCodeCodeSet' (id=7, type=int).",
+            "enum": [
+                "CREDENTIALS",
+                "FLOW_TYPE_NOT_SUPPORTED",
+                "DUPLICATE_ID",
+                "UNSPECIFIED"
+            ],
+            "title": "NegotiationRejectCodeCodeSet",
+            "type": "string"
+        },
+        "NegotiationRejectCodeFieldEnum": {
+            "description": "Inline FIX field enumeration for field 'NegotiationRejectCode' (id=7).",
+            "enum": [
+                "CREDENTIALS",
+                "FLOW_TYPE_NOT_SUPPORTED",
+                "DUPLICATE_ID",
+                "UNSPECIFIED"
+            ],
+            "title": "NegotiationRejectCodeFieldEnum",
+            "type": "string"
+        },
+        "NegotiationResponse": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'NegotiationResponse'.",
+            "properties": {
+                "credentials": {
+                    "description": "FIX field 'Credentials' (tag 4).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "request_timestamp": {
+                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "type": "integer"
+                },
+                "server_flow": {
+                    "$ref": "#/$defs/ClientFlowCodeSet",
+                    "description": "FIX field 'ServerFlow' (tag 6)."
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "request_timestamp",
+                "server_flow"
+            ],
+            "title": "NegotiationResponse",
+            "type": "object"
+        },
+        "NotApplied": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'NotApplied'.",
+            "properties": {
+                "count": {
+                    "description": "FIX field 'Count' (tag 14).",
+                    "type": "integer"
+                },
+                "from_seq_no": {
+                    "description": "FIX field 'FromSeqNo' (tag 13).",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "from_seq_no",
+                "count"
+            ],
+            "title": "NotApplied",
+            "type": "object"
+        },
+        "RestransmitReject": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'RestransmitReject'.",
+            "properties": {
+                "reason": {
+                    "description": "FIX field 'Reason' (tag 8).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "request_timestamp": {
+                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "type": "integer"
+                },
+                "retransmit_reject_code": {
+                    "$ref": "#/$defs/RetransmitRejectCodeFieldEnum",
+                    "description": "FIX field 'RetransmitRejectCode' (tag 15)."
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "request_timestamp",
+                "retransmit_reject_code"
+            ],
+            "title": "RestransmitReject",
+            "type": "object"
+        },
+        "Retransmission": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'Retransmission'.",
+            "properties": {
+                "count": {
+                    "description": "FIX field 'Count' (tag 14).",
+                    "type": "integer"
+                },
+                "next_seq_no": {
+                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "type": "integer"
+                },
+                "request_timestamp": {
+                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "request_timestamp",
+                "next_seq_no",
+                "count"
+            ],
+            "title": "Retransmission",
+            "type": "object"
+        },
+        "RetransmitRejectCodeCodeSet": {
+            "description": "FIX Orchestra codeSet 'RetransmitRejectCodeCodeSet' (id=15, type=int).",
+            "enum": [
+                "OUT_OF_RANGE",
+                "INVALID_SESSION",
+                "REQUEST_LIMIT_EXCEEDED"
+            ],
+            "title": "RetransmitRejectCodeCodeSet",
+            "type": "string"
+        },
+        "RetransmitRejectCodeFieldEnum": {
+            "description": "Inline FIX field enumeration for field 'RetransmitRejectCode' (id=15).",
+            "enum": [
+                "OUT_OF_RANGE",
+                "INVALID_SESSION",
+                "REQUEST_LIMIT_EXCEEDED"
+            ],
+            "title": "RetransmitRejectCodeFieldEnum",
+            "type": "string"
+        },
+        "RetransmitRequest": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'RetransmitRequest'.",
+            "properties": {
+                "count": {
+                    "description": "FIX field 'Count' (tag 14).",
+                    "type": "integer"
+                },
+                "from_seq_no": {
+                    "description": "FIX field 'FromSeqNo' (tag 13).",
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                },
+                "timestamp": {
+                    "description": "FIX field 'Timestamp' (tag 2).",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "session_id",
+                "timestamp",
+                "from_seq_no",
+                "count"
+            ],
+            "title": "RetransmitRequest",
+            "type": "object"
+        },
+        "SbeCharacterStringComposite": {
+            "additionalProperties": false,
+            "description": "Variable length text",
+            "properties": {
+                "length": {
+                    "description": "SBE member 'length' (primitiveType=uint16, semanticType=Length).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "var_data": {
+                    "description": "SBE member 'varData' (primitiveType=char, semanticType=String).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SbeCharacterStringComposite",
+            "type": "object"
+        },
+        "SbeEstablishmentRejectCode": {
+            "description": "SBE enum 'EstablishmentRejectCode' (encodingType=uint8).",
+            "enum": [
+                "UNNEGOTIATED",
+                "ALREADY_ESTABLISHED",
+                "SESSION_BLOCKED",
+                "KEEPALIVE_INTERVAL",
+                "CREDENTIALS",
+                "UNSPECIFIED"
+            ],
+            "title": "SbeEstablishmentRejectCode",
+            "type": "string"
+        },
+        "SbeFlowType": {
+            "description": "SBE enum 'FlowType' (encodingType=uint8).",
+            "enum": [
+                "RECOVERABLE",
+                "IDEMPOTENT",
+                "UNSEQUENCED",
+                "NONE"
+            ],
+            "title": "SbeFlowType",
+            "type": "string"
+        },
+        "SbeMessageHeaderComposite": {
+            "additionalProperties": false,
+            "description": "Message identifiers and length of message root",
+            "properties": {
+                "block_length": {
+                    "description": "SBE member 'blockLength' (primitiveType=uint16).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "schema_id": {
+                    "description": "SBE member 'schemaId' (primitiveType=uint16).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "schema_version": {
+                    "description": "SBE member 'version' (primitiveType=uint16).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "template_id": {
+                    "description": "SBE member 'templateId' (primitiveType=uint16).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SbeMessageHeaderComposite",
+            "type": "object"
+        },
+        "SbeNegotiationRejectCode": {
+            "description": "SBE enum 'NegotiationRejectCode' (encodingType=uint8).",
+            "enum": [
+                "CREDENTIALS",
+                "FLOW_TYPE_NOT_SUPPORTED",
+                "DUPLICATE_ID",
+                "UNSPECIFIED"
+            ],
+            "title": "SbeNegotiationRejectCode",
+            "type": "string"
+        },
+        "SbeObjectComposite": {
+            "additionalProperties": false,
+            "description": "Variable length data, also know as octect string",
+            "properties": {
+                "length": {
+                    "description": "SBE member 'length' (primitiveType=uint16, semanticType=Length).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "var_data": {
+                    "description": "SBE member 'varData' (primitiveType=uint8, semanticType=data).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SbeObjectComposite",
+            "type": "object"
+        },
+        "SbeRetransmitRejectCode": {
+            "description": "SBE enum 'RetransmitRejectCode' (encodingType=uint8).",
+            "enum": [
+                "OUT_OF_RANGE",
+                "INVALID_SESSION",
+                "REQUEST_LIMIT_EXCEEDED"
+            ],
+            "title": "SbeRetransmitRejectCode",
+            "type": "string"
+        },
+        "SbeTerminationCode": {
+            "description": "SBE enum 'TerminationCode' (encodingType=uint8).",
+            "enum": [
+                "FINISHED",
+                "UNSPECIFIED_ERROR",
+                "RE_REQUEST_OUT_OF_BOUNDS",
+                "RE_REQUEST_IN_PROGRESS"
+            ],
+            "title": "SbeTerminationCode",
+            "type": "string"
+        },
+        "Sequence": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'Sequence'.",
+            "properties": {
+                "next_seq_no": {
+                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "next_seq_no"
+            ],
+            "title": "Sequence",
+            "type": "object"
+        },
+        "Terminate": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'Terminate'.",
+            "properties": {
+                "reason": {
+                    "description": "FIX field 'Reason' (tag 8).",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                },
+                "termination_code": {
+                    "$ref": "#/$defs/TerminationCodeFieldEnum",
+                    "description": "FIX field 'TerminationCode' (tag 16)."
+                }
+            },
+            "required": [
+                "session_id",
+                "termination_code"
+            ],
+            "title": "Terminate",
+            "type": "object"
+        },
+        "TerminationCodeCodeSet": {
+            "description": "FIX Orchestra codeSet 'TerminationCodeCodeSet' (id=16, type=int).",
+            "enum": [
+                "FINISHED",
+                "UNSPECIFIED_ERROR",
+                "RE_REQUEST_OUT_OF_BOUNDS",
+                "RE_REQUEST_IN_PROGRESS"
+            ],
+            "title": "TerminationCodeCodeSet",
+            "type": "string"
+        },
+        "TerminationCodeFieldEnum": {
+            "description": "Inline FIX field enumeration for field 'TerminationCode' (id=16).",
+            "enum": [
+                "FINISHED",
+                "UNSPECIFIED_ERROR",
+                "RE_REQUEST_OUT_OF_BOUNDS",
+                "RE_REQUEST_IN_PROGRESS"
+            ],
+            "title": "TerminationCodeFieldEnum",
+            "type": "string"
+        },
+        "Topic": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'Topic'.",
+            "properties": {
+                "classification": {
+                    "description": "FIX field 'Classification' (tag 10).",
+                    "type": "string"
+                },
+                "flow": {
+                    "$ref": "#/$defs/FlowFieldEnum",
+                    "description": "FIX field 'Flow' (tag 18)."
+                },
+                "keepalive_interval": {
+                    "description": "FIX field 'KeepaliveInterval' (tag 9).",
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "FIX field 'SessionId' (tag 1).",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "flow",
+                "keepalive_interval",
+                "classification"
+            ],
+            "title": "Topic",
+            "type": "object"
+        },
+        "UnsequencedHeartbeat": {
+            "additionalProperties": false,
+            "description": "FIXP session message 'UnsequencedHeartbeat'.",
+            "title": "UnsequencedHeartbeat",
+            "type": "object"
+        }
+    },
+    "$id": "https://w3id.org/lmodel/fixp",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "Top-level container for a FIXP session exchange - holds an ordered list of session messages plus optional metadata.",
+    "metamodel_version": "1.11.0",
+    "properties": {
+        "creator": {
+            "description": "Creator of this exchange document.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "date": {
+            "description": "Date associated with this exchange document.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "messages": {
+            "description": "Ordered sequence of FIXP session messages.",
+            "items": {
+                "$ref": "#/$defs/FixpSessionMessage"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "publisher": {
+            "description": "Publisher of this exchange document.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "rights": {
+            "description": "Rights statement for this exchange document.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "title": {
+            "description": "Title of this exchange document.",
+            "type": [
+                "string",
+                "null"
+            ]
+        }
+    },
+    "title": "fixp",
+    "type": "object",
+    "version": "FIX.5.0SP2"
+}

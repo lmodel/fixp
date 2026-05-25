@@ -1,0 +1,248 @@
+{
+   "@context": {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "common_domain_model": "https://w3id.org/lmodel/common-domain-model/elements/",
+      "dc": "http://purl.org/dc/elements/1.1/",
+      "dcterms": "http://purl.org/dc/terms/",
+      "fix_orchestra": "https://w3id.org/lmodel/fix-orchestra/elements/",
+      "fix_sbe": "https://w3id.org/lmodel/fix-sbe/elements/",
+      "fixp": "https://w3id.org/lmodel/fixp/",
+      "fixr": "http://fixprotocol.io/2020/orchestra/repository/",
+      "fluxnova_bpm_platform": "https://w3id.org/lmodel/fluxnova-bpm-platform/elements/",
+      "gist_linkml": "https://w3id.org/lmodel/gist/",
+      "linkml": "https://w3id.org/linkml/",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "sbe": "http://fixprotocol.io/2016/sbe/",
+      "schema": "http://schema.org/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "@vocab": "https://w3id.org/lmodel/fixp/",
+      "classification": {
+         "@type": "fixp:FIXData",
+         "@id": "classification"
+      },
+      "client_flow": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "client_flow"
+      },
+      "count": {
+         "@type": "fixp:FIXInt",
+         "@id": "count"
+      },
+      "credentials": {
+         "@type": "fixp:FIXData",
+         "@id": "credentials"
+      },
+      "effective_time": {
+         "@type": "fixp:FIXInt",
+         "@id": "effective_time"
+      },
+      "establishment_reject_code": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "establishment_reject_code"
+      },
+      "creator": {
+         "@id": "dcterms:creator"
+      },
+      "date": {
+         "@id": "dcterms:date"
+      },
+      "messages": {
+         "@type": "@id",
+         "@id": "messages"
+      },
+      "publisher": {
+         "@id": "dcterms:publisher"
+      },
+      "rights": {
+         "@id": "dcterms:rights"
+      },
+      "title": {
+         "@id": "dcterms:title"
+      },
+      "flow": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "flow"
+      },
+      "from_seq_no": {
+         "@type": "fixp:FIXInt",
+         "@id": "from_seq_no"
+      },
+      "keepalive_interval": {
+         "@type": "fixp:FIXInt",
+         "@id": "keepalive_interval"
+      },
+      "last_seq_no": {
+         "@type": "fixp:FIXInt",
+         "@id": "last_seq_no"
+      },
+      "negotiation_reject_code": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "negotiation_reject_code"
+      },
+      "next_seq_no": {
+         "@type": "fixp:FIXInt",
+         "@id": "next_seq_no"
+      },
+      "reason": {
+         "@type": "fixp:FIXString",
+         "@id": "reason"
+      },
+      "request_timestamp": {
+         "@type": "fixp:FIXInt",
+         "@id": "request_timestamp"
+      },
+      "retransmit_reject_code": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "retransmit_reject_code"
+      },
+      "length": {
+         "@type": "xsd:integer",
+         "@id": "length"
+      },
+      "var_data": {
+         "@type": "xsd:integer",
+         "@id": "var_data"
+      },
+      "block_length": {
+         "@type": "xsd:integer",
+         "@id": "block_length"
+      },
+      "schema_id": {
+         "@type": "xsd:integer",
+         "@id": "schema_id"
+      },
+      "schema_version": {
+         "@type": "xsd:integer",
+         "@id": "schema_version"
+      },
+      "template_id": {
+         "@type": "xsd:integer",
+         "@id": "template_id"
+      },
+      "server_flow": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "server_flow"
+      },
+      "session_id": {
+         "@type": "fixp:FIXString",
+         "@id": "session_id"
+      },
+      "template": {
+         "@type": "fixp:FIXData",
+         "@id": "template"
+      },
+      "termination_code": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "termination_code"
+      },
+      "timestamp": {
+         "@type": "fixp:FIXInt",
+         "@id": "timestamp"
+      },
+      "version": {
+         "@type": "fixp:FIXData",
+         "@id": "version"
+      },
+      "Applied": {
+         "@id": "Applied"
+      },
+      "Context": {
+         "@id": "Context"
+      },
+      "Establish": {
+         "@id": "Establish"
+      },
+      "EstablishmentAck": {
+         "@id": "EstablishmentAck"
+      },
+      "EstablishmentReject": {
+         "@id": "EstablishmentReject"
+      },
+      "FinishedReceiving": {
+         "@id": "FinishedReceiving"
+      },
+      "FinishedSending": {
+         "@id": "FinishedSending"
+      },
+      "FixpSessionExchange": {
+         "@id": "FixpSessionExchange"
+      },
+      "FixpSessionMessage": {
+         "@id": "FixpSessionMessage"
+      },
+      "MessageTemplate": {
+         "@id": "MessageTemplate"
+      },
+      "Negotiate": {
+         "@id": "Negotiate"
+      },
+      "NegotiationReject": {
+         "@id": "NegotiationReject"
+      },
+      "NegotiationResponse": {
+         "@id": "NegotiationResponse"
+      },
+      "NotApplied": {
+         "@id": "NotApplied"
+      },
+      "RestransmitReject": {
+         "@id": "RestransmitReject"
+      },
+      "Retransmission": {
+         "@id": "Retransmission"
+      },
+      "RetransmitRequest": {
+         "@id": "RetransmitRequest"
+      },
+      "SbeCharacterStringComposite": {
+         "@id": "SbeCharacterStringComposite"
+      },
+      "SbeMessageHeaderComposite": {
+         "@id": "SbeMessageHeaderComposite"
+      },
+      "SbeObjectComposite": {
+         "@id": "SbeObjectComposite"
+      },
+      "Sequence": {
+         "@id": "Sequence"
+      },
+      "Terminate": {
+         "@id": "Terminate"
+      },
+      "Topic": {
+         "@id": "Topic"
+      },
+      "UnsequencedHeartbeat": {
+         "@id": "UnsequencedHeartbeat"
+      }
+   }
+}

@@ -204,9 +204,10 @@ _test-examples: _ensure_examples_output
     --schema {{source_schema_path}} > examples/output/README.md
 
 # Add the merged model to docs/schema.
+
 _gen-yaml:
   -mkdir -p {{distrib_schema_path}}
-  uv run gen-yaml {{source_schema_path}} > {{distrib_schema_path}}/{{schema_name}}.yaml
+  uv run python scripts/gen_yaml_monkeypatch.py {{source_schema_path}} > {{distrib_schema_path}}/{{schema_name}}.yaml
 
 # Overridable recipe to add project-specific artifacts to the distribution schema path
 _add-artifacts:
