@@ -1,0 +1,164 @@
+ syntax="proto3";
+ package
+// metamodel_version: 1.11.0
+// version: FIX.5.0SP2
+// FIXP session message 'Applied'.
+message Applied
+ {
+  fIXInt fromSeqNo = 0
+  fIXInt count = 0
+ }
+// FIXP session message 'Context'.
+message Context
+ {
+  fIXString sessionId = 0
+  fIXInt nextSeqNo = 0
+ }
+// FIXP session message 'Establish'.
+message Establish
+ {
+  fIXString sessionId = 0
+  fIXInt timestamp = 0
+  fIXInt keepaliveInterval = 0
+  fIXInt nextSeqNo = 0
+  fIXData credentials = 0
+ }
+// FIXP session message 'EstablishmentAck'.
+message EstablishmentAck
+ {
+  fIXString sessionId = 0
+  fIXInt requestTimestamp = 0
+  fIXInt keepaliveInterval = 0
+  fIXInt nextSeqNo = 0
+ }
+// FIXP session message 'EstablishmentReject'.
+message EstablishmentReject
+ {
+  fIXString sessionId = 0
+  fIXInt requestTimestamp = 0
+  establishmentRejectCodeFieldEnum establishmentRejectCode = 0
+  fIXString reason = 0
+ }
+// FIXP session message 'FinishedReceiving'.
+message FinishedReceiving
+ {
+  fIXString sessionId = 0
+ }
+// FIXP session message 'FinishedSending'.
+message FinishedSending
+ {
+  fIXString sessionId = 0
+  fIXInt lastSeqNo = 0
+ }
+// Top-level container for a FIXP session exchange - holds an ordered list of session messages plus optional metadata.
+message FixpSessionExchange
+ {
+ repeated  fixpSessionMessage messages = 0
+  string title = 0
+  string creator = 0
+  string publisher = 0
+  string rights = 0
+  string date = 0
+ }
+// FIXP session message 'MessageTemplate'.
+message MessageTemplate
+ {
+  flowFieldEnum flow = 0
+  fIXInt effectiveTime = 0
+  fIXData version = 0
+  fIXData template = 0
+ }
+// FIXP session message 'Negotiate'.
+message Negotiate
+ {
+  fIXString sessionId = 0
+  fIXInt timestamp = 0
+  clientFlowFieldEnum clientFlow = 0
+  fIXData credentials = 0
+ }
+// FIXP session message 'NegotiationReject'.
+message NegotiationReject
+ {
+  fIXString sessionId = 0
+  fIXInt requestTimestamp = 0
+  negotiationRejectCodeFieldEnum negotiationRejectCode = 0
+  fIXString reason = 0
+ }
+// FIXP session message 'NegotiationResponse'.
+message NegotiationResponse
+ {
+  fIXString sessionId = 0
+  fIXInt requestTimestamp = 0
+  clientFlowCodeSet serverFlow = 0
+  fIXData credentials = 0
+ }
+// FIXP session message 'NotApplied'.
+message NotApplied
+ {
+  fIXInt fromSeqNo = 0
+  fIXInt count = 0
+ }
+// FIXP session message 'RestransmitReject'.
+message RestransmitReject
+ {
+  fIXString sessionId = 0
+  fIXInt requestTimestamp = 0
+  retransmitRejectCodeFieldEnum retransmitRejectCode = 0
+  fIXString reason = 0
+ }
+// FIXP session message 'Retransmission'.
+message Retransmission
+ {
+  fIXString sessionId = 0
+  fIXInt requestTimestamp = 0
+  fIXInt nextSeqNo = 0
+  fIXInt count = 0
+ }
+// FIXP session message 'RetransmitRequest'.
+message RetransmitRequest
+ {
+  fIXString sessionId = 0
+  fIXInt timestamp = 0
+  fIXInt fromSeqNo = 0
+  fIXInt count = 0
+ }
+// Variable length text
+message SbeCharacterStringComposite
+ {
+  integer length = 0
+  string varData = 0
+ }
+// Message identifiers and length of message root
+message SbeMessageHeaderComposite
+ {
+  integer blockLength = 0
+  integer templateId = 0
+  integer schemaId = 0
+  integer schemaVersion = 0
+ }
+// Variable length data, also know as octect string
+message SbeObjectComposite
+ {
+  integer length = 0
+  integer varData = 0
+ }
+// FIXP session message 'Sequence'.
+message Sequence
+ {
+  fIXInt nextSeqNo = 0
+ }
+// FIXP session message 'Terminate'.
+message Terminate
+ {
+  fIXString sessionId = 0
+  terminationCodeFieldEnum terminationCode = 0
+  fIXString reason = 0
+ }
+// FIXP session message 'Topic'.
+message Topic
+ {
+  fIXString sessionId = 0
+  flowFieldEnum flow = 0
+  fIXInt keepaliveInterval = 0
+  fIXData classification = 0
+ }
