@@ -1,0 +1,12 @@
+application_recovery: false
+application_fix_version: FIX.Latest
+extension_packs:
+  - "312"
+message_encoding: Simple Binary Encoding
+encoding_version: "1.0"
+framing: Simple Open Framing Header
+supported_flow_types:
+  - Idempotent
+tls_version: "1.3"
+transports:
+  - TCP

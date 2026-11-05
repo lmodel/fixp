@@ -1,0 +1,6 @@
+# Fails at: /session_kind
+id: https://example.org/fixp/exchanges/broadcast
+session_kind: broadcast
+exchange_steps:
+  - sent_by: publisher
+    application_message_count: 1

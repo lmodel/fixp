@@ -1,0 +1,5 @@
+# Fails at: /
+id: https://example.org/fixp/venue-a
+client_stack:
+  transports:
+    - TCP

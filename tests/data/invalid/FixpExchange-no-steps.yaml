@@ -1,0 +1,3 @@
+# Fails at: /
+id: https://example.org/fixp/exchanges/empty
+session_kind: point_to_point

@@ -1,0 +1,5 @@
+# Fails at: /
+message_kind: FixpRetransmission
+session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+next_seq_no: 3
+message_count: 2

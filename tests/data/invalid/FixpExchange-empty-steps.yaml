@@ -1,0 +1,4 @@
+# Fails at: /exchange_steps
+id: https://example.org/fixp/exchanges/empty
+session_kind: point_to_point
+exchange_steps: []

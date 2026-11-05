@@ -1,0 +1,5 @@
+# Fails at: /client_flow
+message_kind: FixpNegotiate
+session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+request_time: 1793865600000000000
+client_flow: Guaranteed

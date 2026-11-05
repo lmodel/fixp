@@ -1,0 +1,24 @@
+id: https://example.org/fixp/venue-a-order-entry
+description: Order entry with venue A, client idempotent and server recoverable.
+client_stack:
+  application_fix_version: FIX.Latest
+  message_encoding: Simple Binary Encoding
+  encoding_version: "1.0"
+  framing: Simple Open Framing Header
+  supported_flow_types:
+    - Idempotent
+  tls_version: "1.3"
+  authentication_methods:
+    - TLS client certificate
+  transports:
+    - TCP
+server_stack:
+  application_fix_version: FIX.Latest
+  message_encoding: Simple Binary Encoding
+  encoding_version: "1.0"
+  framing: Simple Open Framing Header
+  supported_flow_types:
+    - Recoverable
+  tls_version: "1.3"
+  transports:
+    - TCP

@@ -1,0 +1,5 @@
+message_kind: FixpTopic
+session_id: d23f0824-128b-4f33-8c5c-7fd0a6a3a450
+flow: Idempotent
+keepalive_interval: 1000
+topic_classification: RVMtRlVU

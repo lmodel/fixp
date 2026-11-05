@@ -1,0 +1,5 @@
+# Fails at: /retransmit_reject_code
+message_kind: FixpRetransmitReject
+session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+request_timestamp: 1793865600000000000
+retransmit_reject_code: TooMany

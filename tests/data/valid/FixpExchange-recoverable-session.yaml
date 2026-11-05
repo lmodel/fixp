@@ -1,0 +1,89 @@
+id: https://example.org/fixp/exchanges/recoverable-session
+description: >-
+  Both flows recoverable: negotiation, binding, a gap filled by retransmission, then
+  finalization of both flows and the release of the transport.
+session_kind: point_to_point
+multiplexed: false
+exchange_steps:
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpNegotiate
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      request_time: 1793865600000000000
+      client_flow: Recoverable
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpNegotiationResponse
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      request_timestamp: 1793865600000000000
+      server_flow: Recoverable
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpEstablish
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      request_time: 1793865600005000000
+      keepalive_interval: 500
+      next_seq_no: 1
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpEstablishmentAck
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      request_timestamp: 1793865600005000000
+      keepalive_interval: 500
+      next_seq_no: 1
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpSequence
+      next_seq_no: 1
+  - sent_by: client
+    application_message_count: 3
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpSequence
+      next_seq_no: 1
+  - sent_by: server
+    application_message_count: 4
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpRetransmitRequest
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      request_time: 1793865601000000000
+      from_seq_no: 3
+      message_count: 2
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpRetransmission
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      request_timestamp: 1793865601000000000
+      next_seq_no: 3
+      message_count: 2
+  - sent_by: server
+    application_message_count: 2
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpFinishedSending
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      last_seq_no: 3
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpFinishedReceiving
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpFinishedSending
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      last_seq_no: 4
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpFinishedReceiving
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpTerminate
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      termination_code: Finished
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpTerminate
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      termination_code: Finished

@@ -1,0 +1,4 @@
+# Fails at: /fixp_message
+sent_by: client
+fixp_message:
+  message_kind: FixpLogon
