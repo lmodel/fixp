@@ -1,5 +1,5 @@
 id: https://example.org/fixp/venue-a-order-entry
-description: Order entry with venue A, client idempotent and server recoverable.
+description: Order entry with venue A. The client sends an idempotent flow, the server a recoverable one.
 client_stack:
   application_fix_version: FIX.Latest
   message_encoding: Simple Binary Encoding

@@ -1,6 +1,6 @@
 id: https://example.org/fixp/exchanges/idempotent-orders
 description: >-
-  An idempotent client flow answered by a recoverable server flow, which reports with Applied
+  An idempotent client flow answered by the server's recoverable flow, which reports with Applied
   and NotApplied which operations took effect. The transport is then released.
 session_kind: point_to_point
 exchange_steps:
