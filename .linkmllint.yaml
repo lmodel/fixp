@@ -1,0 +1,10 @@
+# linkml-lint reads this file from the directory `just lint` runs in. The recommended rules
+# apply, with one exception. A permissible value keeps FIXP's symbolic name, such as
+# Recoverable or FlowTypeNotSupported, so a value in a record is the name the specification
+# and its resource files give.
+extends: recommended
+rules:
+  standard_naming:
+    level: error
+    exclude_type:
+      - permissible_value

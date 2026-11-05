@@ -1,0 +1,293 @@
+{
+   "@context": {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "fix_orchestra": "https://w3id.org/lmodel/fix-orchestra/",
+      "fix_sbe": "https://w3id.org/lmodel/fix-sbe/",
+      "fixp": "https://w3id.org/lmodel/fixp/",
+      "linkml": "https://w3id.org/linkml/",
+      "schema": "http://schema.org/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "@vocab": "https://w3id.org/lmodel/fixp/",
+      "client_flow": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "client_flow"
+      },
+      "credentials": {
+         "@type": "xsd:base64Binary",
+         "@id": "credentials"
+      },
+      "description": {
+         "@id": "schema:description"
+      },
+      "effective_time": {
+         "@type": "xsd:integer",
+         "@id": "effective_time"
+      },
+      "establishment_reject_code": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "establishment_reject_code"
+      },
+      "exchange_steps": {
+         "@type": "@id",
+         "@id": "exchange_steps"
+      },
+      "multiplexed": {
+         "@type": "xsd:boolean",
+         "@id": "multiplexed"
+      },
+      "session_kind": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "session_kind"
+      },
+      "application_message_count": {
+         "@type": "xsd:integer",
+         "@id": "application_message_count"
+      },
+      "fixp_message": {
+         "@type": "@id",
+         "@id": "fixp_message"
+      },
+      "sent_by": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "sent_by"
+      },
+      "client_stack": {
+         "@type": "@id",
+         "@id": "client_stack"
+      },
+      "server_stack": {
+         "@type": "@id",
+         "@id": "server_stack"
+      },
+      "application_fix_version": {
+         "@id": "application_fix_version"
+      },
+      "application_recovery": {
+         "@type": "xsd:boolean",
+         "@id": "application_recovery"
+      },
+      "authentication_methods": {
+         "@id": "authentication_methods"
+      },
+      "cipher_suites": {
+         "@id": "cipher_suites"
+      },
+      "encoding_version": {
+         "@id": "encoding_version"
+      },
+      "extension_packs": {
+         "@id": "extension_packs"
+      },
+      "framing": {
+         "@id": "framing"
+      },
+      "message_encoding": {
+         "@id": "message_encoding"
+      },
+      "message_schemas": {
+         "@id": "message_schemas"
+      },
+      "network_protocols": {
+         "@id": "network_protocols"
+      },
+      "service_pack": {
+         "@id": "service_pack"
+      },
+      "supported_flow_types": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "supported_flow_types"
+      },
+      "tls_version": {
+         "@id": "tls_version"
+      },
+      "transports": {
+         "@id": "transports"
+      },
+      "flow": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "flow"
+      },
+      "from_seq_no": {
+         "@type": "xsd:integer",
+         "@id": "from_seq_no"
+      },
+      "id": "@id",
+      "keepalive_interval": {
+         "@type": "xsd:integer",
+         "@id": "keepalive_interval"
+      },
+      "last_seq_no": {
+         "@type": "xsd:integer",
+         "@id": "last_seq_no"
+      },
+      "message_count": {
+         "@type": "xsd:integer",
+         "@id": "message_count"
+      },
+      "message_kind": {
+         "@id": "message_kind"
+      },
+      "negotiation_reject_code": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "negotiation_reject_code"
+      },
+      "next_seq_no": {
+         "@type": "xsd:integer",
+         "@id": "next_seq_no"
+      },
+      "reason_text": {
+         "@id": "reason_text"
+      },
+      "request_time": {
+         "@type": "xsd:integer",
+         "@id": "request_time"
+      },
+      "request_timestamp": {
+         "@type": "xsd:integer",
+         "@id": "request_timestamp"
+      },
+      "retransmit_reject_code": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "retransmit_reject_code"
+      },
+      "server_flow": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "server_flow"
+      },
+      "session_id": {
+         "@id": "session_id"
+      },
+      "sofh_encoding_type": {
+         "@type": "xsd:integer",
+         "@id": "sofh_encoding_type"
+      },
+      "template": {
+         "@type": "xsd:base64Binary",
+         "@id": "template"
+      },
+      "template_version": {
+         "@type": "xsd:base64Binary",
+         "@id": "template_version"
+      },
+      "termination_code": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "termination_code"
+      },
+      "topic_classification": {
+         "@type": "xsd:base64Binary",
+         "@id": "topic_classification"
+      },
+      "FixpApplied": {
+         "@id": "FixpApplied"
+      },
+      "FixpContext": {
+         "@id": "FixpContext"
+      },
+      "FixpEstablish": {
+         "@id": "FixpEstablish"
+      },
+      "FixpEstablishmentAck": {
+         "@id": "FixpEstablishmentAck"
+      },
+      "FixpEstablishmentReject": {
+         "@id": "FixpEstablishmentReject"
+      },
+      "FixpExchange": {
+         "@id": "FixpExchange"
+      },
+      "FixpExchangeStep": {
+         "@id": "FixpExchangeStep"
+      },
+      "FixpFinishedReceiving": {
+         "@id": "FixpFinishedReceiving"
+      },
+      "FixpFinishedSending": {
+         "@id": "FixpFinishedSending"
+      },
+      "FixpMessage": {
+         "@id": "FixpMessage"
+      },
+      "FixpMessageTemplate": {
+         "@id": "FixpMessageTemplate"
+      },
+      "FixpNegotiate": {
+         "@id": "FixpNegotiate"
+      },
+      "FixpNegotiationReject": {
+         "@id": "FixpNegotiationReject"
+      },
+      "FixpNegotiationResponse": {
+         "@id": "FixpNegotiationResponse"
+      },
+      "FixpNotApplied": {
+         "@id": "FixpNotApplied"
+      },
+      "FixpRetransmission": {
+         "@id": "FixpRetransmission"
+      },
+      "FixpRetransmitReject": {
+         "@id": "FixpRetransmitReject"
+      },
+      "FixpRetransmitRequest": {
+         "@id": "FixpRetransmitRequest"
+      },
+      "FixpRulesOfEngagement": {
+         "@id": "FixpRulesOfEngagement"
+      },
+      "FixpSequence": {
+         "@id": "FixpSequence"
+      },
+      "FixpStackProfile": {
+         "@id": "FixpStackProfile"
+      },
+      "FixpTerminate": {
+         "@id": "FixpTerminate"
+      },
+      "FixpTopic": {
+         "@id": "FixpTopic"
+      },
+      "FixpUnsequencedHeartbeat": {
+         "@id": "FixpUnsequencedHeartbeat"
+      }
+   }
+}

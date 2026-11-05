@@ -1,0 +1,533 @@
+---
+id: https://w3id.org/lmodel/fixp/schema/fixp_messages
+name: fixp_messages
+title: FIXP session messages
+description: >-
+  The nineteen messages of FIXP 1.0: the seventeen session messages and the two application
+  messages that answer an idempotent flow. Each class lists its fields in the order the
+  specification gives, which is the order an encoding should send them in.
+version: "1.0"
+source: https://github.com/FIXTradingCommunity/fixp-specification/tree/v1.0-STANDARD/v1-0-STANDARD
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/fixp
+notes:
+  - >-
+    Every class carries these annotations. sbe_template_id and sbe_name are the message's id
+    and name in the SBE schema and the FIX repository file. fixp_sent_by says which side sends
+    it: the client, the server, the publisher, or any. fixp_flow_types lists the flow types the
+    summary in section 6 allows it on, and fixp_multicast says whether a multicast session uses
+    it. Where a message concerns one flow, fixp_flow_of says whose: own for the flow its sender
+    sends, peer for the flow its sender receives. tests/fixp_rules.py reads them.
+prefixes:
+  fixp: https://w3id.org/lmodel/fixp/
+  linkml: https://w3id.org/linkml/
+default_prefix: fixp
+default_range: string
+
+imports:
+  - linkml:types
+  - ./fixp_core
+
+classes:
+
+  FixpNegotiate:
+    is_a: FixpMessage
+    description: >-
+      A client's request to create a session under an identifier it has never used, stating
+      the flow type it will send.
+    in_subset: [fixp_initialization]
+    slots:
+      - session_id
+      - request_time
+      - client_flow
+      - credentials
+    slot_usage:
+      session_id:
+        required: true
+      request_time:
+        required: true
+      client_flow:
+        required: true
+      credentials:
+        description: Data that identifies the client, in a form the two parties agree on.
+    annotations:
+      sbe_template_id: "1"
+      sbe_name: Negotiate
+      fixp_sent_by: client
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "false"
+
+  FixpNegotiationResponse:
+    is_a: FixpMessage
+    description: >-
+      A server's acceptance of a new session, stating the flow type it will send back.
+    in_subset: [fixp_initialization]
+    slots:
+      - session_id
+      - request_timestamp
+      - server_flow
+      - credentials
+    slot_usage:
+      session_id:
+        required: true
+      request_timestamp:
+        required: true
+        description: The request_time of the Negotiate this message accepts.
+      server_flow:
+        required: true
+      credentials:
+        description: Data that identifies the server to the client, for mutual authentication.
+    annotations:
+      sbe_template_id: "2"
+      sbe_name: NegotiationResponse
+      fixp_sent_by: server
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "false"
+
+  FixpNegotiationReject:
+    is_a: FixpMessage
+    description: >-
+      A server's refusal to create a session. The server sends nothing more and closes the
+      transport.
+    in_subset: [fixp_initialization]
+    slots:
+      - session_id
+      - request_timestamp
+      - negotiation_reject_code
+      - reason_text
+    slot_usage:
+      session_id:
+        required: true
+      request_timestamp:
+        required: true
+        description: The request_time of the Negotiate this message refuses.
+      negotiation_reject_code:
+        required: true
+    annotations:
+      sbe_template_id: "3"
+      sbe_name: NegotiationReject
+      fixp_sent_by: server
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "false"
+
+  FixpTopic:
+    is_a: FixpMessage
+    description: >-
+      A multicast publisher's notice that starts a flow and ties the session's short-lived
+      identifier to a lasting subject. It is repeated so that late listeners can join.
+    in_subset: [fixp_initialization]
+    slots:
+      - session_id
+      - flow
+      - keepalive_interval
+      - topic_classification
+    slot_usage:
+      session_id:
+        required: true
+      flow:
+        required: true
+      keepalive_interval:
+        description: The publisher's heartbeat interval, in milliseconds.
+        comments:
+          - >-
+            The SBE schema and the repository file give Topic this field, as a required one.
+            Section 5's table leaves it out, so the schema accepts a Topic with or without it.
+      topic_classification:
+        required: true
+    annotations:
+      sbe_template_id: "4"
+      sbe_name: Topic
+      fixp_sent_by: publisher
+      fixp_flow_types: Recoverable Idempotent
+      fixp_multicast: "true"
+
+  FixpEstablish:
+    is_a: FixpMessage
+    description: >-
+      A client's request to tie a negotiated session to the very transport this message arrives
+      on.
+      After a disconnection it is sent again to re-bind.
+    in_subset: [fixp_binding]
+    slots:
+      - session_id
+      - request_time
+      - keepalive_interval
+      - next_seq_no
+      - credentials
+    slot_usage:
+      session_id:
+        required: true
+      request_time:
+        required: true
+      keepalive_interval:
+        required: true
+        description: The longest the client stays silent, in milliseconds, before a heartbeat.
+      next_seq_no:
+        description: >-
+          When the client's recoverable flow is bound again, the number its next application
+          message will carry.
+      credentials:
+        description: Data that identifies the client, in a form the two parties agree on.
+    annotations:
+      sbe_template_id: "5"
+      sbe_name: Establish
+      fixp_sent_by: client
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "false"
+
+  FixpEstablishmentAck:
+    is_a: FixpMessage
+    description: >-
+      A server's acceptance of the binding. From here, application messages may flow.
+    in_subset: [fixp_binding]
+    slots:
+      - session_id
+      - request_timestamp
+      - keepalive_interval
+      - next_seq_no
+    slot_usage:
+      session_id:
+        required: true
+      request_timestamp:
+        required: true
+        description: The request_time of the Establish this message accepts.
+      keepalive_interval:
+        required: true
+        description: The longest the server stays silent, in milliseconds, before a heartbeat.
+      next_seq_no:
+        description: >-
+          If the server's flow is recoverable, the number its next application message will
+          carry, so the client can ask for what it missed.
+    annotations:
+      sbe_template_id: "6"
+      sbe_name: EstablishmentAck
+      fixp_sent_by: server
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "false"
+
+  FixpEstablishmentReject:
+    is_a: FixpMessage
+    description: A server's refusal of the binding.
+    in_subset: [fixp_binding]
+    slots:
+      - session_id
+      - request_timestamp
+      - establishment_reject_code
+      - reason_text
+    slot_usage:
+      session_id:
+        required: true
+      request_timestamp:
+        required: true
+        description: The request_time of the Establish this message refuses.
+      establishment_reject_code:
+        required: true
+    annotations:
+      sbe_template_id: "7"
+      sbe_name: EstablishmentReject
+      fixp_sent_by: server
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "false"
+
+  FixpSequence:
+    is_a: FixpMessage
+    description: >-
+      Starts the numbering of a sequenced flow, so that the application messages after it are
+      numbered by counting up from the value it carries. Sent when idle, it is also the
+      heartbeat.
+    comments:
+      - It is used on a transport that carries one session; Context replaces it on a shared one.
+    in_subset: [fixp_transferring]
+    slots:
+      - next_seq_no
+    slot_usage:
+      next_seq_no:
+        required: true
+    annotations:
+      sbe_template_id: "8"
+      sbe_name: Sequence
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable Idempotent
+      fixp_multicast: "true"
+      fixp_flow_of: own
+
+  FixpContext:
+    is_a: FixpMessage
+    description: >-
+      On a transport that several sessions share, names the session the following messages
+      belong to and, when the flow is sequenced, where its numbering continues.
+    in_subset: [fixp_transferring]
+    slots:
+      - session_id
+      - next_seq_no
+    slot_usage:
+      session_id:
+        required: true
+      next_seq_no:
+        comments:
+          - >-
+            Section 3's table makes it optional, and both resource files make it required,
+            so the schema accepts a Context with or without it.
+    annotations:
+      sbe_template_id: "9"
+      sbe_name: Context
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "true"
+      fixp_flow_of: own
+
+  FixpUnsequencedHeartbeat:
+    is_a: FixpMessage
+    description: >-
+      Shows the peer that the session and transport are alive when the sender's flow is
+      unsequenced or empty. It has no fields.
+    in_subset: [fixp_transferring]
+    annotations:
+      sbe_template_id: "10"
+      sbe_name: UnsequencedHeartbeat
+      fixp_sent_by: any
+      fixp_flow_types: Unsequenced None
+      fixp_multicast: "false"
+      fixp_flow_of: own
+
+  FixpRetransmitRequest:
+    is_a: FixpMessage
+    description: >-
+      Asks the peer to resend some messages of its recoverable flow. A party has at most one
+      such request open at a time.
+    in_subset: [fixp_transferring]
+    slots:
+      - session_id
+      - request_time
+      - from_seq_no
+      - message_count
+    slot_usage:
+      session_id:
+        required: true
+      request_time:
+        required: true
+        description: When the request was made, which also tells this request apart from others.
+      from_seq_no:
+        required: true
+        description: Where the requested run starts, by sequence number.
+      message_count:
+        required: true
+        description: How many messages are asked for.
+    annotations:
+      sbe_template_id: "11"
+      sbe_name: RetransmitRequest
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable
+      fixp_multicast: "false"
+      fixp_flow_of: peer
+
+  FixpRetransmission:
+    is_a: FixpMessage
+    description: >-
+      Introduces a batch of resent messages, which are numbered by counting from the number
+      it gives. A request may be answered in several batches.
+    in_subset: [fixp_transferring]
+    slots:
+      - session_id
+      - request_timestamp
+      - next_seq_no
+      - message_count
+    slot_usage:
+      session_id:
+        required: true
+      request_timestamp:
+        required: true
+        description: The request_time of the RetransmitRequest this batch answers.
+      next_seq_no:
+        required: true
+        description: The number the batch's first message carries.
+      message_count:
+        required: true
+        description: How many resent messages the batch holds.
+    annotations:
+      sbe_template_id: "12"
+      sbe_name: Retransmission
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable
+      fixp_multicast: "false"
+      fixp_flow_of: own
+
+  FixpRetransmitReject:
+    is_a: FixpMessage
+    description: Refuses a RetransmitRequest, with a code saying why.
+    comments:
+      - >-
+        The resource files and section 4's table spell its name RestransmitReject. The summary
+        in section 6 does not list it; it answers a RetransmitRequest, so it belongs to
+        recoverable flows.
+    in_subset: [fixp_transferring]
+    slots:
+      - session_id
+      - request_timestamp
+      - retransmit_reject_code
+      - reason_text
+    slot_usage:
+      session_id:
+        required: true
+      request_timestamp:
+        required: true
+        description: The request_time of the RetransmitRequest this message refuses.
+      retransmit_reject_code:
+        required: true
+    annotations:
+      sbe_template_id: "13"
+      sbe_name: RestransmitReject
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable
+      fixp_multicast: "false"
+      fixp_flow_of: own
+
+  FixpTerminate:
+    is_a: FixpMessage
+    description: >-
+      Releases the session from its transport without ending the session, which can be bound
+      again later. The peer answers with a Terminate, and after its own Terminate a party
+      sends nothing more.
+    in_subset: [fixp_unbinding]
+    slots:
+      - session_id
+      - termination_code
+      - reason_text
+    slot_usage:
+      session_id:
+        required: true
+      termination_code:
+        required: true
+    annotations:
+      sbe_template_id: "14"
+      sbe_name: Terminate
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "false"
+
+  FixpFinishedSending:
+    is_a: FixpMessage
+    description: >-
+      Says that the sender's flow has carried its last application message, which begins
+      finalization. It is repeated as the heartbeat until the answer comes.
+    in_subset: [fixp_finalizing]
+    slots:
+      - session_id
+      - last_seq_no
+    slot_usage:
+      session_id:
+        required: true
+      last_seq_no:
+        comments:
+          - >-
+            Optional in section 4's table and in the SBE schema, required in the repository
+            file. Section 4 asks for it whenever the flow is recoverable or idempotent, which
+            tests/fixp_rules.py checks in an exchange.
+    annotations:
+      sbe_template_id: "15"
+      sbe_name: FinishedSending
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "true"
+      fixp_flow_of: own
+
+  FixpFinishedReceiving:
+    is_a: FixpMessage
+    description: >-
+      Answers FinishedSending once the last message of the peer's flow has been processed.
+      After it the session is finalized and its identifier is spent.
+    in_subset: [fixp_finalizing]
+    slots:
+      - session_id
+    slot_usage:
+      session_id:
+        required: true
+    annotations:
+      sbe_template_id: "16"
+      sbe_name: FinishedReceiving
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "true"
+      fixp_flow_of: peer
+
+  FixpApplied:
+    is_a: FixpMessage
+    description: >-
+      An optional application message telling the party that sends an idempotent flow which
+      of its operations took effect, where no business message already says so.
+    comments:
+      - Like any application message, it uses up one number in the sequence of the flow it travels
+        on.
+    in_subset: [fixp_transferring]
+    slots:
+      - from_seq_no
+      - message_count
+    slot_usage:
+      from_seq_no:
+        required: true
+        description: Where the run of operations that took effect starts.
+      message_count:
+        required: true
+        description: How many operations in a row took effect.
+    annotations:
+      sbe_template_id: "17"
+      sbe_name: Applied
+      fixp_sent_by: any
+      fixp_flow_types: Idempotent
+      fixp_multicast: "false"
+      fixp_flow_of: peer
+
+  FixpNotApplied:
+    is_a: FixpMessage
+    description: >-
+      An application message telling the party that sends an idempotent flow about a gap: a
+      run of operations that did not take effect. That party's application decides what to do.
+    comments:
+      - Like any application message, it uses up one number in the sequence of the flow it travels
+        on.
+    in_subset: [fixp_transferring]
+    slots:
+      - from_seq_no
+      - message_count
+    slot_usage:
+      from_seq_no:
+        required: true
+        description: Where the run of operations that failed to take effect starts.
+      message_count:
+        required: true
+        description: How many operations in a row did not take effect.
+    annotations:
+      sbe_template_id: "18"
+      sbe_name: NotApplied
+      fixp_sent_by: any
+      fixp_flow_types: Idempotent
+      fixp_multicast: "false"
+      fixp_flow_of: peer
+
+  FixpMessageTemplate:
+    is_a: FixpMessage
+    description: >-
+      Hands the peer a template or schema it needs to read messages in an encoding that
+      templates drive. There is no fixed moment for sending it.
+    comments:
+      - >-
+        A publisher does well to repeat it for late listeners. On a shared transport it
+        applies to every session there.
+    in_subset: [fixp_initialization]
+    slots:
+      - sofh_encoding_type
+      - effective_time
+      - template_version
+      - template
+    slot_usage:
+      sofh_encoding_type:
+        required: true
+      template:
+        required: true
+    annotations:
+      sbe_template_id: "19"
+      sbe_name: MessageTemplate
+      fixp_sent_by: any
+      fixp_flow_types: Recoverable Idempotent Unsequenced None
+      fixp_multicast: "true"

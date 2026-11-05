@@ -1,0 +1,4261 @@
+name: fixp
+annotations:
+  upstream_tag:
+    tag: upstream_tag
+    value: v1.0-STANDARD
+  upstream_commit:
+    tag: upstream_commit
+    value: 6d89f5fa66d544ea6b41e93853c23292505e49c6
+description: A LinkML model of the FIX Performance Session Layer 1.0, the FIX Trading
+  Community's session protocol for fast trading links. It describes FIXP's session
+  messages, their fields and value lists, exchanges of those messages on one session,
+  and the rules of engagement two parties agree on. A message is described by its
+  fields, so the model works with any encoding.
+title: FIX Performance Session Layer (FIXP)
+comments:
+- An exchange starts at FixpExchange, the tree root. A single message validates against
+  its own class, such as FixpNegotiate, and a rules-of-engagement record against FixpRulesOfEngagement.
+  upstream/ holds the specification's resource files unchanged, tests/test_coverage.py
+  compares the modules with them, and scripts/check_upstream_release.py reports when
+  they change.
+source: https://github.com/FIXTradingCommunity/fixp-specification/tree/v1.0-STANDARD/v1-0-STANDARD
+see_also:
+- https://lmodel.github.io/fixp
+- https://github.com/FIXTradingCommunity/fixp-specification
+keywords:
+- FIX
+- FIXP
+- session layer
+- trading
+id: https://w3id.org/lmodel/fixp
+version: '1.0'
+imports:
+- linkml:types
+- ./fixp_core
+- ./fixp_messages
+- ./fixp_exchange
+- ./fixp_engagement
+license: Apache-2.0
+prefixes:
+  fixp:
+    prefix_prefix: fixp
+    prefix_reference: https://w3id.org/lmodel/fixp/
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+  schema:
+    prefix_prefix: schema
+    prefix_reference: http://schema.org/
+  fix_sbe:
+    prefix_prefix: fix_sbe
+    prefix_reference: https://w3id.org/lmodel/fix-sbe/
+  fix_orchestra:
+    prefix_prefix: fix_orchestra
+    prefix_reference: https://w3id.org/lmodel/fix-orchestra/
+default_prefix: fixp
+default_range: string
+subsets:
+  fixp_initialization:
+    name: fixp_initialization
+    definition_uri: https://w3id.org/lmodel/fixp/FixpInitialization
+    description: Messages that create a session or announce a flow before any binding.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+  fixp_binding:
+    name: fixp_binding
+    definition_uri: https://w3id.org/lmodel/fixp/FixpBinding
+    description: Messages that bind a session to a transport.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+  fixp_transferring:
+    name: fixp_transferring
+    definition_uri: https://w3id.org/lmodel/fixp/FixpTransferring
+    description: Messages sent while application messages flow.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+  fixp_unbinding:
+    name: fixp_unbinding
+    definition_uri: https://w3id.org/lmodel/fixp/FixpUnbinding
+    description: The message that releases a session from its transport.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+  fixp_finalizing:
+    name: fixp_finalizing
+    definition_uri: https://w3id.org/lmodel/fixp/FixpFinalizing
+    description: Messages that close a flow for good.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+types:
+  string:
+    name: string
+    definition_uri: https://w3id.org/linkml/String
+    description: A character string
+    notes:
+    - In RDF serializations, a slot with range of string is treated as a literal or
+      type xsd:string. If you are authoring schemas in LinkML YAML, the type is referenced
+      with the lower case "string".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Text
+    base: str
+    uri: xsd:string
+  integer:
+    name: integer
+    definition_uri: https://w3id.org/linkml/Integer
+    description: An integer
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "integer".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Integer
+    base: int
+    uri: xsd:integer
+  boolean:
+    name: boolean
+    definition_uri: https://w3id.org/linkml/Boolean
+    description: A binary (true or false) value
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "boolean".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Boolean
+    base: Bool
+    uri: xsd:boolean
+    repr: bool
+  float:
+    name: float
+    definition_uri: https://w3id.org/linkml/Float
+    description: A real number that conforms to the xsd:float specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "float".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:float
+  double:
+    name: double
+    definition_uri: https://w3id.org/linkml/Double
+    description: A real number that conforms to the xsd:double specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "double".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    close_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:double
+  decimal:
+    name: decimal
+    definition_uri: https://w3id.org/linkml/Decimal
+    description: A real number with arbitrary precision that conforms to the xsd:decimal
+      specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "decimal".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    broad_mappings:
+    - schema:Number
+    base: Decimal
+    uri: xsd:decimal
+  time:
+    name: time
+    definition_uri: https://w3id.org/linkml/Time
+    description: A time object represents a (local) time of day, independent of any
+      particular day
+    notes:
+    - URI is dateTime because OWL reasoners do not work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "time".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Time
+    base: XSDTime
+    uri: xsd:time
+    repr: str
+  date:
+    name: date
+    definition_uri: https://w3id.org/linkml/Date
+    description: a date (year, month and day) in an idealized calendar
+    notes:
+    - URI is dateTime because OWL reasoners don't work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Date
+    base: XSDDate
+    uri: xsd:date
+    repr: str
+  datetime:
+    name: datetime
+    definition_uri: https://w3id.org/linkml/Datetime
+    description: The combination of a date and time
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "datetime".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:DateTime
+    base: XSDDateTime
+    uri: xsd:dateTime
+    repr: str
+  date_or_datetime:
+    name: date_or_datetime
+    definition_uri: https://w3id.org/linkml/DateOrDatetime
+    description: Either a date or a datetime
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date_or_datetime".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: linkml:DateOrDatetime
+    repr: str
+  uriorcurie:
+    name: uriorcurie
+    definition_uri: https://w3id.org/linkml/Uriorcurie
+    description: a URI or a CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uriorcurie".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: URIorCURIE
+    uri: xsd:anyURI
+    repr: str
+  curie:
+    name: curie
+    definition_uri: https://w3id.org/linkml/Curie
+    conforms_to: https://www.w3.org/TR/curie/
+    description: a compact URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "curie".
+    comments:
+    - in RDF serializations this MUST be expanded to a URI
+    - in non-RDF serializations MAY be serialized as the compact representation
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: Curie
+    uri: xsd:string
+    repr: str
+  uri:
+    name: uri
+    definition_uri: https://w3id.org/linkml/Uri
+    conforms_to: https://www.ietf.org/rfc/rfc3987.txt
+    description: a complete URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uri".
+    comments:
+    - in RDF serializations a slot with range of uri is treated as a literal or type
+      xsd:anyURI unless it is an identifier or a reference to an identifier, in which
+      case it is translated directly to a node
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    close_mappings:
+    - schema:URL
+    base: URI
+    uri: xsd:anyURI
+    repr: str
+  ncname:
+    name: ncname
+    definition_uri: https://w3id.org/linkml/Ncname
+    description: Prefix part of CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "ncname".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: NCName
+    uri: xsd:string
+    repr: str
+  objectidentifier:
+    name: objectidentifier
+    definition_uri: https://w3id.org/linkml/Objectidentifier
+    description: A URI or CURIE that represents an object in the model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "objectidentifier".
+    comments:
+    - Used for inheritance and type checking
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: ElementIdentifier
+    uri: shex:iri
+    repr: str
+  nodeidentifier:
+    name: nodeidentifier
+    definition_uri: https://w3id.org/linkml/Nodeidentifier
+    description: A URI, CURIE or BNODE that represents a node in a model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "nodeidentifier".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: NodeIdentifier
+    uri: shex:nonLiteral
+    repr: str
+  jsonpointer:
+    name: jsonpointer
+    definition_uri: https://w3id.org/linkml/Jsonpointer
+    conforms_to: https://datatracker.ietf.org/doc/html/rfc6901
+    description: A string encoding a JSON Pointer. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to a valid object within the current
+      instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpointer".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  jsonpath:
+    name: jsonpath
+    definition_uri: https://w3id.org/linkml/Jsonpath
+    conforms_to: https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html
+    description: A string encoding a JSON Path. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to zero or more valid objects within
+      the current instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpath".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  sparqlpath:
+    name: sparqlpath
+    definition_uri: https://w3id.org/linkml/Sparqlpath
+    conforms_to: https://www.w3.org/TR/sparql11-query/#propertypaths
+    description: A string encoding a SPARQL Property Path. The value of the string
+      MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects
+      within the current instance document when encoded as RDF.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "sparqlpath".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  fixp_u8:
+    name: fixp_u8
+    definition_uri: https://w3id.org/lmodel/fixp/FixpU8
+    description: A whole number from 0 to 255, held in eight unsigned bits.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    typeof: integer
+    base: int
+    uri: xsd:integer
+    minimum_value: 0
+    maximum_value: 255
+  fixp_u16:
+    name: fixp_u16
+    definition_uri: https://w3id.org/lmodel/fixp/FixpU16
+    description: A whole number from 0 to 65,535, held in 16 unsigned bits.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    typeof: integer
+    base: int
+    uri: xsd:integer
+    minimum_value: 0
+    maximum_value: 65535
+  fixp_u32:
+    name: fixp_u32
+    definition_uri: https://w3id.org/lmodel/fixp/FixpU32
+    annotations:
+      sbe_type:
+        tag: sbe_type
+        value: cardinal
+      sbe_primitive_type:
+        tag: sbe_primitive_type
+        value: uint32
+    description: A whole number from 0 to 4,294,967,295, held in 32 unsigned bits.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    typeof: integer
+    base: int
+    uri: xsd:integer
+    minimum_value: 0
+    maximum_value: 4294967295
+  fixp_u64:
+    name: fixp_u64
+    definition_uri: https://w3id.org/lmodel/fixp/FixpU64
+    annotations:
+      sbe_type:
+        tag: sbe_type
+        value: ordinal
+      sbe_primitive_type:
+        tag: sbe_primitive_type
+        value: uint64
+    description: A whole number from 0 to 18,446,744,073,709,551,615, held in 64 unsigned
+      bits.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    typeof: integer
+    base: int
+    uri: xsd:integer
+    minimum_value: 0
+    maximum_value: 18446744073709551615
+  fixp_uuid:
+    name: fixp_uuid
+    definition_uri: https://w3id.org/lmodel/fixp/FixpUuid
+    annotations:
+      sbe_type:
+        tag: sbe_type
+        value: UUID
+      sbe_primitive_type:
+        tag: sbe_primitive_type
+        value: uint8
+    description: A random UUID of RFC 4122's version 4, written as 32 hexadecimal
+      digits in five groups joined by hyphens.
+    comments:
+    - On the wire it is 16 octets. The pattern checks the version digit and the variant
+      bits that RFC 4122 sets for a random UUID.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    see_also:
+    - https://www.rfc-editor.org/rfc/rfc4122
+    typeof: string
+    base: str
+    uri: xsd:string
+    pattern: ^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$
+  fixp_nanotime:
+    name: fixp_nanotime
+    definition_uri: https://w3id.org/lmodel/fixp/FixpNanotime
+    annotations:
+      sbe_type:
+        tag: sbe_type
+        value: nanotime
+      sbe_primitive_type:
+        tag: sbe_primitive_type
+        value: uint64
+    description: A moment, counted in nanoseconds since the Unix epoch and held in
+      64 unsigned bits.
+    comments:
+    - The datatype table names no epoch; the usage examples in the specification's
+      appendix A use the Unix epoch.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    typeof: integer
+    base: int
+    uri: xsd:integer
+    unit:
+      ucum_code: ns
+    minimum_value: 0
+    maximum_value: 18446744073709551615
+  fixp_delta_millisecs:
+    name: fixp_delta_millisecs
+    definition_uri: https://w3id.org/lmodel/fixp/FixpDeltaMillisecs
+    annotations:
+      sbe_type:
+        tag: sbe_type
+        value: DeltaMillisecs
+      sbe_primitive_type:
+        tag: sbe_primitive_type
+        value: uint32
+    description: A length of time in whole milliseconds, held in 32 unsigned bits.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    typeof: integer
+    base: int
+    uri: xsd:integer
+    unit:
+      ucum_code: ms
+    minimum_value: 0
+    maximum_value: 4294967295
+  fixp_object:
+    name: fixp_object
+    definition_uri: https://w3id.org/lmodel/fixp/FixpObject
+    annotations:
+      sbe_type:
+        tag: sbe_type
+        value: Object
+    description: Octets that FIXP passes through without reading them, written here
+      in base64.
+    comments:
+    - FIXP leaves the wire form to the encoding. Base64 (RFC 4648, section 4) is this
+      schema's choice for writing the octets in YAML and JSON.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    typeof: string
+    base: str
+    uri: xsd:base64Binary
+    pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+  fixp_string:
+    name: fixp_string
+    definition_uri: https://w3id.org/lmodel/fixp/FixpString
+    annotations:
+      sbe_type:
+        tag: sbe_type
+        value: CharacterString
+    description: Text, in UTF-8.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    typeof: string
+    base: str
+    uri: xsd:string
+enums:
+  FixpFlowType:
+    name: FixpFlowType
+    definition_uri: https://w3id.org/lmodel/fixp/FixpFlowType
+    annotations:
+      sbe_name:
+        tag: sbe_name
+        value: FlowType
+      sbe_encoding_type:
+        tag: sbe_encoding_type
+        value: uint8
+    description: How surely a flow is delivered. A flow is what one side of a session
+      sends the other, leaving out session messages.
+    comments:
+    - The values are listed from the strongest guarantee to none.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    permissible_values:
+      Recoverable:
+        text: Recoverable
+        description: Every message arrives once and in order; the receiver asks for
+          any gap to be sent again.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '0'
+      Idempotent:
+        text: Idempotent
+        description: No message takes effect twice; the sender hears of a gap and
+          its application decides what to resend.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '1'
+      Unsequenced:
+        text: Unsequenced
+        description: Messages carry no sequence number, and none is ever resent.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '2'
+      None:
+        text: None
+        description: This side sends no application messages at all.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '3'
+  FixpMulticastFlowType:
+    name: FixpMulticastFlowType
+    definition_uri: https://w3id.org/lmodel/fixp/FixpMulticastFlowType
+    annotations:
+      repository_code_set:
+        tag: repository_code_set
+        value: FlowCodeSet
+    description: The delivery guarantee a multicast topic announces for its flow.
+    comments:
+    - Section 5 and the repository file allow these two values. Section 3 allows a
+      multicast Idempotent alone, and the SBE schema reuses the four-value FlowType;
+      tests/upstream_departures.yaml records both.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    permissible_values:
+      Recoverable:
+        text: Recoverable
+        description: Sequenced; a listener gets a lost message back over a separate
+          unicast session.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '0'
+      Idempotent:
+        text: Idempotent
+        description: Sequenced, so a listener can see a loss, but nothing lost comes
+          back.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '1'
+  FixpNegotiationRejectCode:
+    name: FixpNegotiationRejectCode
+    definition_uri: https://w3id.org/lmodel/fixp/FixpNegotiationRejectCode
+    annotations:
+      sbe_name:
+        tag: sbe_name
+        value: NegotiationRejectCode
+      sbe_encoding_type:
+        tag: sbe_encoding_type
+        value: uint8
+    description: Why a server refused to create a session.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    permissible_values:
+      Credentials:
+        text: Credentials
+        description: The server could not identify the client, or would not let it
+          in.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '0'
+      FlowTypeNotSupported:
+        text: FlowTypeNotSupported
+        description: The server does not offer the flow type the client asked to send.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '1'
+      DuplicateId:
+        text: DuplicateId
+        description: The client chose a session identifier that is not new.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '2'
+      Unspecified:
+        text: Unspecified
+        description: Some reason the other values do not name.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '3'
+  FixpEstablishmentRejectCode:
+    name: FixpEstablishmentRejectCode
+    definition_uri: https://w3id.org/lmodel/fixp/FixpEstablishmentRejectCode
+    annotations:
+      sbe_name:
+        tag: sbe_name
+        value: EstablishmentRejectCode
+      sbe_encoding_type:
+        tag: sbe_encoding_type
+        value: uint8
+    description: Why a server would not bind the session to this transport.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    permissible_values:
+      Unnegotiated:
+        text: Unnegotiated
+        description: The session was never negotiated, or it has been finalized and
+          needs a new negotiation.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '0'
+      AlreadyEstablished:
+        text: AlreadyEstablished
+        description: The server had already acknowledged a binding, so this request
+          repeats it.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '1'
+      SessionBlocked:
+        text: SessionBlocked
+        description: The client may not use this session.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '2'
+      KeepaliveInterval:
+        text: KeepaliveInterval
+        description: The client's keep-alive interval is outside what the server accepts.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '3'
+      Credentials:
+        text: Credentials
+        description: The server could not identify the client, or would not let it
+          in.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '4'
+      Unspecified:
+        text: Unspecified
+        description: Some reason the other values do not name.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '5'
+  FixpRetransmitRejectCode:
+    name: FixpRetransmitRejectCode
+    definition_uri: https://w3id.org/lmodel/fixp/FixpRetransmitRejectCode
+    annotations:
+      sbe_name:
+        tag: sbe_name
+        value: RetransmitRejectCode
+      sbe_encoding_type:
+        tag: sbe_encoding_type
+        value: uint8
+    description: Why a party will not resend the messages its peer asked for.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    permissible_values:
+      OutOfRange:
+        text: OutOfRange
+        description: The range asked for runs past the sequence numbers sent so far.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '0'
+      InvalidSession:
+        text: InvalidSession
+        description: The session is unknown, or the one asking may not read it.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '1'
+      RequestLimitExceeded:
+        text: RequestLimitExceeded
+        description: The request asks for more messages than the sender resends at
+          once.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '2'
+  FixpTerminationCode:
+    name: FixpTerminationCode
+    definition_uri: https://w3id.org/lmodel/fixp/FixpTerminationCode
+    annotations:
+      sbe_name:
+        tag: sbe_name
+        value: TerminationCode
+      sbe_encoding_type:
+        tag: sbe_encoding_type
+        value: uint8
+    description: Why a party releases a session from its transport.
+    comments:
+    - The specification lists these values without saying what each one means, apart
+      from ReRequestInProgress, so the descriptions read their names.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    permissible_values:
+      Finished:
+        text: Finished
+        description: An ordinary release, with no error.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '0'
+      UnspecifiedError:
+        text: UnspecifiedError
+        description: An error that the other values do not name.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '1'
+      ReRequestOutOfBounds:
+        text: ReRequestOutOfBounds
+        description: The peer asked again for messages outside the range sent.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '2'
+      ReRequestInProgress:
+        text: ReRequestInProgress
+        description: The peer asked again for messages while its earlier request was
+          unanswered.
+        annotations:
+          sbe_value:
+            tag: sbe_value
+            value: '3'
+  FixpSessionKind:
+    name: FixpSessionKind
+    definition_uri: https://w3id.org/lmodel/fixp/FixpSessionKind
+    description: The two forms of FIXP session.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    permissible_values:
+      point_to_point:
+        text: point_to_point
+        description: A client and a server over a transport that carries messages
+          both ways, with one flow each way.
+        annotations:
+          fixp_section:
+            tag: fixp_section
+            value: '4'
+      multicast:
+        text: multicast
+        description: One publisher, one flow and many listeners, on a transport that
+          only carries messages outward.
+        annotations:
+          fixp_section:
+            tag: fixp_section
+            value: '5'
+  FixpParty:
+    name: FixpParty
+    definition_uri: https://w3id.org/lmodel/fixp/FixpParty
+    description: The side that sends a step.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    permissible_values:
+      client:
+        text: client
+        description: The party that opens a session with a server.
+      server:
+        text: server
+        description: The party that accepts the client's session.
+      publisher:
+        text: publisher
+        description: The only party that sends in a multicast.
+slots:
+  id:
+    name: id
+    definition_uri: https://w3id.org/lmodel/fixp/id
+    description: The identifier of an exchange or a rules-of-engagement record.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    slot_uri: fixp:id
+    identifier: true
+    owner: FixpRulesOfEngagement
+    domain_of:
+    - FixpExchange
+    - FixpRulesOfEngagement
+    range: uriorcurie
+    required: true
+  description:
+    name: description
+    definition_uri: https://w3id.org/lmodel/fixp/description
+    description: Free text about a record, for the people who read it.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    mappings:
+    - schema:description
+    slot_uri: schema:description
+    owner: FixpRulesOfEngagement
+    domain_of:
+    - FixpExchange
+    - FixpRulesOfEngagement
+    range: string
+  message_kind:
+    name: message_kind
+    definition_uri: https://w3id.org/lmodel/fixp/message_kind
+    description: The class of this message, such as FixpNegotiate. It stands for FIXP's
+      MessageType, which every message carries.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - MessageType
+    slot_uri: fixp:message_kind
+    designates_type: true
+    owner: FixpMessage
+    domain_of:
+    - FixpMessage
+    range: string
+    required: true
+  session_id:
+    name: session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    slot_uri: fixp:session_id
+    owner: FixpFinishedReceiving
+    domain_of:
+    - FixpNegotiate
+    - FixpNegotiationResponse
+    - FixpNegotiationReject
+    - FixpTopic
+    - FixpEstablish
+    - FixpEstablishmentAck
+    - FixpEstablishmentReject
+    - FixpContext
+    - FixpRetransmitRequest
+    - FixpRetransmission
+    - FixpRetransmitReject
+    - FixpTerminate
+    - FixpFinishedSending
+    - FixpFinishedReceiving
+    range: fixp_uuid
+  request_time:
+    name: request_time
+    definition_uri: https://w3id.org/lmodel/fixp/request_time
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '2'
+      repository_field_id:
+        tag: repository_field_id
+        value: '2'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: When the sender made this request. The answer repeats it, to show
+      what it answers.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Timestamp
+    slot_uri: fixp:request_time
+    owner: FixpRetransmitRequest
+    domain_of:
+    - FixpNegotiate
+    - FixpEstablish
+    - FixpRetransmitRequest
+    range: fixp_nanotime
+  client_flow:
+    name: client_flow
+    definition_uri: https://w3id.org/lmodel/fixp/client_flow
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '3'
+      repository_field_id:
+        tag: repository_field_id
+        value: '3'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The flow type of the application messages the client will send.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - ClientFlow
+    slot_uri: fixp:client_flow
+    owner: FixpNegotiate
+    domain_of:
+    - FixpNegotiate
+    range: FixpFlowType
+  credentials:
+    name: credentials
+    definition_uri: https://w3id.org/lmodel/fixp/credentials
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '4'
+      repository_field_id:
+        tag: repository_field_id
+        value: '4'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: Data that identifies the sender, in a form the two parties agree
+      on.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Credentials
+    slot_uri: fixp:credentials
+    owner: FixpEstablish
+    domain_of:
+    - FixpNegotiate
+    - FixpNegotiationResponse
+    - FixpEstablish
+    range: fixp_object
+  request_timestamp:
+    name: request_timestamp
+    definition_uri: https://w3id.org/lmodel/fixp/request_timestamp
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '5'
+      repository_field_id:
+        tag: repository_field_id
+        value: '5'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The request_time of the request this message answers.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - RequestTimestamp
+    slot_uri: fixp:request_timestamp
+    owner: FixpRetransmitReject
+    domain_of:
+    - FixpNegotiationResponse
+    - FixpNegotiationReject
+    - FixpEstablishmentAck
+    - FixpEstablishmentReject
+    - FixpRetransmission
+    - FixpRetransmitReject
+    range: fixp_nanotime
+  server_flow:
+    name: server_flow
+    definition_uri: https://w3id.org/lmodel/fixp/server_flow
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '6'
+      repository_field_id:
+        tag: repository_field_id
+        value: '6'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The flow type of the application messages the server will send.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - ServerFlow
+    slot_uri: fixp:server_flow
+    owner: FixpNegotiationResponse
+    domain_of:
+    - FixpNegotiationResponse
+    range: FixpFlowType
+  negotiation_reject_code:
+    name: negotiation_reject_code
+    definition_uri: https://w3id.org/lmodel/fixp/negotiation_reject_code
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '7'
+      repository_field_id:
+        tag: repository_field_id
+        value: '7'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Why the server refused to create the session.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Code
+    - NegotiationRejectCode
+    slot_uri: fixp:negotiation_reject_code
+    owner: FixpNegotiationReject
+    domain_of:
+    - FixpNegotiationReject
+    range: FixpNegotiationRejectCode
+  reason_text:
+    name: reason_text
+    definition_uri: https://w3id.org/lmodel/fixp/reason_text
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '8'
+      repository_field_id:
+        tag: repository_field_id
+        value: '8'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: Free text that says more about the code beside it.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Reason
+    slot_uri: fixp:reason_text
+    owner: FixpTerminate
+    domain_of:
+    - FixpNegotiationReject
+    - FixpEstablishmentReject
+    - FixpRetransmitReject
+    - FixpTerminate
+    range: fixp_string
+  keepalive_interval:
+    name: keepalive_interval
+    definition_uri: https://w3id.org/lmodel/fixp/keepalive_interval
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '9'
+      repository_field_id:
+        tag: repository_field_id
+        value: '9'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The most milliseconds the sender lets pass without sending anything
+      before it sends a heartbeat.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - KeepaliveInterval
+    slot_uri: fixp:keepalive_interval
+    owner: FixpEstablishmentAck
+    domain_of:
+    - FixpTopic
+    - FixpEstablish
+    - FixpEstablishmentAck
+    range: fixp_delta_millisecs
+  topic_classification:
+    name: topic_classification
+    definition_uri: https://w3id.org/lmodel/fixp/topic_classification
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '10'
+      repository_field_id:
+        tag: repository_field_id
+        value: '10'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: The lasting subject of a topic's messages, such as a product type
+      or a market symbol.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Classification
+    slot_uri: fixp:topic_classification
+    owner: FixpTopic
+    domain_of:
+    - FixpTopic
+    range: fixp_object
+  next_seq_no:
+    name: next_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/next_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '11'
+      repository_field_id:
+        tag: repository_field_id
+        value: '11'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The number the sender's next application message will carry.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - NextSeqNo
+    slot_uri: fixp:next_seq_no
+    owner: FixpRetransmission
+    domain_of:
+    - FixpEstablish
+    - FixpEstablishmentAck
+    - FixpSequence
+    - FixpContext
+    - FixpRetransmission
+    range: fixp_u64
+  establishment_reject_code:
+    name: establishment_reject_code
+    definition_uri: https://w3id.org/lmodel/fixp/establishment_reject_code
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '12'
+      repository_field_id:
+        tag: repository_field_id
+        value: '12'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Why the server refused to bind the session.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Code
+    - EstablishmentRejectCode
+    slot_uri: fixp:establishment_reject_code
+    owner: FixpEstablishmentReject
+    domain_of:
+    - FixpEstablishmentReject
+    range: FixpEstablishmentRejectCode
+  from_seq_no:
+    name: from_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/from_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '13'
+      repository_field_id:
+        tag: repository_field_id
+        value: '13'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Where a run of messages starts, by sequence number.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - FromSeqNo
+    slot_uri: fixp:from_seq_no
+    owner: FixpNotApplied
+    domain_of:
+    - FixpRetransmitRequest
+    - FixpApplied
+    - FixpNotApplied
+    range: fixp_u64
+  message_count:
+    name: message_count
+    definition_uri: https://w3id.org/lmodel/fixp/message_count
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '14'
+      repository_field_id:
+        tag: repository_field_id
+        value: '14'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: How many messages a range holds.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Count
+    slot_uri: fixp:message_count
+    owner: FixpNotApplied
+    domain_of:
+    - FixpRetransmitRequest
+    - FixpRetransmission
+    - FixpApplied
+    - FixpNotApplied
+    range: fixp_u32
+  retransmit_reject_code:
+    name: retransmit_reject_code
+    definition_uri: https://w3id.org/lmodel/fixp/retransmit_reject_code
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '15'
+      repository_field_id:
+        tag: repository_field_id
+        value: '15'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Why the sender will not resend the range.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Code
+    - RetransmitRejectCode
+    slot_uri: fixp:retransmit_reject_code
+    owner: FixpRetransmitReject
+    domain_of:
+    - FixpRetransmitReject
+    range: FixpRetransmitRejectCode
+  termination_code:
+    name: termination_code
+    definition_uri: https://w3id.org/lmodel/fixp/termination_code
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '16'
+      repository_field_id:
+        tag: repository_field_id
+        value: '16'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Why the party releases the session from the transport.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Code
+    - TerminationCode
+    slot_uri: fixp:termination_code
+    owner: FixpTerminate
+    domain_of:
+    - FixpTerminate
+    range: FixpTerminationCode
+  last_seq_no:
+    name: last_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/last_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '17'
+      repository_field_id:
+        tag: repository_field_id
+        value: '17'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The number carried by the flow's final application message.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - LastSeqNo
+    slot_uri: fixp:last_seq_no
+    owner: FixpFinishedSending
+    domain_of:
+    - FixpFinishedSending
+    range: fixp_u64
+  flow:
+    name: flow
+    definition_uri: https://w3id.org/lmodel/fixp/flow
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '8'
+      repository_field_id:
+        tag: repository_field_id
+        value: '18'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The flow type of a multicast topic's messages.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Flow
+    slot_uri: fixp:flow
+    owner: FixpTopic
+    domain_of:
+    - FixpTopic
+    range: FixpMulticastFlowType
+  sofh_encoding_type:
+    name: sofh_encoding_type
+    definition_uri: https://w3id.org/lmodel/fixp/sofh_encoding_type
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '18'
+      repository_field_id:
+        tag: repository_field_id
+        value: '19'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The code that the Simple Open Framing Header registers for the encoding
+      a template is written for.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - EncodingType
+    slot_uri: fixp:sofh_encoding_type
+    owner: FixpMessageTemplate
+    domain_of:
+    - FixpMessageTemplate
+    range: fixp_u32
+  effective_time:
+    name: effective_time
+    definition_uri: https://w3id.org/lmodel/fixp/effective_time
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '19'
+      repository_field_id:
+        tag: repository_field_id
+        value: '20'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: When the template comes into force. Without it, the template applies
+      at once.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - EffectiveTime
+    slot_uri: fixp:effective_time
+    owner: FixpMessageTemplate
+    domain_of:
+    - FixpMessageTemplate
+    range: fixp_nanotime
+  template_version:
+    name: template_version
+    definition_uri: https://w3id.org/lmodel/fixp/template_version
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '20'
+      repository_field_id:
+        tag: repository_field_id
+        value: '21'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: The template's version and format, for an encoding whose templates
+      do not state them.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Version
+    slot_uri: fixp:template_version
+    owner: FixpMessageTemplate
+    domain_of:
+    - FixpMessageTemplate
+    range: fixp_object
+  template:
+    name: template
+    definition_uri: https://w3id.org/lmodel/fixp/template
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '21'
+      repository_field_id:
+        tag: repository_field_id
+        value: '22'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: The template itself, as octets.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Template
+    slot_uri: fixp:template
+    owner: FixpMessageTemplate
+    domain_of:
+    - FixpMessageTemplate
+    range: fixp_object
+  fixpExchange__session_kind:
+    name: fixpExchange__session_kind
+    description: Which of the two forms the session takes.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    slot_uri: fixp:session_kind
+    alias: session_kind
+    owner: FixpExchange
+    domain_of:
+    - FixpExchange
+    range: FixpSessionKind
+    required: true
+  fixpExchange__multiplexed:
+    name: fixpExchange__multiplexed
+    description: Whether the transport carries other sessions too, so that Context
+      takes the place of Sequence.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    slot_uri: fixp:multiplexed
+    alias: multiplexed
+    owner: FixpExchange
+    domain_of:
+    - FixpExchange
+    range: boolean
+  fixpExchange__exchange_steps:
+    name: fixpExchange__exchange_steps
+    description: Each step of the exchange, in order.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    slot_uri: fixp:exchange_steps
+    alias: exchange_steps
+    owner: FixpExchange
+    domain_of:
+    - FixpExchange
+    range: FixpExchangeStep
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    minimum_cardinality: 1
+  fixpExchangeStep__sent_by:
+    name: fixpExchangeStep__sent_by
+    description: The side that sent this step.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    slot_uri: fixp:sent_by
+    alias: sent_by
+    owner: FixpExchangeStep
+    domain_of:
+    - FixpExchangeStep
+    range: FixpParty
+    required: true
+  fixpExchangeStep__fixp_message:
+    name: fixpExchangeStep__fixp_message
+    description: The FIXP message sent.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    slot_uri: fixp:fixp_message
+    alias: fixp_message
+    owner: FixpExchangeStep
+    domain_of:
+    - FixpExchangeStep
+    range: FixpMessage
+    inlined: true
+    inlined_as_list: true
+  fixpExchangeStep__application_message_count:
+    name: fixpExchangeStep__application_message_count
+    description: How many application messages went out one after another. On a sequenced
+      flow each takes the next sequence number.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    slot_uri: fixp:application_message_count
+    alias: application_message_count
+    owner: FixpExchangeStep
+    domain_of:
+    - FixpExchangeStep
+    range: fixp_u32
+    minimum_value: 1
+  fixpRulesOfEngagement__client_stack:
+    name: fixpRulesOfEngagement__client_stack
+    description: What the client side uses.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:client_stack
+    alias: client_stack
+    owner: FixpRulesOfEngagement
+    domain_of:
+    - FixpRulesOfEngagement
+    range: FixpStackProfile
+    required: true
+    inlined: true
+    inlined_as_list: true
+  fixpRulesOfEngagement__server_stack:
+    name: fixpRulesOfEngagement__server_stack
+    description: What the server side uses.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:server_stack
+    alias: server_stack
+    owner: FixpRulesOfEngagement
+    domain_of:
+    - FixpRulesOfEngagement
+    range: FixpStackProfile
+    required: true
+    inlined: true
+    inlined_as_list: true
+  fixpStackProfile__application_recovery:
+    name: fixpStackProfile__application_recovery
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: application
+    description: Whether this side's applications recover lost messages themselves.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:application_recovery
+    alias: application_recovery
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: boolean
+  fixpStackProfile__application_fix_version:
+    name: fixpStackProfile__application_fix_version
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: application
+    description: The FIX version of the application messages, such as FIX.Latest.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:application_fix_version
+    alias: application_fix_version
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+  fixpStackProfile__service_pack:
+    name: fixpStackProfile__service_pack
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: application
+    description: The FIX service pack, where the version has them.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:service_pack
+    alias: service_pack
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+  fixpStackProfile__extension_packs:
+    name: fixpStackProfile__extension_packs
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: application
+    description: The FIX extension packs in use.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:extension_packs
+    alias: extension_packs
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+    multivalued: true
+  fixpStackProfile__message_encoding:
+    name: fixpStackProfile__message_encoding
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: presentation
+    description: How messages are encoded, such as Simple Binary Encoding.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:message_encoding
+    alias: message_encoding
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+  fixpStackProfile__encoding_version:
+    name: fixpStackProfile__encoding_version
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: presentation
+    description: The version of that encoding.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:encoding_version
+    alias: encoding_version
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+  fixpStackProfile__message_schemas:
+    name: fixpStackProfile__message_schemas
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: presentation
+    description: The message schemas or templates the encoding uses.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:message_schemas
+    alias: message_schemas
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+    multivalued: true
+  fixpStackProfile__framing:
+    name: fixpStackProfile__framing
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: presentation
+    description: What marks where one message ends and the next begins, such as the
+      Simple Open Framing Header.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:framing
+    alias: framing
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+  fixpStackProfile__supported_flow_types:
+    name: fixpStackProfile__supported_flow_types
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: session
+    description: The flow types this side accepts or offers.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:supported_flow_types
+    alias: supported_flow_types
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: FixpFlowType
+    multivalued: true
+  fixpStackProfile__tls_version:
+    name: fixpStackProfile__tls_version
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: security
+    description: The TLS version that protects the transport.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:tls_version
+    alias: tls_version
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+  fixpStackProfile__authentication_methods:
+    name: fixpStackProfile__authentication_methods
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: security
+    description: How the parties prove who they are.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:authentication_methods
+    alias: authentication_methods
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+    multivalued: true
+  fixpStackProfile__cipher_suites:
+    name: fixpStackProfile__cipher_suites
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: security
+    description: The cipher suites allowed.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:cipher_suites
+    alias: cipher_suites
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+    multivalued: true
+  fixpStackProfile__transports:
+    name: fixpStackProfile__transports
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: transport
+    description: The transports this side can use, for example TCP, or UDP with multicast.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:transports
+    alias: transports
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+    multivalued: true
+  fixpStackProfile__network_protocols:
+    name: fixpStackProfile__network_protocols
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: transport
+    description: Any other network protocols in use.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:network_protocols
+    alias: network_protocols
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
+    multivalued: true
+  FixpNegotiate_session_id:
+    name: FixpNegotiate_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpNegotiate
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpNegotiate
+    domain_of:
+    - FixpNegotiate
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpNegotiate_request_time:
+    name: FixpNegotiate_request_time
+    definition_uri: https://w3id.org/lmodel/fixp/request_time
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '2'
+      repository_field_id:
+        tag: repository_field_id
+        value: '2'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: When the sender made this request. The answer repeats it, to show
+      what it answers.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Timestamp
+    is_a: request_time
+    domain: FixpNegotiate
+    slot_uri: fixp:request_time
+    alias: request_time
+    owner: FixpNegotiate
+    domain_of:
+    - FixpNegotiate
+    is_usage_slot: true
+    usage_slot_name: request_time
+    range: fixp_nanotime
+    required: true
+  FixpNegotiate_client_flow:
+    name: FixpNegotiate_client_flow
+    definition_uri: https://w3id.org/lmodel/fixp/client_flow
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '3'
+      repository_field_id:
+        tag: repository_field_id
+        value: '3'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The flow type of the application messages the client will send.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - ClientFlow
+    is_a: client_flow
+    domain: FixpNegotiate
+    slot_uri: fixp:client_flow
+    alias: client_flow
+    owner: FixpNegotiate
+    domain_of:
+    - FixpNegotiate
+    is_usage_slot: true
+    usage_slot_name: client_flow
+    range: FixpFlowType
+    required: true
+  FixpNegotiate_credentials:
+    name: FixpNegotiate_credentials
+    definition_uri: https://w3id.org/lmodel/fixp/credentials
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '4'
+      repository_field_id:
+        tag: repository_field_id
+        value: '4'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: Data that identifies the client, in a form the two parties agree
+      on.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Credentials
+    is_a: credentials
+    domain: FixpNegotiate
+    slot_uri: fixp:credentials
+    alias: credentials
+    owner: FixpNegotiate
+    domain_of:
+    - FixpNegotiate
+    is_usage_slot: true
+    usage_slot_name: credentials
+    range: fixp_object
+  FixpNegotiationResponse_session_id:
+    name: FixpNegotiationResponse_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpNegotiationResponse
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpNegotiationResponse
+    domain_of:
+    - FixpNegotiationResponse
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpNegotiationResponse_request_timestamp:
+    name: FixpNegotiationResponse_request_timestamp
+    definition_uri: https://w3id.org/lmodel/fixp/request_timestamp
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '5'
+      repository_field_id:
+        tag: repository_field_id
+        value: '5'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The request_time of the Negotiate this message accepts.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - RequestTimestamp
+    is_a: request_timestamp
+    domain: FixpNegotiationResponse
+    slot_uri: fixp:request_timestamp
+    alias: request_timestamp
+    owner: FixpNegotiationResponse
+    domain_of:
+    - FixpNegotiationResponse
+    is_usage_slot: true
+    usage_slot_name: request_timestamp
+    range: fixp_nanotime
+    required: true
+  FixpNegotiationResponse_server_flow:
+    name: FixpNegotiationResponse_server_flow
+    definition_uri: https://w3id.org/lmodel/fixp/server_flow
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '6'
+      repository_field_id:
+        tag: repository_field_id
+        value: '6'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The flow type of the application messages the server will send.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - ServerFlow
+    is_a: server_flow
+    domain: FixpNegotiationResponse
+    slot_uri: fixp:server_flow
+    alias: server_flow
+    owner: FixpNegotiationResponse
+    domain_of:
+    - FixpNegotiationResponse
+    is_usage_slot: true
+    usage_slot_name: server_flow
+    range: FixpFlowType
+    required: true
+  FixpNegotiationResponse_credentials:
+    name: FixpNegotiationResponse_credentials
+    definition_uri: https://w3id.org/lmodel/fixp/credentials
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '4'
+      repository_field_id:
+        tag: repository_field_id
+        value: '4'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: Data that identifies the server to the client, for mutual authentication.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Credentials
+    is_a: credentials
+    domain: FixpNegotiationResponse
+    slot_uri: fixp:credentials
+    alias: credentials
+    owner: FixpNegotiationResponse
+    domain_of:
+    - FixpNegotiationResponse
+    is_usage_slot: true
+    usage_slot_name: credentials
+    range: fixp_object
+  FixpNegotiationReject_session_id:
+    name: FixpNegotiationReject_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpNegotiationReject
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpNegotiationReject
+    domain_of:
+    - FixpNegotiationReject
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpNegotiationReject_request_timestamp:
+    name: FixpNegotiationReject_request_timestamp
+    definition_uri: https://w3id.org/lmodel/fixp/request_timestamp
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '5'
+      repository_field_id:
+        tag: repository_field_id
+        value: '5'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The request_time of the Negotiate this message refuses.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - RequestTimestamp
+    is_a: request_timestamp
+    domain: FixpNegotiationReject
+    slot_uri: fixp:request_timestamp
+    alias: request_timestamp
+    owner: FixpNegotiationReject
+    domain_of:
+    - FixpNegotiationReject
+    is_usage_slot: true
+    usage_slot_name: request_timestamp
+    range: fixp_nanotime
+    required: true
+  FixpNegotiationReject_negotiation_reject_code:
+    name: FixpNegotiationReject_negotiation_reject_code
+    definition_uri: https://w3id.org/lmodel/fixp/negotiation_reject_code
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '7'
+      repository_field_id:
+        tag: repository_field_id
+        value: '7'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Why the server refused to create the session.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Code
+    - NegotiationRejectCode
+    is_a: negotiation_reject_code
+    domain: FixpNegotiationReject
+    slot_uri: fixp:negotiation_reject_code
+    alias: negotiation_reject_code
+    owner: FixpNegotiationReject
+    domain_of:
+    - FixpNegotiationReject
+    is_usage_slot: true
+    usage_slot_name: negotiation_reject_code
+    range: FixpNegotiationRejectCode
+    required: true
+  FixpTopic_session_id:
+    name: FixpTopic_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpTopic
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpTopic
+    domain_of:
+    - FixpTopic
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpTopic_flow:
+    name: FixpTopic_flow
+    definition_uri: https://w3id.org/lmodel/fixp/flow
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '8'
+      repository_field_id:
+        tag: repository_field_id
+        value: '18'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The flow type of a multicast topic's messages.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Flow
+    is_a: flow
+    domain: FixpTopic
+    slot_uri: fixp:flow
+    alias: flow
+    owner: FixpTopic
+    domain_of:
+    - FixpTopic
+    is_usage_slot: true
+    usage_slot_name: flow
+    range: FixpMulticastFlowType
+    required: true
+  FixpTopic_keepalive_interval:
+    name: FixpTopic_keepalive_interval
+    definition_uri: https://w3id.org/lmodel/fixp/keepalive_interval
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '9'
+      repository_field_id:
+        tag: repository_field_id
+        value: '9'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The publisher's heartbeat interval, in milliseconds.
+    comments:
+    - The SBE schema and the repository file give Topic this field, as a required
+      one. Section 5's table leaves it out, so the schema accepts a Topic with or
+      without it.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - KeepaliveInterval
+    is_a: keepalive_interval
+    domain: FixpTopic
+    slot_uri: fixp:keepalive_interval
+    alias: keepalive_interval
+    owner: FixpTopic
+    domain_of:
+    - FixpTopic
+    is_usage_slot: true
+    usage_slot_name: keepalive_interval
+    range: fixp_delta_millisecs
+  FixpTopic_topic_classification:
+    name: FixpTopic_topic_classification
+    definition_uri: https://w3id.org/lmodel/fixp/topic_classification
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '10'
+      repository_field_id:
+        tag: repository_field_id
+        value: '10'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: The lasting subject of a topic's messages, such as a product type
+      or a market symbol.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Classification
+    is_a: topic_classification
+    domain: FixpTopic
+    slot_uri: fixp:topic_classification
+    alias: topic_classification
+    owner: FixpTopic
+    domain_of:
+    - FixpTopic
+    is_usage_slot: true
+    usage_slot_name: topic_classification
+    range: fixp_object
+    required: true
+  FixpEstablish_session_id:
+    name: FixpEstablish_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpEstablish
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpEstablish
+    domain_of:
+    - FixpEstablish
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpEstablish_request_time:
+    name: FixpEstablish_request_time
+    definition_uri: https://w3id.org/lmodel/fixp/request_time
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '2'
+      repository_field_id:
+        tag: repository_field_id
+        value: '2'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: When the sender made this request. The answer repeats it, to show
+      what it answers.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Timestamp
+    is_a: request_time
+    domain: FixpEstablish
+    slot_uri: fixp:request_time
+    alias: request_time
+    owner: FixpEstablish
+    domain_of:
+    - FixpEstablish
+    is_usage_slot: true
+    usage_slot_name: request_time
+    range: fixp_nanotime
+    required: true
+  FixpEstablish_keepalive_interval:
+    name: FixpEstablish_keepalive_interval
+    definition_uri: https://w3id.org/lmodel/fixp/keepalive_interval
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '9'
+      repository_field_id:
+        tag: repository_field_id
+        value: '9'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The longest the client stays silent, in milliseconds, before a heartbeat.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - KeepaliveInterval
+    is_a: keepalive_interval
+    domain: FixpEstablish
+    slot_uri: fixp:keepalive_interval
+    alias: keepalive_interval
+    owner: FixpEstablish
+    domain_of:
+    - FixpEstablish
+    is_usage_slot: true
+    usage_slot_name: keepalive_interval
+    range: fixp_delta_millisecs
+    required: true
+  FixpEstablish_next_seq_no:
+    name: FixpEstablish_next_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/next_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '11'
+      repository_field_id:
+        tag: repository_field_id
+        value: '11'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: When the client's recoverable flow is bound again, the number its
+      next application message will carry.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - NextSeqNo
+    is_a: next_seq_no
+    domain: FixpEstablish
+    slot_uri: fixp:next_seq_no
+    alias: next_seq_no
+    owner: FixpEstablish
+    domain_of:
+    - FixpEstablish
+    is_usage_slot: true
+    usage_slot_name: next_seq_no
+    range: fixp_u64
+  FixpEstablish_credentials:
+    name: FixpEstablish_credentials
+    definition_uri: https://w3id.org/lmodel/fixp/credentials
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '4'
+      repository_field_id:
+        tag: repository_field_id
+        value: '4'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: Data that identifies the client, in a form the two parties agree
+      on.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Credentials
+    is_a: credentials
+    domain: FixpEstablish
+    slot_uri: fixp:credentials
+    alias: credentials
+    owner: FixpEstablish
+    domain_of:
+    - FixpEstablish
+    is_usage_slot: true
+    usage_slot_name: credentials
+    range: fixp_object
+  FixpEstablishmentAck_session_id:
+    name: FixpEstablishmentAck_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpEstablishmentAck
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpEstablishmentAck
+    domain_of:
+    - FixpEstablishmentAck
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpEstablishmentAck_request_timestamp:
+    name: FixpEstablishmentAck_request_timestamp
+    definition_uri: https://w3id.org/lmodel/fixp/request_timestamp
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '5'
+      repository_field_id:
+        tag: repository_field_id
+        value: '5'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The request_time of the Establish this message accepts.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - RequestTimestamp
+    is_a: request_timestamp
+    domain: FixpEstablishmentAck
+    slot_uri: fixp:request_timestamp
+    alias: request_timestamp
+    owner: FixpEstablishmentAck
+    domain_of:
+    - FixpEstablishmentAck
+    is_usage_slot: true
+    usage_slot_name: request_timestamp
+    range: fixp_nanotime
+    required: true
+  FixpEstablishmentAck_keepalive_interval:
+    name: FixpEstablishmentAck_keepalive_interval
+    definition_uri: https://w3id.org/lmodel/fixp/keepalive_interval
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '9'
+      repository_field_id:
+        tag: repository_field_id
+        value: '9'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The longest the server stays silent, in milliseconds, before a heartbeat.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - KeepaliveInterval
+    is_a: keepalive_interval
+    domain: FixpEstablishmentAck
+    slot_uri: fixp:keepalive_interval
+    alias: keepalive_interval
+    owner: FixpEstablishmentAck
+    domain_of:
+    - FixpEstablishmentAck
+    is_usage_slot: true
+    usage_slot_name: keepalive_interval
+    range: fixp_delta_millisecs
+    required: true
+  FixpEstablishmentAck_next_seq_no:
+    name: FixpEstablishmentAck_next_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/next_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '11'
+      repository_field_id:
+        tag: repository_field_id
+        value: '11'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: If the server's flow is recoverable, the number its next application
+      message will carry, so the client can ask for what it missed.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - NextSeqNo
+    is_a: next_seq_no
+    domain: FixpEstablishmentAck
+    slot_uri: fixp:next_seq_no
+    alias: next_seq_no
+    owner: FixpEstablishmentAck
+    domain_of:
+    - FixpEstablishmentAck
+    is_usage_slot: true
+    usage_slot_name: next_seq_no
+    range: fixp_u64
+  FixpEstablishmentReject_session_id:
+    name: FixpEstablishmentReject_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpEstablishmentReject
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpEstablishmentReject
+    domain_of:
+    - FixpEstablishmentReject
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpEstablishmentReject_request_timestamp:
+    name: FixpEstablishmentReject_request_timestamp
+    definition_uri: https://w3id.org/lmodel/fixp/request_timestamp
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '5'
+      repository_field_id:
+        tag: repository_field_id
+        value: '5'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The request_time of the Establish this message refuses.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - RequestTimestamp
+    is_a: request_timestamp
+    domain: FixpEstablishmentReject
+    slot_uri: fixp:request_timestamp
+    alias: request_timestamp
+    owner: FixpEstablishmentReject
+    domain_of:
+    - FixpEstablishmentReject
+    is_usage_slot: true
+    usage_slot_name: request_timestamp
+    range: fixp_nanotime
+    required: true
+  FixpEstablishmentReject_establishment_reject_code:
+    name: FixpEstablishmentReject_establishment_reject_code
+    definition_uri: https://w3id.org/lmodel/fixp/establishment_reject_code
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '12'
+      repository_field_id:
+        tag: repository_field_id
+        value: '12'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Why the server refused to bind the session.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Code
+    - EstablishmentRejectCode
+    is_a: establishment_reject_code
+    domain: FixpEstablishmentReject
+    slot_uri: fixp:establishment_reject_code
+    alias: establishment_reject_code
+    owner: FixpEstablishmentReject
+    domain_of:
+    - FixpEstablishmentReject
+    is_usage_slot: true
+    usage_slot_name: establishment_reject_code
+    range: FixpEstablishmentRejectCode
+    required: true
+  FixpSequence_next_seq_no:
+    name: FixpSequence_next_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/next_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '11'
+      repository_field_id:
+        tag: repository_field_id
+        value: '11'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The number the sender's next application message will carry.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - NextSeqNo
+    is_a: next_seq_no
+    domain: FixpSequence
+    slot_uri: fixp:next_seq_no
+    alias: next_seq_no
+    owner: FixpSequence
+    domain_of:
+    - FixpSequence
+    is_usage_slot: true
+    usage_slot_name: next_seq_no
+    range: fixp_u64
+    required: true
+  FixpContext_session_id:
+    name: FixpContext_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpContext
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpContext
+    domain_of:
+    - FixpContext
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpContext_next_seq_no:
+    name: FixpContext_next_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/next_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '11'
+      repository_field_id:
+        tag: repository_field_id
+        value: '11'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The number the sender's next application message will carry.
+    comments:
+    - Section 3's table makes it optional, and both resource files make it required,
+      so the schema accepts a Context with or without it.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - NextSeqNo
+    is_a: next_seq_no
+    domain: FixpContext
+    slot_uri: fixp:next_seq_no
+    alias: next_seq_no
+    owner: FixpContext
+    domain_of:
+    - FixpContext
+    is_usage_slot: true
+    usage_slot_name: next_seq_no
+    range: fixp_u64
+  FixpRetransmitRequest_session_id:
+    name: FixpRetransmitRequest_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpRetransmitRequest
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpRetransmitRequest
+    domain_of:
+    - FixpRetransmitRequest
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpRetransmitRequest_request_time:
+    name: FixpRetransmitRequest_request_time
+    definition_uri: https://w3id.org/lmodel/fixp/request_time
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '2'
+      repository_field_id:
+        tag: repository_field_id
+        value: '2'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: When the request was made, which also tells this request apart from
+      others.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Timestamp
+    is_a: request_time
+    domain: FixpRetransmitRequest
+    slot_uri: fixp:request_time
+    alias: request_time
+    owner: FixpRetransmitRequest
+    domain_of:
+    - FixpRetransmitRequest
+    is_usage_slot: true
+    usage_slot_name: request_time
+    range: fixp_nanotime
+    required: true
+  FixpRetransmitRequest_from_seq_no:
+    name: FixpRetransmitRequest_from_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/from_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '13'
+      repository_field_id:
+        tag: repository_field_id
+        value: '13'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Where the requested run starts, by sequence number.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - FromSeqNo
+    is_a: from_seq_no
+    domain: FixpRetransmitRequest
+    slot_uri: fixp:from_seq_no
+    alias: from_seq_no
+    owner: FixpRetransmitRequest
+    domain_of:
+    - FixpRetransmitRequest
+    is_usage_slot: true
+    usage_slot_name: from_seq_no
+    range: fixp_u64
+    required: true
+  FixpRetransmitRequest_message_count:
+    name: FixpRetransmitRequest_message_count
+    definition_uri: https://w3id.org/lmodel/fixp/message_count
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '14'
+      repository_field_id:
+        tag: repository_field_id
+        value: '14'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: How many messages are asked for.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Count
+    is_a: message_count
+    domain: FixpRetransmitRequest
+    slot_uri: fixp:message_count
+    alias: message_count
+    owner: FixpRetransmitRequest
+    domain_of:
+    - FixpRetransmitRequest
+    is_usage_slot: true
+    usage_slot_name: message_count
+    range: fixp_u32
+    required: true
+  FixpRetransmission_session_id:
+    name: FixpRetransmission_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpRetransmission
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpRetransmission
+    domain_of:
+    - FixpRetransmission
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpRetransmission_request_timestamp:
+    name: FixpRetransmission_request_timestamp
+    definition_uri: https://w3id.org/lmodel/fixp/request_timestamp
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '5'
+      repository_field_id:
+        tag: repository_field_id
+        value: '5'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The request_time of the RetransmitRequest this batch answers.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - RequestTimestamp
+    is_a: request_timestamp
+    domain: FixpRetransmission
+    slot_uri: fixp:request_timestamp
+    alias: request_timestamp
+    owner: FixpRetransmission
+    domain_of:
+    - FixpRetransmission
+    is_usage_slot: true
+    usage_slot_name: request_timestamp
+    range: fixp_nanotime
+    required: true
+  FixpRetransmission_next_seq_no:
+    name: FixpRetransmission_next_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/next_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '11'
+      repository_field_id:
+        tag: repository_field_id
+        value: '11'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The number the batch's first message carries.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - NextSeqNo
+    is_a: next_seq_no
+    domain: FixpRetransmission
+    slot_uri: fixp:next_seq_no
+    alias: next_seq_no
+    owner: FixpRetransmission
+    domain_of:
+    - FixpRetransmission
+    is_usage_slot: true
+    usage_slot_name: next_seq_no
+    range: fixp_u64
+    required: true
+  FixpRetransmission_message_count:
+    name: FixpRetransmission_message_count
+    definition_uri: https://w3id.org/lmodel/fixp/message_count
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '14'
+      repository_field_id:
+        tag: repository_field_id
+        value: '14'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: How many resent messages the batch holds.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Count
+    is_a: message_count
+    domain: FixpRetransmission
+    slot_uri: fixp:message_count
+    alias: message_count
+    owner: FixpRetransmission
+    domain_of:
+    - FixpRetransmission
+    is_usage_slot: true
+    usage_slot_name: message_count
+    range: fixp_u32
+    required: true
+  FixpRetransmitReject_session_id:
+    name: FixpRetransmitReject_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpRetransmitReject
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpRetransmitReject
+    domain_of:
+    - FixpRetransmitReject
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpRetransmitReject_request_timestamp:
+    name: FixpRetransmitReject_request_timestamp
+    definition_uri: https://w3id.org/lmodel/fixp/request_timestamp
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '5'
+      repository_field_id:
+        tag: repository_field_id
+        value: '5'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The request_time of the RetransmitRequest this message refuses.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - RequestTimestamp
+    is_a: request_timestamp
+    domain: FixpRetransmitReject
+    slot_uri: fixp:request_timestamp
+    alias: request_timestamp
+    owner: FixpRetransmitReject
+    domain_of:
+    - FixpRetransmitReject
+    is_usage_slot: true
+    usage_slot_name: request_timestamp
+    range: fixp_nanotime
+    required: true
+  FixpRetransmitReject_retransmit_reject_code:
+    name: FixpRetransmitReject_retransmit_reject_code
+    definition_uri: https://w3id.org/lmodel/fixp/retransmit_reject_code
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '15'
+      repository_field_id:
+        tag: repository_field_id
+        value: '15'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Why the sender will not resend the range.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Code
+    - RetransmitRejectCode
+    is_a: retransmit_reject_code
+    domain: FixpRetransmitReject
+    slot_uri: fixp:retransmit_reject_code
+    alias: retransmit_reject_code
+    owner: FixpRetransmitReject
+    domain_of:
+    - FixpRetransmitReject
+    is_usage_slot: true
+    usage_slot_name: retransmit_reject_code
+    range: FixpRetransmitRejectCode
+    required: true
+  FixpTerminate_session_id:
+    name: FixpTerminate_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpTerminate
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpTerminate
+    domain_of:
+    - FixpTerminate
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpTerminate_termination_code:
+    name: FixpTerminate_termination_code
+    definition_uri: https://w3id.org/lmodel/fixp/termination_code
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '16'
+      repository_field_id:
+        tag: repository_field_id
+        value: '16'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Why the party releases the session from the transport.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Code
+    - TerminationCode
+    is_a: termination_code
+    domain: FixpTerminate
+    slot_uri: fixp:termination_code
+    alias: termination_code
+    owner: FixpTerminate
+    domain_of:
+    - FixpTerminate
+    is_usage_slot: true
+    usage_slot_name: termination_code
+    range: FixpTerminationCode
+    required: true
+  FixpFinishedSending_session_id:
+    name: FixpFinishedSending_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpFinishedSending
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpFinishedSending
+    domain_of:
+    - FixpFinishedSending
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpFinishedSending_last_seq_no:
+    name: FixpFinishedSending_last_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/last_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '17'
+      repository_field_id:
+        tag: repository_field_id
+        value: '17'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The number carried by the flow's final application message.
+    comments:
+    - Optional in section 4's table and in the SBE schema, required in the repository
+      file. Section 4 asks for it whenever the flow is recoverable or idempotent,
+      which tests/fixp_rules.py checks in an exchange.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - LastSeqNo
+    is_a: last_seq_no
+    domain: FixpFinishedSending
+    slot_uri: fixp:last_seq_no
+    alias: last_seq_no
+    owner: FixpFinishedSending
+    domain_of:
+    - FixpFinishedSending
+    is_usage_slot: true
+    usage_slot_name: last_seq_no
+    range: fixp_u64
+  FixpFinishedReceiving_session_id:
+    name: FixpFinishedReceiving_session_id
+    definition_uri: https://w3id.org/lmodel/fixp/session_id
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '1'
+      repository_field_id:
+        tag: repository_field_id
+        value: '1'
+      repository_datatype:
+        tag: repository_datatype
+        value: String
+    description: The session's identifier, which the client chooses and never uses
+      again.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - SessionId
+    is_a: session_id
+    domain: FixpFinishedReceiving
+    slot_uri: fixp:session_id
+    alias: session_id
+    owner: FixpFinishedReceiving
+    domain_of:
+    - FixpFinishedReceiving
+    is_usage_slot: true
+    usage_slot_name: session_id
+    range: fixp_uuid
+    required: true
+  FixpApplied_from_seq_no:
+    name: FixpApplied_from_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/from_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '13'
+      repository_field_id:
+        tag: repository_field_id
+        value: '13'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Where the run of operations that took effect starts.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - FromSeqNo
+    is_a: from_seq_no
+    domain: FixpApplied
+    slot_uri: fixp:from_seq_no
+    alias: from_seq_no
+    owner: FixpApplied
+    domain_of:
+    - FixpApplied
+    is_usage_slot: true
+    usage_slot_name: from_seq_no
+    range: fixp_u64
+    required: true
+  FixpApplied_message_count:
+    name: FixpApplied_message_count
+    definition_uri: https://w3id.org/lmodel/fixp/message_count
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '14'
+      repository_field_id:
+        tag: repository_field_id
+        value: '14'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: How many operations in a row took effect.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Count
+    is_a: message_count
+    domain: FixpApplied
+    slot_uri: fixp:message_count
+    alias: message_count
+    owner: FixpApplied
+    domain_of:
+    - FixpApplied
+    is_usage_slot: true
+    usage_slot_name: message_count
+    range: fixp_u32
+    required: true
+  FixpNotApplied_from_seq_no:
+    name: FixpNotApplied_from_seq_no
+    definition_uri: https://w3id.org/lmodel/fixp/from_seq_no
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '13'
+      repository_field_id:
+        tag: repository_field_id
+        value: '13'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: Where the run of operations that failed to take effect starts.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - FromSeqNo
+    is_a: from_seq_no
+    domain: FixpNotApplied
+    slot_uri: fixp:from_seq_no
+    alias: from_seq_no
+    owner: FixpNotApplied
+    domain_of:
+    - FixpNotApplied
+    is_usage_slot: true
+    usage_slot_name: from_seq_no
+    range: fixp_u64
+    required: true
+  FixpNotApplied_message_count:
+    name: FixpNotApplied_message_count
+    definition_uri: https://w3id.org/lmodel/fixp/message_count
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '14'
+      repository_field_id:
+        tag: repository_field_id
+        value: '14'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: How many operations in a row did not take effect.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Count
+    is_a: message_count
+    domain: FixpNotApplied
+    slot_uri: fixp:message_count
+    alias: message_count
+    owner: FixpNotApplied
+    domain_of:
+    - FixpNotApplied
+    is_usage_slot: true
+    usage_slot_name: message_count
+    range: fixp_u32
+    required: true
+  FixpMessageTemplate_sofh_encoding_type:
+    name: FixpMessageTemplate_sofh_encoding_type
+    definition_uri: https://w3id.org/lmodel/fixp/sofh_encoding_type
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '18'
+      repository_field_id:
+        tag: repository_field_id
+        value: '19'
+      repository_datatype:
+        tag: repository_datatype
+        value: int
+    description: The code that the Simple Open Framing Header registers for the encoding
+      a template is written for.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - EncodingType
+    is_a: sofh_encoding_type
+    domain: FixpMessageTemplate
+    slot_uri: fixp:sofh_encoding_type
+    alias: sofh_encoding_type
+    owner: FixpMessageTemplate
+    domain_of:
+    - FixpMessageTemplate
+    is_usage_slot: true
+    usage_slot_name: sofh_encoding_type
+    range: fixp_u32
+    required: true
+  FixpMessageTemplate_template:
+    name: FixpMessageTemplate_template
+    definition_uri: https://w3id.org/lmodel/fixp/template
+    annotations:
+      sbe_field_id:
+        tag: sbe_field_id
+        value: '21'
+      repository_field_id:
+        tag: repository_field_id
+        value: '22'
+      repository_datatype:
+        tag: repository_datatype
+        value: data
+    description: The template itself, as octets.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    aliases:
+    - Template
+    is_a: template
+    domain: FixpMessageTemplate
+    slot_uri: fixp:template
+    alias: template
+    owner: FixpMessageTemplate
+    domain_of:
+    - FixpMessageTemplate
+    is_usage_slot: true
+    usage_slot_name: template
+    range: fixp_object
+    required: true
+classes:
+  FixpMessage:
+    name: FixpMessage
+    definition_uri: https://w3id.org/lmodel/fixp/FixpMessage
+    description: One FIXP message, as its fields would be read from the wire before
+      or after encoding.
+    comments:
+    - The FIXP files define each message as an SBE message template, which lmodel/fix-sbe
+      models as SbeMessageV1, and as an Orchestra message, which lmodel/fix-orchestra
+      models as OrchestraMessageV10. A record of those classes defines a kind of message;
+      an instance of this class is one message of that kind.
+    - The annotations of each subclass name its template id and its name in the SBE
+      schema, the stage the summary in section 6 gives it, which side sends it, and
+      the flow types it may appear on.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
+    related_mappings:
+    - fix_sbe:SbeMessageV1
+    - fix_orchestra:OrchestraMessageV10
+    abstract: true
+    slots:
+    - message_kind
+    class_uri: fixp:FixpMessage
+  FixpNegotiate:
+    name: FixpNegotiate
+    definition_uri: https://w3id.org/lmodel/fixp/FixpNegotiate
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '1'
+      sbe_name:
+        tag: sbe_name
+        value: Negotiate
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: client
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+    description: A client's request to create a session under an identifier it has
+      never used, stating the flow type it will send.
+    in_subset:
+    - fixp_initialization
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpNegotiate_session_id
+    - FixpNegotiate_request_time
+    - FixpNegotiate_client_flow
+    - FixpNegotiate_credentials
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_time:
+        name: request_time
+        required: true
+      client_flow:
+        name: client_flow
+        required: true
+      credentials:
+        name: credentials
+        description: Data that identifies the client, in a form the two parties agree
+          on.
+    class_uri: fixp:FixpNegotiate
+  FixpNegotiationResponse:
+    name: FixpNegotiationResponse
+    definition_uri: https://w3id.org/lmodel/fixp/FixpNegotiationResponse
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '2'
+      sbe_name:
+        tag: sbe_name
+        value: NegotiationResponse
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: server
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+    description: A server's acceptance of a new session, stating the flow type it
+      will send back.
+    in_subset:
+    - fixp_initialization
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpNegotiationResponse_session_id
+    - FixpNegotiationResponse_request_timestamp
+    - FixpNegotiationResponse_server_flow
+    - FixpNegotiationResponse_credentials
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_timestamp:
+        name: request_timestamp
+        description: The request_time of the Negotiate this message accepts.
+        required: true
+      server_flow:
+        name: server_flow
+        required: true
+      credentials:
+        name: credentials
+        description: Data that identifies the server to the client, for mutual authentication.
+    class_uri: fixp:FixpNegotiationResponse
+  FixpNegotiationReject:
+    name: FixpNegotiationReject
+    definition_uri: https://w3id.org/lmodel/fixp/FixpNegotiationReject
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '3'
+      sbe_name:
+        tag: sbe_name
+        value: NegotiationReject
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: server
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+    description: A server's refusal to create a session. The server sends nothing
+      more and closes the transport.
+    in_subset:
+    - fixp_initialization
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpNegotiationReject_session_id
+    - FixpNegotiationReject_request_timestamp
+    - FixpNegotiationReject_negotiation_reject_code
+    - reason_text
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_timestamp:
+        name: request_timestamp
+        description: The request_time of the Negotiate this message refuses.
+        required: true
+      negotiation_reject_code:
+        name: negotiation_reject_code
+        required: true
+    class_uri: fixp:FixpNegotiationReject
+  FixpTopic:
+    name: FixpTopic
+    definition_uri: https://w3id.org/lmodel/fixp/FixpTopic
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '4'
+      sbe_name:
+        tag: sbe_name
+        value: Topic
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: publisher
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'true'
+    description: A multicast publisher's notice that starts a flow and ties the session's
+      short-lived identifier to a lasting subject. It is repeated so that late listeners
+      can join.
+    in_subset:
+    - fixp_initialization
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpTopic_session_id
+    - FixpTopic_flow
+    - FixpTopic_keepalive_interval
+    - FixpTopic_topic_classification
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      flow:
+        name: flow
+        required: true
+      keepalive_interval:
+        name: keepalive_interval
+        description: The publisher's heartbeat interval, in milliseconds.
+        comments:
+        - The SBE schema and the repository file give Topic this field, as a required
+          one. Section 5's table leaves it out, so the schema accepts a Topic with
+          or without it.
+      topic_classification:
+        name: topic_classification
+        required: true
+    class_uri: fixp:FixpTopic
+  FixpEstablish:
+    name: FixpEstablish
+    definition_uri: https://w3id.org/lmodel/fixp/FixpEstablish
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '5'
+      sbe_name:
+        tag: sbe_name
+        value: Establish
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: client
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+    description: A client's request to tie a negotiated session to the very transport
+      this message arrives on. After a disconnection it is sent again to re-bind.
+    in_subset:
+    - fixp_binding
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpEstablish_session_id
+    - FixpEstablish_request_time
+    - FixpEstablish_keepalive_interval
+    - FixpEstablish_next_seq_no
+    - FixpEstablish_credentials
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_time:
+        name: request_time
+        required: true
+      keepalive_interval:
+        name: keepalive_interval
+        description: The longest the client stays silent, in milliseconds, before
+          a heartbeat.
+        required: true
+      next_seq_no:
+        name: next_seq_no
+        description: When the client's recoverable flow is bound again, the number
+          its next application message will carry.
+      credentials:
+        name: credentials
+        description: Data that identifies the client, in a form the two parties agree
+          on.
+    class_uri: fixp:FixpEstablish
+  FixpEstablishmentAck:
+    name: FixpEstablishmentAck
+    definition_uri: https://w3id.org/lmodel/fixp/FixpEstablishmentAck
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '6'
+      sbe_name:
+        tag: sbe_name
+        value: EstablishmentAck
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: server
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+    description: A server's acceptance of the binding. From here, application messages
+      may flow.
+    in_subset:
+    - fixp_binding
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpEstablishmentAck_session_id
+    - FixpEstablishmentAck_request_timestamp
+    - FixpEstablishmentAck_keepalive_interval
+    - FixpEstablishmentAck_next_seq_no
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_timestamp:
+        name: request_timestamp
+        description: The request_time of the Establish this message accepts.
+        required: true
+      keepalive_interval:
+        name: keepalive_interval
+        description: The longest the server stays silent, in milliseconds, before
+          a heartbeat.
+        required: true
+      next_seq_no:
+        name: next_seq_no
+        description: If the server's flow is recoverable, the number its next application
+          message will carry, so the client can ask for what it missed.
+    class_uri: fixp:FixpEstablishmentAck
+  FixpEstablishmentReject:
+    name: FixpEstablishmentReject
+    definition_uri: https://w3id.org/lmodel/fixp/FixpEstablishmentReject
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '7'
+      sbe_name:
+        tag: sbe_name
+        value: EstablishmentReject
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: server
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+    description: A server's refusal of the binding.
+    in_subset:
+    - fixp_binding
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpEstablishmentReject_session_id
+    - FixpEstablishmentReject_request_timestamp
+    - FixpEstablishmentReject_establishment_reject_code
+    - reason_text
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_timestamp:
+        name: request_timestamp
+        description: The request_time of the Establish this message refuses.
+        required: true
+      establishment_reject_code:
+        name: establishment_reject_code
+        required: true
+    class_uri: fixp:FixpEstablishmentReject
+  FixpSequence:
+    name: FixpSequence
+    definition_uri: https://w3id.org/lmodel/fixp/FixpSequence
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '8'
+      sbe_name:
+        tag: sbe_name
+        value: Sequence
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'true'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: own
+    description: Starts the numbering of a sequenced flow, so that the application
+      messages after it are numbered by counting up from the value it carries. Sent
+      when idle, it is also the heartbeat.
+    comments:
+    - It is used on a transport that carries one session; Context replaces it on a
+      shared one.
+    in_subset:
+    - fixp_transferring
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpSequence_next_seq_no
+    slot_usage:
+      next_seq_no:
+        name: next_seq_no
+        required: true
+    class_uri: fixp:FixpSequence
+  FixpContext:
+    name: FixpContext
+    definition_uri: https://w3id.org/lmodel/fixp/FixpContext
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '9'
+      sbe_name:
+        tag: sbe_name
+        value: Context
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'true'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: own
+    description: On a transport that several sessions share, names the session the
+      following messages belong to and, when the flow is sequenced, where its numbering
+      continues.
+    in_subset:
+    - fixp_transferring
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpContext_session_id
+    - FixpContext_next_seq_no
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      next_seq_no:
+        name: next_seq_no
+        comments:
+        - Section 3's table makes it optional, and both resource files make it required,
+          so the schema accepts a Context with or without it.
+    class_uri: fixp:FixpContext
+  FixpUnsequencedHeartbeat:
+    name: FixpUnsequencedHeartbeat
+    definition_uri: https://w3id.org/lmodel/fixp/FixpUnsequencedHeartbeat
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '10'
+      sbe_name:
+        tag: sbe_name
+        value: UnsequencedHeartbeat
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: own
+    description: Shows the peer that the session and transport are alive when the
+      sender's flow is unsequenced or empty. It has no fields.
+    in_subset:
+    - fixp_transferring
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    class_uri: fixp:FixpUnsequencedHeartbeat
+  FixpRetransmitRequest:
+    name: FixpRetransmitRequest
+    definition_uri: https://w3id.org/lmodel/fixp/FixpRetransmitRequest
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '11'
+      sbe_name:
+        tag: sbe_name
+        value: RetransmitRequest
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: peer
+    description: Asks the peer to resend some messages of its recoverable flow. A
+      party has at most one such request open at a time.
+    in_subset:
+    - fixp_transferring
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpRetransmitRequest_session_id
+    - FixpRetransmitRequest_request_time
+    - FixpRetransmitRequest_from_seq_no
+    - FixpRetransmitRequest_message_count
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_time:
+        name: request_time
+        description: When the request was made, which also tells this request apart
+          from others.
+        required: true
+      from_seq_no:
+        name: from_seq_no
+        description: Where the requested run starts, by sequence number.
+        required: true
+      message_count:
+        name: message_count
+        description: How many messages are asked for.
+        required: true
+    class_uri: fixp:FixpRetransmitRequest
+  FixpRetransmission:
+    name: FixpRetransmission
+    definition_uri: https://w3id.org/lmodel/fixp/FixpRetransmission
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '12'
+      sbe_name:
+        tag: sbe_name
+        value: Retransmission
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: own
+    description: Introduces a batch of resent messages, which are numbered by counting
+      from the number it gives. A request may be answered in several batches.
+    in_subset:
+    - fixp_transferring
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpRetransmission_session_id
+    - FixpRetransmission_request_timestamp
+    - FixpRetransmission_next_seq_no
+    - FixpRetransmission_message_count
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_timestamp:
+        name: request_timestamp
+        description: The request_time of the RetransmitRequest this batch answers.
+        required: true
+      next_seq_no:
+        name: next_seq_no
+        description: The number the batch's first message carries.
+        required: true
+      message_count:
+        name: message_count
+        description: How many resent messages the batch holds.
+        required: true
+    class_uri: fixp:FixpRetransmission
+  FixpRetransmitReject:
+    name: FixpRetransmitReject
+    definition_uri: https://w3id.org/lmodel/fixp/FixpRetransmitReject
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '13'
+      sbe_name:
+        tag: sbe_name
+        value: RestransmitReject
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: own
+    description: Refuses a RetransmitRequest, with a code saying why.
+    comments:
+    - The resource files and section 4's table spell its name RestransmitReject. The
+      summary in section 6 does not list it; it answers a RetransmitRequest, so it
+      belongs to recoverable flows.
+    in_subset:
+    - fixp_transferring
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpRetransmitReject_session_id
+    - FixpRetransmitReject_request_timestamp
+    - FixpRetransmitReject_retransmit_reject_code
+    - reason_text
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      request_timestamp:
+        name: request_timestamp
+        description: The request_time of the RetransmitRequest this message refuses.
+        required: true
+      retransmit_reject_code:
+        name: retransmit_reject_code
+        required: true
+    class_uri: fixp:FixpRetransmitReject
+  FixpTerminate:
+    name: FixpTerminate
+    definition_uri: https://w3id.org/lmodel/fixp/FixpTerminate
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '14'
+      sbe_name:
+        tag: sbe_name
+        value: Terminate
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+    description: Releases the session from its transport without ending the session,
+      which can be bound again later. The peer answers with a Terminate, and after
+      its own Terminate a party sends nothing more.
+    in_subset:
+    - fixp_unbinding
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpTerminate_session_id
+    - FixpTerminate_termination_code
+    - reason_text
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      termination_code:
+        name: termination_code
+        required: true
+    class_uri: fixp:FixpTerminate
+  FixpFinishedSending:
+    name: FixpFinishedSending
+    definition_uri: https://w3id.org/lmodel/fixp/FixpFinishedSending
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '15'
+      sbe_name:
+        tag: sbe_name
+        value: FinishedSending
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'true'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: own
+    description: Says that the sender's flow has carried its last application message,
+      which begins finalization. It is repeated as the heartbeat until the answer
+      comes.
+    in_subset:
+    - fixp_finalizing
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpFinishedSending_session_id
+    - FixpFinishedSending_last_seq_no
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+      last_seq_no:
+        name: last_seq_no
+        comments:
+        - Optional in section 4's table and in the SBE schema, required in the repository
+          file. Section 4 asks for it whenever the flow is recoverable or idempotent,
+          which tests/fixp_rules.py checks in an exchange.
+    class_uri: fixp:FixpFinishedSending
+  FixpFinishedReceiving:
+    name: FixpFinishedReceiving
+    definition_uri: https://w3id.org/lmodel/fixp/FixpFinishedReceiving
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '16'
+      sbe_name:
+        tag: sbe_name
+        value: FinishedReceiving
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'true'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: peer
+    description: Answers FinishedSending once the last message of the peer's flow
+      has been processed. After it the session is finalized and its identifier is
+      spent.
+    in_subset:
+    - fixp_finalizing
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpFinishedReceiving_session_id
+    slot_usage:
+      session_id:
+        name: session_id
+        required: true
+    class_uri: fixp:FixpFinishedReceiving
+  FixpApplied:
+    name: FixpApplied
+    definition_uri: https://w3id.org/lmodel/fixp/FixpApplied
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '17'
+      sbe_name:
+        tag: sbe_name
+        value: Applied
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Idempotent
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: peer
+    description: An optional application message telling the party that sends an idempotent
+      flow which of its operations took effect, where no business message already
+      says so.
+    comments:
+    - Like any application message, it uses up one number in the sequence of the flow
+      it travels on.
+    in_subset:
+    - fixp_transferring
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpApplied_from_seq_no
+    - FixpApplied_message_count
+    slot_usage:
+      from_seq_no:
+        name: from_seq_no
+        description: Where the run of operations that took effect starts.
+        required: true
+      message_count:
+        name: message_count
+        description: How many operations in a row took effect.
+        required: true
+    class_uri: fixp:FixpApplied
+  FixpNotApplied:
+    name: FixpNotApplied
+    definition_uri: https://w3id.org/lmodel/fixp/FixpNotApplied
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '18'
+      sbe_name:
+        tag: sbe_name
+        value: NotApplied
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Idempotent
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'false'
+      fixp_flow_of:
+        tag: fixp_flow_of
+        value: peer
+    description: 'An application message telling the party that sends an idempotent
+      flow about a gap: a run of operations that did not take effect. That party''s
+      application decides what to do.'
+    comments:
+    - Like any application message, it uses up one number in the sequence of the flow
+      it travels on.
+    in_subset:
+    - fixp_transferring
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpNotApplied_from_seq_no
+    - FixpNotApplied_message_count
+    slot_usage:
+      from_seq_no:
+        name: from_seq_no
+        description: Where the run of operations that failed to take effect starts.
+        required: true
+      message_count:
+        name: message_count
+        description: How many operations in a row did not take effect.
+        required: true
+    class_uri: fixp:FixpNotApplied
+  FixpMessageTemplate:
+    name: FixpMessageTemplate
+    definition_uri: https://w3id.org/lmodel/fixp/FixpMessageTemplate
+    annotations:
+      sbe_template_id:
+        tag: sbe_template_id
+        value: '19'
+      sbe_name:
+        tag: sbe_name
+        value: MessageTemplate
+      fixp_sent_by:
+        tag: fixp_sent_by
+        value: any
+      fixp_flow_types:
+        tag: fixp_flow_types
+        value: Recoverable Idempotent Unsequenced None
+      fixp_multicast:
+        tag: fixp_multicast
+        value: 'true'
+    description: Hands the peer a template or schema it needs to read messages in
+      an encoding that templates drive. There is no fixed moment for sending it.
+    comments:
+    - A publisher does well to repeat it for late listeners. On a shared transport
+      it applies to every session there.
+    in_subset:
+    - fixp_initialization
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_messages
+    is_a: FixpMessage
+    slots:
+    - message_kind
+    - FixpMessageTemplate_sofh_encoding_type
+    - effective_time
+    - template_version
+    - FixpMessageTemplate_template
+    slot_usage:
+      sofh_encoding_type:
+        name: sofh_encoding_type
+        required: true
+      template:
+        name: template
+        required: true
+    class_uri: fixp:FixpMessageTemplate
+  FixpExchange:
+    name: FixpExchange
+    definition_uri: https://w3id.org/lmodel/fixp/FixpExchange
+    description: The messages of one session in the order they were sent, as a test
+      case, a worked example or a captured log.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    slots:
+    - id
+    - description
+    - fixpExchange__session_kind
+    - fixpExchange__multiplexed
+    - fixpExchange__exchange_steps
+    attributes:
+      session_kind:
+        name: session_kind
+        description: Which of the two forms the session takes.
+        range: FixpSessionKind
+        required: true
+      multiplexed:
+        name: multiplexed
+        description: Whether the transport carries other sessions too, so that Context
+          takes the place of Sequence.
+        range: boolean
+      exchange_steps:
+        name: exchange_steps
+        description: Each step of the exchange, in order.
+        range: FixpExchangeStep
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        minimum_cardinality: 1
+    class_uri: fixp:FixpExchange
+    tree_root: true
+  FixpExchangeStep:
+    name: FixpExchangeStep
+    definition_uri: https://w3id.org/lmodel/fixp/FixpExchangeStep
+    description: 'One step: a FIXP message, or a run of application messages whose
+      content FIXP does not define, and the side that sent it.'
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+    slots:
+    - fixpExchangeStep__sent_by
+    - fixpExchangeStep__fixp_message
+    - fixpExchangeStep__application_message_count
+    attributes:
+      sent_by:
+        name: sent_by
+        description: The side that sent this step.
+        range: FixpParty
+        required: true
+      fixp_message:
+        name: fixp_message
+        description: The FIXP message sent.
+        range: FixpMessage
+        inlined: true
+      application_message_count:
+        name: application_message_count
+        description: How many application messages went out one after another. On
+          a sequenced flow each takes the next sequence number.
+        range: fixp_u32
+        minimum_value: 1
+    class_uri: fixp:FixpExchangeStep
+    exactly_one_of:
+    - slot_conditions:
+        fixp_message:
+          name: fixp_message
+          value_presence: PRESENT
+    - slot_conditions:
+        application_message_count:
+          name: application_message_count
+          value_presence: PRESENT
+  FixpRulesOfEngagement:
+    name: FixpRulesOfEngagement
+    definition_uri: https://w3id.org/lmodel/fixp/FixpRulesOfEngagement
+    description: What two counterparties agree on for one FIXP service, layer by layer,
+      for the client and for the server.
+    comments:
+    - Appendix B calls its checklist an aid, and FIXP leaves each of these choices
+      to the counterparties.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slots:
+    - id
+    - description
+    - fixpRulesOfEngagement__client_stack
+    - fixpRulesOfEngagement__server_stack
+    attributes:
+      client_stack:
+        name: client_stack
+        description: What the client side uses.
+        range: FixpStackProfile
+        required: true
+        inlined: true
+      server_stack:
+        name: server_stack
+        description: What the server side uses.
+        range: FixpStackProfile
+        required: true
+        inlined: true
+    class_uri: fixp:FixpRulesOfEngagement
+  FixpStackProfile:
+    name: FixpStackProfile
+    definition_uri: https://w3id.org/lmodel/fixp/FixpStackProfile
+    description: 'One side''s choices at each layer of the stack: application, presentation,
+      session, security and transport.'
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slots:
+    - fixpStackProfile__application_recovery
+    - fixpStackProfile__application_fix_version
+    - fixpStackProfile__service_pack
+    - fixpStackProfile__extension_packs
+    - fixpStackProfile__message_encoding
+    - fixpStackProfile__encoding_version
+    - fixpStackProfile__message_schemas
+    - fixpStackProfile__framing
+    - fixpStackProfile__supported_flow_types
+    - fixpStackProfile__tls_version
+    - fixpStackProfile__authentication_methods
+    - fixpStackProfile__cipher_suites
+    - fixpStackProfile__transports
+    - fixpStackProfile__network_protocols
+    attributes:
+      application_recovery:
+        name: application_recovery
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: application
+        description: Whether this side's applications recover lost messages themselves.
+        range: boolean
+      application_fix_version:
+        name: application_fix_version
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: application
+        description: The FIX version of the application messages, such as FIX.Latest.
+      service_pack:
+        name: service_pack
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: application
+        description: The FIX service pack, where the version has them.
+      extension_packs:
+        name: extension_packs
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: application
+        description: The FIX extension packs in use.
+        multivalued: true
+      message_encoding:
+        name: message_encoding
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: presentation
+        description: How messages are encoded, such as Simple Binary Encoding.
+      encoding_version:
+        name: encoding_version
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: presentation
+        description: The version of that encoding.
+      message_schemas:
+        name: message_schemas
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: presentation
+        description: The message schemas or templates the encoding uses.
+        multivalued: true
+      framing:
+        name: framing
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: presentation
+        description: What marks where one message ends and the next begins, such as
+          the Simple Open Framing Header.
+      supported_flow_types:
+        name: supported_flow_types
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: session
+        description: The flow types this side accepts or offers.
+        range: FixpFlowType
+        multivalued: true
+      tls_version:
+        name: tls_version
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: security
+        description: The TLS version that protects the transport.
+      authentication_methods:
+        name: authentication_methods
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: security
+        description: How the parties prove who they are.
+        multivalued: true
+      cipher_suites:
+        name: cipher_suites
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: security
+        description: The cipher suites allowed.
+        multivalued: true
+      transports:
+        name: transports
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: transport
+        description: The transports this side can use, for example TCP, or UDP with
+          multicast.
+        multivalued: true
+      network_protocols:
+        name: network_protocols
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: transport
+        description: Any other network protocols in use.
+        multivalued: true
+    class_uri: fixp:FixpStackProfile
+metamodel_version: 1.12.0
+source_file: fixp.yaml
+source_file_date: '2026-11-05T21:30:57'
+source_file_size: 1646
+

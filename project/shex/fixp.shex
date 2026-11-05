@@ -1,0 +1,357 @@
+# metamodel_version: 1.12.0
+# version: 1.0
+BASE <https://w3id.org/lmodel/fixp/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX linkml: <https://w3id.org/linkml/>
+PREFIX schema1: <http://schema.org/>
+
+
+linkml:String xsd:string
+
+linkml:Integer xsd:integer
+
+linkml:Boolean xsd:boolean
+
+linkml:Float xsd:float
+
+linkml:Double xsd:double
+
+linkml:Decimal xsd:decimal
+
+linkml:Time xsd:time
+
+linkml:Date xsd:date
+
+linkml:Datetime xsd:dateTime
+
+linkml:DateOrDatetime linkml:DateOrDatetime
+
+linkml:Uriorcurie IRI
+
+linkml:Curie xsd:string
+
+linkml:Uri IRI
+
+linkml:Ncname xsd:string
+
+linkml:Objectidentifier IRI
+
+linkml:Nodeidentifier NONLITERAL
+
+linkml:Jsonpointer xsd:string
+
+linkml:Jsonpath xsd:string
+
+linkml:Sparqlpath xsd:string
+
+<FixpU8> xsd:integer
+
+<FixpU16> xsd:integer
+
+<FixpU32> xsd:integer
+
+<FixpU64> xsd:integer
+
+<FixpUuid> xsd:string
+
+<FixpNanotime> xsd:integer
+
+<FixpDeltaMillisecs> xsd:integer
+
+<FixpObject> xsd:base64Binary
+
+<FixpString> xsd:string
+
+<FixpApplied> CLOSED {
+    (  $<FixpApplied_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <from_seq_no> @<FixpU64> ;
+          <message_count> @<FixpU32>
+       ) ;
+       rdf:type [ <FixpApplied> ] ?
+    )
+}
+
+<FixpContext> CLOSED {
+    (  $<FixpContext_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <next_seq_no> @<FixpU64> ?
+       ) ;
+       rdf:type [ <FixpContext> ] ?
+    )
+}
+
+<FixpEstablish> CLOSED {
+    (  $<FixpEstablish_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_time> @<FixpNanotime> ;
+          <keepalive_interval> @<FixpDeltaMillisecs> ;
+          <next_seq_no> @<FixpU64> ? ;
+          <credentials> @<FixpObject> ?
+       ) ;
+       rdf:type [ <FixpEstablish> ] ?
+    )
+}
+
+<FixpEstablishmentAck> CLOSED {
+    (  $<FixpEstablishmentAck_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_timestamp> @<FixpNanotime> ;
+          <keepalive_interval> @<FixpDeltaMillisecs> ;
+          <next_seq_no> @<FixpU64> ?
+       ) ;
+       rdf:type [ <FixpEstablishmentAck> ] ?
+    )
+}
+
+<FixpEstablishmentReject> CLOSED {
+    (  $<FixpEstablishmentReject_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_timestamp> @<FixpNanotime> ;
+          <establishment_reject_code> [ <https://w3id.org/lmodel/fixp/FixpEstablishmentRejectCode#Unnegotiated>
+             <https://w3id.org/lmodel/fixp/FixpEstablishmentRejectCode#AlreadyEstablished>
+             <https://w3id.org/lmodel/fixp/FixpEstablishmentRejectCode#SessionBlocked>
+             <https://w3id.org/lmodel/fixp/FixpEstablishmentRejectCode#KeepaliveInterval>
+             <https://w3id.org/lmodel/fixp/FixpEstablishmentRejectCode#Credentials>
+             <https://w3id.org/lmodel/fixp/FixpEstablishmentRejectCode#Unspecified> ] ;
+          <reason_text> @<FixpString> ?
+       ) ;
+       rdf:type [ <FixpEstablishmentReject> ] ?
+    )
+}
+
+<FixpExchange> CLOSED {
+    (  $<FixpExchange_tes> (  schema1:description @linkml:String ? ;
+          <session_kind> [ <https://w3id.org/lmodel/fixp/FixpSessionKind#point_to_point>
+             <https://w3id.org/lmodel/fixp/FixpSessionKind#multicast> ] ;
+          <multiplexed> @linkml:Boolean ? ;
+          <exchange_steps> @<FixpExchangeStep> +
+       ) ;
+       rdf:type [ <FixpExchange> ]
+    )
+}
+
+<FixpExchangeStep> CLOSED {
+    (  $<FixpExchangeStep_tes> (  <sent_by> [ <https://w3id.org/lmodel/fixp/FixpParty#client>
+             <https://w3id.org/lmodel/fixp/FixpParty#server> <https://w3id.org/lmodel/fixp/FixpParty#publisher> ] ;
+          <fixp_message> @<FixpMessage> ? ;
+          <application_message_count> @<FixpU32> ?
+       ) ;
+       rdf:type [ <FixpExchangeStep> ] ?
+    )
+}
+
+<FixpFinishedReceiving> CLOSED {
+    (  $<FixpFinishedReceiving_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid>
+       ) ;
+       rdf:type [ <FixpFinishedReceiving> ] ?
+    )
+}
+
+<FixpFinishedSending> CLOSED {
+    (  $<FixpFinishedSending_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <last_seq_no> @<FixpU64> ?
+       ) ;
+       rdf:type [ <FixpFinishedSending> ] ?
+    )
+}
+
+<FixpMessage>  (
+    @<FixpApplied> OR @<FixpContext> OR @<FixpEstablish> OR @<FixpEstablishmentAck> OR @<FixpEstablishmentReject> OR
+    @<FixpFinishedReceiving> OR @<FixpFinishedSending> OR @<FixpMessageTemplate> OR @<FixpNegotiate> OR @<FixpNegotiationReject> OR
+    @<FixpNegotiationResponse> OR @<FixpNotApplied> OR @<FixpRetransmission> OR @<FixpRetransmitReject> OR @<FixpRetransmitRequest>
+    OR @<FixpSequence> OR @<FixpTerminate> OR @<FixpTopic> OR @<FixpUnsequencedHeartbeat>
+)
+
+<FixpMessage_struct> {
+    (  $<FixpMessage_tes> <message_kind> @linkml:String ;
+       rdf:type [ <FixpMessage> ] ?
+    )
+}
+
+<FixpMessageTemplate> CLOSED {
+    (  $<FixpMessageTemplate_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <sofh_encoding_type> @<FixpU32> ;
+          <effective_time> @<FixpNanotime> ? ;
+          <template_version> @<FixpObject> ? ;
+          <template> @<FixpObject>
+       ) ;
+       rdf:type [ <FixpMessageTemplate> ] ?
+    )
+}
+
+<FixpNegotiate> CLOSED {
+    (  $<FixpNegotiate_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_time> @<FixpNanotime> ;
+          <client_flow> [ <https://w3id.org/lmodel/fixp/FixpFlowType#Recoverable>
+             <https://w3id.org/lmodel/fixp/FixpFlowType#Idempotent> <https://w3id.org/lmodel/fixp/FixpFlowType#Unsequenced>
+             <https://w3id.org/lmodel/fixp/FixpFlowType#None> ] ;
+          <credentials> @<FixpObject> ?
+       ) ;
+       rdf:type [ <FixpNegotiate> ] ?
+    )
+}
+
+<FixpNegotiationReject> CLOSED {
+    (  $<FixpNegotiationReject_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_timestamp> @<FixpNanotime> ;
+          <negotiation_reject_code> [ <https://w3id.org/lmodel/fixp/FixpNegotiationRejectCode#Credentials>
+             <https://w3id.org/lmodel/fixp/FixpNegotiationRejectCode#FlowTypeNotSupported>
+             <https://w3id.org/lmodel/fixp/FixpNegotiationRejectCode#DuplicateId>
+             <https://w3id.org/lmodel/fixp/FixpNegotiationRejectCode#Unspecified> ] ;
+          <reason_text> @<FixpString> ?
+       ) ;
+       rdf:type [ <FixpNegotiationReject> ] ?
+    )
+}
+
+<FixpNegotiationResponse> CLOSED {
+    (  $<FixpNegotiationResponse_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_timestamp> @<FixpNanotime> ;
+          <server_flow> [ <https://w3id.org/lmodel/fixp/FixpFlowType#Recoverable>
+             <https://w3id.org/lmodel/fixp/FixpFlowType#Idempotent> <https://w3id.org/lmodel/fixp/FixpFlowType#Unsequenced>
+             <https://w3id.org/lmodel/fixp/FixpFlowType#None> ] ;
+          <credentials> @<FixpObject> ?
+       ) ;
+       rdf:type [ <FixpNegotiationResponse> ] ?
+    )
+}
+
+<FixpNotApplied> CLOSED {
+    (  $<FixpNotApplied_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <from_seq_no> @<FixpU64> ;
+          <message_count> @<FixpU32>
+       ) ;
+       rdf:type [ <FixpNotApplied> ] ?
+    )
+}
+
+<FixpRetransmission> CLOSED {
+    (  $<FixpRetransmission_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_timestamp> @<FixpNanotime> ;
+          <next_seq_no> @<FixpU64> ;
+          <message_count> @<FixpU32>
+       ) ;
+       rdf:type [ <FixpRetransmission> ] ?
+    )
+}
+
+<FixpRetransmitReject> CLOSED {
+    (  $<FixpRetransmitReject_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_timestamp> @<FixpNanotime> ;
+          <retransmit_reject_code> [ <https://w3id.org/lmodel/fixp/FixpRetransmitRejectCode#OutOfRange>
+             <https://w3id.org/lmodel/fixp/FixpRetransmitRejectCode#InvalidSession>
+             <https://w3id.org/lmodel/fixp/FixpRetransmitRejectCode#RequestLimitExceeded> ] ;
+          <reason_text> @<FixpString> ?
+       ) ;
+       rdf:type [ <FixpRetransmitReject> ] ?
+    )
+}
+
+<FixpRetransmitRequest> CLOSED {
+    (  $<FixpRetransmitRequest_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <request_time> @<FixpNanotime> ;
+          <from_seq_no> @<FixpU64> ;
+          <message_count> @<FixpU32>
+       ) ;
+       rdf:type [ <FixpRetransmitRequest> ] ?
+    )
+}
+
+<FixpRulesOfEngagement> CLOSED {
+    (  $<FixpRulesOfEngagement_tes> (  schema1:description @linkml:String ? ;
+          <client_stack> @<FixpStackProfile> ;
+          <server_stack> @<FixpStackProfile>
+       ) ;
+       rdf:type [ <FixpRulesOfEngagement> ]
+    )
+}
+
+<FixpSequence> CLOSED {
+    (  $<FixpSequence_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <next_seq_no> @<FixpU64>
+       ) ;
+       rdf:type [ <FixpSequence> ] ?
+    )
+}
+
+<FixpStackProfile> CLOSED {
+    (  $<FixpStackProfile_tes> (  <application_recovery> @linkml:Boolean ? ;
+          <application_fix_version> @linkml:String ? ;
+          <service_pack> @linkml:String ? ;
+          <extension_packs> @linkml:String * ;
+          <message_encoding> @linkml:String ? ;
+          <encoding_version> @linkml:String ? ;
+          <message_schemas> @linkml:String * ;
+          <framing> @linkml:String ? ;
+          <supported_flow_types> [ <https://w3id.org/lmodel/fixp/FixpFlowType#Recoverable>
+             <https://w3id.org/lmodel/fixp/FixpFlowType#Idempotent> <https://w3id.org/lmodel/fixp/FixpFlowType#Unsequenced>
+             <https://w3id.org/lmodel/fixp/FixpFlowType#None> ] * ;
+          <tls_version> @linkml:String ? ;
+          <authentication_methods> @linkml:String * ;
+          <cipher_suites> @linkml:String * ;
+          <transports> @linkml:String * ;
+          <network_protocols> @linkml:String *
+       ) ;
+       rdf:type [ <FixpStackProfile> ] ?
+    )
+}
+
+<FixpTerminate> CLOSED {
+    (  $<FixpTerminate_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <termination_code> [ <https://w3id.org/lmodel/fixp/FixpTerminationCode#Finished>
+             <https://w3id.org/lmodel/fixp/FixpTerminationCode#UnspecifiedError>
+             <https://w3id.org/lmodel/fixp/FixpTerminationCode#ReRequestOutOfBounds>
+             <https://w3id.org/lmodel/fixp/FixpTerminationCode#ReRequestInProgress> ] ;
+          <reason_text> @<FixpString> ?
+       ) ;
+       rdf:type [ <FixpTerminate> ] ?
+    )
+}
+
+<FixpTopic> CLOSED {
+    (  $<FixpTopic_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ? ;
+          <session_id> @<FixpUuid> ;
+          <flow> [ <https://w3id.org/lmodel/fixp/FixpMulticastFlowType#Recoverable>
+             <https://w3id.org/lmodel/fixp/FixpMulticastFlowType#Idempotent> ] ;
+          <keepalive_interval> @<FixpDeltaMillisecs> ? ;
+          <topic_classification> @<FixpObject>
+       ) ;
+       rdf:type [ <FixpTopic> ] ?
+    )
+}
+
+<FixpUnsequencedHeartbeat> CLOSED {
+    (  $<FixpUnsequencedHeartbeat_tes> (  &<FixpMessage_tes> ;
+          rdf:type [ <FixpMessage> ] ?
+       ) ;
+       rdf:type [ <FixpUnsequencedHeartbeat> ] ?
+    )
+}

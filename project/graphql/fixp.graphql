@@ -1,0 +1,261 @@
+# metamodel_version: 1.12.0
+# version: 1.0
+enum FixpEstablishmentRejectCode
+  {
+    Unnegotiated
+    AlreadyEstablished
+    SessionBlocked
+    KeepaliveInterval
+    Credentials
+    Unspecified
+  }
+
+enum FixpFlowType
+  {
+    Recoverable
+    Idempotent
+    Unsequenced
+    None
+  }
+
+enum FixpMulticastFlowType
+  {
+    Recoverable
+    Idempotent
+  }
+
+enum FixpNegotiationRejectCode
+  {
+    Credentials
+    FlowTypeNotSupported
+    DuplicateId
+    Unspecified
+  }
+
+enum FixpParty
+  {
+    client
+    server
+    publisher
+  }
+
+enum FixpRetransmitRejectCode
+  {
+    OutOfRange
+    InvalidSession
+    RequestLimitExceeded
+  }
+
+enum FixpSessionKind
+  {
+    point_to_point
+    multicast
+  }
+
+enum FixpTerminationCode
+  {
+    Finished
+    UnspecifiedError
+    ReRequestOutOfBounds
+    ReRequestInProgress
+  }
+
+type FixpApplied
+  {
+    messageKind: String!
+    fromSeqNo: FixpU64!
+    messageCount: FixpU32!
+  }
+
+type FixpContext
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    nextSeqNo: FixpU64
+  }
+
+type FixpEstablish
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTime: FixpNanotime!
+    keepaliveInterval: FixpDeltaMillisecs!
+    nextSeqNo: FixpU64
+    credentials: FixpObject
+  }
+
+type FixpEstablishmentAck
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    keepaliveInterval: FixpDeltaMillisecs!
+    nextSeqNo: FixpU64
+  }
+
+type FixpEstablishmentReject
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    establishmentRejectCode: FixpEstablishmentRejectCode!
+    reasonText: FixpString
+  }
+
+type FixpExchange
+  {
+    id: String!
+    description: String
+    sessionKind: FixpSessionKind!
+    multiplexed: Boolean
+    exchangeSteps: [FixpExchangeStep]!
+  }
+
+type FixpExchangeStep
+  {
+    sentBy: FixpParty!
+    fixpMessage: FixpMessage
+    applicationMessageCount: FixpU32
+  }
+
+type FixpFinishedReceiving
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+  }
+
+type FixpFinishedSending
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    lastSeqNo: FixpU64
+  }
+
+interface FixpMessage
+  {
+    messageKind: String!
+  }
+
+type FixpMessageTemplate
+  {
+    messageKind: String!
+    sofhEncodingType: FixpU32!
+    effectiveTime: FixpNanotime
+    templateVersion: FixpObject
+    template: FixpObject!
+  }
+
+type FixpNegotiate
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTime: FixpNanotime!
+    clientFlow: FixpFlowType!
+    credentials: FixpObject
+  }
+
+type FixpNegotiationReject
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    negotiationRejectCode: FixpNegotiationRejectCode!
+    reasonText: FixpString
+  }
+
+type FixpNegotiationResponse
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    serverFlow: FixpFlowType!
+    credentials: FixpObject
+  }
+
+type FixpNotApplied
+  {
+    messageKind: String!
+    fromSeqNo: FixpU64!
+    messageCount: FixpU32!
+  }
+
+type FixpRetransmission
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    nextSeqNo: FixpU64!
+    messageCount: FixpU32!
+  }
+
+type FixpRetransmitReject
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    retransmitRejectCode: FixpRetransmitRejectCode!
+    reasonText: FixpString
+  }
+
+type FixpRetransmitRequest
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTime: FixpNanotime!
+    fromSeqNo: FixpU64!
+    messageCount: FixpU32!
+  }
+
+type FixpRulesOfEngagement
+  {
+    id: String!
+    description: String
+    clientStack: FixpStackProfile!
+    serverStack: FixpStackProfile!
+  }
+
+type FixpSequence
+  {
+    messageKind: String!
+    nextSeqNo: FixpU64!
+  }
+
+type FixpStackProfile
+  {
+    applicationRecovery: Boolean
+    applicationFixVersion: String
+    servicePack: String
+    extensionPacks: [String]
+    messageEncoding: String
+    encodingVersion: String
+    messageSchemas: [String]
+    framing: String
+    supportedFlowTypes: [FixpFlowType]
+    tlsVersion: String
+    authenticationMethods: [String]
+    cipherSuites: [String]
+    transports: [String]
+    networkProtocols: [String]
+  }
+
+type FixpTerminate
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    terminationCode: FixpTerminationCode!
+    reasonText: FixpString
+  }
+
+type FixpTopic
+  {
+    messageKind: String!
+    sessionId: FixpUuid!
+    flow: FixpMulticastFlowType!
+    keepaliveInterval: FixpDeltaMillisecs
+    topicClassification: FixpObject!
+  }
+
+type FixpUnsequencedHeartbeat
+  {
+    messageKind: String!
+  }

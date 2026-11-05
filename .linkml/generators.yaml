@@ -37,6 +37,10 @@ generator_args:
     mergeimports: true
   jsonschema:
     mergeimports: true
+    # An exchange step's message ranges over the abstract FixpMessage. Without this the
+    # generated JSON Schema checks each message against that base alone; with it, against the
+    # class its message_kind names.
+    include_range_class_descendants: true
   jsonldcontext:
     mergeimports: true
   # gen-pydantic is not yet supported by gen-project.

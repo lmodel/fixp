@@ -1,0 +1,345 @@
+syntax = "proto3";
+package fixp;
+// metamodel_version: 1.12.0
+// version: 1.0
+// An optional application message telling the party that sends an idempotent flow which of its operations took effect, where no business message already says so.
+message FixpApplied {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // Where the run of operations that took effect starts.
+  int32 from_seq_no = 2;
+  // How many operations in a row took effect.
+  int32 message_count = 3;
+}
+// On a transport that several sessions share, names the session the following messages belong to and, when the flow is sequenced, where its numbering continues.
+message FixpContext {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The number the sender's next application message will carry.
+  int32 next_seq_no = 3;
+}
+// A client's request to tie a negotiated session to the very transport this message arrives on. After a disconnection it is sent again to re-bind.
+message FixpEstablish {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // When the sender made this request. The answer repeats it, to show what it answers.
+  int32 request_time = 3;
+  // The longest the client stays silent, in milliseconds, before a heartbeat.
+  int32 keepalive_interval = 4;
+  // When the client's recoverable flow is bound again, the number its next application message will carry.
+  int32 next_seq_no = 5;
+  // Data that identifies the client, in a form the two parties agree on.
+  string credentials = 6;
+}
+// A server's acceptance of the binding. From here, application messages may flow.
+message FixpEstablishmentAck {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The request_time of the Establish this message accepts.
+  int32 request_timestamp = 3;
+  // The longest the server stays silent, in milliseconds, before a heartbeat.
+  int32 keepalive_interval = 4;
+  // If the server's flow is recoverable, the number its next application message will carry, so the client can ask for what it missed.
+  int32 next_seq_no = 5;
+}
+// A server's refusal of the binding.
+message FixpEstablishmentReject {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The request_time of the Establish this message refuses.
+  int32 request_timestamp = 3;
+  // Why the server refused to bind the session.
+  FixpEstablishmentRejectCode establishment_reject_code = 4;
+  // Free text that says more about the code beside it.
+  string reason_text = 5;
+}
+// The messages of one session in the order they were sent, as a test case, a worked example or a captured log.
+message FixpExchange {
+  // The identifier of an exchange or a rules-of-engagement record.
+  string id = 1;
+  // Free text about a record, for the people who read it.
+  string description = 2;
+  // Which of the two forms the session takes.
+  FixpSessionKind session_kind = 3;
+  // Whether the transport carries other sessions too, so that Context takes the place of Sequence.
+  bool multiplexed = 4;
+  // Each step of the exchange, in order.
+  repeated FixpExchangeStep exchange_steps = 5;
+}
+// One step: a FIXP message, or a run of application messages whose content FIXP does not define, and the side that sent it.
+message FixpExchangeStep {
+  // The side that sent this step.
+  FixpParty sent_by = 1;
+  // The FIXP message sent.
+  FixpMessage fixp_message = 2;
+  // How many application messages went out one after another. On a sequenced flow each takes the next sequence number.
+  int32 application_message_count = 3;
+}
+// Answers FinishedSending once the last message of the peer's flow has been processed. After it the session is finalized and its identifier is spent.
+message FixpFinishedReceiving {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+}
+// Says that the sender's flow has carried its last application message, which begins finalization. It is repeated as the heartbeat until the answer comes.
+message FixpFinishedSending {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The number carried by the flow's final application message.
+  int32 last_seq_no = 3;
+}
+// One FIXP message, as its fields would be read from the wire before or after encoding.
+message FixpMessage {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+}
+// Hands the peer a template or schema it needs to read messages in an encoding that templates drive. There is no fixed moment for sending it.
+message FixpMessageTemplate {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The code that the Simple Open Framing Header registers for the encoding a template is written for.
+  int32 sofh_encoding_type = 2;
+  // When the template comes into force. Without it, the template applies at once.
+  int32 effective_time = 3;
+  // The template's version and format, for an encoding whose templates do not state them.
+  string template_version = 4;
+  // The template itself, as octets.
+  string template = 5;
+}
+// A client's request to create a session under an identifier it has never used, stating the flow type it will send.
+message FixpNegotiate {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // When the sender made this request. The answer repeats it, to show what it answers.
+  int32 request_time = 3;
+  // The flow type of the application messages the client will send.
+  FixpFlowType client_flow = 4;
+  // Data that identifies the client, in a form the two parties agree on.
+  string credentials = 5;
+}
+// A server's refusal to create a session. The server sends nothing more and closes the transport.
+message FixpNegotiationReject {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The request_time of the Negotiate this message refuses.
+  int32 request_timestamp = 3;
+  // Why the server refused to create the session.
+  FixpNegotiationRejectCode negotiation_reject_code = 4;
+  // Free text that says more about the code beside it.
+  string reason_text = 5;
+}
+// A server's acceptance of a new session, stating the flow type it will send back.
+message FixpNegotiationResponse {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The request_time of the Negotiate this message accepts.
+  int32 request_timestamp = 3;
+  // The flow type of the application messages the server will send.
+  FixpFlowType server_flow = 4;
+  // Data that identifies the server to the client, for mutual authentication.
+  string credentials = 5;
+}
+// An application message telling the party that sends an idempotent flow about a gap: a run of operations that did not take effect. That party's application decides what to do.
+message FixpNotApplied {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // Where the run of operations that failed to take effect starts.
+  int32 from_seq_no = 2;
+  // How many operations in a row did not take effect.
+  int32 message_count = 3;
+}
+// Introduces a batch of resent messages, which are numbered by counting from the number it gives. A request may be answered in several batches.
+message FixpRetransmission {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The request_time of the RetransmitRequest this batch answers.
+  int32 request_timestamp = 3;
+  // The number the batch's first message carries.
+  int32 next_seq_no = 4;
+  // How many resent messages the batch holds.
+  int32 message_count = 5;
+}
+// Refuses a RetransmitRequest, with a code saying why.
+message FixpRetransmitReject {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The request_time of the RetransmitRequest this message refuses.
+  int32 request_timestamp = 3;
+  // Why the sender will not resend the range.
+  FixpRetransmitRejectCode retransmit_reject_code = 4;
+  // Free text that says more about the code beside it.
+  string reason_text = 5;
+}
+// Asks the peer to resend some messages of its recoverable flow. A party has at most one such request open at a time.
+message FixpRetransmitRequest {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // When the request was made, which also tells this request apart from others.
+  int32 request_time = 3;
+  // Where the requested run starts, by sequence number.
+  int32 from_seq_no = 4;
+  // How many messages are asked for.
+  int32 message_count = 5;
+}
+// What two counterparties agree on for one FIXP service, layer by layer, for the client and for the server.
+message FixpRulesOfEngagement {
+  // The identifier of an exchange or a rules-of-engagement record.
+  string id = 1;
+  // Free text about a record, for the people who read it.
+  string description = 2;
+  // What the client side uses.
+  FixpStackProfile client_stack = 3;
+  // What the server side uses.
+  FixpStackProfile server_stack = 4;
+}
+// Starts the numbering of a sequenced flow, so that the application messages after it are numbered by counting up from the value it carries. Sent when idle, it is also the heartbeat.
+message FixpSequence {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The number the sender's next application message will carry.
+  int32 next_seq_no = 2;
+}
+// One side's choices at each layer of the stack: application, presentation, session, security and transport.
+message FixpStackProfile {
+  // Whether this side's applications recover lost messages themselves.
+  bool application_recovery = 1;
+  // The FIX version of the application messages, such as FIX.Latest.
+  string application_fix_version = 2;
+  // The FIX service pack, where the version has them.
+  string service_pack = 3;
+  // The FIX extension packs in use.
+  repeated string extension_packs = 4;
+  // How messages are encoded, such as Simple Binary Encoding.
+  string message_encoding = 5;
+  // The version of that encoding.
+  string encoding_version = 6;
+  // The message schemas or templates the encoding uses.
+  repeated string message_schemas = 7;
+  // What marks where one message ends and the next begins, such as the Simple Open Framing Header.
+  string framing = 8;
+  // The flow types this side accepts or offers.
+  repeated FixpFlowType supported_flow_types = 9;
+  // The TLS version that protects the transport.
+  string tls_version = 10;
+  // How the parties prove who they are.
+  repeated string authentication_methods = 11;
+  // The cipher suites allowed.
+  repeated string cipher_suites = 12;
+  // The transports this side can use, for example TCP, or UDP with multicast.
+  repeated string transports = 13;
+  // Any other network protocols in use.
+  repeated string network_protocols = 14;
+}
+// Releases the session from its transport without ending the session, which can be bound again later. The peer answers with a Terminate, and after its own Terminate a party sends nothing more.
+message FixpTerminate {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // Why the party releases the session from the transport.
+  FixpTerminationCode termination_code = 3;
+  // Free text that says more about the code beside it.
+  string reason_text = 4;
+}
+// A multicast publisher's notice that starts a flow and ties the session's short-lived identifier to a lasting subject. It is repeated so that late listeners can join.
+message FixpTopic {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+  // The session's identifier, which the client chooses and never uses again.
+  string session_id = 2;
+  // The flow type of a multicast topic's messages.
+  FixpMulticastFlowType flow = 3;
+  // The publisher's heartbeat interval, in milliseconds.
+  int32 keepalive_interval = 4;
+  // The lasting subject of a topic's messages, such as a product type or a market symbol.
+  string topic_classification = 5;
+}
+// Shows the peer that the session and transport are alive when the sender's flow is unsequenced or empty. It has no fields.
+message FixpUnsequencedHeartbeat {
+  // The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+  string message_kind = 1;
+}
+
+// Why a server would not bind the session to this transport.
+enum FixpEstablishmentRejectCode {
+  FIXP_ESTABLISHMENT_REJECT_CODE_UNSPECIFIED = 0;
+  FIXP_ESTABLISHMENT_REJECT_CODE_UNNEGOTIATED = 1;
+  FIXP_ESTABLISHMENT_REJECT_CODE_ALREADY_ESTABLISHED = 2;
+  FIXP_ESTABLISHMENT_REJECT_CODE_SESSION_BLOCKED = 3;
+  FIXP_ESTABLISHMENT_REJECT_CODE_KEEPALIVE_INTERVAL = 4;
+  FIXP_ESTABLISHMENT_REJECT_CODE_CREDENTIALS = 5;
+  FIXP_ESTABLISHMENT_REJECT_CODE_UNSPECIFIED_V2 = 6;
+}
+// How surely a flow is delivered. A flow is what one side of a session sends the other, leaving out session messages.
+enum FixpFlowType {
+  FIXP_FLOW_TYPE_UNSPECIFIED = 0;
+  FIXP_FLOW_TYPE_RECOVERABLE = 1;
+  FIXP_FLOW_TYPE_IDEMPOTENT = 2;
+  FIXP_FLOW_TYPE_UNSEQUENCED = 3;
+  FIXP_FLOW_TYPE_NONE = 4;
+}
+// The delivery guarantee a multicast topic announces for its flow.
+enum FixpMulticastFlowType {
+  FIXP_MULTICAST_FLOW_TYPE_UNSPECIFIED = 0;
+  FIXP_MULTICAST_FLOW_TYPE_RECOVERABLE = 1;
+  FIXP_MULTICAST_FLOW_TYPE_IDEMPOTENT = 2;
+}
+// Why a server refused to create a session.
+enum FixpNegotiationRejectCode {
+  FIXP_NEGOTIATION_REJECT_CODE_UNSPECIFIED = 0;
+  FIXP_NEGOTIATION_REJECT_CODE_CREDENTIALS = 1;
+  FIXP_NEGOTIATION_REJECT_CODE_FLOW_TYPE_NOT_SUPPORTED = 2;
+  FIXP_NEGOTIATION_REJECT_CODE_DUPLICATE_ID = 3;
+  FIXP_NEGOTIATION_REJECT_CODE_UNSPECIFIED_V2 = 4;
+}
+// The side that sends a step.
+enum FixpParty {
+  FIXP_PARTY_UNSPECIFIED = 0;
+  FIXP_PARTY_CLIENT = 1;
+  FIXP_PARTY_SERVER = 2;
+  FIXP_PARTY_PUBLISHER = 3;
+}
+// Why a party will not resend the messages its peer asked for.
+enum FixpRetransmitRejectCode {
+  FIXP_RETRANSMIT_REJECT_CODE_UNSPECIFIED = 0;
+  FIXP_RETRANSMIT_REJECT_CODE_OUT_OF_RANGE = 1;
+  FIXP_RETRANSMIT_REJECT_CODE_INVALID_SESSION = 2;
+  FIXP_RETRANSMIT_REJECT_CODE_REQUEST_LIMIT_EXCEEDED = 3;
+}
+// The two forms of FIXP session.
+enum FixpSessionKind {
+  FIXP_SESSION_KIND_UNSPECIFIED = 0;
+  FIXP_SESSION_KIND_POINT_TO_POINT = 1;
+  FIXP_SESSION_KIND_MULTICAST = 2;
+}
+// Why a party releases a session from its transport.
+enum FixpTerminationCode {
+  FIXP_TERMINATION_CODE_UNSPECIFIED = 0;
+  FIXP_TERMINATION_CODE_FINISHED = 1;
+  FIXP_TERMINATION_CODE_UNSPECIFIED_ERROR = 2;
+  FIXP_TERMINATION_CODE_RE_REQUEST_OUT_OF_BOUNDS = 3;
+  FIXP_TERMINATION_CODE_RE_REQUEST_IN_PROGRESS = 4;
+}

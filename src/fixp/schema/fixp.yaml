@@ -1,0 +1,45 @@
+---
+id: https://w3id.org/lmodel/fixp
+name: fixp
+title: FIX Performance Session Layer (FIXP)
+description: >-
+  A LinkML model of the FIX Performance Session Layer 1.0, the FIX Trading Community's session
+  protocol for fast trading links. It describes FIXP's session messages, their fields and value
+  lists, exchanges of those messages on one session, and the rules of engagement two parties
+  agree on. A message is described by its fields, so the model works with any encoding.
+version: "1.0"
+source: https://github.com/FIXTradingCommunity/fixp-specification/tree/v1.0-STANDARD/v1-0-STANDARD
+license: Apache-2.0
+keywords:
+  - FIX
+  - FIXP
+  - session layer
+  - trading
+see_also:
+  - https://lmodel.github.io/fixp
+  - https://github.com/FIXTradingCommunity/fixp-specification
+annotations:
+  upstream_tag: v1.0-STANDARD
+  upstream_commit: 6d89f5fa66d544ea6b41e93853c23292505e49c6
+comments:
+  - >-
+    An exchange starts at FixpExchange, the tree root. A single message validates against its
+    own class, such as FixpNegotiate, and a rules-of-engagement record against
+    FixpRulesOfEngagement. upstream/ holds the specification's resource files unchanged,
+    tests/test_coverage.py compares the modules with them, and scripts/check_upstream_release.py
+    reports when they change.
+prefixes:
+  fixp: https://w3id.org/lmodel/fixp/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+  fix_sbe: https://w3id.org/lmodel/fix-sbe/
+  fix_orchestra: https://w3id.org/lmodel/fix-orchestra/
+default_prefix: fixp
+default_range: string
+
+imports:
+  - linkml:types
+  - ./fixp_core
+  - ./fixp_messages
+  - ./fixp_exchange
+  - ./fixp_engagement
