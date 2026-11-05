@@ -192,6 +192,13 @@ def test_copy_roots_the_concept_classes():
     assert not any(cls.get("tree_root") for cls in doc["classes"].values())
 
 
+def test_the_readme_lists_the_concept_types():
+    """The README's Known LOKF types block names each class a concept may use."""
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    for name in ROOTS:
+        assert name in readme, name
+
+
 def test_mappings_use_a_bound_prefix():
     """A mapping in the copy names its target by a prefix the copy binds, so a projection of the
     copy raises no namespace warning."""
