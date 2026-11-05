@@ -11,6 +11,7 @@ from linkml.validator import validate
 from linkml_runtime import SchemaView
 
 from tests.paths import DATA, SCHEMA
+
 VALID = sorted((DATA / "valid").glob("*.yaml"))
 INVALID = sorted((DATA / "invalid").glob("*.yaml"))
 

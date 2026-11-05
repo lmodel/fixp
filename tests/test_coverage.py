@@ -120,7 +120,8 @@ def test_each_class_holds_its_sbe_messages_fields(node):
     fields = [child for child in node if child.tag in ("field", "data")]
     slots = _fields(cls)
     assert [f.get("name") for f in fields] == [
-        next(a for a in s.aliases if a in {f.get("name") for f in fields}) for s in slots
+        next(a for a in s.aliases if a in {f.get("name") for f in fields})
+        for s in slots
     ]
     for field, slot in zip(fields, slots):
         name = field.get("name")
@@ -147,9 +148,7 @@ def test_every_sbe_type_has_its_type():
     types = sbe().find("types")
     simple = {n.get("name"): n for n in types.findall("type")}
     composite = {n.get("name") for n in types.findall("composite")}
-    by_sbe_type = {
-        _annotation(t, "sbe_type"): t for t in view().all_types().values()
-    }
+    by_sbe_type = {_annotation(t, "sbe_type"): t for t in view().all_types().values()}
     # messageHeader is SBE's frame around every message, which this schema leaves to the
     # encoding.
     assert set(simple) | composite - {"messageHeader"} == set(by_sbe_type) - {None}
@@ -170,9 +169,7 @@ def test_every_sbe_enum_has_its_enum():
     for name, node in enums.items():
         enum = by_sbe_name[name]
         assert _annotation(enum, "sbe_encoding_type") == node.get("encodingType")
-        assert {
-            v.get("name"): v.text.strip() for v in node.findall("validValue")
-        } == {
+        assert {v.get("name"): v.text.strip() for v in node.findall("validValue")} == {
             value: _annotation(pv, "sbe_value")
             for value, pv in enum.permissible_values.items()
         }
@@ -245,7 +242,8 @@ def test_the_orchestra_file_agrees_with_the_repository_file():
     and presence as the repository file, so the tests above cover it too."""
     fields = _repository_fields(repository())
     orchestra_fields = {
-        n.get("id"): n for n in orchestra().find(f"{FIXR}fields").findall(f"{FIXR}field")
+        n.get("id"): n
+        for n in orchestra().find(f"{FIXR}fields").findall(f"{FIXR}field")
     }
     assert set(fields) == set(orchestra_fields)
     code_sets = {
@@ -283,7 +281,9 @@ def test_every_departure_is_still_needed():
         root = files[entry["file"]]
         if entry["file"] == SBE_SCHEMA.name:
             message = next(
-                n for n in root.iter(f"{SBE}message") if n.get("name") == entry["message"]
+                n
+                for n in root.iter(f"{SBE}message")
+                if n.get("name") == entry["message"]
             )
             field = next(n for n in message if n.get("name") == entry["field"])
             said = (
@@ -298,7 +298,9 @@ def test_every_departure_is_still_needed():
                 if n.get("name") == entry["message"]
             )
             field = next(
-                n for n in message.findall("fieldRef") if n.get("name") == entry["field"]
+                n
+                for n in message.findall("fieldRef")
+                if n.get("name") == entry["field"]
             )
             said = "required" if field.get("required") == "1" else "optional"
         assert said == entry["file_says"], entry

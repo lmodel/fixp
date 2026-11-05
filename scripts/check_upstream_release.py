@@ -204,7 +204,9 @@ def check_edition() -> tuple[list[str], bool]:
             "edition moved before trusting the copy in upstream/."
         )
     expected = {
-        path: sha for path, sha in _pins_of(SPEC).items() if path.startswith(f"{FOLDER}/")
+        path: sha
+        for path, sha in _pins_of(SPEC).items()
+        if path.startswith(f"{FOLDER}/")
     }
     lines += _compare(_blobs(SPEC, commit), expected, f"at {TAG}")
     lines += _compare(_blobs(SPEC, BRANCH), expected, f"on {BRANCH}")
