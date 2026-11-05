@@ -24,6 +24,7 @@ from tests.paths import ORCHESTRA, REPOSITORY, ROOT, SBE_SCHEMA, SCHEMA_DIR
 
 RUN = 4
 WORD = re.compile(r"[a-z0-9]+")
+ADDRESS = re.compile(r"https?://\S+")
 
 # Names, not statements: a run inside one of these does not count, and no run crosses one.
 NAMES = (
@@ -34,12 +35,13 @@ NAMES = (
     "fix protocol limited",
     "fix protocol ltd",
     "creative commons attribution noderivatives 4 0 international public license",
+    "cc by nd 4 0",
 )
 
 
 def _runs(text):
-    """Every run of four words in the text, with names cut out."""
-    words = " ".join(WORD.findall(text.lower()))
+    """Every run of four words in the text, with names and web addresses cut out."""
+    words = " ".join(WORD.findall(ADDRESS.sub("|", text.lower())))
     for name in NAMES:
         words = words.replace(name, "|")
     runs = set()
