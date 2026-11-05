@@ -3335,9 +3335,6 @@ classes:
       fixp_sent_by:
         tag: fixp_sent_by
         value: publisher
-      fixp_flow_types:
-        tag: fixp_flow_types
-        value: Recoverable Idempotent
       fixp_multicast:
         tag: fixp_multicast
         value: 'true'

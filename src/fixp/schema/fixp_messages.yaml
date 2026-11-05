@@ -16,9 +16,10 @@ notes:
     Every class carries these annotations. sbe_template_id and sbe_name are the message's id
     and name in the SBE schema and the FIX repository file. fixp_sent_by says which side sends
     it: the client, the server, the publisher, or any. fixp_flow_types lists the flow types the
-    summary in section 6 allows it on, and fixp_multicast says whether a multicast session uses
-    it. Where a message concerns one flow, fixp_flow_of says whose: own for the flow its sender
-    sends, peer for the flow its sender receives. tests/fixp_rules.py reads them.
+    summary in section 6 allows it on in a point-to-point session, where it has any, and
+    fixp_multicast says whether a multicast session uses it. Where a message concerns one
+    flow, fixp_flow_of says whose: own for the flow its sender sends, peer for the flow its
+    sender receives. tests/fixp_rules.py reads them.
 prefixes:
   fixp: https://w3id.org/lmodel/fixp/
   linkml: https://w3id.org/linkml/
@@ -139,7 +140,6 @@ classes:
       sbe_template_id: "4"
       sbe_name: Topic
       fixp_sent_by: publisher
-      fixp_flow_types: Recoverable Idempotent
       fixp_multicast: "true"
 
   FixpEstablish:

@@ -4612,11 +4612,6 @@
           "@type": "Annotation"
         },
         {
-          "tag": "fixp_flow_types",
-          "value": "Recoverable Idempotent",
-          "@type": "Annotation"
-        },
-        {
           "tag": "fixp_multicast",
           "value": "true",
           "@type": "Annotation"

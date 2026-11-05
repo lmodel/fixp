@@ -451,7 +451,6 @@ fixp:FixpTopic a owl:Class ;
 	rdfs:subClassOf fixp:FixpMessage , _:c14n114 , _:c14n154 , _:c14n203 , _:c14n261 , _:c14n289 , _:c14n304 , _:c14n308 , _:c14n311 , _:c14n317 , _:c14n46 , _:c14n64 , _:c14n70 ;
 	skos:definition "A multicast publisher's notice that starts a flow and ties the session's short-lived identifier to a lasting subject. It is repeated so that late listeners can join." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
-	fixp:fixp_flow_types "Recoverable Idempotent" ;
 	fixp:fixp_multicast "true" ;
 	fixp:fixp_sent_by "publisher" ;
 	fixp:sbe_name "Topic" ;

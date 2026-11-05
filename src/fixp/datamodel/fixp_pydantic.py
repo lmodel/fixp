@@ -525,9 +525,7 @@ class FixpTopic(FixpMessage):
     """
     A multicast publisher's notice that starts a flow and ties the session's short-lived identifier to a lasting subject. It is repeated so that late listeners can join.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'fixp_flow_types': {'tag': 'fixp_flow_types',
-                                             'value': 'Recoverable Idempotent'},
-                         'fixp_multicast': {'tag': 'fixp_multicast', 'value': 'true'},
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'annotations': {'fixp_multicast': {'tag': 'fixp_multicast', 'value': 'true'},
                          'fixp_sent_by': {'tag': 'fixp_sent_by', 'value': 'publisher'},
                          'sbe_name': {'tag': 'sbe_name', 'value': 'Topic'},
                          'sbe_template_id': {'tag': 'sbe_template_id', 'value': '4'}},
