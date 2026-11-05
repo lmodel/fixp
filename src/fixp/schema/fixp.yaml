@@ -21,6 +21,10 @@ see_also:
 annotations:
   upstream_tag: v1.0-STANDARD
   upstream_commit: 6d89f5fa66d544ea6b41e93853c23292505e49c6
+  sbe_package: FIXP
+  sbe_schema_id: "2748"
+  sbe_schema_version: "0"
+  sbe_byte_order: littleEndian
 comments:
   - >-
     An exchange starts at FixpExchange, the tree root. A single message validates against its

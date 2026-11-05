@@ -66,7 +66,13 @@ class LinkMLMeta(RootModel):
         return key in self.root
 
 
-linkml_meta = LinkMLMeta({'annotations': {'upstream_commit': {'tag': 'upstream_commit',
+linkml_meta = LinkMLMeta({'annotations': {'sbe_byte_order': {'tag': 'sbe_byte_order',
+                                        'value': 'littleEndian'},
+                     'sbe_package': {'tag': 'sbe_package', 'value': 'FIXP'},
+                     'sbe_schema_id': {'tag': 'sbe_schema_id', 'value': '2748'},
+                     'sbe_schema_version': {'tag': 'sbe_schema_version',
+                                            'value': '0'},
+                     'upstream_commit': {'tag': 'upstream_commit',
                                          'value': '6d89f5fa66d544ea6b41e93853c23292505e49c6'},
                      'upstream_tag': {'tag': 'upstream_tag',
                                       'value': 'v1.0-STANDARD'}},

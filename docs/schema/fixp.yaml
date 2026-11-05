@@ -6,6 +6,18 @@ annotations:
   upstream_commit:
     tag: upstream_commit
     value: 6d89f5fa66d544ea6b41e93853c23292505e49c6
+  sbe_package:
+    tag: sbe_package
+    value: FIXP
+  sbe_schema_id:
+    tag: sbe_schema_id
+    value: '2748'
+  sbe_schema_version:
+    tag: sbe_schema_version
+    value: '0'
+  sbe_byte_order:
+    tag: sbe_byte_order
+    value: littleEndian
 description: A LinkML model of the FIX Performance Session Layer 1.0, the FIX Trading
   Community's session protocol for fast trading links. It describes FIXP's session
   messages, their fields and value lists, exchanges of those messages on one session,
@@ -554,8 +566,8 @@ enums:
     description: The delivery guarantee a multicast topic announces for its flow.
     comments:
     - Section 5 and the repository file allow these two values. Section 3 allows a
-      multicast Idempotent alone, and the SBE schema reuses the four-value FlowType;
-      tests/upstream_departures.yaml records both.
+      multicast Idempotent alone, and the SBE schema reuses the four-value FlowType,
+      which tests/upstream_departures.yaml records.
     from_schema: https://w3id.org/lmodel/fixp/schema/fixp_core
     permissible_values:
       Recoverable:
@@ -4256,6 +4268,6 @@ classes:
     class_uri: fixp:FixpStackProfile
 metamodel_version: 1.12.0
 source_file: fixp.yaml
-source_file_date: '2026-11-05T21:30:57'
-source_file_size: 1646
+source_file_date: '2026-11-05T21:36:42'
+source_file_size: 1747
 

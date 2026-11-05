@@ -22,6 +22,10 @@ xsd:base64Binary a rdfs:Datatype ;
 	rdfs:seeAlso <https://github.com/FIXTradingCommunity/fixp-specification> , <https://lmodel.github.io/fixp> ;
 	skos:definition "A LinkML model of the FIX Performance Session Layer 1.0, the FIX Trading Community's session protocol for fast trading links. It describes FIXP's session messages, their fields and value lists, exchanges of those messages on one session, and the rules of engagement two parties agree on. A message is described by its fields, so the model works with any encoding." ;
 	skos:note "An exchange starts at FixpExchange, the tree root. A single message validates against its own class, such as FixpNegotiate, and a rules-of-engagement record against FixpRulesOfEngagement. upstream/ holds the specification's resource files unchanged, tests/test_coverage.py compares the modules with them, and scripts/check_upstream_release.py reports when they change." ;
+	fixp:sbe_byte_order "littleEndian" ;
+	fixp:sbe_package "FIXP" ;
+	fixp:sbe_schema_id "2748" ;
+	fixp:sbe_schema_version "0" ;
 	fixp:upstream_commit "6d89f5fa66d544ea6b41e93853c23292505e49c6" ;
 	fixp:upstream_tag "v1.0-STANDARD" .
 fixp:FixpApplied a owl:Class ;
@@ -212,7 +216,7 @@ fixp:FixpMulticastFlowType a owl:Class ;
 	owl:unionOf _:c14n12 ;
 	skos:definition "The delivery guarantee a multicast topic announces for its flow." ;
 	skos:inScheme fixp:schema\/fixp_core ;
-	skos:note "Section 5 and the repository file allow these two values. Section 3 allows a multicast Idempotent alone, and the SBE schema reuses the four-value FlowType; tests/upstream_departures.yaml records both." ;
+	skos:note "Section 5 and the repository file allow these two values. Section 3 allows a multicast Idempotent alone, and the SBE schema reuses the four-value FlowType, which tests/upstream_departures.yaml records." ;
 	linkml:permissible_values fixp:FixpMulticastFlowType\#Idempotent , fixp:FixpMulticastFlowType\#Recoverable ;
 	fixp:repository_code_set "FlowCodeSet" .
 fixp:FixpNanotime a rdfs:Datatype ;

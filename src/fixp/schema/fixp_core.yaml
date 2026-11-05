@@ -174,8 +174,8 @@ enums:
     comments:
       - >-
         Section 5 and the repository file allow these two values. Section 3 allows a
-        multicast Idempotent alone, and the SBE schema reuses the four-value FlowType;
-        tests/upstream_departures.yaml records both.
+        multicast Idempotent alone, and the SBE schema reuses the four-value FlowType, which
+        tests/upstream_departures.yaml records.
     annotations:
       repository_code_set: FlowCodeSet
     permissible_values:
