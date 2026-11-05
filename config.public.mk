@@ -8,7 +8,7 @@
 # - just works fine with quoted variables of dot-env files like this one
 LINKML_SCHEMA_NAME="fixp"
 LINKML_SCHEMA_AUTHOR="Noel McLoughlin <noel.mcloughlin@gmail.com>"
-LINKML_SCHEMA_DESCRIPTION="FIX Performance (FIXP) protocol - LinkML Schema"
+LINKML_SCHEMA_DESCRIPTION="FIX Performance Session Layer (FIXP) 1.0 (LinkML)"
 LINKML_SCHEMA_SOURCE_DIR="src/fixp/schema"
 
 ###### linkml generator variables, used by justfile

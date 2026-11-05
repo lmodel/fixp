@@ -142,3 +142,11 @@ dmypy.json
 .idea
 # Local vscode editor config
 .vscode
+
+# Agent skills are installed at run time, never committed.
+.agents/
+.claude/
+skills-lock.json
+
+# The release job's tools, installed from .github/release/package-lock.json
+/.github/release/node_modules/
