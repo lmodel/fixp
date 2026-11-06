@@ -37,7 +37,7 @@ Where the files and the specification's tables disagree, the schema accepts both
 
 ## Rules that span an exchange
 
-JSON Schema checks each message by itself. `tests/fixp_rules.py` checks what the specification states about one step against the steps before it, and each rule has a counter-example in `tests/test_rules.py`. That test also holds a few steps the specification allows to every rule, such as appendix A's session bound again after Terminate, so a rule that refuses one fails.
+JSON Schema checks each message by itself. `tests/fixp_rules.py` checks what the specification states about one step against the steps before it, and each rule has a counter-example in `tests/test_rules.py`. That test also holds a few steps the specification allows to every rule, such as appendix A's session bound again after Terminate, so a rule that refuses one fails. The rules read an exchange from the session's first message, so a log of a later binding starts with the negotiation it continues.
 
 - **Who sends what.** A message comes from the side its class names: Negotiate and Establish from the client, their answers from the server, Topic from a publisher. Only the publisher sends on a multicast, and a message section 6 leaves off a multicast, or off a session between two parties, is refused there.
 - **Flow types.** A message that concerns one flow suits that flow's type, by the summary in section 6. Sequence goes only on a sequenced flow, UnsequencedHeartbeat only where the flow is unsequenced or empty, RetransmitRequest only towards a recoverable one, and Applied and NotApplied only back to an idempotent one. A session's two flows cannot both be None, and the side whose flow is None sends no application message.
