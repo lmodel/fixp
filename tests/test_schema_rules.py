@@ -41,6 +41,12 @@ NEIGHBOURS = {
     "datatype.yaml": "52fe21c1cd4675b851a26947b69ae9a3b5b68ead592711b23a6552866ec6f933",
     # lmodel/dpv v0.1.0
     "dpv.yaml": "388ca72d90615903c6d57b6d0856e71fcf77a3b07a318cf2b2bee0224930b362",
+    # lmodel/fix-orchestra v0.1.0
+    "fix-orchestra.yaml": "68574443d6a144f1e9c4f453fea67ad421bf05186cdce972c45e1ac00111f4a8",
+    # lmodel/fix-protocol v0.1.0
+    "fix-protocol.yaml": "a2e7c62dbf856298b9c93c8d6eb93365690f768b0f0b00dbf17ad14384a76d02",
+    # lmodel/fix-sbe v0.1.0
+    "fix-sbe.yaml": "894cc3948e8283ab09f96a27ad8cbacbd19dcd9a7d8ae46acb9f3c166d53a353",
     # lmodel/gist v0.7.1
     "gist.yaml": "f7283f1c1df4aa6b6e2803e0645c2b1cb2eab37815642a6616d8034feb26d94d",
     # lmodel/github-actions v0.5.0
@@ -83,10 +89,6 @@ NEIGHBOURS = {
     "void.yaml": "8c21583f49b860e38cc2ee4312a9ef5242300989915bda6fa7a2dd1d0b252051",
 }
 
-# lmodel/fix-orchestra, fix-sbe and fix-protocol have no release yet. A copy from a branch may
-# sit in tests/neighbours/ for one run, so that tests/test_mappings.py can hold each mapping to
-# it. Each joins NEIGHBOURS at its release.
-UNRELEASED = {"fix-orchestra.yaml", "fix-sbe.yaml", "fix-protocol.yaml"}
 ELEMENT_KINDS = ("classes", "enums", "types", "subsets")
 
 # The classes `just lokf-adapt` re-roots on Concept: what a person documents as a concept.
@@ -144,7 +146,7 @@ def _source():
 
 def test_neighbours_are_the_released_assets():
     """Each neighbour copy is byte for byte the file pinned above."""
-    assert {p.name for p in NEIGHBOUR_DIR.iterdir()} - UNRELEASED == set(NEIGHBOURS)
+    assert {p.name for p in NEIGHBOUR_DIR.iterdir()} == set(NEIGHBOURS)
     for name, sha256 in NEIGHBOURS.items():
         digest = hashlib.sha256((NEIGHBOUR_DIR / name).read_bytes()).hexdigest()
         assert digest == sha256, name
