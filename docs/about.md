@@ -54,6 +54,10 @@ JSON Schema checks each message by itself. `tests/fixp_rules.py` checks what the
 - Timing. Keep-alive intervals, timeouts and retries are about when a message is sent, which a record of the messages cannot show.
 - Application messages, whose content FIXP does not define. An exchange counts them, so that the sequence numbers add up.
 
+## Your own text
+
+The descriptions here are the project's own, and FIX's words stay in FIX's documents: the resource files whole in `upstream/`, and the chapters in FIX's repository. Each element's aliases and numbers name its place in them, so a reader who holds FIX's text can join the two. A firm that documents how it runs FIXP has two places for its own words. A rules-of-engagement record holds what two parties agreed, in its fields and its `description`. An Orchestra file, the form the FIX standards give for documenting messages, names FIXP's messages and fields by the numbers these annotations give, carries the firm's text and limits, and validates against [lmodel/fix-orchestra](https://github.com/lmodel/fix-orchestra). The schema adds no slot or overlay for either, since a schema with FIX's words woven in could not be shared under CC BY-ND.
+
 ## What FIX's files show
 
 The project leaves these faults in FIX's files as they are.
