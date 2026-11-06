@@ -6,6 +6,8 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-06
+
 ### Added
 
 - **`upstream/`**, holding FIXP 1.0's SBE schema, FIX repository file and Orchestra file with their licence, at the tag `v1.0-STANDARD`, pinned by git object hash, with a weekly watch.
