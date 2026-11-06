@@ -1,6 +1,6 @@
 # About fixp
 
-This page says how the schema reads FIXP, where each part comes from, and what the model leaves out. It is for someone who will use the schema or change it.
+This page says how the schema reads FIXP, where each part comes from, and what the model leaves out.
 
 ## One edition
 
@@ -8,11 +8,11 @@ The schema models FIXP 1.0, the Technical Standard the FIX Trading Community app
 
 ## A message as a record
 
-FIXP describes a message by its fields and leaves the wire format to the encoding, so a record is the message's fields as YAML or JSON, whatever the encoding. Each message is a class with the `Fixp` prefix, and its fields keep the specification's order. `message_kind` names the class, as FIXP's MessageType names the message.
+FIXP describes a message by its fields and leaves the wire format to the encoding, so a record is those fields as YAML or JSON. Each message is a class with the `Fixp` prefix, and its fields keep the specification's order. `message_kind` names the class, as FIXP's MessageType names the message.
 
 Each field is a snake_case slot, and the slot's aliases give FIXP's name. Seven take a different word, because the plain one is taken elsewhere in the family: `Timestamp` is `request_time`, `Reason` is `reason_text`, `Classification` is `topic_classification`, `Count` is `message_count`, `EncodingType` is `sofh_encoding_type`, `Version` is `template_version`, and each `Code` is named for its list, such as `termination_code`.
 
-The datatypes are FIXP's own: unsigned numbers of 8 to 64 bits, a version 4 UUID, nanoseconds since the Unix epoch, milliseconds, opaque octets and text. The octets are written in base64, which is this schema's choice: FIXP leaves the wire form to the encoding.
+The datatypes are FIXP's own: unsigned numbers of 8 to 64 bits, a version 4 UUID, nanoseconds since the Unix epoch, milliseconds, opaque octets and text. The octets are written in base64, which is this schema's choice.
 
 Two records that are not messages hold what a session needs around them. `FixpExchange` is a run of steps on one session, each a message or a count of application messages, and the specification's appendix A describes many such runs. `FixpRulesOfEngagement` is the checklist of appendix B: what the client and the server each use at each layer of the stack.
 
@@ -47,7 +47,7 @@ JSON Schema checks each message by itself. `tests/fixp_rules.py` checks what the
 
 ## What FIX's files show
 
-The issues below are reported to the FIX Trading Community, not mended here.
+The project leaves these faults in FIX's files as they are.
 
 - The Orchestra file is not well-formed XML: line 733 closes the UnsequencedHeartbeat message, and line 735 closes it again. The tests read it in recovery mode, and it agrees with the repository file.
 - The SBE schema numbers Topic's `Flow` 8, which is `Reason`'s number in four other messages, and numbers the four fields of `MessageTemplate` one lower than the repository file does.
