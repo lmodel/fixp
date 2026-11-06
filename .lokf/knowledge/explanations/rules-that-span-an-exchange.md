@@ -25,7 +25,7 @@ status: draft
 
 JSON Schema checks each message by itself. The rules compare one step of an exchange with the steps before it, and each has a counter-example.[^about.md]
 
-The module reports seventeen rules, and each has a case that breaks it alone.[^test_rules.py]
+`tests/fixp_rules.py` reports seventeen rules, and each has a test case that breaks that rule and no other.[^test_rules.py]
 
 [^about.md]: docs/about.md, Rules that span an exchange
 [^test_rules.py]: tests/test_rules.py, test_every_rule_has_a_case

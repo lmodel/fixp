@@ -21,6 +21,6 @@ status: draft
 
 # The upstream check
 
-The script compares git object hashes and downloads no file. It reads nothing from fixtrading.org, whose terms bar automated copying, and exits 1 on any finding.[^check]
+The script compares git object hashes and downloads no file. It reads nothing from fixtrading.org, whose terms bar automated copying. It exits 1 on any finding.[^check]
 
 [^check]: scripts/check_upstream_release.py, the module's description

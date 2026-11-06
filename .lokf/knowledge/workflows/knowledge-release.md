@@ -20,6 +20,6 @@ status: draft
 
 # Knowledge release (knowledge-release.yaml)
 
-The workflow does nothing until it is dispatched, and only its `attach` job, which runs no third-party packages, can write.[^security.md]
+The workflow does nothing until it is dispatched. Only its `attach` job can write, and that job runs no third-party packages.[^security.md]
 
 [^security.md]: SECURITY.md, What this repository releases and What executes here

@@ -27,7 +27,7 @@ status: draft
 
 The copy roots an exchange and a rules-of-engagement record on `Concept`, and `just lokf-adapt-check` says when it is stale. It keeps `message_kind` as a plain key, so inside a concept a message is matched by its fields.[^readme.md]
 
-It keeps every class and slot of the source but `id`, which it drops for LOKF's, and `description`, which it folds into LOKF's, and it renames nothing.[^test_schema_rules.py]
+It keeps every class and slot of the source, with two exceptions: it drops `id` for LOKF's, and folds `description` into LOKF's. It renames nothing.[^test_schema_rules.py]
 
 [^readme.md]: README.md, Knowledge Trust Ladder (KTL)
 [^test_schema_rules.py]: tests/test_schema_rules.py, test_the_copy_keeps_each_class_and_slot and test_copy_roots_the_concept_classes

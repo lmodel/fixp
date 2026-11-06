@@ -20,7 +20,7 @@ status: draft
 
 # The neighbours' copies
 
-Each copy is pinned by its SHA-256 checksum. A class, enum, type or subset of this copy is its own, and a key it shares with a neighbour has the same IRI in both.[^test_schema_rules.py]
+Each copy is pinned by its SHA-256 checksum. No neighbour declares a class, enum, type or subset of this copy, and a key the copy shares with a neighbour has the same IRI in both.[^test_schema_rules.py]
 
 lmodel/fix-orchestra, fix-sbe and fix-protocol have no release yet. A copy from a branch may sit in the folder for one run, and each joins the pinned list at its release.[^test_schema_rules.py]
 

@@ -28,7 +28,7 @@ status: draft
 
 # The fixp LinkML schema
 
-The header pins FIXP 1.0 at the tag `v1.0-STANDARD`, commit `6d89f5f`, and names the SBE schema's package `FIXP`, its id 2748, its version 0 and its byte order, `littleEndian`.[^schema]
+The header pins FIXP 1.0 at the tag `v1.0-STANDARD`, commit `6d89f5f`. It also names the SBE schema's package, `FIXP`, its id, 2748, its version, 0, and its byte order, `littleEndian`.[^schema]
 
 An exchange starts at `FixpExchange`, the tree root. A single message validates against its own class, and a rules-of-engagement record against `FixpRulesOfEngagement`.[^schema]
 

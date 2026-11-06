@@ -26,7 +26,7 @@ status: draft
 
 # The generated artefacts
 
-`just gen-project`, `just gen-doc` and `just lokf-adapt` write them, and a change to the schema commits their output with it.[^contributing.md]
+`just gen-project`, `just gen-doc` and `just lokf-adapt` write them, and their output is committed with the schema change.[^contributing.md]
 
 A test fails when the committed JSON Schema is not what the generator writes from the schema today.[^test_generated_json_schema.py]
 

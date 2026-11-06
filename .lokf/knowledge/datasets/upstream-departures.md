@@ -25,7 +25,7 @@ status: draft
 
 The coverage test skips exactly the differences the file lists, and fails when one is no longer there, so a mended file is noticed.[^departures]
 
-Each listed departure names a field the files really state otherwise.[^test_coverage.py]
+Each departure in the list names a field that the files do state otherwise.[^test_coverage.py]
 
 [^departures]: tests/upstream_departures.yaml, the header
 [^test_coverage.py]: tests/test_coverage.py, test_every_departure_is_still_needed
