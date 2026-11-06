@@ -45,7 +45,7 @@ JSON Schema checks each message by itself. `tests/fixp_rules.py` checks what the
 - **Answers.** An answer repeats the request_time of the request it answers. A party has no more than one RetransmitRequest open, and a request stays open until the batch that answers it has been resent. It asks only for numbers its peer has reached: those the peer sent, and those below the last NextSeqNo the peer gave.
 - **Resending.** After a batch of resent messages, a party sends Sequence or Context before it goes back to new ones.
 - **Endings.** FinishedReceiving answers the peer's FinishedSending. After its own FinishedSending, a party sends no new application message and repeats FinishedSending where it would send a heartbeat, though it still resends what its peer asks for. After its own FinishedReceiving, it sends no new application message. FinishedSending gives `last_seq_no` on a sequenced flow, and the number lies between the flow's last message and the last NextSeqNo it gave. A party sends nothing after its own Terminate until the client's next Establish ties the session to another transport.
-- **Transport.** A transport that carries one session sees one session identifier and takes Sequence, and a shared one takes Context. A reject may repeat the other identifier a request named, as InvalidSession's does.
+- **Transport.** A transport that carries one session sees one session identifier and takes Sequence, and a shared one takes Context. RetransmitRequest and its answers may name another session, as a multicast's recovery session does, and a reject may repeat the identifier its request named.
 
 ## What the model leaves out
 

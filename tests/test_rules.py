@@ -155,8 +155,8 @@ def _second_session_id(r):
 
 
 def _request_for_another_session(r):
-    """Appendix A's unknown-session dialog: the request names another session, and the
-    reject that repeats that identifier is the right answer, not a second fault."""
+    """A request that names another session, as a multicast's recovery session sends, or as in
+    appendix A's unknown-session dialog, and the reject that repeats its identifier."""
     other = "9531985d-5d9d-49f8-9818-e811892f902b"
     index = _step(r, "FixpRetransmitRequest")
     r["exchange_steps"][index:index] = [
@@ -471,11 +471,6 @@ CASES = {
     "one-none-flow": ("recoverable-session", _two_none_flows, 1),
     "no-application-on-none-flow": ("multiplexed", _application_on_a_none_flow, 5),
     "session-id": ("recoverable-session", _second_session_id, 11),
-    "session-id of a request for another session": (
-        "recoverable-session",
-        _request_for_another_session,
-        8,
-    ),
     "sequence-before-sequenced": (
         "recoverable-session",
         _application_before_sequence,
@@ -510,6 +505,10 @@ KEPT = {
     "new messages behind a Sequence after resent ones": (
         "recoverable-session",
         _new_messages_behind_a_sequence,
+    ),
+    "a request for another session's messages": (
+        "recoverable-session",
+        _request_for_another_session,
     ),
 }
 

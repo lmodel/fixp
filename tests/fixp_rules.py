@@ -30,6 +30,14 @@ REQUESTS = {
     "FixpRetransmitReject": "FixpRetransmitRequest",
 }
 RETRANSMIT_ANSWERS = {"FixpRetransmission", "FixpRetransmitReject", "FixpTerminate"}
+# The messages that name the flow they concern, which may be another session's: a multicast's
+# lost messages are asked for over a separate session (section 5), and InvalidSession answers
+# a request for a session the sender does not know (section 4).
+RETRANSMIT_MESSAGES = {
+    "FixpRetransmitRequest",
+    "FixpRetransmission",
+    "FixpRetransmitReject",
+}
 # Applied and NotApplied are application messages: each takes a sequence number.
 APPLICATION_MESSAGES = {"FixpApplied", "FixpNotApplied"}
 # The messages that keep a session alive when nothing else is sent. Once a party has sent
@@ -304,7 +312,12 @@ def _check_message(session, step, place, errors):
             session.session_id = named
         # A reject may repeat the identifier its request named, such as InvalidSession's.
         echoed = named == session.request_ids.get((REQUESTS.get(name, ""), peer or ""))
-        if named != session.session_id and not session.multiplexed and not echoed:
+        if (
+            named != session.session_id
+            and not session.multiplexed
+            and not echoed
+            and name not in RETRANSMIT_MESSAGES
+        ):
             errors.append(
                 (
                     place,
@@ -352,7 +365,9 @@ def _check_message(session, step, place, errors):
     if "next_seq_no" in message:
         session.reached(party, message["next_seq_no"])
 
-    if name == "FixpRetransmitRequest":
+    # A request about another session's flow concerns numbers this exchange does not hold.
+    own = message.get("session_id") in (None, session.session_id)
+    if name == "FixpRetransmitRequest" and own:
         if party in session.open_retransmit or session.replay_left.get(peer, 0) > 0:
             errors.append(
                 (
@@ -371,7 +386,7 @@ def _check_message(session, step, place, errors):
                 )
             )
         session.open_retransmit.add(party)
-    if name in RETRANSMIT_ANSWERS and peer:
+    if name in RETRANSMIT_ANSWERS and peer and own:
         session.open_retransmit.discard(peer)
 
     if name == "FixpFinishedSending":
