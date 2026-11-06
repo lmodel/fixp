@@ -22,8 +22,9 @@ body="${RUNNER_TEMP}/issue-body.md"
   echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
 } > "$body"
 
-# gh's --search is fuzzy, so match the exact title before reusing an issue.
-number="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+# gh's --search is fuzzy, so match the exact title before reusing an issue. Only an issue
+# this workflow opened is reused, so anyone who opens one with the same title first is ignored.
+number="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --author app/github-actions \
   --search "in:title \"$TITLE\"" --json number,title \
   --jq 'map(select(.title == env.TITLE)) | .[0].number // empty')"
 
