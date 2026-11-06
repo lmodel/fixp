@@ -148,9 +148,42 @@ def _two_none_flows(r):
 
 
 def _second_session_id(r):
-    _message(r, "FixpTerminate", "server")["session_id"] = (
+    # Only this message is at fault: the ones after it name the session again.
+    _message(r, "FixpFinishedSending", "client")["session_id"] = (
         "9531985d-5d9d-49f8-9818-e811892f902b"
     )
+
+
+def _request_for_another_session(r):
+    """Appendix A's unknown-session dialog: the request names another session, and the
+    reject that repeats that identifier is the right answer, not a second fault."""
+    other = "9531985d-5d9d-49f8-9818-e811892f902b"
+    index = _step(r, "FixpRetransmitRequest")
+    r["exchange_steps"][index:index] = [
+        {
+            "sent_by": "client",
+            "fixp_message": {
+                "message_kind": "FixpRetransmitRequest",
+                "session_id": other,
+                "request_time": 1793865600900000000,
+                "from_seq_no": 1,
+                "message_count": 1,
+            },
+        },
+        {
+            "sent_by": "server",
+            "fixp_message": {
+                "message_kind": "FixpRetransmitReject",
+                "session_id": other,
+                "request_timestamp": 1793865600900000000,
+                "retransmit_reject_code": "InvalidSession",
+            },
+        },
+    ]
+
+
+def _last_seq_no_beyond_the_flow(r):
+    _message(r, "FixpFinishedSending", "client")["last_seq_no"] = 9
 
 
 def _application_before_sequence(r):
@@ -205,6 +238,7 @@ def _new_messages_in_a_resent_batch(r):
     r["exchange_steps"][_step(r, "FixpRetransmission") + 1][
         "application_message_count"
     ] = 3
+    _message(r, "FixpFinishedSending", "server")["last_seq_no"] = 5
 
 
 def _request_during_a_batch(r):
@@ -227,6 +261,7 @@ def _application_after_finished_receiving(r):
         },
         {"sent_by": "server", "application_message_count": 1},
     ]
+    _message(r, "FixpFinishedSending", "server")["last_seq_no"] = 5
 
 
 def _sequence_after_finished_sending(r):
@@ -244,8 +279,8 @@ def _application_on_a_none_flow(r):
     _message(r, "FixpNegotiate")["client_flow"] = "None"
 
 
-def _multicast_numbered_from_five(r):
-    _message(r, "FixpSequence")["next_seq_no"] = 5
+def _multicast_numbered_from_zero(r):
+    _message(r, "FixpSequence")["next_seq_no"] = 0
 
 
 def _establish_after_finalization(r):
@@ -428,9 +463,19 @@ CASES = {
         12,
     ),
     "last-seq-no": ("recoverable-session", _no_last_seq_no, 11),
+    "last-seq-no beyond the flow": (
+        "recoverable-session",
+        _last_seq_no_beyond_the_flow,
+        11,
+    ),
     "one-none-flow": ("recoverable-session", _two_none_flows, 1),
     "no-application-on-none-flow": ("multiplexed", _application_on_a_none_flow, 5),
-    "session-id": ("recoverable-session", _second_session_id, 16),
+    "session-id": ("recoverable-session", _second_session_id, 11),
+    "session-id of a request for another session": (
+        "recoverable-session",
+        _request_for_another_session,
+        8,
+    ),
     "sequence-before-sequenced": (
         "recoverable-session",
         _application_before_sequence,
@@ -448,7 +493,7 @@ CASES = {
         6,
     ),
     "topic-first": ("multicast", _sequence_before_topic, 1),
-    "multicast-starts-at-one": ("multicast", _multicast_numbered_from_five, 2),
+    "multicast-starts-at-one": ("multicast", _multicast_numbered_from_zero, 2),
 }
 
 # Each case: the exchange, and a change to it that the specification allows.

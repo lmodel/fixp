@@ -65,6 +65,8 @@ class _Session:
         self.finished_sending: set[str] = set()
         self.finished_receiving: set[str] = set()
         self.last_request: dict[tuple[str, str], int] = {}
+        # The session_id each party's latest request of each kind named.
+        self.request_ids: dict[tuple[str, str], str] = {}
         self.open_retransmit: set[str] = set()
         self.started: set[str] = set()
         # A party in `replaying` has sent a Retransmission and no Sequence or Context since;
@@ -72,8 +74,12 @@ class _Session:
         self.replaying: set[str] = set()
         self.replay_left: dict[str, int] = {}
         self.next_number: dict[str, int] = {}
+        # The highest number each flow has reached, counting what a NextSeqNo shows, and the
+        # highest an application message in the exchange took.
         self.highest_sent: dict[str, int] = {}
-        self.session_ids: set[str] = set()
+        self.highest_counted: dict[str, int] = {}
+        # The session's own identifier: the first the exchange names.
+        self.session_id: str | None = None
         self.topic_seen = False
         self.multicast_numbered = False
 
@@ -149,9 +155,9 @@ class _Session:
         if party in self.next_number:
             first = self.next_number[party]
             self.next_number[party] = first + count
-            self.highest_sent[party] = max(
-                self.highest_sent.get(party, 0), first + count - 1
-            )
+            last = first + count - 1
+            self.highest_sent[party] = max(self.highest_sent.get(party, 0), last)
+            self.highest_counted[party] = max(self.highest_counted.get(party, 0), last)
 
 
 def _check_sender(session, name, party, rules, place, errors):
@@ -293,8 +299,12 @@ def _check_message(session, step, place, errors):
     _check_answer(session, name, party, message, place, errors)
 
     if "session_id" in message:
-        session.session_ids.add(message["session_id"])
-        if not session.multiplexed and len(session.session_ids) > 1:
+        named = message["session_id"]
+        if session.session_id is None:
+            session.session_id = named
+        # A reject may repeat the identifier its request named, such as InvalidSession's.
+        echoed = named == session.request_ids.get((REQUESTS.get(name, ""), peer or ""))
+        if named != session.session_id and not session.multiplexed and not echoed:
             errors.append(
                 (
                     place,
@@ -366,7 +376,8 @@ def _check_message(session, step, place, errors):
 
     if name == "FixpFinishedSending":
         session.finished_sending.add(party)
-        if session.flows.get(party) in SEQUENCED and "last_seq_no" not in message:
+        last = message.get("last_seq_no")
+        if session.flows.get(party) in SEQUENCED and last is None:
             errors.append(
                 (
                     place,
@@ -375,6 +386,20 @@ def _check_message(session, step, place, errors):
                     "(section 4)",
                 )
             )
+        elif last is not None and party in session.next_number:
+            if not (
+                session.highest_counted.get(party, 0)
+                <= last
+                <= session.highest_sent.get(party, 0)
+            ):
+                errors.append(
+                    (
+                        place,
+                        "last-seq-no",
+                        f"the {party}'s last_seq_no is not the number its flow reached "
+                        "(section 4)",
+                    )
+                )
     if name == "FixpFinishedReceiving":
         if peer not in session.finished_sending:
             errors.append(
@@ -389,6 +414,7 @@ def _check_message(session, step, place, errors):
 
     if name in REQUESTS.values():
         session.last_request[(name, party)] = message.get("request_time")
+        session.request_ids[(name, party)] = message.get("session_id")
     if name in APPLICATION_MESSAGES:
         _check_application(session, party, 1, place, errors)
     if name == "FixpTerminate":
