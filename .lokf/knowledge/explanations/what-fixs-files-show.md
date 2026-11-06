@@ -12,14 +12,14 @@ sources:
     title: What FIX's files show
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: f07e8ed1bf536329aad51980ead6c19e04420365
+  at: "2026-11-06T07:41:45Z"
+  revision: 938c37aed96e2260b792df371dce6a85872ec20c
 status: draft
 ---
 
 # What FIX's files show
 
-The issues are reported to the FIX Trading Community, not mended here.[^about.md]
+The project leaves these faults in FIX's files as they are.[^about.md]
 
 - The Orchestra file closes the UnsequencedHeartbeat message twice. The tests read it in recovery mode, and it agrees with the repository file.[^about.md]
 - The SBE schema numbers Topic's `Flow` 8, which is `Reason`'s number in four other messages, and numbers the four fields of `MessageTemplate` one lower than the repository file does.[^about.md]
