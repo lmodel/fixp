@@ -37,13 +37,14 @@ Where the files and the specification's tables disagree, the schema accepts both
 
 ## Rules that span an exchange
 
-JSON Schema checks each message by itself. `tests/fixp_rules.py` checks what the specification states about one step against the steps before it, and each rule has a counter-example in `tests/test_rules.py`.
+JSON Schema checks each message by itself. `tests/fixp_rules.py` checks what the specification states about one step against the steps before it, and each rule has a counter-example in `tests/test_rules.py`. That test also holds a few steps the specification allows to every rule, such as appendix A's session bound again after Terminate, so a rule that refuses one fails.
 
 - **Who sends what.** A message comes from the side its class names: Negotiate and Establish from the client, their answers from the server, Topic from a publisher. Only the publisher sends on a multicast, and a message section 6 leaves off a multicast, or off a session between two parties, is refused there.
-- **Flow types.** A message that concerns one flow suits that flow's type, by the summary in section 6. Sequence goes only on a sequenced flow, UnsequencedHeartbeat only where the flow is unsequenced or empty, RetransmitRequest only towards a recoverable one, and Applied and NotApplied only back to an idempotent one. A session's two flows cannot both be None.
-- **Order.** Establish follows a NegotiationResponse, application messages wait for EstablishmentAck, a multicast flow starts with Topic, and a sequenced flow starts with Sequence, Context or Retransmission.
-- **Answers.** An answer repeats the request_time of the request it answers. A party keeps at most one RetransmitRequest open, and asks only for numbers already sent.
-- **Endings.** FinishedReceiving answers the peer's FinishedSending, no application message follows the sender's own FinishedSending, FinishedSending gives `last_seq_no` on a sequenced flow, and a party sends nothing after its own Terminate.
+- **Flow types.** A message that concerns one flow suits that flow's type, by the summary in section 6. Sequence goes only on a sequenced flow, UnsequencedHeartbeat only where the flow is unsequenced or empty, RetransmitRequest only towards a recoverable one, and Applied and NotApplied only back to an idempotent one. A session's two flows cannot both be None, and the side whose flow is None sends no application message.
+- **Order.** Establish follows a NegotiationResponse, and none follows a FinishedReceiving. Application messages wait for EstablishmentAck, and a sequenced flow starts with Sequence, Context or Retransmission. A multicast flow starts with Topic, and its first application message is number 1.
+- **Answers.** An answer repeats the request_time of the request it answers. A party has no more than one RetransmitRequest open, and a request stays open until the batch that answers it has been resent. It asks only for numbers its peer has reached: those the peer sent, and those below the last NextSeqNo the peer gave.
+- **Resending.** After a batch of resent messages, a party sends Sequence or Context before it goes back to new ones.
+- **Endings.** FinishedReceiving answers the peer's FinishedSending. After its own FinishedSending, a party sends no new application message and repeats FinishedSending where it would send a heartbeat, though it still resends what its peer asks for. After its own FinishedReceiving, it sends no new application message. FinishedSending gives `last_seq_no` on a sequenced flow. A party sends nothing after its own Terminate until the client's next Establish ties the session to another transport.
 - **Transport.** A transport that carries one session sees one session identifier and takes Sequence, and a shared one takes Context.
 
 ## What the model leaves out
@@ -61,6 +62,8 @@ The project leaves these faults in FIX's files as they are.
 - The SBE schema numbers Topic's `Flow` 8, which is `Reason`'s number in four other messages, and numbers the four fields of `MessageTemplate` one lower than the repository file does.
 - All three files spell RetransmitReject as `RestransmitReject`, and section 4's tables spell RetransmitRequest and Retransmission with the same extra letter. Version 1.1's tables mend all three, and its files do not.
 - Section 3 says that sending Context or Sequence when the flow is unsequenced or empty breaks the protocol, while its own table makes Context's `NextSeqNo` optional, and section 6's summary allows Context on those flows. The rules follow section 6, which the list of violations points to.
+- Appendix A's half-close dialog has a party go on sending application messages after its own FinishedReceiving, which section 6 lists as a violation. The rules follow section 6.
+- Appendix A counts EstablishmentAck among the messages that set a flow's numbering, which sections 3 and 4 leave to Sequence, Context and Retransmission. The rules follow the sections.
 
 ## Mappings
 

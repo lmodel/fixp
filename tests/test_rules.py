@@ -2,7 +2,8 @@
 
 A change to one of the valid exchanges breaks one rule, and the test asserts the only finding
 is that rule at that place. A rule that cannot see its fault fails here, and so does one that
-sees more than it should.
+sees more than it should. Other changes make a step the specification allows, often one that
+appendix A shows, and those must break no rule.
 """
 
 import copy
@@ -15,6 +16,7 @@ import yaml
 from tests import fixp_rules
 from tests.fixp_rules import rule_errors
 from tests.paths import DATA
+from tests.test_data import errors as schema_errors
 
 EXCHANGES = {
     path.stem.removeprefix("FixpExchange-"): yaml.safe_load(
@@ -116,7 +118,7 @@ def _message_after_terminate(r):
     r["exchange_steps"].append(
         {
             "sent_by": "client",
-            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 4},
+            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 6},
         }
     )
 
@@ -198,6 +200,184 @@ def _not_applied_for_recoverable(r):
     _message(r, "FixpNegotiate")["client_flow"] = "Recoverable"
 
 
+def _new_messages_in_a_resent_batch(r):
+    # The Retransmission announces two resent messages; a third is a new one with no Sequence.
+    r["exchange_steps"][_step(r, "FixpRetransmission") + 1][
+        "application_message_count"
+    ] = 3
+
+
+def _request_during_a_batch(r):
+    request = copy.deepcopy(_message(r, "FixpRetransmitRequest"))
+    request["request_time"] += 1
+    _insert(
+        r,
+        _step(r, "FixpRetransmission") + 1,
+        {"sent_by": "client", "fixp_message": request},
+    )
+
+
+def _application_after_finished_receiving(r):
+    # The server's Sequence comes first, so its new message breaks no rule but this one.
+    index = _step(r, "FixpFinishedReceiving", "server") + 1
+    r["exchange_steps"][index:index] = [
+        {
+            "sent_by": "server",
+            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 5},
+        },
+        {"sent_by": "server", "application_message_count": 1},
+    ]
+
+
+def _sequence_after_finished_sending(r):
+    _insert(
+        r,
+        _step(r, "FixpFinishedSending", "client") + 1,
+        {
+            "sent_by": "client",
+            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 4},
+        },
+    )
+
+
+def _application_on_a_none_flow(r):
+    _message(r, "FixpNegotiate")["client_flow"] = "None"
+
+
+def _multicast_numbered_from_five(r):
+    _message(r, "FixpSequence")["next_seq_no"] = 5
+
+
+def _establish_after_finalization(r):
+    establish = copy.deepcopy(_message(r, "FixpEstablish"))
+    establish["request_time"] = 1793865700000000000
+    r["exchange_steps"].append({"sent_by": "client", "fixp_message": establish})
+
+
+def _bound_again(r):
+    """Appendix A's graceful termination: the client binds the session to a new transport and
+    both flows go on from where they were."""
+    session_id = _message(r, "FixpNegotiate")["session_id"]
+    r["exchange_steps"] += [
+        {
+            "sent_by": "client",
+            "fixp_message": {
+                "message_kind": "FixpEstablish",
+                "session_id": session_id,
+                "request_time": 1793869200000000000,
+                "keepalive_interval": 1000,
+            },
+        },
+        {
+            "sent_by": "server",
+            "fixp_message": {
+                "message_kind": "FixpEstablishmentAck",
+                "session_id": session_id,
+                "request_timestamp": 1793869200000000000,
+                "keepalive_interval": 1000,
+                "next_seq_no": 3,
+            },
+        },
+        {
+            "sent_by": "client",
+            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 6},
+        },
+        {"sent_by": "client", "application_message_count": 1},
+        {
+            "sent_by": "server",
+            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 3},
+        },
+        {
+            "sent_by": "server",
+            "fixp_message": {
+                "message_kind": "FixpApplied",
+                "from_seq_no": 6,
+                "message_count": 1,
+            },
+        },
+    ]
+
+
+def _request_below_next_seq_no(r):
+    """Appendix A's request-limit dialog: the server's flow resumes at 1000, and the client asks
+    for numbers below it before any message of the server's arrives."""
+    session_id = _message(r, "FixpNegotiate")["session_id"]
+    _message(r, "FixpEstablishmentAck")["next_seq_no"] = 1000
+    _message(r, "FixpSequence", "server")["next_seq_no"] = 1000
+    index = _step(r, "FixpSequence", "server") + 1
+    _insert(
+        r,
+        index,
+        {
+            "sent_by": "server",
+            "fixp_message": {
+                "message_kind": "FixpRetransmitReject",
+                "session_id": session_id,
+                "request_timestamp": 1793865601000000000,
+                "retransmit_reject_code": "RequestLimitExceeded",
+            },
+        },
+    )
+    _insert(
+        r,
+        index,
+        {
+            "sent_by": "client",
+            "fixp_message": {
+                "message_kind": "FixpRetransmitRequest",
+                "session_id": session_id,
+                "request_time": 1793865601000000000,
+                "from_seq_no": 1,
+                "message_count": 999,
+            },
+        },
+    )
+
+
+def _resent_after_finished_sending(r):
+    """Appendix A's finishing on a recoverable flow: the server finds a gap from last_seq_no
+    and gets the message back before it answers with FinishedReceiving."""
+    session_id = _message(r, "FixpNegotiate")["session_id"]
+    index = _step(r, "FixpFinishedSending", "client") + 1
+    r["exchange_steps"][index:index] = [
+        {
+            "sent_by": "server",
+            "fixp_message": {
+                "message_kind": "FixpRetransmitRequest",
+                "session_id": session_id,
+                "request_time": 1793865602000000000,
+                "from_seq_no": 3,
+                "message_count": 1,
+            },
+        },
+        {
+            "sent_by": "client",
+            "fixp_message": {
+                "message_kind": "FixpRetransmission",
+                "session_id": session_id,
+                "request_timestamp": 1793865602000000000,
+                "next_seq_no": 3,
+                "message_count": 1,
+            },
+        },
+        {"sent_by": "client", "application_message_count": 1},
+    ]
+
+
+def _new_messages_behind_a_sequence(r):
+    """Section 4's interleaving: after the resent batch, a Sequence brings the flow back to new
+    messages."""
+    index = _step(r, "FixpRetransmission") + 2
+    r["exchange_steps"][index:index] = [
+        {
+            "sent_by": "server",
+            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 5},
+        },
+        {"sent_by": "server", "application_message_count": 1},
+    ]
+    _message(r, "FixpFinishedSending", "server")["last_seq_no"] = 5
+
+
 # Each case: the exchange, the change, the rule it breaks and the step where it shows.
 CASES = {
     "sent-by": ("recoverable-session", _wrong_sender, 2),
@@ -213,10 +393,20 @@ CASES = {
         2,
     ),
     "negotiate-first": ("recoverable-session", _establish_before_response, 1),
+    "negotiate-first after finalization": (
+        "recoverable-session",
+        _establish_after_finalization,
+        17,
+    ),
     "established-first": ("multiplexed", _application_before_ack, 3),
     "one-retransmit-request": ("recoverable-session", _second_retransmit_request, 9),
+    "one-retransmit-request during a batch": (
+        "recoverable-session",
+        _request_during_a_batch,
+        10,
+    ),
     "retransmit-in-bounds": ("recoverable-session", _retransmit_out_of_bounds, 8),
-    "nothing-after-terminate": ("recoverable-session", _message_after_terminate, 17),
+    "nothing-after-terminate": ("idempotent-orders", _message_after_terminate, 11),
     "finished-receiving-after-finished-sending": (
         "recoverable-session",
         _finished_receiving_first,
@@ -227,13 +417,29 @@ CASES = {
         _application_after_finished_sending,
         12,
     ),
+    "no-application-after-finished-receiving": (
+        "recoverable-session",
+        _application_after_finished_receiving,
+        14,
+    ),
+    "heartbeat-after-finished-sending": (
+        "recoverable-session",
+        _sequence_after_finished_sending,
+        12,
+    ),
     "last-seq-no": ("recoverable-session", _no_last_seq_no, 11),
     "one-none-flow": ("recoverable-session", _two_none_flows, 1),
+    "no-application-on-none-flow": ("multiplexed", _application_on_a_none_flow, 5),
     "session-id": ("recoverable-session", _second_session_id, 16),
     "sequence-before-sequenced": (
         "recoverable-session",
         _application_before_sequence,
         4,
+    ),
+    "sequence-after-retransmission": (
+        "recoverable-session",
+        _new_messages_in_a_resent_batch,
+        10,
     ),
     "context-when-multiplexed": ("recoverable-session", _context_on_one_session, 4),
     "context-when-multiplexed on a shared transport": (
@@ -242,6 +448,24 @@ CASES = {
         6,
     ),
     "topic-first": ("multicast", _sequence_before_topic, 1),
+    "multicast-starts-at-one": ("multicast", _multicast_numbered_from_five, 2),
+}
+
+# Each case: the exchange, and a change to it that the specification allows.
+KEPT = {
+    "a session bound again after Terminate": ("idempotent-orders", _bound_again),
+    "a request below the peer's NextSeqNo": (
+        "idempotent-orders",
+        _request_below_next_seq_no,
+    ),
+    "messages resent after FinishedSending": (
+        "recoverable-session",
+        _resent_after_finished_sending,
+    ),
+    "new messages behind a Sequence after resent ones": (
+        "recoverable-session",
+        _new_messages_behind_a_sequence,
+    ),
 }
 
 
@@ -260,9 +484,20 @@ def test_each_rule_catches_its_fault(case):
     assert found == [(f"/exchange_steps/{step}", rule)], found
 
 
+@pytest.mark.parametrize("case", sorted(KEPT))
+def test_what_the_specification_allows_keeps_every_rule(case):
+    """A rule that sees a fault in a step the specification allows fails here. The changed
+    exchange must still validate, so the case tests the rules and not a malformed record."""
+    name, change = KEPT[case]
+    record = copy.deepcopy(EXCHANGES[name])
+    change(record)
+    assert not schema_errors(record, "FixpExchange")
+    assert rule_errors(record) == []
+
+
 def test_every_rule_has_a_case():
     """A rule the module can report but no case breaks would go untested."""
     source = inspect.getsource(fixp_rules)
     named = set(re.findall(r'\(\s*place,\s*"([a-z-]+)"', source))
-    assert len(named) == 17, sorted(named)
+    assert len(named) == 22, sorted(named)
     assert named == {case.split(" ")[0] for case in CASES}

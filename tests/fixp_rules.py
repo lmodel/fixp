@@ -3,8 +3,10 @@
 Each rule compares one step of an exchange with the steps before it: an answer with its
 request, a message with the flow types the session negotiated, a sequence number with what
 was sent. Most come from the list of protocol violations in section 6 of FIXP 1.0, and each
-rule below names its source. They read an exchange as the YAML record the LinkML schema
-describes, and read what each message class allows from its annotations.
+rule below names its source. Where appendix A shows a step the chapters allow, such as a
+session bound again after Terminate, the rules let it pass. They read an exchange as the YAML
+record the LinkML schema describes, and read what each message class allows from its
+annotations.
 
 `rule_errors` returns (place, rule, message) tuples, and tests/test_rules.py holds each rule to
 a counter-example.
@@ -30,6 +32,9 @@ REQUESTS = {
 RETRANSMIT_ANSWERS = {"FixpRetransmission", "FixpRetransmitReject", "FixpTerminate"}
 # Applied and NotApplied are application messages: each takes a sequence number.
 APPLICATION_MESSAGES = {"FixpApplied", "FixpNotApplied"}
+# The messages that keep a session alive when nothing else is sent. Once a party has sent
+# FinishedSending, that message takes their place.
+HEARTBEATS = {"FixpSequence", "FixpContext", "FixpUnsequencedHeartbeat"}
 
 
 @cache
@@ -52,30 +57,92 @@ class _Session:
         self.multiplexed = bool(exchange.get("multiplexed"))
         self.flows: dict[str, str] = {}
         self.negotiated = False
+        # A flow has been finalized, so the session's identifier is spent.
+        self.finalized = False
         self.established = False
         self.terminated: set[str] = set()
         self.finished_sending: set[str] = set()
+        self.finished_receiving: set[str] = set()
         self.last_request: dict[tuple[str, str], int] = {}
         self.open_retransmit: set[str] = set()
         self.started: set[str] = set()
+        # A party in `replaying` has sent a Retransmission and no Sequence or Context since;
+        # `replay_left` counts the resent messages its latest batch still owes.
+        self.replaying: set[str] = set()
+        self.replay_left: dict[str, int] = {}
         self.next_number: dict[str, int] = {}
         self.highest_sent: dict[str, int] = {}
         self.session_ids: set[str] = set()
         self.topic_seen = False
+        self.multicast_numbered = False
 
     def peer(self, party: str) -> str | None:
         return {"client": "server", "server": "client"}.get(party)
 
+    def bind_again(self) -> None:
+        """An Establish ties the session to a new transport (section 3), so what each side sent
+        before its Terminate no longer silences it, and no earlier request is still open."""
+        self.terminated.clear()
+        self.established = False
+        self.open_retransmit.clear()
+        self.replay_left.clear()
+
+    def reached(self, party: str, next_seq_no: int) -> None:
+        """A NextSeqNo shows that the numbers below it are behind the party's flow, so its peer
+        may ask for any of them (section 4)."""
+        self.highest_sent[party] = max(self.highest_sent.get(party, 0), next_seq_no - 1)
+
     def count_application(
         self, party: str, count: int, place: str, errors: list
     ) -> None:
-        if self.flows.get(party) in SEQUENCED and party not in self.started:
+        flow = self.flows.get(party)
+        if flow == "None":
+            errors.append(
+                (
+                    place,
+                    "no-application-on-none-flow",
+                    f"the {party}'s flow is None, so it sends no application messages "
+                    "(section 3)",
+                )
+            )
+        # The first messages after a Retransmission are the batch it announced; the rest are new.
+        resent = min(count, self.replay_left.get(party, 0))
+        self.replay_left[party] = self.replay_left.get(party, 0) - resent
+        new = count - resent
+        if flow in SEQUENCED and party not in self.started:
             errors.append(
                 (
                     place,
                     "sequence-before-sequenced",
                     f"the {party}'s sequenced flow sends an application message before any "
                     "Sequence, Context or Retransmission (section 3)",
+                )
+            )
+        elif new and party in self.replaying:
+            errors.append(
+                (
+                    place,
+                    "sequence-after-retransmission",
+                    f"the {party} goes back to new messages after resent ones without "
+                    "Sequence or Context first (sections 3 and 4)",
+                )
+            )
+        if new and party in self.finished_sending:
+            errors.append(
+                (
+                    place,
+                    "no-application-after-finished-sending",
+                    "no new application message follows the sender's FinishedSending "
+                    "(section 6)",
+                )
+            )
+        if new and party in self.finished_receiving:
+            errors.append(
+                (
+                    place,
+                    "no-application-after-finished-receiving",
+                    "no new application message follows the sender's FinishedReceiving "
+                    "(section 6)",
                 )
             )
         if party in self.next_number:
@@ -167,6 +234,52 @@ def _check_answer(session, name, party, message, place, errors):
         )
 
 
+def _check_sequencing(session, name, party, message, place, errors):
+    """topic-first, context-when-multiplexed and multicast-starts-at-one, for the messages
+    that start or resume a flow's numbering."""
+    if session.kind == "multicast" and not session.topic_seen:
+        errors.append(
+            (place, "topic-first", "a Topic starts a multicast flow (section 5)")
+        )
+    if name == "FixpSequence" and session.multiplexed:
+        errors.append(
+            (
+                place,
+                "context-when-multiplexed",
+                "a shared transport takes Context (section 3)",
+            )
+        )
+    if name == "FixpContext" and not session.multiplexed:
+        errors.append(
+            (
+                place,
+                "context-when-multiplexed",
+                "a transport that carries one session takes Sequence (section 3)",
+            )
+        )
+    if "next_seq_no" not in message:
+        return
+    if session.kind == "multicast" and not session.multicast_numbered:
+        session.multicast_numbered = True
+        if message["next_seq_no"] != 1:
+            errors.append(
+                (
+                    place,
+                    "multicast-starts-at-one",
+                    "a new multicast session numbers its first application message 1 "
+                    "(section 5)",
+                )
+            )
+    session.started.add(party)
+    session.next_number[party] = message["next_seq_no"]
+    if name == "FixpRetransmission":
+        session.replaying.add(party)
+        session.replay_left[party] = message["message_count"]
+    else:
+        session.replaying.discard(party)
+        session.replay_left[party] = 0
+
+
 def _check_message(session, step, place, errors):
     party = step["sent_by"]
     message = step["fixp_message"]
@@ -189,6 +302,16 @@ def _check_message(session, step, place, errors):
                 )
             )
 
+    if name in HEARTBEATS and party in session.finished_sending:
+        errors.append(
+            (
+                place,
+                "heartbeat-after-finished-sending",
+                f"after its FinishedSending, the {party} keeps the session alive with "
+                "FinishedSending (section 4)",
+            )
+        )
+
     if name == "FixpNegotiate":
         session.flows["client"] = message.get("client_flow")
     elif name == "FixpNegotiationResponse":
@@ -201,49 +324,30 @@ def _check_message(session, step, place, errors):
     elif name == "FixpTopic":
         session.flows["publisher"] = message.get("flow")
         session.topic_seen = True
-    elif name == "FixpEstablish" and not session.negotiated:
+    elif name == "FixpEstablish" and (not session.negotiated or session.finalized):
         errors.append(
             (
                 place,
                 "negotiate-first",
-                "Establish comes after a NegotiationResponse (section 6)",
+                "Establish needs a negotiated session that no FinishedReceiving has closed "
+                "(sections 4 and 6)",
             )
         )
     elif name == "FixpEstablishmentAck":
         session.established = True
 
     if name in ("FixpSequence", "FixpContext", "FixpRetransmission"):
-        if session.kind == "multicast" and not session.topic_seen:
-            errors.append(
-                (place, "topic-first", "a Topic starts a multicast flow (section 5)")
-            )
-        if name == "FixpSequence" and session.multiplexed:
-            errors.append(
-                (
-                    place,
-                    "context-when-multiplexed",
-                    "a shared transport takes Context (section 3)",
-                )
-            )
-        if name == "FixpContext" and not session.multiplexed:
-            errors.append(
-                (
-                    place,
-                    "context-when-multiplexed",
-                    "a transport that carries one session takes Sequence (section 3)",
-                )
-            )
-        if "next_seq_no" in message:
-            session.started.add(party)
-            session.next_number[party] = message["next_seq_no"]
+        _check_sequencing(session, name, party, message, place, errors)
+    if "next_seq_no" in message:
+        session.reached(party, message["next_seq_no"])
 
     if name == "FixpRetransmitRequest":
-        if party in session.open_retransmit:
+        if party in session.open_retransmit or session.replay_left.get(peer, 0) > 0:
             errors.append(
                 (
                     place,
                     "one-retransmit-request",
-                    "an earlier RetransmitRequest is still unanswered (section 4)",
+                    "an earlier RetransmitRequest is still being answered (sections 4 and 6)",
                 )
             )
         last = message["from_seq_no"] + message["message_count"] - 1
@@ -252,7 +356,7 @@ def _check_message(session, step, place, errors):
                 (
                     place,
                     "retransmit-in-bounds",
-                    "it asks for a sequence number the peer has not sent (section 6)",
+                    "it asks for a number beyond the last the peer has reached (section 6)",
                 )
             )
         session.open_retransmit.add(party)
@@ -270,14 +374,17 @@ def _check_message(session, step, place, errors):
                     "(section 4)",
                 )
             )
-    if name == "FixpFinishedReceiving" and peer not in session.finished_sending:
-        errors.append(
-            (
-                place,
-                "finished-receiving-after-finished-sending",
-                "FinishedReceiving answers the peer's FinishedSending (section 6)",
+    if name == "FixpFinishedReceiving":
+        if peer not in session.finished_sending:
+            errors.append(
+                (
+                    place,
+                    "finished-receiving-after-finished-sending",
+                    "FinishedReceiving answers the peer's FinishedSending (section 6)",
+                )
             )
-        )
+        session.finished_receiving.add(party)
+        session.finalized = True
 
     if name in REQUESTS.values():
         session.last_request[(name, party)] = message.get("request_time")
@@ -300,14 +407,6 @@ def _check_application(session, party, count, place, errors):
         errors.append(
             (place, "topic-first", "a Topic starts a multicast flow (section 5)")
         )
-    if party in session.finished_sending:
-        errors.append(
-            (
-                place,
-                "no-application-after-finished-sending",
-                "no application message follows the sender's FinishedSending (section 6)",
-            )
-        )
     session.count_application(party, count, place, errors)
 
 
@@ -318,12 +417,16 @@ def rule_errors(exchange: dict) -> list[tuple[str, str, str]]:
     for index, step in enumerate(exchange.get("exchange_steps") or []):
         place = f"/exchange_steps/{index}"
         party = step["sent_by"]
+        message = step.get("fixp_message") or {}
+        if message.get("message_kind") == "FixpEstablish" and session.terminated:
+            session.bind_again()
         if party in session.terminated:
             errors.append(
                 (
                     place,
                     "nothing-after-terminate",
-                    f"the {party} sends nothing after its own Terminate (section 4)",
+                    f"the {party} sends nothing after its own Terminate until an Establish "
+                    "ties the session to a transport again (section 4)",
                 )
             )
         if "fixp_message" in step:

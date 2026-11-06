@@ -37,11 +37,11 @@ def test_nineteen_messages_two_of_them_application_messages():
     assert application <= {cls.name for cls in found}
 
 
-def test_seventeen_rules():
-    """The bundle's page on the rules says the module reports seventeen."""
-    assert "seventeen rules" in RULES_PAGE
+def test_twenty_two_rules():
+    """The bundle's page on the rules says the module reports twenty-two."""
+    assert "twenty-two rules" in RULES_PAGE
     source = inspect.getsource(fixp_rules)
-    assert len(set(re.findall(r'\(\s*place,\s*"([a-z-]+)"', source))) == 17
+    assert len(set(re.findall(r'\(\s*place,\s*"([a-z-]+)"', source))) == 22
 
 
 def test_seven_fields_under_another_key():
