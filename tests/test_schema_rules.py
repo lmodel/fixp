@@ -16,8 +16,8 @@ from tests.paths import ROOT, SCHEMA_DIR
 # and the adapt copies other lmodel repositories release. Each neighbour is the schema asset of a
 # release, downloaded and checked against the release's .sha256 and its attestation, and pinned
 # here by that checksum.
-COPY = ROOT / ".lokf" / "fixp.yaml"
-LOKF = ROOT / ".lokf" / "lokf.yaml"
+COPY = ROOT / ".lokf" / "schema" / "fixp.yaml"
+LOKF = ROOT / ".lokf" / "schema" / "lokf.yaml"
 NEIGHBOUR_DIR = ROOT / "tests" / "neighbours"
 DATA = ROOT / "tests" / "data" / "valid"
 NEIGHBOURS = {
