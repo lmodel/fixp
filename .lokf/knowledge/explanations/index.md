@@ -1,0 +1,8 @@
+# Explanations
+
+* [One edition](one-edition.md) - Why the schema models FIXP 1.0, the Technical Standard of April 2021, alone: version 1.1 is a Draft Standard whose files differ only in four field numbers, and whose chapters add WebSocket guidance but no message, field or value.
+* [A message as a record](a-message-as-a-record.md) - How a FIXP message becomes a YAML or JSON record whatever its encoding: a class per message, `message_kind` for FIXP's MessageType, snake_case fields with FIXP's names as aliases, seven fields under another key, and octets in base64.
+* [Rules that span an exchange](rules-that-span-an-exchange.md) - What `tests/fixp_rules.py` checks that JSON Schema cannot: who sends each message, the flow types it suits, the order of negotiation and binding, an answer's timestamp, retransmission, the endings, and Sequence against Context.
+* [What the model leaves out](what-the-model-leaves-out.md) - What the schema does not hold: the specification's text, the encoded bytes with SBE's message header and the Simple Open Framing Header, timing, and the content of application messages.
+* [What FIX's files show](what-fixs-files-show.md) - Faults found in FIXP 1.0's own files: the Orchestra file is not well-formed, the SBE schema's field numbers clash and differ from the repository file's, RetransmitReject is misspelt, and section 3 contradicts section 6 on Context.
+* [Mappings](mappings.md) - Why `FixpMessage` is only related to lmodel/fix-sbe's `SbeMessageV1` and lmodel/fix-orchestra's `OrchestraMessageV10`, and why the SBE and FIX datatype names are checked against fix-sbe's lists. The five SSSOM sets are gone.
