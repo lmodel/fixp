@@ -287,11 +287,7 @@ class FixpMessage(ConfiguredBaseModel):
                       'Orchestra message, which lmodel/fix-orchestra models as '
                       'OrchestraMessageV10. A record of those classes defines a kind '
                       'of message; an instance of this class is one message of that '
-                      'kind.',
-                      'The annotations of each subclass name its template id and its '
-                      'name in the SBE schema, the stage the summary in section 6 '
-                      'gives it, which side sends it, and the flow types it may appear '
-                      'on.'],
+                      'kind.'],
          'from_schema': 'https://w3id.org/lmodel/fixp/schema/fixp_core',
          'related_mappings': ['fix_sbe:SbeMessageV1',
                               'fix_orchestra:OrchestraMessageV10']})
