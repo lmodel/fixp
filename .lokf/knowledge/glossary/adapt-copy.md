@@ -2,7 +2,7 @@
 type: GlossaryTerm
 id: https://w3id.org/lmodel/fixp/knowledge/glossary/adapt-copy
 title: Adapt copy
-description: "Adapt copy: the copy of a schema that `lokf adapt` writes so that it can sit beside LOKF's, here `.lokf/fixp.yaml`. Edit the source, never the copy."
+description: "Adapt copy: the copy of a schema that `lokf adapt` writes so that it can sit beside LOKF's, here `.lokf/schema/fixp.yaml`. Edit the source, never the copy."
 relatedTo:
   - https://w3id.org/lmodel/fixp/knowledge/datasets/adapt-copy
 sources:
@@ -11,7 +11,7 @@ sources:
     title: Knowledge Trust Ladder (KTL)
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T08:48:23Z"
+  at: "2026-11-06T21:20:16Z"
 status: draft
 ---
 

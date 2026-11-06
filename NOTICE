@@ -113,7 +113,7 @@ This product maintains its documentation as a Linked Open Knowledge Format
 (LOKF) bundle under .lokf/: https://lokf.nolan-nichols.com/specification/
 The concepts under .lokf/knowledge/ are this project's work, licensed under
 the Creative Commons Attribution 4.0 International Public License (CC BY 4.0,
-https://creativecommons.org/licenses/by/4.0/), as .lokf/lokf.yaml states.
+https://creativecommons.org/licenses/by/4.0/), as .lokf/schema/lokf.yaml states.
 
 LOKF is a semantic profile of the Open Knowledge Format (OKF) specification
 by Google Cloud Platform:

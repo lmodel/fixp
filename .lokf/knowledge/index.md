@@ -23,7 +23,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for fixp. Every Markdown
 * [The messages module](datasets/messages-module.md) - `fixp_messages`: the nineteen FIXP messages as classes with the `Fixp` prefix, from `FixpNegotiate` to `FixpMessageTemplate`, each with its fields in the specification's order and annotations for its template id, sender and flow types.
 * [The exchange module](datasets/exchange-module.md) - `fixp_exchange`: `FixpExchange`, the tree root, a run of messages on one session, and `FixpExchangeStep`, which holds one message or a count of application messages and the side that sent it.
 * [The engagement module](datasets/engagement-module.md) - `fixp_engagement`: `FixpRulesOfEngagement`, the checklist of the specification's appendix B, with a `FixpStackProfile` each for the client and the server.
-* [The adapt copy](datasets/adapt-copy.md) - `.lokf/fixp.yaml`, which `just lokf-adapt` writes from the schema so that it can sit beside LOKF's: the file this bundle validates against, and the file a release attaches as `schema-<tag>-fixp.yaml`.
+* [The adapt copy](datasets/adapt-copy.md) - `.lokf/schema/fixp.yaml`, which `just lokf-adapt` writes from the schema so that it can sit beside LOKF's: the file this bundle validates against, and the file a release attaches as `schema-<tag>-fixp.yaml`.
 * [The neighbours' copies](datasets/neighbour-copies.md) - `tests/neighbours/`: the adapt copies other lmodel repositories release, each the release's schema asset, which tests use to hold this copy's names apart from theirs, fix-sbe's, fix-orchestra's and fix-protocol's among them.
 * [The generated artefacts](datasets/generated-artefacts.md) - What the generators write from the schema: `project/`, `src/fixp/datamodel/` and `docs/schema/fixp.yaml`. They are committed and never edited.
 * [The example data](datasets/example-data.md) - `tests/data/`: a valid example of every class, four whole exchanges, and a counter-example per constraint, named `ClassName-suffix.yaml`, each counter-example naming where it fails on its first line.
@@ -48,7 +48,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for fixp. Every Markdown
 * [Session](glossary/session.md) - Session: a FIXP dialog under one identifier, a version 4 UUID the client chooses and never uses again. It takes one of two forms, between two parties or multicast, and outlives the transport it is bound to.
 * [Exchange](glossary/exchange.md) - Exchange: the messages of one session in the order they were sent, as a test case, a worked example or a captured log. `FixpExchange` is the schema's tree root.
 * [Rules of engagement](glossary/rules-of-engagement.md) - Rules of engagement: what two counterparties agree on for a FIXP service at each layer of the stack, the checklist of the specification's appendix B. `FixpRulesOfEngagement` records it.
-* [Adapt copy](glossary/adapt-copy.md) - Adapt copy: the copy of a schema that `lokf adapt` writes so that it can sit beside LOKF's, here `.lokf/fixp.yaml`. Edit the source, never the copy.
+* [Adapt copy](glossary/adapt-copy.md) - Adapt copy: the copy of a schema that `lokf adapt` writes so that it can sit beside LOKF's, here `.lokf/schema/fixp.yaml`. Edit the source, never the copy.
 
 # References
 

@@ -41,7 +41,7 @@ Run `just` to list the project's [just](https://github.com/casey/just/) recipes.
 
 ## Knowledge Trust Ladder (KTL)
 
-`.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle. Its domain schema, `.lokf/fixp.yaml`, is the copy `just lokf-adapt` writes from `src/fixp/schema/fixp.yaml`, and `just lokf-adapt-check` says when it is stale. Edit the source, never the copy.
+`.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle. Its domain schema, `.lokf/schema/fixp.yaml`, is the copy `just lokf-adapt` writes from `src/fixp/schema/fixp.yaml`, and `just lokf-adapt-check` says when it is stale. Edit the source, never the copy.
 
 The copy roots an exchange and a rules-of-engagement record on `Concept`. An exchange's messages stay values inside it. In Obsidian, add these to the KTL plugins' *Known LOKF types* setting:
 

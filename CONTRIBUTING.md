@@ -38,7 +38,7 @@ npx skills add noelmcloughlin/knowledge-trust-ladder --skill ktl-curator --yes  
 
 ## Before opening a pull request
 
-- **Edit the schema, then regenerate.** Run `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output. `project/`, `src/fixp/datamodel/`, `docs/schema/` and `.lokf/fixp.yaml` are generated.
+- **Edit the schema, then regenerate.** Run `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output. `project/`, `src/fixp/datamodel/`, `docs/schema/` and `.lokf/schema/fixp.yaml` are generated.
 - **An element follows FIXP's files.** `tests/test_coverage.py` compares each message with the SBE schema, the repository file and the Orchestra file. A difference goes in `tests/upstream_departures.yaml`, with its reason.
 - **A rule says where it comes from.** Each rule names the specification's section. What JSON Schema can hold goes in the schema, the rest in `tests/fixp_rules.py`, with a counter-example.
 - **FIX's words stay FIX's.** Write every title, description and comment from what the element does. `tests/test_own_words.py` finds a run of four words shared with FIX's files. Set `FIXP_SPEC_DOCS` to a folder of the specification's chapters to check them too, since that text stays out of this repository.
