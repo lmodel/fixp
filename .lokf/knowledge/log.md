@@ -2,6 +2,7 @@
 
 ## 2026-11-06
 
+* **Changed**: the licence page says FIX also publishes the SBE schema under the Apache License 2.0.
 * **Changed**: the page on what the model leaves out says where a firm's own text goes.
 * **Changed**: the engagement module's page names the credentials' form, the keep-alive range and the resend limit a stack profile now holds.
 * **Changed**: fix-sbe, fix-orchestra and fix-protocol have released, so their copies are pinned beside the others and the mapping checks no longer skip.

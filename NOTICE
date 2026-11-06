@@ -38,6 +38,20 @@ unchanged, each matched by git object hash in scripts/upstream_pins.tsv:
 These copies are outside this repository's Apache License, and this project
 claims no right over them.
 
+FIX Protocol Limited also publishes the SBE schema under the Apache
+License, Version 2.0, in its conga repository
+(https://github.com/FIXTradingCommunity/conga), as
+conga-sbe/src/main/resources/SBEschemaForFIXP.xml at commit e26dbd4. That
+copy has the same git object hash as the pinned file, 0719eef, so the SBE
+schema may also be used and adapted under that licence. The project's
+descriptions remain its own all the same.
+
+One case in tests/test_rules.py follows a scenario of FIX Protocol
+Limited's silverflash repository
+(https://github.com/FIXTradingCommunity/silverflash), under the Apache
+License, Version 2.0:
+behavior/src/test/resources/features/application_messages_are_idempotent.feature.
+
 Nothing else here repeats or adapts FIX's text. What the schema takes from
 FIX is the message, field and value names, their numbers, and the
 structure, which a FIXP implementation must use to work with FIXP at all.

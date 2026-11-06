@@ -26,7 +26,7 @@ Two records that are not messages hold what a session needs around them. `FixpEx
 
 ## Where each part comes from
 
-`upstream/` holds FIXP 1.0's three resource files, pinned by git object hash: the SBE message schema, the FIX repository file and the Orchestra file. `tests/test_coverage.py` holds every message, field, number, type, value and presence in the schema to them. The annotations on each element give the names and numbers the files use: `sbe_template_id`, `sbe_field_id`, `repository_field_id` and `sbe_value`.
+`upstream/` holds FIXP 1.0's three resource files, pinned by git object hash: the SBE message schema, the FIX repository file and the Orchestra file. FIX Protocol Limited also publishes the same SBE schema under the Apache License 2.0, in its conga repository, and [NOTICE](https://github.com/lmodel/fixp/blob/main/NOTICE) says what that allows. `tests/test_coverage.py` holds every message, field, number, type, value and presence in the schema to them. The annotations on each element give the names and numbers the files use: `sbe_template_id`, `sbe_field_id`, `repository_field_id` and `sbe_value`.
 
 Where the files and the specification's tables disagree, the schema accepts both, and `tests/upstream_departures.yaml` lists each case with its reason:
 

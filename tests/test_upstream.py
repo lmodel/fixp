@@ -83,3 +83,16 @@ def test_the_notice_carries_what_the_licences_ask():
         assert needed in notice, needed
     for path in _watch().pins():
         assert path.removeprefix("fixp-specification/") in notice, path
+
+
+def test_the_notice_names_the_apache_copy_of_the_sbe_schema():
+    """FIX also publishes the SBE schema under Apache-2.0 in conga, as the same git object. NOTICE
+    names it by that hash, so a new pin fails here until the claim is checked again."""
+    notice = (ROOT / "NOTICE").read_text(encoding="utf-8")
+    sbe = _watch().pins()[
+        "fixp-specification/v1-0-STANDARD/resources/SBEschemaForFIXP.xml"
+    ]
+    assert "https://github.com/FIXTradingCommunity/conga" in notice
+    assert f"same git object hash as the pinned file, {sbe[:7]}" in notice.replace(
+        "\n", " "
+    )

@@ -399,6 +399,34 @@ def _resent_after_finished_sending(r):
     ]
 
 
+def _missed_message_not_applied(r):
+    """silverflash's behaviour test of idempotent flows (FIX Protocol Limited, Apache-2.0, see
+    NOTICE): the client's flow skips number 2, and the server answers NotApplied for it."""
+    steps = r["exchange_steps"]
+    first = _step(r, "FixpSequence", "client") + 1
+    last = _step(r, "FixpNotApplied")
+    steps[first : last + 1] = [
+        {"sent_by": "client", "application_message_count": 1},
+        {
+            "sent_by": "client",
+            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 3},
+        },
+        {"sent_by": "client", "application_message_count": 1},
+        {
+            "sent_by": "server",
+            "fixp_message": {"message_kind": "FixpSequence", "next_seq_no": 1},
+        },
+        {
+            "sent_by": "server",
+            "fixp_message": {
+                "message_kind": "FixpNotApplied",
+                "from_seq_no": 2,
+                "message_count": 1,
+            },
+        },
+    ]
+
+
 def _new_messages_behind_a_sequence(r):
     """Section 4's interleaving: after the resent batch, a Sequence brings the flow back to new
     messages."""
@@ -509,6 +537,10 @@ KEPT = {
     "a request for another session's messages": (
         "recoverable-session",
         _request_for_another_session,
+    ),
+    "a missed message answered with NotApplied": (
+        "idempotent-orders",
+        _missed_message_not_applied,
     ),
 }
 

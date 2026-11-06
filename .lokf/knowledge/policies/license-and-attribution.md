@@ -18,7 +18,7 @@ sources:
   - resource: LICENSE
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T08:48:23Z"
+  at: "2026-11-06T09:30:50Z"
 status: draft
 ---
 
@@ -27,6 +27,8 @@ status: draft
 The schema and the code are under the Apache License 2.0, and the knowledge bundle is under CC BY 4.0.[^readme.md]
 
 CC BY-ND 4.0 lets anyone share a whole, unchanged copy of FIX's files, and does not let anyone share an adapted version. So `upstream/` holds those files unchanged, and every title, description and comment here was written from what the element does.[^notice]
+
+FIX Protocol Limited also publishes the SBE schema, the same file by git object hash, under the Apache License 2.0 in its conga repository, so that one file may also be adapted under that licence.[^notice]
 
 A test finds any run of four words shared with the text in the resource files, and with the specification's chapters when `FIXP_SPEC_DOCS` names them.[^test_own_words.py]
 
