@@ -8,5 +8,6 @@ framing: Simple Open Framing Header
 supported_flow_types:
   - Idempotent
 tls_version: "1.3"
+credentials_format: A token the venue issues for each trading account
 transports:
   - TCP

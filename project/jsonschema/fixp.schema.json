@@ -947,6 +947,13 @@
                         "null"
                     ]
                 },
+                "credentials_format": {
+                    "description": "The form of the credentials this side sends, and how its peer checks them.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "encoding_version": {
                     "description": "The version of that encoding.",
                     "type": [
@@ -968,6 +975,15 @@
                     "description": "What marks where one message ends and the next begins, such as the Simple Open Framing Header.",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "longest_keepalive_interval": {
+                    "description": "The longest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": [
+                        "integer",
                         "null"
                     ]
                 },
@@ -998,10 +1014,28 @@
                         "null"
                     ]
                 },
+                "retransmission_limit": {
+                    "description": "The most messages this side resends in answer to one RetransmitRequest.",
+                    "maximum": 4294967295,
+                    "minimum": 1,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
                 "service_pack": {
                     "description": "The FIX service pack, where the version has them.",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "shortest_keepalive_interval": {
+                    "description": "The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": [
+                        "integer",
                         "null"
                     ]
                 },

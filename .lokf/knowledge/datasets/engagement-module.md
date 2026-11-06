@@ -13,12 +13,12 @@ sources:
     title: the header and the classes
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T08:48:23Z"
+  at: "2026-11-06T08:56:29Z"
 status: draft
 ---
 
 # The engagement module
 
-A stack profile holds one side's choices at the application, presentation, session, security and transport layers, and each field's `stack_layer` annotation names its layer.[^engagement]
+A stack profile holds one side's choices at the application, presentation, session, security and transport layers, and each field's `stack_layer` annotation names its layer. It also holds what sections 3 and 4 leave to the two parties: the form of the credentials, the keep-alive intervals the side accepts, and the most messages it resends for one request.[^engagement]
 
 [^engagement]: src/fixp/schema/fixp_engagement.yaml, the header and the classes

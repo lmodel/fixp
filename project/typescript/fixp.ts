@@ -431,10 +431,18 @@ export interface FixpStackProfile {
     framing?: string,
     /** The flow types this side accepts or offers. */
     supported_flow_types?: string,
+    /** The shortest keep-alive interval, in milliseconds, that this side accepts from its peer. */
+    shortest_keepalive_interval?: string,
+    /** The longest keep-alive interval, in milliseconds, that this side accepts from its peer. */
+    longest_keepalive_interval?: string,
+    /** The most messages this side resends in answer to one RetransmitRequest. */
+    retransmission_limit?: string,
     /** The TLS version that protects the transport. */
     tls_version?: string,
     /** How the parties prove who they are. */
     authentication_methods?: string[],
+    /** The form of the credentials this side sends, and how its peer checks them. */
+    credentials_format?: string,
     /** The cipher suites allowed. */
     cipher_suites?: string[],
     /** The transports this side can use, for example TCP, or UDP with multicast. */

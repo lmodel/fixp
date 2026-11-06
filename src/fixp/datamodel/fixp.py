@@ -1058,8 +1058,12 @@ class FixpStackProfile(YAMLRoot):
     message_schemas: Optional[Union[str, list[str]]] = empty_list()
     framing: Optional[str] = None
     supported_flow_types: Optional[Union[Union[str, "FixpFlowType"], list[Union[str, "FixpFlowType"]]]] = empty_list()
+    shortest_keepalive_interval: Optional[Union[int, FixpDeltaMillisecs]] = None
+    longest_keepalive_interval: Optional[Union[int, FixpDeltaMillisecs]] = None
+    retransmission_limit: Optional[Union[int, FixpU32]] = None
     tls_version: Optional[str] = None
     authentication_methods: Optional[Union[str, list[str]]] = empty_list()
+    credentials_format: Optional[str] = None
     cipher_suites: Optional[Union[str, list[str]]] = empty_list()
     transports: Optional[Union[str, list[str]]] = empty_list()
     network_protocols: Optional[Union[str, list[str]]] = empty_list()
@@ -1095,12 +1099,24 @@ class FixpStackProfile(YAMLRoot):
             self.supported_flow_types = [self.supported_flow_types] if self.supported_flow_types is not None else []
         self.supported_flow_types = [v if isinstance(v, FixpFlowType) else FixpFlowType(v) for v in self.supported_flow_types]
 
+        if self.shortest_keepalive_interval is not None and not isinstance(self.shortest_keepalive_interval, FixpDeltaMillisecs):
+            self.shortest_keepalive_interval = FixpDeltaMillisecs(self.shortest_keepalive_interval)
+
+        if self.longest_keepalive_interval is not None and not isinstance(self.longest_keepalive_interval, FixpDeltaMillisecs):
+            self.longest_keepalive_interval = FixpDeltaMillisecs(self.longest_keepalive_interval)
+
+        if self.retransmission_limit is not None and not isinstance(self.retransmission_limit, FixpU32):
+            self.retransmission_limit = FixpU32(self.retransmission_limit)
+
         if self.tls_version is not None and not isinstance(self.tls_version, str):
             self.tls_version = str(self.tls_version)
 
         if not isinstance(self.authentication_methods, list):
             self.authentication_methods = [self.authentication_methods] if self.authentication_methods is not None else []
         self.authentication_methods = [v if isinstance(v, str) else str(v) for v in self.authentication_methods]
+
+        if self.credentials_format is not None and not isinstance(self.credentials_format, str):
+            self.credentials_format = str(self.credentials_format)
 
         if not isinstance(self.cipher_suites, list):
             self.cipher_suites = [self.cipher_suites] if self.cipher_suites is not None else []
@@ -1416,11 +1432,23 @@ slots.fixpStackProfile__framing = Slot(uri=FIXP.framing, name="fixpStackProfile_
 slots.fixpStackProfile__supported_flow_types = Slot(uri=FIXP.supported_flow_types, name="fixpStackProfile__supported_flow_types", curie=FIXP.curie('supported_flow_types'),
                    model_uri=FIXP.fixpStackProfile__supported_flow_types, domain=None, range=Optional[Union[Union[str, "FixpFlowType"], list[Union[str, "FixpFlowType"]]]])
 
+slots.fixpStackProfile__shortest_keepalive_interval = Slot(uri=FIXP.shortest_keepalive_interval, name="fixpStackProfile__shortest_keepalive_interval", curie=FIXP.curie('shortest_keepalive_interval'),
+                   model_uri=FIXP.fixpStackProfile__shortest_keepalive_interval, domain=None, range=Optional[Union[int, FixpDeltaMillisecs]])
+
+slots.fixpStackProfile__longest_keepalive_interval = Slot(uri=FIXP.longest_keepalive_interval, name="fixpStackProfile__longest_keepalive_interval", curie=FIXP.curie('longest_keepalive_interval'),
+                   model_uri=FIXP.fixpStackProfile__longest_keepalive_interval, domain=None, range=Optional[Union[int, FixpDeltaMillisecs]])
+
+slots.fixpStackProfile__retransmission_limit = Slot(uri=FIXP.retransmission_limit, name="fixpStackProfile__retransmission_limit", curie=FIXP.curie('retransmission_limit'),
+                   model_uri=FIXP.fixpStackProfile__retransmission_limit, domain=None, range=Optional[Union[int, FixpU32]])
+
 slots.fixpStackProfile__tls_version = Slot(uri=FIXP.tls_version, name="fixpStackProfile__tls_version", curie=FIXP.curie('tls_version'),
                    model_uri=FIXP.fixpStackProfile__tls_version, domain=None, range=Optional[str])
 
 slots.fixpStackProfile__authentication_methods = Slot(uri=FIXP.authentication_methods, name="fixpStackProfile__authentication_methods", curie=FIXP.curie('authentication_methods'),
                    model_uri=FIXP.fixpStackProfile__authentication_methods, domain=None, range=Optional[Union[str, list[str]]])
+
+slots.fixpStackProfile__credentials_format = Slot(uri=FIXP.credentials_format, name="fixpStackProfile__credentials_format", curie=FIXP.curie('credentials_format'),
+                   model_uri=FIXP.fixpStackProfile__credentials_format, domain=None, range=Optional[str])
 
 slots.fixpStackProfile__cipher_suites = Slot(uri=FIXP.cipher_suites, name="fixpStackProfile__cipher_suites", curie=FIXP.curie('cipher_suites'),
                    model_uri=FIXP.fixpStackProfile__cipher_suites, domain=None, range=Optional[Union[str, list[str]]])

@@ -25,8 +25,12 @@ public class FixpStackProfile  {
   private List<String> messageSchemas;
   private String framing;
   private List<String> supportedFlowTypes;
+  private Integer shortestKeepaliveInterval;
+  private Integer longestKeepaliveInterval;
+  private Integer retransmissionLimit;
   private String tlsVersion;
   private List<String> authenticationMethods;
+  private String credentialsFormat;
   private List<String> cipherSuites;
   private List<String> transports;
   private List<String> networkProtocols;

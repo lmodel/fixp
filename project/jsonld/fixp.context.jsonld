@@ -88,6 +88,9 @@
       "cipher_suites": {
          "@id": "cipher_suites"
       },
+      "credentials_format": {
+         "@id": "credentials_format"
+      },
       "encoding_version": {
          "@id": "encoding_version"
       },
@@ -96,6 +99,10 @@
       },
       "framing": {
          "@id": "framing"
+      },
+      "longest_keepalive_interval": {
+         "@type": "xsd:integer",
+         "@id": "longest_keepalive_interval"
       },
       "message_encoding": {
          "@id": "message_encoding"
@@ -106,8 +113,16 @@
       "network_protocols": {
          "@id": "network_protocols"
       },
+      "retransmission_limit": {
+         "@type": "xsd:integer",
+         "@id": "retransmission_limit"
+      },
       "service_pack": {
          "@id": "service_pack"
+      },
+      "shortest_keepalive_interval": {
+         "@type": "xsd:integer",
+         "@id": "shortest_keepalive_interval"
       },
       "supported_flow_types": {
          "@context": {

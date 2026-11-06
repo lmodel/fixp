@@ -311,8 +311,12 @@ linkml:Sparqlpath xsd:string
           <supported_flow_types> [ <https://w3id.org/lmodel/fixp/FixpFlowType#Recoverable>
              <https://w3id.org/lmodel/fixp/FixpFlowType#Idempotent> <https://w3id.org/lmodel/fixp/FixpFlowType#Unsequenced>
              <https://w3id.org/lmodel/fixp/FixpFlowType#None> ] * ;
+          <shortest_keepalive_interval> @<FixpDeltaMillisecs> ? ;
+          <longest_keepalive_interval> @<FixpDeltaMillisecs> ? ;
+          <retransmission_limit> @<FixpU32> ? ;
           <tls_version> @linkml:String ? ;
           <authentication_methods> @linkml:String * ;
+          <credentials_format> @linkml:String ? ;
           <cipher_suites> @linkml:String * ;
           <transports> @linkml:String * ;
           <network_protocols> @linkml:String *

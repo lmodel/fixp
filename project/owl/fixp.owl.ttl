@@ -11,7 +11,7 @@
 @prefix pav: <http://purl.org/pav/> .
 @prefix schema1: <http://schema.org/> .
 xsd:base64Binary a rdfs:Datatype ;
-	owl:equivalentClass _:c14n228 .
+	owl:equivalentClass _:c14n233 .
 <https://w3id.org/lmodel/fixp.owl.ttl> dcterms:license "Apache-2.0" ;
 	dcterms:source <https://github.com/FIXTradingCommunity/fixp-specification/tree/v1.0-STANDARD/v1-0-STANDARD> ;
 	dcterms:title "FIX Performance Session Layer (FIXP)" ;
@@ -30,7 +30,7 @@ xsd:base64Binary a rdfs:Datatype ;
 	fixp:upstream_tag "v1.0-STANDARD" .
 fixp:FixpApplied a owl:Class ;
 	rdfs:label "FixpApplied" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n117 , _:c14n181 , _:c14n195 , _:c14n216 , _:c14n294 , _:c14n4 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n120 , _:c14n184 , _:c14n198 , _:c14n221 , _:c14n301 , _:c14n5 ;
 	skos:definition "An optional application message telling the party that sends an idempotent flow which of its operations took effect, where no business message already says so." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	skos:note "Like any application message, it uses up one number in the sequence of the flow it travels on." ;
@@ -42,7 +42,7 @@ fixp:FixpApplied a owl:Class ;
 	fixp:sbe_template_id "17" .
 fixp:FixpContext a owl:Class ;
 	rdfs:label "FixpContext" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n111 , _:c14n162 , _:c14n225 , _:c14n250 , _:c14n268 , _:c14n323 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n114 , _:c14n166 , _:c14n230 , _:c14n256 , _:c14n275 , _:c14n332 ;
 	skos:definition "On a transport that several sessions share, names the session the following messages belong to and, when the flow is sequenced, where its numbering continues." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_of "own" ;
@@ -52,10 +52,10 @@ fixp:FixpContext a owl:Class ;
 	fixp:sbe_name "Context" ;
 	fixp:sbe_template_id "9" .
 fixp:FixpDeltaMillisecs a rdfs:Datatype ;
-	owl:equivalentClass _:c14n204 .
+	owl:equivalentClass _:c14n207 .
 fixp:FixpEstablish a owl:Class ;
 	rdfs:label "FixpEstablish" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n169 , _:c14n182 , _:c14n19 , _:c14n215 , _:c14n234 , _:c14n262 , _:c14n273 , _:c14n296 , _:c14n3 , _:c14n315 , _:c14n327 , _:c14n33 , _:c14n34 , _:c14n62 , _:c14n69 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n172 , _:c14n185 , _:c14n20 , _:c14n220 , _:c14n239 , _:c14n268 , _:c14n280 , _:c14n303 , _:c14n324 , _:c14n336 , _:c14n35 , _:c14n36 , _:c14n4 , _:c14n64 , _:c14n71 ;
 	skos:definition "A client's request to tie a negotiated session to the very transport this message arrives on. After a disconnection it is sent again to re-bind." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_types "Recoverable Idempotent Unsequenced None" ;
@@ -65,7 +65,7 @@ fixp:FixpEstablish a owl:Class ;
 	fixp:sbe_template_id "5" .
 fixp:FixpEstablishmentAck a owl:Class ;
 	rdfs:label "FixpEstablishmentAck" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n1 , _:c14n10 , _:c14n115 , _:c14n2 , _:c14n264 , _:c14n300 , _:c14n301 , _:c14n305 , _:c14n32 , _:c14n321 , _:c14n47 , _:c14n90 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n1 , _:c14n11 , _:c14n118 , _:c14n270 , _:c14n3 , _:c14n308 , _:c14n309 , _:c14n313 , _:c14n330 , _:c14n34 , _:c14n49 , _:c14n92 ;
 	skos:definition "A server's acceptance of the binding. From here, application messages may flow." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_types "Recoverable Idempotent Unsequenced None" ;
@@ -75,7 +75,7 @@ fixp:FixpEstablishmentAck a owl:Class ;
 	fixp:sbe_template_id "6" .
 fixp:FixpEstablishmentReject a owl:Class ;
 	rdfs:label "FixpEstablishmentReject" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n113 , _:c14n13 , _:c14n142 , _:c14n158 , _:c14n192 , _:c14n229 , _:c14n241 , _:c14n41 , _:c14n5 , _:c14n78 , _:c14n95 , _:c14n96 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n116 , _:c14n14 , _:c14n146 , _:c14n161 , _:c14n195 , _:c14n234 , _:c14n246 , _:c14n43 , _:c14n6 , _:c14n81 , _:c14n97 , _:c14n98 ;
 	skos:definition "A server's refusal of the binding." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_types "Recoverable Idempotent Unsequenced None" ;
@@ -115,7 +115,7 @@ fixp:FixpEstablishmentRejectCode\#Unspecified a owl:Class ;
 	fixp:sbe_value "5" .
 fixp:FixpEstablishmentRejectCode a owl:Class ;
 	rdfs:label "FixpEstablishmentRejectCode" ;
-	owl:unionOf _:c14n276 ;
+	owl:unionOf _:c14n283 ;
 	skos:definition "Why a server would not bind the session to this transport." ;
 	skos:inScheme fixp:schema\/fixp_core ;
 	linkml:permissible_values fixp:FixpEstablishmentRejectCode\#AlreadyEstablished , fixp:FixpEstablishmentRejectCode\#Credentials , fixp:FixpEstablishmentRejectCode\#KeepaliveInterval , fixp:FixpEstablishmentRejectCode\#SessionBlocked , fixp:FixpEstablishmentRejectCode\#Unnegotiated , fixp:FixpEstablishmentRejectCode\#Unspecified ;
@@ -123,18 +123,18 @@ fixp:FixpEstablishmentRejectCode a owl:Class ;
 	fixp:sbe_name "EstablishmentRejectCode" .
 fixp:FixpExchange a owl:Class ;
 	rdfs:label "FixpExchange" ;
-	rdfs:subClassOf _:c14n174 , _:c14n201 , _:c14n207 , _:c14n208 , _:c14n238 , _:c14n25 , _:c14n277 , _:c14n280 , _:c14n283 , _:c14n328 , _:c14n44 , _:c14n51 , _:c14n53 , _:c14n80 ;
+	rdfs:subClassOf _:c14n177 , _:c14n204 , _:c14n210 , _:c14n211 , _:c14n243 , _:c14n27 , _:c14n284 , _:c14n287 , _:c14n290 , _:c14n337 , _:c14n46 , _:c14n53 , _:c14n55 , _:c14n83 ;
 	skos:definition "The messages of one session in the order they were sent, as a test case, a worked example or a captured log." ;
 	skos:inScheme fixp:schema\/fixp_exchange .
 fixp:FixpExchangeStep a owl:Class ;
 	rdfs:label "FixpExchangeStep" ;
-	rdfs:subClassOf _:c14n110 , _:c14n123 , _:c14n172 , _:c14n197 , _:c14n252 , _:c14n314 , _:c14n52 , _:c14n7 , _:c14n71 ;
-	owl:disjointUnionOf _:c14n200 ;
+	rdfs:subClassOf _:c14n113 , _:c14n126 , _:c14n175 , _:c14n200 , _:c14n258 , _:c14n323 , _:c14n54 , _:c14n74 , _:c14n8 ;
+	owl:disjointUnionOf _:c14n203 ;
 	skos:definition "One step: a FIXP message, or a run of application messages whose content FIXP does not define, and the side that sent it." ;
 	skos:inScheme fixp:schema\/fixp_exchange .
 fixp:FixpFinishedReceiving a owl:Class ;
 	rdfs:label "FixpFinishedReceiving" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n134 , _:c14n178 , _:c14n288 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n138 , _:c14n181 , _:c14n295 ;
 	skos:definition "Answers FinishedSending once the last message of the peer's flow has been processed. After it the session is finalized and its identifier is spent." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_of "peer" ;
@@ -145,7 +145,7 @@ fixp:FixpFinishedReceiving a owl:Class ;
 	fixp:sbe_template_id "16" .
 fixp:FixpFinishedSending a owl:Class ;
 	rdfs:label "FixpFinishedSending" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n0 , _:c14n14 , _:c14n183 , _:c14n281 , _:c14n286 , _:c14n330 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n0 , _:c14n15 , _:c14n186 , _:c14n288 , _:c14n293 , _:c14n339 ;
 	skos:definition "Says that the sender's flow has carried its last application message, which begins finalization. It is repeated as the heartbeat until the answer comes." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_of "own" ;
@@ -176,7 +176,7 @@ fixp:FixpFlowType\#Unsequenced a owl:Class ;
 	fixp:sbe_value "2" .
 fixp:FixpFlowType a owl:Class ;
 	rdfs:label "FixpFlowType" ;
-	owl:unionOf _:c14n85 ;
+	owl:unionOf _:c14n87 ;
 	skos:definition "How surely a flow is delivered. A flow is what one side of a session sends the other, leaving out session messages." ;
 	skos:inScheme fixp:schema\/fixp_core ;
 	skos:note "The values are listed from the strongest guarantee to none." ;
@@ -185,14 +185,14 @@ fixp:FixpFlowType a owl:Class ;
 	fixp:sbe_name "FlowType" .
 fixp:FixpMessage a owl:Class ;
 	rdfs:label "FixpMessage" ;
-	rdfs:subClassOf _:c14n118 , _:c14n138 , _:c14n176 , _:c14n266 ;
+	rdfs:subClassOf _:c14n121 , _:c14n142 , _:c14n179 , _:c14n272 ;
 	skos:definition "One FIXP message, as its fields would be read from the wire before or after encoding." ;
 	skos:inScheme fixp:schema\/fixp_core ;
 	skos:note "The FIXP files define each message as an SBE message template, which lmodel/fix-sbe models as SbeMessageV1, and as an Orchestra message, which lmodel/fix-orchestra models as OrchestraMessageV10. A record of those classes defines a kind of message; an instance of this class is one message of that kind." ;
 	skos:relatedMatch fix_orchestra:OrchestraMessageV10 , fix_sbe:SbeMessageV1 .
 fixp:FixpMessageTemplate a owl:Class ;
 	rdfs:label "FixpMessageTemplate" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n129 , _:c14n155 , _:c14n167 , _:c14n206 , _:c14n233 , _:c14n267 , _:c14n28 , _:c14n298 , _:c14n319 , _:c14n322 , _:c14n332 , _:c14n79 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n133 , _:c14n159 , _:c14n171 , _:c14n209 , _:c14n238 , _:c14n273 , _:c14n30 , _:c14n306 , _:c14n328 , _:c14n331 , _:c14n341 , _:c14n82 ;
 	skos:definition "Hands the peer a template or schema it needs to read messages in an encoding that templates drive. There is no fixed moment for sending it." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	skos:note "A publisher does well to repeat it for late listeners. On a shared transport it applies to every session there." ;
@@ -213,17 +213,17 @@ fixp:FixpMulticastFlowType\#Recoverable a owl:Class ;
 	fixp:sbe_value "0" .
 fixp:FixpMulticastFlowType a owl:Class ;
 	rdfs:label "FixpMulticastFlowType" ;
-	owl:unionOf _:c14n12 ;
+	owl:unionOf _:c14n13 ;
 	skos:definition "The delivery guarantee a multicast topic announces for its flow." ;
 	skos:inScheme fixp:schema\/fixp_core ;
 	skos:note "Section 5 and the repository file allow these two values. Section 3 allows a multicast Idempotent alone, and the SBE schema reuses the four-value FlowType, which tests/upstream_departures.yaml records." ;
 	linkml:permissible_values fixp:FixpMulticastFlowType\#Idempotent , fixp:FixpMulticastFlowType\#Recoverable ;
 	fixp:repository_code_set "FlowCodeSet" .
 fixp:FixpNanotime a rdfs:Datatype ;
-	owl:equivalentClass _:c14n173 .
+	owl:equivalentClass _:c14n176 .
 fixp:FixpNegotiate a owl:Class ;
 	rdfs:label "FixpNegotiate" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n108 , _:c14n125 , _:c14n151 , _:c14n189 , _:c14n202 , _:c14n239 , _:c14n309 , _:c14n42 , _:c14n61 , _:c14n68 , _:c14n86 , _:c14n87 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n111 , _:c14n129 , _:c14n155 , _:c14n192 , _:c14n205 , _:c14n244 , _:c14n317 , _:c14n44 , _:c14n63 , _:c14n70 , _:c14n88 , _:c14n89 ;
 	skos:definition "A client's request to create a session under an identifier it has never used, stating the flow type it will send." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_types "Recoverable Idempotent Unsequenced None" ;
@@ -233,7 +233,7 @@ fixp:FixpNegotiate a owl:Class ;
 	fixp:sbe_template_id "1" .
 fixp:FixpNegotiationReject a owl:Class ;
 	rdfs:label "FixpNegotiationReject" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n124 , _:c14n187 , _:c14n217 , _:c14n240 , _:c14n271 , _:c14n278 , _:c14n29 , _:c14n290 , _:c14n37 , _:c14n72 , _:c14n82 , _:c14n83 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n127 , _:c14n190 , _:c14n222 , _:c14n245 , _:c14n278 , _:c14n285 , _:c14n297 , _:c14n31 , _:c14n39 , _:c14n75 , _:c14n84 , _:c14n85 ;
 	skos:definition "A server's refusal to create a session. The server sends nothing more and closes the transport." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_types "Recoverable Idempotent Unsequenced None" ;
@@ -263,7 +263,7 @@ fixp:FixpNegotiationRejectCode\#Unspecified a owl:Class ;
 	fixp:sbe_value "3" .
 fixp:FixpNegotiationRejectCode a owl:Class ;
 	rdfs:label "FixpNegotiationRejectCode" ;
-	owl:unionOf _:c14n205 ;
+	owl:unionOf _:c14n208 ;
 	skos:definition "Why a server refused to create a session." ;
 	skos:inScheme fixp:schema\/fixp_core ;
 	linkml:permissible_values fixp:FixpNegotiationRejectCode\#Credentials , fixp:FixpNegotiationRejectCode\#DuplicateId , fixp:FixpNegotiationRejectCode\#FlowTypeNotSupported , fixp:FixpNegotiationRejectCode\#Unspecified ;
@@ -271,7 +271,7 @@ fixp:FixpNegotiationRejectCode a owl:Class ;
 	fixp:sbe_name "NegotiationRejectCode" .
 fixp:FixpNegotiationResponse a owl:Class ;
 	rdfs:label "FixpNegotiationResponse" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n161 , _:c14n163 , _:c14n18 , _:c14n219 , _:c14n251 , _:c14n255 , _:c14n287 , _:c14n306 , _:c14n39 , _:c14n55 , _:c14n56 , _:c14n58 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n165 , _:c14n167 , _:c14n19 , _:c14n224 , _:c14n257 , _:c14n261 , _:c14n294 , _:c14n314 , _:c14n41 , _:c14n57 , _:c14n58 , _:c14n60 ;
 	skos:definition "A server's acceptance of a new session, stating the flow type it will send back." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_types "Recoverable Idempotent Unsequenced None" ;
@@ -281,7 +281,7 @@ fixp:FixpNegotiationResponse a owl:Class ;
 	fixp:sbe_template_id "2" .
 fixp:FixpNotApplied a owl:Class ;
 	rdfs:label "FixpNotApplied" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n20 , _:c14n218 , _:c14n303 , _:c14n325 , _:c14n333 , _:c14n66 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n21 , _:c14n223 , _:c14n311 , _:c14n334 , _:c14n342 , _:c14n68 ;
 	skos:definition "An application message telling the party that sends an idempotent flow about a gap: a run of operations that did not take effect. That party's application decides what to do." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	skos:note "Like any application message, it uses up one number in the sequence of the flow it travels on." ;
@@ -305,13 +305,13 @@ fixp:FixpParty\#server a owl:Class ;
 	skos:definition "The party that accepts the client's session." .
 fixp:FixpParty a owl:Class ;
 	rdfs:label "FixpParty" ;
-	owl:unionOf _:c14n235 ;
+	owl:unionOf _:c14n240 ;
 	skos:definition "The side that sends a step." ;
 	skos:inScheme fixp:schema\/fixp_exchange ;
 	linkml:permissible_values fixp:FixpParty\#client , fixp:FixpParty\#publisher , fixp:FixpParty\#server .
 fixp:FixpRetransmission a owl:Class ;
 	rdfs:label "FixpRetransmission" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n112 , _:c14n139 , _:c14n149 , _:c14n15 , _:c14n171 , _:c14n23 , _:c14n26 , _:c14n263 , _:c14n275 , _:c14n291 , _:c14n297 , _:c14n99 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n101 , _:c14n115 , _:c14n143 , _:c14n153 , _:c14n16 , _:c14n174 , _:c14n25 , _:c14n269 , _:c14n28 , _:c14n282 , _:c14n298 , _:c14n305 ;
 	skos:definition "Introduces a batch of resent messages, which are numbered by counting from the number it gives. A request may be answered in several batches." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_of "own" ;
@@ -322,7 +322,7 @@ fixp:FixpRetransmission a owl:Class ;
 	fixp:sbe_template_id "12" .
 fixp:FixpRetransmitReject a owl:Class ;
 	rdfs:label "FixpRetransmitReject" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n107 , _:c14n119 , _:c14n127 , _:c14n135 , _:c14n140 , _:c14n159 , _:c14n180 , _:c14n212 , _:c14n24 , _:c14n259 , _:c14n274 , _:c14n295 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n110 , _:c14n122 , _:c14n131 , _:c14n139 , _:c14n144 , _:c14n162 , _:c14n183 , _:c14n215 , _:c14n26 , _:c14n265 , _:c14n281 , _:c14n302 ;
 	skos:definition "Refuses a RetransmitRequest, with a code saying why." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	skos:note "The resource files and section 4's table spell its name RestransmitReject. The summary in section 6 does not list it; it answers a RetransmitRequest, so it belongs to recoverable flows." ;
@@ -349,7 +349,7 @@ fixp:FixpRetransmitRejectCode\#RequestLimitExceeded a owl:Class ;
 	fixp:sbe_value "2" .
 fixp:FixpRetransmitRejectCode a owl:Class ;
 	rdfs:label "FixpRetransmitRejectCode" ;
-	owl:unionOf _:c14n230 ;
+	owl:unionOf _:c14n235 ;
 	skos:definition "Why a party will not resend the messages its peer asked for." ;
 	skos:inScheme fixp:schema\/fixp_core ;
 	linkml:permissible_values fixp:FixpRetransmitRejectCode\#InvalidSession , fixp:FixpRetransmitRejectCode\#OutOfRange , fixp:FixpRetransmitRejectCode\#RequestLimitExceeded ;
@@ -357,7 +357,7 @@ fixp:FixpRetransmitRejectCode a owl:Class ;
 	fixp:sbe_name "RetransmitRejectCode" .
 fixp:FixpRetransmitRequest a owl:Class ;
 	rdfs:label "FixpRetransmitRequest" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n106 , _:c14n148 , _:c14n152 , _:c14n196 , _:c14n209 , _:c14n21 , _:c14n220 , _:c14n242 , _:c14n269 , _:c14n279 , _:c14n35 , _:c14n88 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n109 , _:c14n152 , _:c14n156 , _:c14n199 , _:c14n212 , _:c14n22 , _:c14n225 , _:c14n248 , _:c14n276 , _:c14n286 , _:c14n37 , _:c14n90 ;
 	skos:definition "Asks the peer to resend some messages of its recoverable flow. A party has at most one such request open at a time." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_of "peer" ;
@@ -368,13 +368,13 @@ fixp:FixpRetransmitRequest a owl:Class ;
 	fixp:sbe_template_id "11" .
 fixp:FixpRulesOfEngagement a owl:Class ;
 	rdfs:label "FixpRulesOfEngagement" ;
-	rdfs:subClassOf _:c14n100 , _:c14n120 , _:c14n130 , _:c14n144 , _:c14n191 , _:c14n256 , _:c14n40 , _:c14n49 , _:c14n67 , _:c14n73 , _:c14n89 , _:c14n93 ;
+	rdfs:subClassOf _:c14n103 , _:c14n123 , _:c14n134 , _:c14n148 , _:c14n194 , _:c14n262 , _:c14n42 , _:c14n51 , _:c14n69 , _:c14n76 , _:c14n91 , _:c14n95 ;
 	skos:definition "What two counterparties agree on for one FIXP service, layer by layer, for the client and for the server." ;
 	skos:inScheme fixp:schema\/fixp_engagement ;
 	skos:note "Appendix B calls its checklist an aid, and FIXP leaves each of these choices to the counterparties." .
 fixp:FixpSequence a owl:Class ;
 	rdfs:label "FixpSequence" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n244 , _:c14n284 , _:c14n8 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n250 , _:c14n291 , _:c14n9 ;
 	skos:definition "Starts the numbering of a sequenced flow, so that the application messages after it are numbered by counting up from the value it carries. Sent when idle, it is also the heartbeat." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	skos:note "It is used on a transport that carries one session; Context replaces it on a shared one." ;
@@ -396,20 +396,21 @@ fixp:FixpSessionKind\#point_to_point a owl:Class ;
 	fixp:fixp_section "4" .
 fixp:FixpSessionKind a owl:Class ;
 	rdfs:label "FixpSessionKind" ;
-	owl:unionOf _:c14n27 ;
+	owl:unionOf _:c14n29 ;
 	skos:definition "The two forms of FIXP session." ;
 	skos:inScheme fixp:schema\/fixp_exchange ;
 	linkml:permissible_values fixp:FixpSessionKind\#multicast , fixp:FixpSessionKind\#point_to_point .
 fixp:FixpStackProfile a owl:Class ;
 	rdfs:label "FixpStackProfile" ;
-	rdfs:subClassOf _:c14n101 , _:c14n102 , _:c14n133 , _:c14n141 , _:c14n145 , _:c14n165 , _:c14n175 , _:c14n177 , _:c14n184 , _:c14n188 , _:c14n190 , _:c14n194 , _:c14n198 , _:c14n199 , _:c14n210 , _:c14n226 , _:c14n231 , _:c14n237 , _:c14n246 , _:c14n257 , _:c14n265 , _:c14n270 , _:c14n282 , _:c14n285 , _:c14n307 , _:c14n320 , _:c14n331 , _:c14n54 , _:c14n57 , _:c14n59 , _:c14n65 , _:c14n74 , _:c14n84 , _:c14n94 , _:c14n98 ;
+	rdfs:subClassOf _:c14n100 , _:c14n102 , _:c14n104 , _:c14n105 , _:c14n128 , _:c14n137 , _:c14n145 , _:c14n149 , _:c14n164 , _:c14n169 , _:c14n178 , _:c14n180 , _:c14n187 , _:c14n191 , _:c14n193 , _:c14n197 , _:c14n2 , _:c14n201 , _:c14n202 , _:c14n213 , _:c14n216 , _:c14n217 , _:c14n231 , _:c14n236 , _:c14n24 , _:c14n242 , _:c14n247 , _:c14n252 , _:c14n263 , _:c14n271 , _:c14n274 , _:c14n277 , _:c14n289 , _:c14n292 , _:c14n304 , _:c14n315 , _:c14n322 , _:c14n329 , _:c14n340 , _:c14n56 , _:c14n59 , _:c14n61 , _:c14n67 , _:c14n73 , _:c14n77 , _:c14n86 , _:c14n96 ;
 	skos:definition "One side's choices at each layer of the stack: application, presentation, session, security and transport." ;
-	skos:inScheme fixp:schema\/fixp_engagement .
+	skos:inScheme fixp:schema\/fixp_engagement ;
+	skos:note "Beyond appendix B's rows, it holds what sections 3 and 4 leave to the two parties: the form of the credentials, the keep-alive intervals each side accepts, and the most messages one resend may cover." .
 fixp:FixpString a rdfs:Datatype ;
-	owl:equivalentClass _:c14n335 .
+	owl:equivalentClass _:c14n344 .
 fixp:FixpTerminate a owl:Class ;
 	rdfs:label "FixpTerminate" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n105 , _:c14n122 , _:c14n147 , _:c14n223 , _:c14n253 , _:c14n318 , _:c14n326 , _:c14n60 , _:c14n97 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n108 , _:c14n125 , _:c14n151 , _:c14n228 , _:c14n259 , _:c14n327 , _:c14n335 , _:c14n62 , _:c14n99 ;
 	skos:definition "Releases the session from its transport without ending the session, which can be bound again later. The peer answers with a Terminate, and after its own Terminate a party sends nothing more." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_flow_types "Recoverable Idempotent Unsequenced None" ;
@@ -439,7 +440,7 @@ fixp:FixpTerminationCode\#UnspecifiedError a owl:Class ;
 	fixp:sbe_value "1" .
 fixp:FixpTerminationCode a owl:Class ;
 	rdfs:label "FixpTerminationCode" ;
-	owl:unionOf _:c14n136 ;
+	owl:unionOf _:c14n140 ;
 	skos:definition "Why a party releases a session from its transport." ;
 	skos:inScheme fixp:schema\/fixp_core ;
 	skos:note "The specification lists these values without saying what each one means, apart from ReRequestInProgress, so the descriptions read their names." ;
@@ -448,7 +449,7 @@ fixp:FixpTerminationCode a owl:Class ;
 	fixp:sbe_name "TerminationCode" .
 fixp:FixpTopic a owl:Class ;
 	rdfs:label "FixpTopic" ;
-	rdfs:subClassOf fixp:FixpMessage , _:c14n114 , _:c14n154 , _:c14n203 , _:c14n261 , _:c14n289 , _:c14n304 , _:c14n308 , _:c14n311 , _:c14n317 , _:c14n46 , _:c14n64 , _:c14n70 ;
+	rdfs:subClassOf fixp:FixpMessage , _:c14n117 , _:c14n158 , _:c14n206 , _:c14n267 , _:c14n296 , _:c14n312 , _:c14n316 , _:c14n319 , _:c14n326 , _:c14n48 , _:c14n66 , _:c14n72 ;
 	skos:definition "A multicast publisher's notice that starts a flow and ties the session's short-lived identifier to a lasting subject. It is repeated so that late listeners can join." ;
 	skos:inScheme fixp:schema\/fixp_messages ;
 	fixp:fixp_multicast "true" ;
@@ -456,13 +457,13 @@ fixp:FixpTopic a owl:Class ;
 	fixp:sbe_name "Topic" ;
 	fixp:sbe_template_id "4" .
 fixp:FixpU16 a rdfs:Datatype ;
-	owl:equivalentClass _:c14n30 .
+	owl:equivalentClass _:c14n32 .
 fixp:FixpU32 a rdfs:Datatype ;
-	owl:equivalentClass _:c14n43 .
+	owl:equivalentClass _:c14n45 .
 fixp:FixpU64 a rdfs:Datatype ;
-	owl:equivalentClass _:c14n31 .
+	owl:equivalentClass _:c14n33 .
 fixp:FixpU8 a rdfs:Datatype ;
-	owl:equivalentClass _:c14n75 .
+	owl:equivalentClass _:c14n78 .
 fixp:FixpUnsequencedHeartbeat a owl:Class ;
 	rdfs:label "FixpUnsequencedHeartbeat" ;
 	rdfs:subClassOf fixp:FixpMessage ;
@@ -475,7 +476,7 @@ fixp:FixpUnsequencedHeartbeat a owl:Class ;
 	fixp:sbe_name "UnsequencedHeartbeat" ;
 	fixp:sbe_template_id "10" .
 fixp:FixpUuid a rdfs:Datatype ;
-	owl:equivalentClass _:c14n224 .
+	owl:equivalentClass _:c14n229 .
 fixp:application_fix_version a owl:DatatypeProperty ;
 	rdfs:label "application_fix_version" ;
 	skos:definition "The FIX version of the application messages, such as FIX.Latest." ;
@@ -522,6 +523,13 @@ fixp:credentials a owl:DatatypeProperty ;
 	fixp:repository_datatype "data" ;
 	fixp:repository_field_id "4" ;
 	fixp:sbe_field_id "4" .
+fixp:credentials_format a owl:DatatypeProperty ;
+	rdfs:label "credentials_format" ;
+	skos:definition "The form of the credentials this side sends, and how its peer checks them." ;
+	skos:inScheme fixp:schema\/fixp_engagement ;
+	skos:note "FIXP carries credentials as opaque octets and leaves their form to the two parties." ;
+	fixp:fixp_section "3" ;
+	fixp:stack_layer "security" .
 fixp:description a owl:DatatypeProperty ;
 	rdfs:label "description" ;
 	skos:definition "Free text about a record, for the people who read it." ;
@@ -608,6 +616,13 @@ fixp:last_seq_no a owl:DatatypeProperty ;
 	fixp:repository_datatype "int" ;
 	fixp:repository_field_id "17" ;
 	fixp:sbe_field_id "17" .
+fixp:longest_keepalive_interval a owl:DatatypeProperty ;
+	rdfs:label "longest_keepalive_interval" ;
+	skos:definition "The longest keep-alive interval, in milliseconds, that this side accepts from its peer." ;
+	skos:inScheme fixp:schema\/fixp_engagement ;
+	skos:note "An Establish that asks for a longer one is refused with the KeepaliveInterval code." ;
+	fixp:fixp_section "4" ;
+	fixp:stack_layer "session" .
 fixp:message_count a owl:DatatypeProperty ;
 	rdfs:label "message_count" ;
 	rdfs:range fixp:FixpU32 ;
@@ -687,6 +702,13 @@ fixp:request_timestamp a owl:DatatypeProperty ;
 	fixp:repository_datatype "int" ;
 	fixp:repository_field_id "5" ;
 	fixp:sbe_field_id "5" .
+fixp:retransmission_limit a owl:DatatypeProperty ;
+	rdfs:label "retransmission_limit" ;
+	skos:definition "The most messages this side resends in answer to one RetransmitRequest." ;
+	skos:inScheme fixp:schema\/fixp_engagement ;
+	skos:note "A request for more may be refused with the RequestLimitExceeded code." ;
+	fixp:fixp_section "4" ;
+	fixp:stack_layer "session" .
 fixp:retransmit_reject_code a owl:ObjectProperty ;
 	rdfs:label "retransmit_reject_code" ;
 	rdfs:range fixp:FixpRetransmitRejectCode ;
@@ -731,6 +753,13 @@ fixp:session_kind a owl:ObjectProperty ;
 	rdfs:label "session_kind" ;
 	skos:definition "Which of the two forms the session takes." ;
 	skos:inScheme fixp:schema\/fixp_exchange .
+fixp:shortest_keepalive_interval a owl:DatatypeProperty ;
+	rdfs:label "shortest_keepalive_interval" ;
+	skos:definition "The shortest keep-alive interval, in milliseconds, that this side accepts from its peer." ;
+	skos:inScheme fixp:schema\/fixp_engagement ;
+	skos:note "An Establish that asks for a shorter one is refused with the KeepaliveInterval code." ;
+	fixp:fixp_section "4" ;
+	fixp:stack_layer "session" .
 fixp:sofh_encoding_type a owl:DatatypeProperty ;
 	rdfs:label "sofh_encoding_type" ;
 	rdfs:range fixp:FixpU32 ;
@@ -797,1094 +826,1142 @@ _:c14n0 a owl:Restriction ;
 _:c14n1 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpNanotime ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n10 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:request_timestamp .
+_:c14n10 rdf:first fixp:FixpRetransmitRejectCode\#RequestLimitExceeded ;
+	rdf:rest rdf:nil .
 _:c14n100 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:id .
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:application_recovery .
 _:c14n101 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:extension_packs .
-_:c14n102 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:supported_flow_types .
-_:c14n103 rdf:first fixp:FixpFinishedSending ;
-	rdf:rest _:c14n131 .
-_:c14n104 a owl:Restriction ;
-	owl:allValuesFrom owl:Thing ;
-	owl:onProperty fixp:fixp_message .
-_:c14n105 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n106 a owl:Restriction ;
+_:c14n102 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpDeltaMillisecs ;
+	owl:onProperty fixp:shortest_keepalive_interval .
+_:c14n103 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:id .
+_:c14n104 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:extension_packs .
+_:c14n105 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:supported_flow_types .
+_:c14n106 rdf:first fixp:FixpFinishedSending ;
+	rdf:rest _:c14n135 .
+_:c14n107 a owl:Restriction ;
+	owl:allValuesFrom owl:Thing ;
+	owl:onProperty fixp:fixp_message .
+_:c14n108 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpUuid ;
+	owl:onProperty fixp:session_id .
+_:c14n109 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:request_time .
-_:c14n107 a owl:Restriction ;
+_:c14n11 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:request_timestamp .
+_:c14n110 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n108 a owl:Restriction ;
+_:c14n111 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:request_time .
-_:c14n109 rdf:first fixp:FixpEstablishmentRejectCode\#SessionBlocked ;
-	rdf:rest _:c14n186 .
-_:c14n11 rdf:first fixp:FixpTopic ;
-	rdf:rest _:c14n312 .
-_:c14n110 a owl:Restriction ;
+_:c14n112 rdf:first fixp:FixpEstablishmentRejectCode\#SessionBlocked ;
+	rdf:rest _:c14n189 .
+_:c14n113 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpMessage ;
 	owl:onProperty fixp:fixp_message .
-_:c14n111 a owl:Restriction ;
+_:c14n114 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpU64 ;
 	owl:onProperty fixp:next_seq_no .
-_:c14n112 a owl:Restriction ;
+_:c14n115 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:message_count .
-_:c14n113 a owl:Restriction ;
+_:c14n116 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:establishment_reject_code .
-_:c14n114 a owl:Restriction ;
+_:c14n117 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:keepalive_interval .
-_:c14n115 a owl:Restriction ;
+_:c14n118 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:keepalive_interval .
-_:c14n116 a owl:Restriction ;
+_:c14n119 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpContext ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpContext .
-_:c14n117 a owl:Restriction ;
+_:c14n12 rdf:first fixp:FixpTopic ;
+	rdf:rest _:c14n320 .
+_:c14n120 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpU64 ;
 	owl:onProperty fixp:from_seq_no .
-_:c14n118 owl:unionOf _:c14n214 .
-_:c14n119 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:reason_text .
-_:c14n12 rdf:first fixp:FixpMulticastFlowType\#Recoverable ;
-	rdf:rest _:c14n17 .
-_:c14n120 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpStackProfile ;
-	owl:onProperty fixp:client_stack .
-_:c14n121 rdf:first fixp:FixpTerminationCode\#UnspecifiedError ;
-	rdf:rest _:c14n166 .
+_:c14n121 owl:unionOf _:c14n219 .
 _:c14n122 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:reason_text .
 _:c14n123 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:application_message_count .
-_:c14n124 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:negotiation_reject_code .
+	owl:allValuesFrom fixp:FixpStackProfile ;
+	owl:onProperty fixp:client_stack .
+_:c14n124 rdf:first fixp:FixpTerminationCode\#UnspecifiedError ;
+	rdf:rest _:c14n170 .
 _:c14n125 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty fixp:credentials .
-_:c14n126 rdf:first fixp:FixpNegotiationRejectCode\#Unspecified ;
-	rdf:rest rdf:nil .
+	owl:onProperty fixp:reason_text .
+_:c14n126 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:application_message_count .
 _:c14n127 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:negotiation_reject_code .
+_:c14n128 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpDeltaMillisecs ;
+	owl:onProperty fixp:longest_keepalive_interval .
+_:c14n129 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:credentials .
+_:c14n13 rdf:first fixp:FixpMulticastFlowType\#Recoverable ;
+	rdf:rest _:c14n18 .
+_:c14n130 rdf:first fixp:FixpNegotiationRejectCode\#Unspecified ;
+	rdf:rest rdf:nil .
+_:c14n131 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:retransmit_reject_code .
-_:c14n128 rdf:first fixp:FixpEstablishmentReject ;
-	rdf:rest _:c14n254 .
-_:c14n129 a owl:Restriction ;
+_:c14n132 rdf:first fixp:FixpEstablishmentReject ;
+	rdf:rest _:c14n260 .
+_:c14n133 a owl:Restriction ;
 	owl:allValuesFrom xsd:base64Binary ;
 	owl:onProperty fixp:template .
-_:c14n13 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:reason_text .
-_:c14n130 a owl:Restriction ;
+_:c14n134 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:server_stack .
-_:c14n131 rdf:first fixp:FixpMessageTemplate ;
-	rdf:rest _:c14n77 .
-_:c14n132 a owl:Restriction ;
+_:c14n135 rdf:first fixp:FixpMessageTemplate ;
+	rdf:rest _:c14n80 .
+_:c14n136 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpNegotiationResponse ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpNegotiationResponse .
-_:c14n133 a owl:Restriction ;
+_:c14n137 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:encoding_version .
-_:c14n134 a owl:Restriction ;
+_:c14n138 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n135 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n136 rdf:first fixp:FixpTerminationCode\#Finished ;
-	rdf:rest _:c14n121 .
-_:c14n137 rdf:first fixp:FixpSessionKind\#multicast ;
-	rdf:rest rdf:nil .
-_:c14n138 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:message_kind .
 _:c14n139 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:next_seq_no .
+	owl:onProperty fixp:session_id .
 _:c14n14 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpU64 ;
-	owl:onProperty fixp:last_seq_no .
-_:c14n140 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:reason_text .
+_:c14n140 rdf:first fixp:FixpTerminationCode\#Finished ;
+	rdf:rest _:c14n124 .
+_:c14n141 rdf:first fixp:FixpSessionKind\#multicast ;
+	rdf:rest rdf:nil .
+_:c14n142 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:message_kind .
+_:c14n143 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:next_seq_no .
+_:c14n144 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n141 a owl:Restriction ;
+_:c14n145 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:application_fix_version .
-_:c14n142 a owl:Restriction ;
+_:c14n146 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:reason_text .
-_:c14n143 rdf:first fixp:FixpRetransmitRequest ;
-	rdf:rest _:c14n310 .
-_:c14n144 a owl:Restriction ;
+_:c14n147 rdf:first fixp:FixpRetransmitRequest ;
+	rdf:rest _:c14n318 .
+_:c14n148 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:client_stack .
-_:c14n145 a owl:Restriction ;
+_:c14n149 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:framing .
-_:c14n146 rdf:first fixp:FixpNegotiationRejectCode\#FlowTypeNotSupported ;
-	rdf:rest _:c14n213 .
-_:c14n147 a owl:Restriction ;
+_:c14n15 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpU64 ;
+	owl:onProperty fixp:last_seq_no .
+_:c14n150 rdf:first fixp:FixpNegotiationRejectCode\#FlowTypeNotSupported ;
+	rdf:rest _:c14n218 .
+_:c14n151 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpTerminationCode ;
 	owl:onProperty fixp:termination_code .
-_:c14n148 a owl:Restriction ;
+_:c14n152 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:message_count .
-_:c14n149 a owl:Restriction ;
+_:c14n153 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:message_count .
-_:c14n15 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:next_seq_no .
-_:c14n150 rdf:first fixp:FixpTerminate ;
-	rdf:rest _:c14n11 .
-_:c14n151 a owl:Restriction ;
+_:c14n154 rdf:first fixp:FixpTerminate ;
+	rdf:rest _:c14n12 .
+_:c14n155 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:client_flow .
-_:c14n152 a owl:Restriction ;
+_:c14n156 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpNanotime ;
 	owl:onProperty fixp:request_time .
-_:c14n153 rdf:first xsd:string ;
+_:c14n157 rdf:first xsd:string ;
 	rdf:rest rdf:nil .
-_:c14n154 a owl:Restriction ;
+_:c14n158 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:flow .
-_:c14n155 a owl:Restriction ;
+_:c14n159 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:sofh_encoding_type .
-_:c14n156 a owl:Restriction ;
+_:c14n16 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:next_seq_no .
+_:c14n160 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpRetransmission ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpRetransmission .
-_:c14n157 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n168 .
-_:c14n158 a owl:Restriction ;
+_:c14n161 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n159 a owl:Restriction ;
+_:c14n162 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpNanotime ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n16 rdf:first fixp:FixpContext ;
-	rdf:rest _:c14n179 .
-_:c14n160 a owl:Restriction ;
+_:c14n163 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:application_message_count .
-_:c14n161 a owl:Restriction ;
+_:c14n164 a owl:Restriction ;
+	owl:allValuesFrom _:c14n419 ;
+	owl:onProperty fixp:retransmission_limit .
+_:c14n165 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n162 a owl:Restriction ;
+_:c14n166 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:next_seq_no .
-_:c14n163 a owl:Restriction ;
+_:c14n167 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n164 rdf:first fixp:FixpFlowType\#Idempotent ;
-	rdf:rest _:c14n272 .
-_:c14n165 a owl:Restriction ;
+_:c14n168 rdf:first fixp:FixpFlowType\#Idempotent ;
+	rdf:rest _:c14n279 .
+_:c14n169 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:message_schemas .
-_:c14n166 rdf:first fixp:FixpTerminationCode\#ReRequestOutOfBounds ;
-	rdf:rest _:c14n260 .
-_:c14n167 a owl:Restriction ;
+_:c14n17 rdf:first fixp:FixpContext ;
+	rdf:rest _:c14n182 .
+_:c14n170 rdf:first fixp:FixpTerminationCode\#ReRequestOutOfBounds ;
+	rdf:rest _:c14n266 .
+_:c14n171 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:template_version .
-_:c14n168 rdf:first fixp:FixpU32 ;
-	rdf:rest _:c14n393 .
-_:c14n169 a owl:Restriction ;
+_:c14n172 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:next_seq_no .
-_:c14n17 rdf:first fixp:FixpMulticastFlowType\#Idempotent ;
-	rdf:rest rdf:nil .
-_:c14n170 a owl:Restriction ;
+_:c14n173 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpEstablishmentAck ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpEstablishmentAck .
-_:c14n171 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:request_timestamp .
-_:c14n172 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:fixp_message .
-_:c14n173 owl:intersectionOf _:c14n359 .
 _:c14n174 a owl:Restriction ;
 	owl:minCardinality 1 ;
-	owl:onProperty fixp:id .
+	owl:onProperty fixp:request_timestamp .
 _:c14n175 a owl:Restriction ;
 	owl:minCardinality 0 ;
+	owl:onProperty fixp:fixp_message .
+_:c14n176 owl:intersectionOf _:c14n358 .
+_:c14n177 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:id .
+_:c14n178 a owl:Restriction ;
+	owl:minCardinality 0 ;
 	owl:onProperty fixp:transports .
-_:c14n176 a owl:Restriction ;
+_:c14n179 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:message_kind .
-_:c14n177 a owl:Restriction ;
+_:c14n18 rdf:first fixp:FixpMulticastFlowType\#Idempotent ;
+	rdf:rest rdf:nil .
+_:c14n180 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:tls_version .
-_:c14n178 a owl:Restriction ;
+_:c14n181 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n179 rdf:first fixp:FixpEstablish ;
-	rdf:rest _:c14n243 .
-_:c14n18 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:credentials .
-_:c14n180 a owl:Restriction ;
+_:c14n182 rdf:first fixp:FixpEstablish ;
+	rdf:rest _:c14n249 .
+_:c14n183 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpString ;
 	owl:onProperty fixp:reason_text .
-_:c14n181 a owl:Restriction ;
+_:c14n184 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:from_seq_no .
-_:c14n182 a owl:Restriction ;
+_:c14n185 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpDeltaMillisecs ;
 	owl:onProperty fixp:keepalive_interval .
-_:c14n183 a owl:Restriction ;
+_:c14n186 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n184 a owl:Restriction ;
+_:c14n187 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:service_pack .
-_:c14n185 rdf:first fixp:FixpRetransmitReject ;
-	rdf:rest _:c14n143 .
-_:c14n186 rdf:first fixp:FixpEstablishmentRejectCode\#KeepaliveInterval ;
-	rdf:rest _:c14n36 .
-_:c14n187 a owl:Restriction ;
+_:c14n188 rdf:first fixp:FixpRetransmitReject ;
+	rdf:rest _:c14n147 .
+_:c14n189 rdf:first fixp:FixpEstablishmentRejectCode\#KeepaliveInterval ;
+	rdf:rest _:c14n38 .
+_:c14n19 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:credentials .
+_:c14n190 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n188 a owl:Restriction ;
+_:c14n191 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:message_encoding .
-_:c14n189 a owl:Restriction ;
+_:c14n192 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:client_flow .
-_:c14n19 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:keepalive_interval .
-_:c14n190 a owl:Restriction ;
+_:c14n193 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:authentication_methods .
-_:c14n191 a owl:Restriction ;
+_:c14n194 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:description .
-_:c14n192 a owl:Restriction ;
+_:c14n195 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n193 a owl:Restriction ;
+_:c14n196 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpMessageTemplate ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpMessageTemplate .
-_:c14n194 a owl:Restriction ;
+_:c14n197 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:transports .
-_:c14n195 a owl:Restriction ;
+_:c14n198 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:from_seq_no .
-_:c14n196 a owl:Restriction ;
+_:c14n199 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpU32 ;
 	owl:onProperty fixp:message_count .
-_:c14n197 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpParty ;
-	owl:onProperty fixp:sent_by .
-_:c14n198 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty fixp:encoding_version .
-_:c14n199 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:application_recovery .
 _:c14n2 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:keepalive_interval .
+	owl:onProperty fixp:credentials_format .
 _:c14n20 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:from_seq_no .
-_:c14n200 rdf:first _:c14n104 ;
-	rdf:rest _:c14n406 .
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:keepalive_interval .
+_:c14n200 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpParty ;
+	owl:onProperty fixp:sent_by .
 _:c14n201 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:multiplexed .
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty fixp:encoding_version .
 _:c14n202 a owl:Restriction ;
 	owl:maxCardinality 1 ;
+	owl:onProperty fixp:application_recovery .
+_:c14n203 rdf:first _:c14n107 ;
+	rdf:rest _:c14n424 .
+_:c14n204 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:multiplexed .
+_:c14n205 a owl:Restriction ;
+	owl:maxCardinality 1 ;
 	owl:onProperty fixp:credentials .
-_:c14n203 a owl:Restriction ;
+_:c14n206 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n204 owl:intersectionOf _:c14n369 .
-_:c14n205 rdf:first fixp:FixpNegotiationRejectCode\#Credentials ;
-	rdf:rest _:c14n146 .
-_:c14n206 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:effective_time .
-_:c14n207 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpSessionKind ;
-	owl:onProperty fixp:session_kind .
-_:c14n208 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpExchangeStep ;
-	owl:onProperty fixp:exchange_steps .
+_:c14n207 owl:intersectionOf _:c14n388 .
+_:c14n208 rdf:first fixp:FixpNegotiationRejectCode\#Credentials ;
+	rdf:rest _:c14n150 .
 _:c14n209 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:request_time .
+	owl:onProperty fixp:effective_time .
 _:c14n21 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpU64 ;
+	owl:minCardinality 1 ;
 	owl:onProperty fixp:from_seq_no .
 _:c14n210 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpSessionKind ;
+	owl:onProperty fixp:session_kind .
+_:c14n211 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpExchangeStep ;
+	owl:onProperty fixp:exchange_steps .
+_:c14n212 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:request_time .
+_:c14n213 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:message_encoding .
-_:c14n211 rdf:first fixp:FixpParty\#server ;
-	rdf:rest _:c14n91 .
-_:c14n212 a owl:Restriction ;
+_:c14n214 rdf:first fixp:FixpParty\#server ;
+	rdf:rest _:c14n93 .
+_:c14n215 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n213 rdf:first fixp:FixpNegotiationRejectCode\#DuplicateId ;
-	rdf:rest _:c14n126 .
-_:c14n214 rdf:first fixp:FixpApplied ;
-	rdf:rest _:c14n16 .
-_:c14n215 a owl:Restriction ;
+_:c14n216 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:credentials_format .
+_:c14n217 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:retransmission_limit .
+_:c14n218 rdf:first fixp:FixpNegotiationRejectCode\#DuplicateId ;
+	rdf:rest _:c14n130 .
+_:c14n219 rdf:first fixp:FixpApplied ;
+	rdf:rest _:c14n17 .
+_:c14n22 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpU64 ;
+	owl:onProperty fixp:from_seq_no .
+_:c14n220 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n216 a owl:Restriction ;
+_:c14n221 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:message_count .
-_:c14n217 a owl:Restriction ;
+_:c14n222 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpString ;
 	owl:onProperty fixp:reason_text .
-_:c14n218 a owl:Restriction ;
+_:c14n223 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:from_seq_no .
-_:c14n219 a owl:Restriction ;
+_:c14n224 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n22 rdf:first fixp:FixpNegotiationResponse ;
-	rdf:rest _:c14n48 .
-_:c14n220 a owl:Restriction ;
+_:c14n225 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:message_count .
-_:c14n221 a owl:Restriction ;
+_:c14n226 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpEstablishmentReject ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpEstablishmentReject .
-_:c14n222 a owl:Restriction ;
+_:c14n227 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpRetransmitRequest ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpRetransmitRequest .
-_:c14n223 a owl:Restriction ;
+_:c14n228 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:termination_code .
-_:c14n224 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n405 .
-_:c14n225 a owl:Restriction ;
+_:c14n229 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n422 .
+_:c14n23 rdf:first fixp:FixpNegotiationResponse ;
+	rdf:rest _:c14n50 .
+_:c14n230 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:next_seq_no .
-_:c14n226 a owl:Restriction ;
+_:c14n231 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:application_fix_version .
-_:c14n227 a owl:Restriction ;
+_:c14n232 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpSequence ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpSequence .
-_:c14n228 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n338 .
-_:c14n229 a owl:Restriction ;
+_:c14n233 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n350 .
+_:c14n234 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:establishment_reject_code .
-_:c14n23 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpU64 ;
-	owl:onProperty fixp:next_seq_no .
-_:c14n230 rdf:first fixp:FixpRetransmitRejectCode\#OutOfRange ;
-	rdf:rest _:c14n302 .
-_:c14n231 a owl:Restriction ;
+_:c14n235 rdf:first fixp:FixpRetransmitRejectCode\#OutOfRange ;
+	rdf:rest _:c14n310 .
+_:c14n236 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpFlowType ;
 	owl:onProperty fixp:supported_flow_types .
-_:c14n232 rdf:first fixp:FixpEstablishmentRejectCode\#Unspecified ;
+_:c14n237 rdf:first fixp:FixpEstablishmentRejectCode\#Unspecified ;
 	rdf:rest rdf:nil .
-_:c14n233 a owl:Restriction ;
+_:c14n238 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:effective_time .
-_:c14n234 a owl:Restriction ;
+_:c14n239 a owl:Restriction ;
 	owl:allValuesFrom xsd:base64Binary ;
 	owl:onProperty fixp:credentials .
-_:c14n235 rdf:first fixp:FixpParty\#client ;
-	rdf:rest _:c14n211 .
-_:c14n236 xsd:maxInclusive 65535 .
-_:c14n237 a owl:Restriction ;
+_:c14n24 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:retransmission_limit .
+_:c14n240 rdf:first fixp:FixpParty\#client ;
+	rdf:rest _:c14n214 .
+_:c14n241 xsd:maxInclusive 65535 .
+_:c14n242 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:tls_version .
-_:c14n238 a owl:Restriction ;
+_:c14n243 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:exchange_steps .
-_:c14n239 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n24 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpRetransmitRejectCode ;
-	owl:onProperty fixp:retransmit_reject_code .
-_:c14n240 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n241 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpEstablishmentRejectCode ;
-	owl:onProperty fixp:establishment_reject_code .
-_:c14n242 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n243 rdf:first fixp:FixpEstablishmentAck ;
-	rdf:rest _:c14n128 .
 _:c14n244 a owl:Restriction ;
 	owl:minCardinality 1 ;
-	owl:onProperty fixp:next_seq_no .
-_:c14n245 xsd:pattern "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$" .
+	owl:onProperty fixp:session_id .
+_:c14n245 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:session_id .
 _:c14n246 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpEstablishmentRejectCode ;
+	owl:onProperty fixp:establishment_reject_code .
+_:c14n247 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:shortest_keepalive_interval .
+_:c14n248 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n249 rdf:first fixp:FixpEstablishmentAck ;
+	rdf:rest _:c14n132 .
+_:c14n25 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpU64 ;
+	owl:onProperty fixp:next_seq_no .
+_:c14n250 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:next_seq_no .
+_:c14n251 xsd:pattern "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$" .
+_:c14n252 a owl:Restriction ;
 	owl:allValuesFrom xsd:boolean ;
 	owl:onProperty fixp:application_recovery .
-_:c14n247 rdf:first xsd:string ;
-	rdf:rest _:c14n341 .
-_:c14n248 a owl:Restriction ;
+_:c14n253 rdf:first xsd:string ;
+	rdf:rest _:c14n346 .
+_:c14n254 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpEstablish ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpEstablish .
-_:c14n249 rdf:first fixp:FixpFlowType\#None ;
+_:c14n255 rdf:first fixp:FixpFlowType\#None ;
 	rdf:rest rdf:nil .
-_:c14n25 a owl:Restriction ;
-	owl:allValuesFrom xsd:string ;
-	owl:onProperty fixp:description .
-_:c14n250 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n251 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:credentials .
-_:c14n252 a owl:Restriction ;
-	owl:allValuesFrom _:c14n157 ;
-	owl:onProperty fixp:application_message_count .
-_:c14n253 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n254 rdf:first fixp:FixpFinishedReceiving ;
-	rdf:rest _:c14n103 .
-_:c14n255 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpNanotime ;
-	owl:onProperty fixp:request_timestamp .
 _:c14n256 a owl:Restriction ;
 	owl:minCardinality 1 ;
-	owl:onProperty fixp:id .
+	owl:onProperty fixp:session_id .
 _:c14n257 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:framing .
+	owl:onProperty fixp:credentials .
 _:c14n258 a owl:Restriction ;
+	owl:allValuesFrom _:c14n404 ;
+	owl:onProperty fixp:application_message_count .
+_:c14n259 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n26 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpRetransmitRejectCode ;
+	owl:onProperty fixp:retransmit_reject_code .
+_:c14n260 rdf:first fixp:FixpFinishedReceiving ;
+	rdf:rest _:c14n106 .
+_:c14n261 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpNanotime ;
+	owl:onProperty fixp:request_timestamp .
+_:c14n262 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:id .
+_:c14n263 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:framing .
+_:c14n264 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpTopic ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpTopic .
-_:c14n259 a owl:Restriction ;
+_:c14n265 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:retransmit_reject_code .
-_:c14n26 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n260 rdf:first fixp:FixpTerminationCode\#ReRequestInProgress ;
+_:c14n266 rdf:first fixp:FixpTerminationCode\#ReRequestInProgress ;
 	rdf:rest rdf:nil .
-_:c14n261 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:flow .
-_:c14n262 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpU64 ;
-	owl:onProperty fixp:next_seq_no .
-_:c14n263 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpNanotime ;
-	owl:onProperty fixp:request_timestamp .
-_:c14n264 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:next_seq_no .
-_:c14n265 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:network_protocols .
-_:c14n266 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:message_kind .
 _:c14n267 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:template_version .
+	owl:onProperty fixp:flow .
 _:c14n268 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpUuid ;
-	owl:onProperty fixp:session_id .
-_:c14n269 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:from_seq_no .
-_:c14n27 rdf:first fixp:FixpSessionKind\#point_to_point ;
-	rdf:rest _:c14n137 .
-_:c14n270 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:tls_version .
-_:c14n271 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpNanotime ;
-	owl:onProperty fixp:request_timestamp .
-_:c14n272 rdf:first fixp:FixpFlowType\#Unsequenced ;
-	rdf:rest _:c14n249 .
-_:c14n273 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:request_time .
-_:c14n274 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:request_timestamp .
-_:c14n275 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n276 rdf:first fixp:FixpEstablishmentRejectCode\#Unnegotiated ;
-	rdf:rest _:c14n334 .
-_:c14n277 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:description .
-_:c14n278 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:reason_text .
-_:c14n279 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpUuid ;
-	owl:onProperty fixp:session_id .
-_:c14n28 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpU32 ;
-	owl:onProperty fixp:sofh_encoding_type .
-_:c14n280 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:description .
-_:c14n281 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:last_seq_no .
-_:c14n282 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:application_fix_version .
-_:c14n283 a owl:Restriction ;
-	owl:allValuesFrom xsd:anyURI ;
-	owl:onProperty fixp:id .
-_:c14n284 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpU64 ;
 	owl:onProperty fixp:next_seq_no .
-_:c14n285 a owl:Restriction ;
+_:c14n269 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpNanotime ;
+	owl:onProperty fixp:request_timestamp .
+_:c14n27 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty fixp:description .
+_:c14n270 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty fixp:framing .
-_:c14n286 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n287 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpFlowType ;
-	owl:onProperty fixp:server_flow .
-_:c14n288 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n289 a owl:Restriction ;
+	owl:onProperty fixp:next_seq_no .
+_:c14n271 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:network_protocols .
+_:c14n272 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n29 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpNegotiationRejectCode ;
-	owl:onProperty fixp:negotiation_reject_code .
-_:c14n290 a owl:Restriction ;
+	owl:onProperty fixp:message_kind .
+_:c14n273 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:template_version .
+_:c14n274 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:longest_keepalive_interval .
+_:c14n275 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n291 a owl:Restriction ;
+_:c14n276 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:from_seq_no .
+_:c14n277 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:tls_version .
+_:c14n278 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpNanotime ;
+	owl:onProperty fixp:request_timestamp .
+_:c14n279 rdf:first fixp:FixpFlowType\#Unsequenced ;
+	rdf:rest _:c14n255 .
+_:c14n28 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n280 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:request_time .
+_:c14n281 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n292 a owl:Restriction ;
-	rdfs:subClassOf fixp:FixpTerminate ;
-	owl:onProperty fixp:message_kind ;
-	owl:someValuesFrom fixp:FixpTerminate .
-_:c14n293 a owl:Restriction ;
-	rdfs:subClassOf fixp:FixpMessage ;
-	owl:onProperty fixp:message_kind ;
-	owl:someValuesFrom fixp:FixpMessage .
-_:c14n294 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpU32 ;
-	owl:onProperty fixp:message_count .
-_:c14n295 a owl:Restriction ;
+_:c14n282 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n283 rdf:first fixp:FixpEstablishmentRejectCode\#Unnegotiated ;
+	rdf:rest _:c14n343 .
+_:c14n284 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:description .
+_:c14n285 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:reason_text .
+_:c14n286 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpUuid ;
+	owl:onProperty fixp:session_id .
+_:c14n287 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:description .
+_:c14n288 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:last_seq_no .
+_:c14n289 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:application_fix_version .
+_:c14n29 rdf:first fixp:FixpSessionKind\#point_to_point ;
+	rdf:rest _:c14n141 .
+_:c14n290 a owl:Restriction ;
+	owl:allValuesFrom xsd:anyURI ;
+	owl:onProperty fixp:id .
+_:c14n291 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpU64 ;
+	owl:onProperty fixp:next_seq_no .
+_:c14n292 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:framing .
+_:c14n293 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n294 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpFlowType ;
+	owl:onProperty fixp:server_flow .
+_:c14n295 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:session_id .
 _:c14n296 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:session_id .
 _:c14n297 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpUuid ;
+	owl:onProperty fixp:session_id .
+_:c14n298 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:request_timestamp .
+_:c14n299 a owl:Restriction ;
+	rdfs:subClassOf fixp:FixpTerminate ;
+	owl:onProperty fixp:message_kind ;
+	owl:someValuesFrom fixp:FixpTerminate .
+_:c14n3 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:keepalive_interval .
+_:c14n30 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpU32 ;
+	owl:onProperty fixp:sofh_encoding_type .
+_:c14n300 a owl:Restriction ;
+	rdfs:subClassOf fixp:FixpMessage ;
+	owl:onProperty fixp:message_kind ;
+	owl:someValuesFrom fixp:FixpMessage .
+_:c14n301 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpU32 ;
 	owl:onProperty fixp:message_count .
-_:c14n298 a owl:Restriction ;
+_:c14n302 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:reason_text .
+_:c14n303 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n304 a owl:Restriction ;
+	owl:allValuesFrom xsd:string ;
+	owl:onProperty fixp:credentials_format .
+_:c14n305 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpU32 ;
+	owl:onProperty fixp:message_count .
+_:c14n306 a owl:Restriction ;
 	owl:allValuesFrom xsd:base64Binary ;
 	owl:onProperty fixp:template_version .
-_:c14n299 a owl:Restriction ;
+_:c14n307 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpFinishedReceiving ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpFinishedReceiving .
-_:c14n3 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:next_seq_no .
-_:c14n30 owl:intersectionOf _:c14n387 .
-_:c14n300 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n301 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpUuid ;
-	owl:onProperty fixp:session_id .
-_:c14n302 rdf:first fixp:FixpRetransmitRejectCode\#InvalidSession ;
-	rdf:rest _:c14n9 .
-_:c14n303 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpU64 ;
-	owl:onProperty fixp:from_seq_no .
-_:c14n304 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpMulticastFlowType ;
-	owl:onProperty fixp:flow .
-_:c14n305 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:next_seq_no .
-_:c14n306 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:request_timestamp .
-_:c14n307 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:service_pack .
 _:c14n308 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:topic_classification .
+	owl:onProperty fixp:session_id .
 _:c14n309 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpUuid ;
+	owl:onProperty fixp:session_id .
+_:c14n31 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpNegotiationRejectCode ;
+	owl:onProperty fixp:negotiation_reject_code .
+_:c14n310 rdf:first fixp:FixpRetransmitRejectCode\#InvalidSession ;
+	rdf:rest _:c14n10 .
+_:c14n311 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpU64 ;
+	owl:onProperty fixp:from_seq_no .
+_:c14n312 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpMulticastFlowType ;
+	owl:onProperty fixp:flow .
+_:c14n313 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:next_seq_no .
+_:c14n314 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:request_timestamp .
+_:c14n315 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:service_pack .
+_:c14n316 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:topic_classification .
+_:c14n317 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:request_time .
-_:c14n31 owl:intersectionOf _:c14n349 .
-_:c14n310 rdf:first fixp:FixpSequence ;
-	rdf:rest _:c14n150 .
-_:c14n311 a owl:Restriction ;
+_:c14n318 rdf:first fixp:FixpSequence ;
+	rdf:rest _:c14n154 .
+_:c14n319 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:topic_classification .
-_:c14n312 rdf:first fixp:FixpUnsequencedHeartbeat ;
+_:c14n32 owl:intersectionOf _:c14n411 .
+_:c14n320 rdf:first fixp:FixpUnsequencedHeartbeat ;
 	rdf:rest rdf:nil .
-_:c14n313 a owl:Restriction ;
+_:c14n321 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpNegotiationReject ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpNegotiationReject .
-_:c14n314 a owl:Restriction ;
+_:c14n322 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:longest_keepalive_interval .
+_:c14n323 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:sent_by .
-_:c14n315 a owl:Restriction ;
+_:c14n324 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpNanotime ;
 	owl:onProperty fixp:request_time .
-_:c14n316 a owl:Restriction ;
+_:c14n325 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpNegotiate ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpNegotiate .
-_:c14n317 a owl:Restriction ;
+_:c14n326 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n318 a owl:Restriction ;
+_:c14n327 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n319 a owl:Restriction ;
+_:c14n328 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpNanotime ;
 	owl:onProperty fixp:effective_time .
-_:c14n32 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n320 a owl:Restriction ;
+_:c14n329 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:extension_packs .
-_:c14n321 a owl:Restriction ;
+_:c14n33 owl:intersectionOf _:c14n368 .
+_:c14n330 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpDeltaMillisecs ;
 	owl:onProperty fixp:keepalive_interval .
-_:c14n322 a owl:Restriction ;
+_:c14n331 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:template .
-_:c14n323 a owl:Restriction ;
+_:c14n332 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n324 xsd:maxInclusive 255 .
-_:c14n325 a owl:Restriction ;
+_:c14n333 xsd:maxInclusive 255 .
+_:c14n334 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:message_count .
-_:c14n326 a owl:Restriction ;
+_:c14n335 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpString ;
 	owl:onProperty fixp:reason_text .
-_:c14n327 a owl:Restriction ;
+_:c14n336 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:keepalive_interval .
-_:c14n328 a owl:Restriction ;
+_:c14n337 a owl:Restriction ;
 	owl:allValuesFrom xsd:boolean ;
 	owl:onProperty fixp:multiplexed .
-_:c14n329 a owl:Restriction ;
+_:c14n338 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpRetransmitReject ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpRetransmitReject .
-_:c14n33 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:credentials .
-_:c14n330 a owl:Restriction ;
+_:c14n339 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:last_seq_no .
-_:c14n331 a owl:Restriction ;
+_:c14n34 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n340 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:message_encoding .
-_:c14n332 a owl:Restriction ;
+_:c14n341 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:template .
-_:c14n333 a owl:Restriction ;
+_:c14n342 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:message_count .
-_:c14n334 rdf:first fixp:FixpEstablishmentRejectCode\#AlreadyEstablished ;
-	rdf:rest _:c14n109 .
-_:c14n335 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n404 .
-_:c14n336 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:c14n339 .
-_:c14n337 rdf:first _:c14n336 ;
-	rdf:rest rdf:nil .
-_:c14n338 rdf:first xsd:string ;
-	rdf:rest _:c14n337 .
-_:c14n339 rdf:first _:c14n92 ;
-	rdf:rest rdf:nil .
-_:c14n34 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:credentials .
-_:c14n340 a rdfs:Datatype ;
-	owl:onDatatype xsd:string ;
-	owl:withRestrictions _:c14n342 .
-_:c14n341 rdf:first _:c14n340 ;
-	rdf:rest rdf:nil .
-_:c14n342 rdf:first _:c14n245 ;
-	rdf:rest rdf:nil .
-_:c14n343 xsd:maxInclusive 18446744073709551615 .
-_:c14n344 rdf:first _:c14n343 ;
-	rdf:rest rdf:nil .
+_:c14n343 rdf:first fixp:FixpEstablishmentRejectCode\#AlreadyEstablished ;
+	rdf:rest _:c14n112 .
+_:c14n344 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n423 .
 _:c14n345 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n344 .
+	owl:onDatatype xsd:string ;
+	owl:withRestrictions _:c14n347 .
 _:c14n346 rdf:first _:c14n345 ;
 	rdf:rest rdf:nil .
-_:c14n347 rdf:first _:c14n350 ;
-	rdf:rest _:c14n346 .
-_:c14n348 rdf:first xsd:integer ;
-	rdf:rest _:c14n347 .
-_:c14n349 rdf:first xsd:integer ;
-	rdf:rest _:c14n348 .
-_:c14n35 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:from_seq_no .
-_:c14n350 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
+_:c14n347 rdf:first _:c14n251 ;
+	rdf:rest rdf:nil .
+_:c14n348 a rdfs:Datatype ;
+	owl:onDatatype xsd:string ;
 	owl:withRestrictions _:c14n351 .
-_:c14n351 rdf:first _:c14n352 ;
+_:c14n349 rdf:first _:c14n348 ;
 	rdf:rest rdf:nil .
-_:c14n352 xsd:minInclusive 0 .
-_:c14n353 xsd:maxInclusive 18446744073709551615 .
-_:c14n354 rdf:first _:c14n353 ;
+_:c14n35 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:credentials .
+_:c14n350 rdf:first xsd:string ;
+	rdf:rest _:c14n349 .
+_:c14n351 rdf:first _:c14n94 ;
 	rdf:rest rdf:nil .
-_:c14n355 a rdfs:Datatype ;
+_:c14n352 xsd:maxInclusive 18446744073709551615 .
+_:c14n353 rdf:first _:c14n352 ;
+	rdf:rest rdf:nil .
+_:c14n354 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n354 .
-_:c14n356 rdf:first _:c14n355 ;
+	owl:withRestrictions _:c14n353 .
+_:c14n355 rdf:first _:c14n354 ;
 	rdf:rest rdf:nil .
-_:c14n357 rdf:first _:c14n360 ;
+_:c14n356 rdf:first _:c14n359 ;
+	rdf:rest _:c14n355 .
+_:c14n357 rdf:first xsd:integer ;
 	rdf:rest _:c14n356 .
 _:c14n358 rdf:first xsd:integer ;
 	rdf:rest _:c14n357 .
-_:c14n359 rdf:first xsd:integer ;
-	rdf:rest _:c14n358 .
-_:c14n36 rdf:first fixp:FixpEstablishmentRejectCode\#Credentials ;
-	rdf:rest _:c14n232 .
-_:c14n360 a rdfs:Datatype ;
+_:c14n359 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n361 .
-_:c14n361 rdf:first _:c14n362 ;
+	owl:withRestrictions _:c14n360 .
+_:c14n36 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:credentials .
+_:c14n360 rdf:first _:c14n361 ;
 	rdf:rest rdf:nil .
-_:c14n362 xsd:minInclusive 0 .
-_:c14n363 xsd:maxInclusive 4294967295 .
-_:c14n364 rdf:first _:c14n363 ;
+_:c14n361 xsd:minInclusive 0 .
+_:c14n362 xsd:maxInclusive 18446744073709551615 .
+_:c14n363 rdf:first _:c14n362 ;
 	rdf:rest rdf:nil .
-_:c14n365 a rdfs:Datatype ;
+_:c14n364 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n364 .
-_:c14n366 rdf:first _:c14n365 ;
+	owl:withRestrictions _:c14n363 .
+_:c14n365 rdf:first _:c14n364 ;
 	rdf:rest rdf:nil .
-_:c14n367 rdf:first _:c14n370 ;
+_:c14n366 rdf:first _:c14n369 ;
+	rdf:rest _:c14n365 .
+_:c14n367 rdf:first xsd:integer ;
 	rdf:rest _:c14n366 .
 _:c14n368 rdf:first xsd:integer ;
 	rdf:rest _:c14n367 .
-_:c14n369 rdf:first xsd:integer ;
-	rdf:rest _:c14n368 .
+_:c14n369 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n370 .
 _:c14n37 a owl:Restriction ;
 	owl:minCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n370 a rdfs:Datatype ;
+	owl:onProperty fixp:from_seq_no .
+_:c14n370 rdf:first _:c14n371 ;
+	rdf:rest rdf:nil .
+_:c14n371 xsd:minInclusive 0 .
+_:c14n372 xsd:maxInclusive 4294967295 .
+_:c14n373 rdf:first _:c14n372 ;
+	rdf:rest rdf:nil .
+_:c14n374 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n371 .
-_:c14n371 rdf:first _:c14n372 ;
+	owl:withRestrictions _:c14n373 .
+_:c14n375 rdf:first _:c14n374 ;
 	rdf:rest rdf:nil .
-_:c14n372 xsd:minInclusive 0 .
-_:c14n373 xsd:maxInclusive 4294967295 .
-_:c14n374 rdf:first _:c14n373 ;
-	rdf:rest rdf:nil .
-_:c14n375 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n374 .
-_:c14n376 rdf:first _:c14n375 ;
-	rdf:rest rdf:nil .
-_:c14n377 rdf:first _:c14n380 ;
+_:c14n376 rdf:first _:c14n379 ;
+	rdf:rest _:c14n375 .
+_:c14n377 rdf:first xsd:integer ;
 	rdf:rest _:c14n376 .
 _:c14n378 rdf:first xsd:integer ;
 	rdf:rest _:c14n377 .
-_:c14n379 rdf:first xsd:integer ;
-	rdf:rest _:c14n378 .
-_:c14n38 a owl:Restriction ;
-	rdfs:subClassOf fixp:FixpNotApplied ;
-	owl:onProperty fixp:message_kind ;
-	owl:someValuesFrom fixp:FixpNotApplied .
-_:c14n380 a rdfs:Datatype ;
+_:c14n379 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n381 .
-_:c14n381 rdf:first _:c14n382 ;
+	owl:withRestrictions _:c14n380 .
+_:c14n38 rdf:first fixp:FixpEstablishmentRejectCode\#Credentials ;
+	rdf:rest _:c14n237 .
+_:c14n380 rdf:first _:c14n381 ;
 	rdf:rest rdf:nil .
-_:c14n382 xsd:minInclusive 0 .
-_:c14n383 a rdfs:Datatype ;
+_:c14n381 xsd:minInclusive 0 .
+_:c14n382 xsd:maxInclusive 4294967295 .
+_:c14n383 rdf:first _:c14n382 ;
+	rdf:rest rdf:nil .
+_:c14n384 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n391 .
-_:c14n384 rdf:first _:c14n383 ;
+	owl:withRestrictions _:c14n383 .
+_:c14n385 rdf:first _:c14n384 ;
 	rdf:rest rdf:nil .
-_:c14n385 rdf:first _:c14n388 ;
-	rdf:rest _:c14n384 .
-_:c14n386 rdf:first xsd:integer ;
+_:c14n386 rdf:first _:c14n389 ;
 	rdf:rest _:c14n385 .
 _:c14n387 rdf:first xsd:integer ;
 	rdf:rest _:c14n386 .
-_:c14n388 a rdfs:Datatype ;
+_:c14n388 rdf:first xsd:integer ;
+	rdf:rest _:c14n387 .
+_:c14n389 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n389 .
-_:c14n389 rdf:first _:c14n390 ;
-	rdf:rest rdf:nil .
+	owl:withRestrictions _:c14n390 .
 _:c14n39 a owl:Restriction ;
-	owl:maxCardinality 1 ;
+	owl:minCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n390 xsd:minInclusive 0 .
-_:c14n391 rdf:first _:c14n236 ;
+_:c14n390 rdf:first _:c14n391 ;
 	rdf:rest rdf:nil .
+_:c14n391 xsd:minInclusive 0 .
 _:c14n392 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n394 .
+	owl:withRestrictions _:c14n400 .
 _:c14n393 rdf:first _:c14n392 ;
 	rdf:rest rdf:nil .
-_:c14n394 rdf:first _:c14n81 ;
-	rdf:rest rdf:nil .
-_:c14n395 a rdfs:Datatype ;
+_:c14n394 rdf:first _:c14n397 ;
+	rdf:rest _:c14n393 .
+_:c14n395 rdf:first xsd:integer ;
+	rdf:rest _:c14n394 .
+_:c14n396 rdf:first xsd:integer ;
+	rdf:rest _:c14n395 .
+_:c14n397 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n396 .
-_:c14n396 rdf:first _:c14n397 ;
+	owl:withRestrictions _:c14n398 .
+_:c14n398 rdf:first _:c14n399 ;
 	rdf:rest rdf:nil .
-_:c14n397 xsd:minInclusive 0 .
-_:c14n398 rdf:first _:c14n395 ;
-	rdf:rest _:c14n399 .
-_:c14n399 rdf:first _:c14n400 ;
-	rdf:rest rdf:nil .
+_:c14n399 xsd:minInclusive 0 .
 _:c14n4 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:message_count .
-_:c14n40 a owl:Restriction ;
 	owl:minCardinality 0 ;
-	owl:onProperty fixp:description .
-_:c14n400 a rdfs:Datatype ;
+	owl:onProperty fixp:next_seq_no .
+_:c14n40 a owl:Restriction ;
+	rdfs:subClassOf fixp:FixpNotApplied ;
+	owl:onProperty fixp:message_kind ;
+	owl:someValuesFrom fixp:FixpNotApplied .
+_:c14n400 rdf:first _:c14n333 ;
+	rdf:rest rdf:nil .
+_:c14n401 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n401 .
-_:c14n401 rdf:first _:c14n324 ;
+	owl:withRestrictions _:c14n405 .
+_:c14n402 rdf:first _:c14n401 ;
 	rdf:rest rdf:nil .
-_:c14n402 rdf:first xsd:integer ;
-	rdf:rest _:c14n398 .
-_:c14n403 rdf:first xsd:integer ;
+_:c14n403 rdf:first fixp:FixpU32 ;
 	rdf:rest _:c14n402 .
-_:c14n404 rdf:first xsd:string ;
-	rdf:rest _:c14n153 .
-_:c14n405 rdf:first xsd:string ;
-	rdf:rest _:c14n247 .
-_:c14n406 rdf:first _:c14n160 ;
+_:c14n404 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n403 .
+_:c14n405 rdf:first _:c14n406 ;
 	rdf:rest rdf:nil .
+_:c14n406 xsd:minInclusive 1 .
+_:c14n407 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n415 .
+_:c14n408 rdf:first _:c14n407 ;
+	rdf:rest rdf:nil .
+_:c14n409 rdf:first _:c14n412 ;
+	rdf:rest _:c14n408 .
 _:c14n41 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:session_id .
+_:c14n410 rdf:first xsd:integer ;
+	rdf:rest _:c14n409 .
+_:c14n411 rdf:first xsd:integer ;
+	rdf:rest _:c14n410 .
+_:c14n412 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n413 .
+_:c14n413 rdf:first _:c14n414 ;
+	rdf:rest rdf:nil .
+_:c14n414 xsd:minInclusive 0 .
+_:c14n415 rdf:first _:c14n241 ;
+	rdf:rest rdf:nil .
+_:c14n416 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n420 .
+_:c14n417 rdf:first _:c14n416 ;
+	rdf:rest rdf:nil .
+_:c14n418 rdf:first fixp:FixpU32 ;
+	rdf:rest _:c14n417 .
+_:c14n419 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n418 .
 _:c14n42 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:description .
+_:c14n420 rdf:first _:c14n421 ;
+	rdf:rest rdf:nil .
+_:c14n421 xsd:minInclusive 1 .
+_:c14n422 rdf:first xsd:string ;
+	rdf:rest _:c14n253 .
+_:c14n423 rdf:first xsd:string ;
+	rdf:rest _:c14n157 .
+_:c14n424 rdf:first _:c14n163 ;
+	rdf:rest rdf:nil .
+_:c14n43 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n44 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n43 owl:intersectionOf _:c14n379 .
-_:c14n44 a owl:Restriction ;
+_:c14n45 owl:intersectionOf _:c14n378 .
+_:c14n46 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:multiplexed .
-_:c14n45 rdf:first fixp:FixpRetransmission ;
-	rdf:rest _:c14n185 .
-_:c14n46 a owl:Restriction ;
+_:c14n47 rdf:first fixp:FixpRetransmission ;
+	rdf:rest _:c14n188 .
+_:c14n48 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:keepalive_interval .
-_:c14n47 a owl:Restriction ;
+_:c14n49 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpU64 ;
 	owl:onProperty fixp:next_seq_no .
-_:c14n48 rdf:first fixp:FixpNotApplied ;
-	rdf:rest _:c14n45 .
-_:c14n49 a owl:Restriction ;
+_:c14n5 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:message_count .
+_:c14n50 rdf:first fixp:FixpNotApplied ;
+	rdf:rest _:c14n47 .
+_:c14n51 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpStackProfile ;
 	owl:onProperty fixp:server_stack .
-_:c14n5 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpString ;
-	owl:onProperty fixp:reason_text .
-_:c14n50 a owl:Restriction ;
+_:c14n52 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpApplied ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpApplied .
-_:c14n51 a owl:Restriction ;
+_:c14n53 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:session_kind .
-_:c14n52 a owl:Restriction ;
+_:c14n54 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:application_message_count .
-_:c14n53 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:id .
-_:c14n54 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:encoding_version .
 _:c14n55 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:server_flow .
+	owl:onProperty fixp:id .
 _:c14n56 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:encoding_version .
+_:c14n57 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:server_flow .
+_:c14n58 a owl:Restriction ;
 	owl:allValuesFrom xsd:base64Binary ;
 	owl:onProperty fixp:credentials .
-_:c14n57 a owl:Restriction ;
+_:c14n59 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:cipher_suites .
-_:c14n58 a owl:Restriction ;
+_:c14n6 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpString ;
+	owl:onProperty fixp:reason_text .
+_:c14n60 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:server_flow .
-_:c14n59 a owl:Restriction ;
+_:c14n61 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:authentication_methods .
-_:c14n6 rdf:first fixp:FixpNegotiationReject ;
-	rdf:rest _:c14n22 .
-_:c14n60 a owl:Restriction ;
+_:c14n62 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:reason_text .
-_:c14n61 a owl:Restriction ;
+_:c14n63 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpNanotime ;
 	owl:onProperty fixp:request_time .
-_:c14n62 a owl:Restriction ;
+_:c14n64 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n63 a owl:Restriction ;
+_:c14n65 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpUnsequencedHeartbeat ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpUnsequencedHeartbeat .
-_:c14n64 a owl:Restriction ;
+_:c14n66 a owl:Restriction ;
 	owl:allValuesFrom xsd:base64Binary ;
 	owl:onProperty fixp:topic_classification .
-_:c14n65 a owl:Restriction ;
+_:c14n67 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:service_pack .
-_:c14n66 a owl:Restriction ;
+_:c14n68 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpU32 ;
 	owl:onProperty fixp:message_count .
-_:c14n67 a owl:Restriction ;
+_:c14n69 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:client_stack .
-_:c14n68 a owl:Restriction ;
+_:c14n7 rdf:first fixp:FixpNegotiationReject ;
+	rdf:rest _:c14n23 .
+_:c14n70 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpFlowType ;
 	owl:onProperty fixp:client_flow .
-_:c14n69 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:request_time .
-_:c14n7 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:fixp_message .
-_:c14n70 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpDeltaMillisecs ;
-	owl:onProperty fixp:keepalive_interval .
 _:c14n71 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:sent_by .
+	owl:onProperty fixp:request_time .
 _:c14n72 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpDeltaMillisecs ;
+	owl:onProperty fixp:keepalive_interval .
+_:c14n73 a owl:Restriction ;
+	owl:minCardinality 0 ;
+	owl:onProperty fixp:shortest_keepalive_interval .
+_:c14n74 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:sent_by .
+_:c14n75 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:reason_text .
-_:c14n73 a owl:Restriction ;
+_:c14n76 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:description .
-_:c14n74 a owl:Restriction ;
+_:c14n77 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:network_protocols .
-_:c14n75 owl:intersectionOf _:c14n403 .
-_:c14n76 a owl:Restriction ;
+_:c14n78 owl:intersectionOf _:c14n396 .
+_:c14n79 a owl:Restriction ;
 	rdfs:subClassOf fixp:FixpFinishedSending ;
 	owl:onProperty fixp:message_kind ;
 	owl:someValuesFrom fixp:FixpFinishedSending .
-_:c14n77 rdf:first fixp:FixpNegotiate ;
-	rdf:rest _:c14n6 .
-_:c14n78 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpNanotime ;
-	owl:onProperty fixp:request_timestamp .
-_:c14n79 a owl:Restriction ;
-	owl:minCardinality 1 ;
-	owl:onProperty fixp:sofh_encoding_type .
 _:c14n8 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:next_seq_no .
-_:c14n80 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:session_kind .
-_:c14n81 xsd:minInclusive 1 .
+	owl:onProperty fixp:fixp_message .
+_:c14n80 rdf:first fixp:FixpNegotiate ;
+	rdf:rest _:c14n7 .
+_:c14n81 a owl:Restriction ;
+	owl:allValuesFrom fixp:FixpNanotime ;
+	owl:onProperty fixp:request_timestamp .
 _:c14n82 a owl:Restriction ;
 	owl:minCardinality 1 ;
-	owl:onProperty fixp:negotiation_reject_code .
+	owl:onProperty fixp:sofh_encoding_type .
 _:c14n83 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:request_timestamp .
+	owl:onProperty fixp:session_kind .
 _:c14n84 a owl:Restriction ;
+	owl:minCardinality 1 ;
+	owl:onProperty fixp:negotiation_reject_code .
+_:c14n85 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:request_timestamp .
+_:c14n86 a owl:Restriction ;
 	owl:allValuesFrom xsd:string ;
 	owl:onProperty fixp:message_schemas .
-_:c14n85 rdf:first fixp:FixpFlowType\#Recoverable ;
-	rdf:rest _:c14n164 .
-_:c14n86 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty fixp:session_id .
-_:c14n87 a owl:Restriction ;
-	owl:allValuesFrom xsd:base64Binary ;
-	owl:onProperty fixp:credentials .
+_:c14n87 rdf:first fixp:FixpFlowType\#Recoverable ;
+	rdf:rest _:c14n168 .
 _:c14n88 a owl:Restriction ;
-	owl:minCardinality 1 ;
+	owl:maxCardinality 1 ;
 	owl:onProperty fixp:session_id .
 _:c14n89 a owl:Restriction ;
+	owl:allValuesFrom xsd:base64Binary ;
+	owl:onProperty fixp:credentials .
+_:c14n9 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty fixp:server_stack .
-_:c14n9 rdf:first fixp:FixpRetransmitRejectCode\#RequestLimitExceeded ;
-	rdf:rest rdf:nil .
+	owl:onProperty fixp:next_seq_no .
 _:c14n90 a owl:Restriction ;
 	owl:minCardinality 1 ;
+	owl:onProperty fixp:session_id .
+_:c14n91 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty fixp:server_stack .
+_:c14n92 a owl:Restriction ;
+	owl:minCardinality 1 ;
 	owl:onProperty fixp:request_timestamp .
-_:c14n91 rdf:first fixp:FixpParty\#publisher ;
+_:c14n93 rdf:first fixp:FixpParty\#publisher ;
 	rdf:rest rdf:nil .
-_:c14n92 xsd:pattern "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$" .
-_:c14n93 a owl:Restriction ;
+_:c14n94 xsd:pattern "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$" .
+_:c14n95 a owl:Restriction ;
 	owl:allValuesFrom xsd:anyURI ;
 	owl:onProperty fixp:id .
-_:c14n94 a owl:Restriction ;
+_:c14n96 a owl:Restriction ;
 	owl:minCardinality 0 ;
 	owl:onProperty fixp:cipher_suites .
-_:c14n95 a owl:Restriction ;
+_:c14n97 a owl:Restriction ;
 	owl:allValuesFrom fixp:FixpUuid ;
 	owl:onProperty fixp:session_id .
-_:c14n96 a owl:Restriction ;
+_:c14n98 a owl:Restriction ;
 	owl:minCardinality 1 ;
 	owl:onProperty fixp:session_id .
-_:c14n97 a owl:Restriction ;
+_:c14n99 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty fixp:termination_code .
-_:c14n98 a owl:Restriction ;
-	owl:minCardinality 0 ;
-	owl:onProperty fixp:application_recovery .
-_:c14n99 a owl:Restriction ;
-	owl:allValuesFrom fixp:FixpUuid ;
-	owl:onProperty fixp:session_id .
 

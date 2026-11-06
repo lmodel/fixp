@@ -140,7 +140,11 @@
 --     * Slot: message_encoding Description: How messages are encoded, such as Simple Binary Encoding.
 --     * Slot: encoding_version Description: The version of that encoding.
 --     * Slot: framing Description: What marks where one message ends and the next begins, such as the Simple Open Framing Header.
+--     * Slot: shortest_keepalive_interval Description: The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.
+--     * Slot: longest_keepalive_interval Description: The longest keep-alive interval, in milliseconds, that this side accepts from its peer.
+--     * Slot: retransmission_limit Description: The most messages this side resends in answer to one RetransmitRequest.
 --     * Slot: tls_version Description: The TLS version that protects the transport.
+--     * Slot: credentials_format Description: The form of the credentials this side sends, and how its peer checks them.
 -- # Class: FixpStackProfile_extension_packs
 --     * Slot: FixpStackProfile_id Description: Autocreated FK slot
 --     * Slot: extension_packs Description: The FIX extension packs in use.
@@ -378,7 +382,11 @@ CREATE TABLE "FixpStackProfile" (
 	message_encoding TEXT,
 	encoding_version TEXT,
 	framing TEXT,
+	shortest_keepalive_interval TEXT,
+	longest_keepalive_interval TEXT,
+	retransmission_limit TEXT,
 	tls_version TEXT,
+	credentials_format TEXT,
 	PRIMARY KEY (id)
 );
 CREATE INDEX "ix_FixpStackProfile_id" ON "FixpStackProfile" (id);
@@ -412,8 +420,8 @@ CREATE TABLE "FixpStackProfile_extension_packs" (
 	PRIMARY KEY ("FixpStackProfile_id", extension_packs),
 	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
 );
-CREATE INDEX "ix_FixpStackProfile_extension_packs_FixpStackProfile_id" ON "FixpStackProfile_extension_packs" ("FixpStackProfile_id");
 CREATE INDEX "ix_FixpStackProfile_extension_packs_extension_packs" ON "FixpStackProfile_extension_packs" (extension_packs);
+CREATE INDEX "ix_FixpStackProfile_extension_packs_FixpStackProfile_id" ON "FixpStackProfile_extension_packs" ("FixpStackProfile_id");
 
 CREATE TABLE "FixpStackProfile_message_schemas" (
 	"FixpStackProfile_id" INTEGER,
@@ -421,8 +429,8 @@ CREATE TABLE "FixpStackProfile_message_schemas" (
 	PRIMARY KEY ("FixpStackProfile_id", message_schemas),
 	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
 );
-CREATE INDEX "ix_FixpStackProfile_message_schemas_message_schemas" ON "FixpStackProfile_message_schemas" (message_schemas);
 CREATE INDEX "ix_FixpStackProfile_message_schemas_FixpStackProfile_id" ON "FixpStackProfile_message_schemas" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_message_schemas_message_schemas" ON "FixpStackProfile_message_schemas" (message_schemas);
 
 CREATE TABLE "FixpStackProfile_supported_flow_types" (
 	"FixpStackProfile_id" INTEGER,
@@ -430,8 +438,8 @@ CREATE TABLE "FixpStackProfile_supported_flow_types" (
 	PRIMARY KEY ("FixpStackProfile_id", supported_flow_types),
 	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
 );
-CREATE INDEX "ix_FixpStackProfile_supported_flow_types_supported_flow_types" ON "FixpStackProfile_supported_flow_types" (supported_flow_types);
 CREATE INDEX "ix_FixpStackProfile_supported_flow_types_FixpStackProfile_id" ON "FixpStackProfile_supported_flow_types" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_supported_flow_types_supported_flow_types" ON "FixpStackProfile_supported_flow_types" (supported_flow_types);
 
 CREATE TABLE "FixpStackProfile_authentication_methods" (
 	"FixpStackProfile_id" INTEGER,
@@ -439,8 +447,8 @@ CREATE TABLE "FixpStackProfile_authentication_methods" (
 	PRIMARY KEY ("FixpStackProfile_id", authentication_methods),
 	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
 );
-CREATE INDEX "ix_FixpStackProfile_authentication_methods_FixpStackProfile_id" ON "FixpStackProfile_authentication_methods" ("FixpStackProfile_id");
 CREATE INDEX "ix_FixpStackProfile_authentication_methods_authentication_methods" ON "FixpStackProfile_authentication_methods" (authentication_methods);
+CREATE INDEX "ix_FixpStackProfile_authentication_methods_FixpStackProfile_id" ON "FixpStackProfile_authentication_methods" ("FixpStackProfile_id");
 
 CREATE TABLE "FixpStackProfile_cipher_suites" (
 	"FixpStackProfile_id" INTEGER,
@@ -448,8 +456,8 @@ CREATE TABLE "FixpStackProfile_cipher_suites" (
 	PRIMARY KEY ("FixpStackProfile_id", cipher_suites),
 	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
 );
-CREATE INDEX "ix_FixpStackProfile_cipher_suites_cipher_suites" ON "FixpStackProfile_cipher_suites" (cipher_suites);
 CREATE INDEX "ix_FixpStackProfile_cipher_suites_FixpStackProfile_id" ON "FixpStackProfile_cipher_suites" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_cipher_suites_cipher_suites" ON "FixpStackProfile_cipher_suites" (cipher_suites);
 
 CREATE TABLE "FixpStackProfile_transports" (
 	"FixpStackProfile_id" INTEGER,
@@ -457,8 +465,8 @@ CREATE TABLE "FixpStackProfile_transports" (
 	PRIMARY KEY ("FixpStackProfile_id", transports),
 	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
 );
-CREATE INDEX "ix_FixpStackProfile_transports_transports" ON "FixpStackProfile_transports" (transports);
 CREATE INDEX "ix_FixpStackProfile_transports_FixpStackProfile_id" ON "FixpStackProfile_transports" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_transports_transports" ON "FixpStackProfile_transports" (transports);
 
 CREATE TABLE "FixpStackProfile_network_protocols" (
 	"FixpStackProfile_id" INTEGER,
@@ -466,5 +474,5 @@ CREATE TABLE "FixpStackProfile_network_protocols" (
 	PRIMARY KEY ("FixpStackProfile_id", network_protocols),
 	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
 );
-CREATE INDEX "ix_FixpStackProfile_network_protocols_network_protocols" ON "FixpStackProfile_network_protocols" (network_protocols);
 CREATE INDEX "ix_FixpStackProfile_network_protocols_FixpStackProfile_id" ON "FixpStackProfile_network_protocols" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_network_protocols_network_protocols" ON "FixpStackProfile_network_protocols" (network_protocols);

@@ -231,8 +231,12 @@ type FixpStackProfile
     messageSchemas: [String]
     framing: String
     supportedFlowTypes: [FixpFlowType]
+    shortestKeepaliveInterval: FixpDeltaMillisecs
+    longestKeepaliveInterval: FixpDeltaMillisecs
+    retransmissionLimit: FixpU32
     tlsVersion: String
     authenticationMethods: [String]
+    credentialsFormat: String
     cipherSuites: [String]
     transports: [String]
     networkProtocols: [String]

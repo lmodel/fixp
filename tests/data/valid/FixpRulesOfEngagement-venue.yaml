@@ -10,6 +10,9 @@ client_stack:
   tls_version: "1.3"
   authentication_methods:
     - TLS client certificate
+  credentials_format: >-
+    An HMAC-SHA256 signature of the session identifier and request time, keyed with
+    the secret the venue issued
   transports:
     - TCP
 server_stack:
@@ -19,6 +22,9 @@ server_stack:
   framing: Simple Open Framing Header
   supported_flow_types:
     - Recoverable
+  shortest_keepalive_interval: 100
+  longest_keepalive_interval: 60000
+  retransmission_limit: 1000
   tls_version: "1.3"
   transports:
     - TCP

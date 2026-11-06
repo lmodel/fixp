@@ -2136,6 +2136,91 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "fixpStackProfile__shortest_keepalive_interval",
+      "annotations": [
+        {
+          "tag": "stack_layer",
+          "value": "session",
+          "@type": "Annotation"
+        },
+        {
+          "tag": "fixp_section",
+          "value": "4",
+          "@type": "Annotation"
+        }
+      ],
+      "description": "The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+      "comments": [
+        "An Establish that asks for a shorter one is refused with the KeepaliveInterval code."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+      "slot_uri": "https://w3id.org/lmodel/fixp/shortest_keepalive_interval",
+      "alias": "shortest_keepalive_interval",
+      "owner": "FixpStackProfile",
+      "domain_of": [
+        "FixpStackProfile"
+      ],
+      "range": "fixp_delta_millisecs",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fixpStackProfile__longest_keepalive_interval",
+      "annotations": [
+        {
+          "tag": "stack_layer",
+          "value": "session",
+          "@type": "Annotation"
+        },
+        {
+          "tag": "fixp_section",
+          "value": "4",
+          "@type": "Annotation"
+        }
+      ],
+      "description": "The longest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+      "comments": [
+        "An Establish that asks for a longer one is refused with the KeepaliveInterval code."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+      "slot_uri": "https://w3id.org/lmodel/fixp/longest_keepalive_interval",
+      "alias": "longest_keepalive_interval",
+      "owner": "FixpStackProfile",
+      "domain_of": [
+        "FixpStackProfile"
+      ],
+      "range": "fixp_delta_millisecs",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fixpStackProfile__retransmission_limit",
+      "annotations": [
+        {
+          "tag": "stack_layer",
+          "value": "session",
+          "@type": "Annotation"
+        },
+        {
+          "tag": "fixp_section",
+          "value": "4",
+          "@type": "Annotation"
+        }
+      ],
+      "description": "The most messages this side resends in answer to one RetransmitRequest.",
+      "comments": [
+        "A request for more may be refused with the RequestLimitExceeded code."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+      "slot_uri": "https://w3id.org/lmodel/fixp/retransmission_limit",
+      "alias": "retransmission_limit",
+      "owner": "FixpStackProfile",
+      "domain_of": [
+        "FixpStackProfile"
+      ],
+      "range": "fixp_u32",
+      "minimum_value": 1,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "fixpStackProfile__tls_version",
       "annotations": [
         {
@@ -2174,6 +2259,34 @@
       ],
       "range": "string",
       "multivalued": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "fixpStackProfile__credentials_format",
+      "annotations": [
+        {
+          "tag": "stack_layer",
+          "value": "security",
+          "@type": "Annotation"
+        },
+        {
+          "tag": "fixp_section",
+          "value": "3",
+          "@type": "Annotation"
+        }
+      ],
+      "description": "The form of the credentials this side sends, and how its peer checks them.",
+      "comments": [
+        "FIXP carries credentials as opaque octets and leaves their form to the two parties."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+      "slot_uri": "https://w3id.org/lmodel/fixp/credentials_format",
+      "alias": "credentials_format",
+      "owner": "FixpStackProfile",
+      "domain_of": [
+        "FixpStackProfile"
+      ],
+      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -5526,6 +5639,9 @@
       "name": "FixpStackProfile",
       "definition_uri": "https://w3id.org/lmodel/fixp/FixpStackProfile",
       "description": "One side's choices at each layer of the stack: application, presentation, session, security and transport.",
+      "comments": [
+        "Beyond appendix B's rows, it holds what sections 3 and 4 leave to the two parties: the form of the credentials, the keep-alive intervals each side accepts, and the most messages one resend may cover."
+      ],
       "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
       "slots": [
         "fixpStackProfile__application_recovery",
@@ -5537,8 +5653,12 @@
         "fixpStackProfile__message_schemas",
         "fixpStackProfile__framing",
         "fixpStackProfile__supported_flow_types",
+        "fixpStackProfile__shortest_keepalive_interval",
+        "fixpStackProfile__longest_keepalive_interval",
+        "fixpStackProfile__retransmission_limit",
         "fixpStackProfile__tls_version",
         "fixpStackProfile__authentication_methods",
+        "fixpStackProfile__credentials_format",
         "fixpStackProfile__cipher_suites",
         "fixpStackProfile__transports",
         "fixpStackProfile__network_protocols"
@@ -5659,6 +5779,70 @@
           "@type": "SlotDefinition"
         },
         {
+          "name": "shortest_keepalive_interval",
+          "annotations": [
+            {
+              "tag": "stack_layer",
+              "value": "session",
+              "@type": "Annotation"
+            },
+            {
+              "tag": "fixp_section",
+              "value": "4",
+              "@type": "Annotation"
+            }
+          ],
+          "description": "The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+          "comments": [
+            "An Establish that asks for a shorter one is refused with the KeepaliveInterval code."
+          ],
+          "range": "fixp_delta_millisecs",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "longest_keepalive_interval",
+          "annotations": [
+            {
+              "tag": "stack_layer",
+              "value": "session",
+              "@type": "Annotation"
+            },
+            {
+              "tag": "fixp_section",
+              "value": "4",
+              "@type": "Annotation"
+            }
+          ],
+          "description": "The longest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+          "comments": [
+            "An Establish that asks for a longer one is refused with the KeepaliveInterval code."
+          ],
+          "range": "fixp_delta_millisecs",
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "retransmission_limit",
+          "annotations": [
+            {
+              "tag": "stack_layer",
+              "value": "session",
+              "@type": "Annotation"
+            },
+            {
+              "tag": "fixp_section",
+              "value": "4",
+              "@type": "Annotation"
+            }
+          ],
+          "description": "The most messages this side resends in answer to one RetransmitRequest.",
+          "comments": [
+            "A request for more may be refused with the RequestLimitExceeded code."
+          ],
+          "range": "fixp_u32",
+          "minimum_value": 1,
+          "@type": "SlotDefinition"
+        },
+        {
           "name": "tls_version",
           "annotations": [
             {
@@ -5681,6 +5865,26 @@
           ],
           "description": "How the parties prove who they are.",
           "multivalued": true,
+          "@type": "SlotDefinition"
+        },
+        {
+          "name": "credentials_format",
+          "annotations": [
+            {
+              "tag": "stack_layer",
+              "value": "security",
+              "@type": "Annotation"
+            },
+            {
+              "tag": "fixp_section",
+              "value": "3",
+              "@type": "Annotation"
+            }
+          ],
+          "description": "The form of the credentials this side sends, and how its peer checks them.",
+          "comments": [
+            "FIXP carries credentials as opaque octets and leaves their form to the two parties."
+          ],
           "@type": "SlotDefinition"
         },
         {
@@ -5729,7 +5933,7 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "fixp.yaml",
-  "source_file_date": "2026-11-05T21:36:42",
+  "source_file_date": "2026-11-06T07:52:23",
   "source_file_size": 1747,
   "@type": "SchemaDefinition",
   "@context": [

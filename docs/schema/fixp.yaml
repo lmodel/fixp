@@ -1605,6 +1605,68 @@ slots:
     - FixpStackProfile
     range: FixpFlowType
     multivalued: true
+  fixpStackProfile__shortest_keepalive_interval:
+    name: fixpStackProfile__shortest_keepalive_interval
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: session
+      fixp_section:
+        tag: fixp_section
+        value: '4'
+    description: The shortest keep-alive interval, in milliseconds, that this side
+      accepts from its peer.
+    comments:
+    - An Establish that asks for a shorter one is refused with the KeepaliveInterval
+      code.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:shortest_keepalive_interval
+    alias: shortest_keepalive_interval
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: fixp_delta_millisecs
+  fixpStackProfile__longest_keepalive_interval:
+    name: fixpStackProfile__longest_keepalive_interval
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: session
+      fixp_section:
+        tag: fixp_section
+        value: '4'
+    description: The longest keep-alive interval, in milliseconds, that this side
+      accepts from its peer.
+    comments:
+    - An Establish that asks for a longer one is refused with the KeepaliveInterval
+      code.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:longest_keepalive_interval
+    alias: longest_keepalive_interval
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: fixp_delta_millisecs
+  fixpStackProfile__retransmission_limit:
+    name: fixpStackProfile__retransmission_limit
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: session
+      fixp_section:
+        tag: fixp_section
+        value: '4'
+    description: The most messages this side resends in answer to one RetransmitRequest.
+    comments:
+    - A request for more may be refused with the RequestLimitExceeded code.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:retransmission_limit
+    alias: retransmission_limit
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: fixp_u32
+    minimum_value: 1
   fixpStackProfile__tls_version:
     name: fixpStackProfile__tls_version
     annotations:
@@ -1634,6 +1696,26 @@ slots:
     - FixpStackProfile
     range: string
     multivalued: true
+  fixpStackProfile__credentials_format:
+    name: fixpStackProfile__credentials_format
+    annotations:
+      stack_layer:
+        tag: stack_layer
+        value: security
+      fixp_section:
+        tag: fixp_section
+        value: '3'
+    description: The form of the credentials this side sends, and how its peer checks
+      them.
+    comments:
+    - FIXP carries credentials as opaque octets and leaves their form to the two parties.
+    from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+    slot_uri: fixp:credentials_format
+    alias: credentials_format
+    owner: FixpStackProfile
+    domain_of:
+    - FixpStackProfile
+    range: string
   fixpStackProfile__cipher_suites:
     name: fixpStackProfile__cipher_suites
     annotations:
@@ -4133,6 +4215,10 @@ classes:
     definition_uri: https://w3id.org/lmodel/fixp/FixpStackProfile
     description: 'One side''s choices at each layer of the stack: application, presentation,
       session, security and transport.'
+    comments:
+    - 'Beyond appendix B''s rows, it holds what sections 3 and 4 leave to the two
+      parties: the form of the credentials, the keep-alive intervals each side accepts,
+      and the most messages one resend may cover.'
     from_schema: https://w3id.org/lmodel/fixp/schema/fixp_engagement
     slots:
     - fixpStackProfile__application_recovery
@@ -4144,8 +4230,12 @@ classes:
     - fixpStackProfile__message_schemas
     - fixpStackProfile__framing
     - fixpStackProfile__supported_flow_types
+    - fixpStackProfile__shortest_keepalive_interval
+    - fixpStackProfile__longest_keepalive_interval
+    - fixpStackProfile__retransmission_limit
     - fixpStackProfile__tls_version
     - fixpStackProfile__authentication_methods
+    - fixpStackProfile__credentials_format
     - fixpStackProfile__cipher_suites
     - fixpStackProfile__transports
     - fixpStackProfile__network_protocols
@@ -4219,6 +4309,50 @@ classes:
         description: The flow types this side accepts or offers.
         range: FixpFlowType
         multivalued: true
+      shortest_keepalive_interval:
+        name: shortest_keepalive_interval
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: session
+          fixp_section:
+            tag: fixp_section
+            value: '4'
+        description: The shortest keep-alive interval, in milliseconds, that this
+          side accepts from its peer.
+        comments:
+        - An Establish that asks for a shorter one is refused with the KeepaliveInterval
+          code.
+        range: fixp_delta_millisecs
+      longest_keepalive_interval:
+        name: longest_keepalive_interval
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: session
+          fixp_section:
+            tag: fixp_section
+            value: '4'
+        description: The longest keep-alive interval, in milliseconds, that this side
+          accepts from its peer.
+        comments:
+        - An Establish that asks for a longer one is refused with the KeepaliveInterval
+          code.
+        range: fixp_delta_millisecs
+      retransmission_limit:
+        name: retransmission_limit
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: session
+          fixp_section:
+            tag: fixp_section
+            value: '4'
+        description: The most messages this side resends in answer to one RetransmitRequest.
+        comments:
+        - A request for more may be refused with the RequestLimitExceeded code.
+        range: fixp_u32
+        minimum_value: 1
       tls_version:
         name: tls_version
         annotations:
@@ -4234,6 +4368,20 @@ classes:
             value: security
         description: How the parties prove who they are.
         multivalued: true
+      credentials_format:
+        name: credentials_format
+        annotations:
+          stack_layer:
+            tag: stack_layer
+            value: security
+          fixp_section:
+            tag: fixp_section
+            value: '3'
+        description: The form of the credentials this side sends, and how its peer
+          checks them.
+        comments:
+        - FIXP carries credentials as opaque octets and leaves their form to the two
+          parties.
       cipher_suites:
         name: cipher_suites
         annotations:
@@ -4262,6 +4410,6 @@ classes:
     class_uri: fixp:FixpStackProfile
 metamodel_version: 1.12.0
 source_file: fixp.yaml
-source_file_date: '2026-11-05T21:36:42'
+source_file_date: '2026-11-06T07:52:23'
 source_file_size: 1747
 

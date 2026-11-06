@@ -1556,7 +1556,11 @@ class FixpStackProfile(ConfiguredBaseModel):
     """
     One side's choices at each layer of the stack: application, presentation, session, security and transport.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/lmodel/fixp/schema/fixp_engagement'})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'comments': ["Beyond appendix B's rows, it holds what sections 3 and 4 leave "
+                      'to the two parties: the form of the credentials, the keep-alive '
+                      'intervals each side accepts, and the most messages one resend '
+                      'may cover.'],
+         'from_schema': 'https://w3id.org/lmodel/fixp/schema/fixp_engagement'})
 
     application_recovery: Optional[bool] = Field(default=None, description="""Whether this side's applications recover lost messages themselves.""", json_schema_extra = { "linkml_meta": {'annotations': {'stack_layer': {'tag': 'stack_layer', 'value': 'application'}},
          'domain_of': ['FixpStackProfile']} })
@@ -1580,9 +1584,29 @@ class FixpStackProfile(ConfiguredBaseModel):
          'domain_of': ['FixpStackProfile']} })
     supported_flow_types: Optional[list[FixpFlowType]] = Field(default=None, description="""The flow types this side accepts or offers.""", json_schema_extra = { "linkml_meta": {'annotations': {'stack_layer': {'tag': 'stack_layer', 'value': 'session'}},
          'domain_of': ['FixpStackProfile']} })
+    shortest_keepalive_interval: Optional[int] = Field(default=None, description="""The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.""", json_schema_extra = { "linkml_meta": {'annotations': {'fixp_section': {'tag': 'fixp_section', 'value': '4'},
+                         'stack_layer': {'tag': 'stack_layer', 'value': 'session'}},
+         'comments': ['An Establish that asks for a shorter one is refused with the '
+                      'KeepaliveInterval code.'],
+         'domain_of': ['FixpStackProfile']} })
+    longest_keepalive_interval: Optional[int] = Field(default=None, description="""The longest keep-alive interval, in milliseconds, that this side accepts from its peer.""", json_schema_extra = { "linkml_meta": {'annotations': {'fixp_section': {'tag': 'fixp_section', 'value': '4'},
+                         'stack_layer': {'tag': 'stack_layer', 'value': 'session'}},
+         'comments': ['An Establish that asks for a longer one is refused with the '
+                      'KeepaliveInterval code.'],
+         'domain_of': ['FixpStackProfile']} })
+    retransmission_limit: Optional[int] = Field(default=None, description="""The most messages this side resends in answer to one RetransmitRequest.""", ge=1, json_schema_extra = { "linkml_meta": {'annotations': {'fixp_section': {'tag': 'fixp_section', 'value': '4'},
+                         'stack_layer': {'tag': 'stack_layer', 'value': 'session'}},
+         'comments': ['A request for more may be refused with the RequestLimitExceeded '
+                      'code.'],
+         'domain_of': ['FixpStackProfile']} })
     tls_version: Optional[str] = Field(default=None, description="""The TLS version that protects the transport.""", json_schema_extra = { "linkml_meta": {'annotations': {'stack_layer': {'tag': 'stack_layer', 'value': 'security'}},
          'domain_of': ['FixpStackProfile']} })
     authentication_methods: Optional[list[str]] = Field(default=None, description="""How the parties prove who they are.""", json_schema_extra = { "linkml_meta": {'annotations': {'stack_layer': {'tag': 'stack_layer', 'value': 'security'}},
+         'domain_of': ['FixpStackProfile']} })
+    credentials_format: Optional[str] = Field(default=None, description="""The form of the credentials this side sends, and how its peer checks them.""", json_schema_extra = { "linkml_meta": {'annotations': {'fixp_section': {'tag': 'fixp_section', 'value': '3'},
+                         'stack_layer': {'tag': 'stack_layer', 'value': 'security'}},
+         'comments': ['FIXP carries credentials as opaque octets and leaves their form '
+                      'to the two parties.'],
          'domain_of': ['FixpStackProfile']} })
     cipher_suites: Optional[list[str]] = Field(default=None, description="""The cipher suites allowed.""", json_schema_extra = { "linkml_meta": {'annotations': {'stack_layer': {'tag': 'stack_layer', 'value': 'security'}},
          'domain_of': ['FixpStackProfile']} })

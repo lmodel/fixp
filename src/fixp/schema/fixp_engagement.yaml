@@ -50,6 +50,11 @@ classes:
     description: >-
       One side's choices at each layer of the stack: application, presentation, session,
       security and transport.
+    comments:
+      - >-
+        Beyond appendix B's rows, it holds what sections 3 and 4 leave to the two parties: the
+        form of the credentials, the keep-alive intervals each side accepts, and the most
+        messages one resend may cover.
     attributes:
       application_recovery:
         description: Whether this side's applications recover lost messages themselves.
@@ -94,6 +99,33 @@ classes:
         multivalued: true
         annotations:
           stack_layer: session
+      shortest_keepalive_interval:
+        description: >-
+          The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.
+        range: fixp_delta_millisecs
+        comments:
+          - An Establish that asks for a shorter one is refused with the KeepaliveInterval code.
+        annotations:
+          stack_layer: session
+          fixp_section: "4"
+      longest_keepalive_interval:
+        description: >-
+          The longest keep-alive interval, in milliseconds, that this side accepts from its peer.
+        range: fixp_delta_millisecs
+        comments:
+          - An Establish that asks for a longer one is refused with the KeepaliveInterval code.
+        annotations:
+          stack_layer: session
+          fixp_section: "4"
+      retransmission_limit:
+        description: The most messages this side resends in answer to one RetransmitRequest.
+        range: fixp_u32
+        minimum_value: 1
+        comments:
+          - A request for more may be refused with the RequestLimitExceeded code.
+        annotations:
+          stack_layer: session
+          fixp_section: "4"
       tls_version:
         description: The TLS version that protects the transport.
         annotations:
@@ -103,6 +135,13 @@ classes:
         multivalued: true
         annotations:
           stack_layer: security
+      credentials_format:
+        description: The form of the credentials this side sends, and how its peer checks them.
+        comments:
+          - FIXP carries credentials as opaque octets and leaves their form to the two parties.
+        annotations:
+          stack_layer: security
+          fixp_section: "3"
       cipher_suites:
         description: The cipher suites allowed.
         multivalued: true

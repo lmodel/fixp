@@ -22,7 +22,7 @@ Each field is a snake_case slot, and the slot's aliases give FIXP's name. Seven 
 
 The datatypes are FIXP's own: unsigned numbers of 8 to 64 bits, a version 4 UUID, nanoseconds since the Unix epoch, milliseconds, opaque octets and text. The octets are written in base64, which is this schema's choice.
 
-Two records that are not messages hold what a session needs around them. `FixpExchange` is a run of steps on one session, each a message or a count of application messages, and the specification's appendix A describes many such runs. `FixpRulesOfEngagement` is the checklist of appendix B: what the client and the server each use at each layer of the stack.
+Two records that are not messages hold what a session needs around them. `FixpExchange` is a run of steps on one session, each a message or a count of application messages, and the specification's appendix A describes many such runs. `FixpRulesOfEngagement` is the checklist of appendix B: what the client and the server each use at each layer of the stack. It also holds what sections 3 and 4 leave to the two parties: the form of the credentials, the keep-alive intervals each side accepts, and the most messages one resend may cover.
 
 ## Where each part comes from
 

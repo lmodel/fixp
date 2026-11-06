@@ -242,16 +242,24 @@ message FixpStackProfile {
   string framing = 8;
   // The flow types this side accepts or offers.
   repeated FixpFlowType supported_flow_types = 9;
+  // The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.
+  int32 shortest_keepalive_interval = 10;
+  // The longest keep-alive interval, in milliseconds, that this side accepts from its peer.
+  int32 longest_keepalive_interval = 11;
+  // The most messages this side resends in answer to one RetransmitRequest.
+  int32 retransmission_limit = 12;
   // The TLS version that protects the transport.
-  string tls_version = 10;
+  string tls_version = 13;
   // How the parties prove who they are.
-  repeated string authentication_methods = 11;
+  repeated string authentication_methods = 14;
+  // The form of the credentials this side sends, and how its peer checks them.
+  string credentials_format = 15;
   // The cipher suites allowed.
-  repeated string cipher_suites = 12;
+  repeated string cipher_suites = 16;
   // The transports this side can use, for example TCP, or UDP with multicast.
-  repeated string transports = 13;
+  repeated string transports = 17;
   // Any other network protocols in use.
-  repeated string network_protocols = 14;
+  repeated string network_protocols = 18;
 }
 // Releases the session from its transport without ending the session, which can be bound again later. The peer answers with a Terminate, and after its own Terminate a party sends nothing more.
 message FixpTerminate {
