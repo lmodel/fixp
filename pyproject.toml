@@ -82,6 +82,8 @@ quiet-level = 3
 linke = "linke"
 # ND is the NoDerivatives of CC BY-ND, the licence of FIX's specification.
 nd = "nd"
+# FIX's files spell the message RetransmitReject this way, and the schema quotes them.
+Restransmit = "Restransmit"
 
 [tool.typos.files]
 extend-exclude = [
