@@ -74,7 +74,7 @@ skip = [
   "website/package-lock.json",
 ]
 
-ignore-words-list = "linke"
+ignore-words-list = "linke,nd"
 quiet-level = 3
 
 # Ref.: https://github.com/crate-ci/typos (spell checker)
