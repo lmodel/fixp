@@ -104,8 +104,7 @@ sources:
   - resource: pyproject.toml
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: aa85c33978c9c71f0ce3ed3a8a835590423eea41
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

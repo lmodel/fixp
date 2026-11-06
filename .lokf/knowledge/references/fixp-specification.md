@@ -16,8 +16,7 @@ sources:
     title: FIX Performance Session Layer
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 8fe9853aa70678997c59d582ad8098a43baf2acb
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

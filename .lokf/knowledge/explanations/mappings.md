@@ -19,8 +19,7 @@ sources:
   - resource: tests/test_mappings.py
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: f07e8ed1bf536329aad51980ead6c19e04420365
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

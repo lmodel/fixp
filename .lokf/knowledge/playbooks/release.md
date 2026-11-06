@@ -13,8 +13,7 @@ sources:
     title: Releasing (maintainers)
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 8ea8e217b962bbc25b66d5dae7752774166a71d7
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

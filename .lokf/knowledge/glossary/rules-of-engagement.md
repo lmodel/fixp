@@ -11,8 +11,7 @@ sources:
     title: FixpRulesOfEngagement
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 2c7c0f68c51ab45e91a9504ae0836e283b8918ef
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

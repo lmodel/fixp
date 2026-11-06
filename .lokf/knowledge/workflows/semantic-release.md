@@ -16,8 +16,7 @@ references:
   - https://w3id.org/lmodel/fixp/knowledge/playbooks/release
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 3e7087cbcf1f1e5140bc509800888c2bf3a3347d
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

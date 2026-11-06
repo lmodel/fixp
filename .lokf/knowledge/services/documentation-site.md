@@ -13,8 +13,7 @@ sources:
     resource: website/README.md
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: ce2a0dc5082fa0724c709bc49e0f0cb15057a597
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

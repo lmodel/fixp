@@ -16,8 +16,7 @@ sources:
     title: test_every_departure_is_still_needed
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 2999f6dae0835ad3618643d5af37aeb959d150b9
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

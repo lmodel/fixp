@@ -16,8 +16,7 @@ sources:
     title: test_every_concrete_class_has_an_example
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 47eb5a3ad7c927fe17100df6f078cf5cf7308e4f
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

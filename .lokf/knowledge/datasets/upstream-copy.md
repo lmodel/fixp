@@ -17,8 +17,7 @@ sources:
   - resource: scripts/upstream_pins.tsv
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 16759216a6a1b8cbfbf18151c2d0e7d3acf62b6d
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

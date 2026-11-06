@@ -18,8 +18,7 @@ sources:
     title: lokf_adapt_roots
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: e2dfb0e77707c97c8de0338f3ee286232f528b06
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

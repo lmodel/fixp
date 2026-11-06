@@ -11,8 +11,7 @@ sources:
     title: Before opening a pull request
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 02ca5bbd4a6a7d5343827f52b26fbbdcba94254b
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

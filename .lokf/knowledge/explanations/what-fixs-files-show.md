@@ -12,8 +12,7 @@ sources:
     title: What FIX's files show
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:41:45Z"
-  revision: 938c37aed96e2260b792df371dce6a85872ec20c
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

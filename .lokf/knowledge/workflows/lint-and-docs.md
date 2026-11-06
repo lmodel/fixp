@@ -12,8 +12,7 @@ sources:
   - resource: .github/workflows/lint-and-docs.yaml
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: 6e3a202185283b3534f6d81939d2f9d5b542d015
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

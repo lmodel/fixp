@@ -27,8 +27,7 @@ sources:
     title: test_an_exchange_concept_validates_against_the_copy
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: fbf29bb122bd8eae5aecbf6fffb0642c285aa817
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 

@@ -21,8 +21,7 @@ sources:
     title: the module's description
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T07:38:52Z"
-  revision: dd047e9f1966002a09d4983ab2b8a95f0fe99e58
+  at: "2026-11-06T08:48:23Z"
 status: draft
 ---
 
