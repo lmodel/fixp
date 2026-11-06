@@ -11,6 +11,7 @@ them, such as the v1-0-STANDARD/doc folder of a clone of FIXTradingCommunity/fix
 and the test compares with them too.
 """
 
+import ast
 import os
 import re
 from functools import cache
@@ -34,6 +35,7 @@ NAMES = (
     "fix trading community",
     "fix protocol limited",
     "fix protocol ltd",
+    "point to point",
     "creative commons attribution noderivatives 4 0 international public license",
     "cc by nd 4 0",
 )
@@ -118,6 +120,47 @@ def test_the_schema_shares_no_run_with_fix(path):
 @pytest.mark.parametrize("path", _documents(), ids=lambda p: p.name)
 def test_the_docs_share_no_run_with_fix(path):
     assert not _runs(path.read_text(encoding="utf-8")) & fix_runs()
+
+
+def _comments(text):
+    return [line for line in text.splitlines() if line.lstrip().startswith("#")]
+
+
+def _test_prose():
+    """The prose the tests carry: what the example records say, why the schema departs from
+    FIX's files, and the strings of the rule module, whose messages a user reads when a rule
+    fails."""
+    examples = []
+    for path in sorted((ROOT / "tests" / "data").rglob("*.yaml")):
+        text = path.read_text(encoding="utf-8")
+        examples += [*_schema_texts(yaml.safe_load(text)), *_comments(text)]
+    departures = ROOT / "tests" / "upstream_departures.yaml"
+    text = departures.read_text(encoding="utf-8")
+    listed = yaml.safe_load(text)
+    reasons = [entry["why"] for kind in ("presence", "range") for entry in listed[kind]]
+    rules = (ROOT / "tests" / "fixp_rules.py").read_text(encoding="utf-8")
+    strings = [
+        node.value
+        for node in ast.walk(ast.parse(rules))
+        if isinstance(node, ast.Constant) and isinstance(node.value, str)
+    ]
+    return {
+        "examples": examples,
+        "departures": [*reasons, *_comments(text)],
+        "rules": [*strings, *_comments(rules)],
+    }
+
+
+@pytest.mark.parametrize("group", ["examples", "departures", "rules"])
+def test_the_tests_prose_shares_no_run_with_fix(group):
+    texts = _test_prose()[group]
+    assert texts
+    shared = {}
+    for text in texts:
+        found = _runs(text) & fix_runs()
+        if found:
+            shared[text[:60]] = sorted(found)
+    assert not shared, shared
 
 
 def test_a_shared_run_is_caught():

@@ -57,7 +57,8 @@ class _Session:
         self.multiplexed = bool(exchange.get("multiplexed"))
         self.flows: dict[str, str] = {}
         self.negotiated = False
-        # A flow has been finalized, so the session's identifier is spent.
+        # A FinishedReceiving has answered a FinishedSending, so the session's identifier is
+        # spent.
         self.finalized = False
         self.established = False
         self.terminated: set[str] = set()
