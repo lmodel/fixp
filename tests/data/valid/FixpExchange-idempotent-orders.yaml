@@ -1,0 +1,61 @@
+id: https://example.org/fixp/exchanges/idempotent-orders
+description: >-
+  An idempotent client flow answered by the server's recoverable flow, which reports with Applied
+  and NotApplied which operations took effect. The transport is then released.
+session_kind: point_to_point
+exchange_steps:
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpNegotiate
+      session_id: 36f675cc-81e7-4ef5-a8e2-5d940ed90475
+      request_time: 1793865600000000000
+      client_flow: Idempotent
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpNegotiationResponse
+      session_id: 36f675cc-81e7-4ef5-a8e2-5d940ed90475
+      request_timestamp: 1793865600000000000
+      server_flow: Recoverable
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpEstablish
+      session_id: 36f675cc-81e7-4ef5-a8e2-5d940ed90475
+      request_time: 1793865600005000000
+      keepalive_interval: 1000
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpEstablishmentAck
+      session_id: 36f675cc-81e7-4ef5-a8e2-5d940ed90475
+      request_timestamp: 1793865600005000000
+      keepalive_interval: 1000
+      next_seq_no: 1
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpSequence
+      next_seq_no: 1
+  - sent_by: client
+    application_message_count: 5
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpSequence
+      next_seq_no: 1
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpApplied
+      from_seq_no: 1
+      message_count: 4
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpNotApplied
+      from_seq_no: 5
+      message_count: 1
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpTerminate
+      session_id: 36f675cc-81e7-4ef5-a8e2-5d940ed90475
+      termination_code: Finished
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpTerminate
+      session_id: 36f675cc-81e7-4ef5-a8e2-5d940ed90475
+      termination_code: Finished

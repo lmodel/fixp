@@ -1,0 +1,32 @@
+id: https://example.org/fixp/exchanges/multicast-futures
+description: >-
+  A multicast publisher announces an idempotent topic, sends a template and ten messages,
+  heartbeats once, and finalizes the flow.
+session_kind: multicast
+exchange_steps:
+  - sent_by: publisher
+    fixp_message:
+      message_kind: FixpTopic
+      session_id: d23f0824-128b-4f33-8c5c-7fd0a6a3a450
+      flow: Idempotent
+      topic_classification: RVMtRlVU
+  - sent_by: publisher
+    fixp_message:
+      message_kind: FixpMessageTemplate
+      sofh_encoding_type: 23520
+      template: PG1lc3NhZ2VTY2hlbWEvPg==
+  - sent_by: publisher
+    fixp_message:
+      message_kind: FixpSequence
+      next_seq_no: 1
+  - sent_by: publisher
+    application_message_count: 10
+  - sent_by: publisher
+    fixp_message:
+      message_kind: FixpSequence
+      next_seq_no: 11
+  - sent_by: publisher
+    fixp_message:
+      message_kind: FixpFinishedSending
+      session_id: d23f0824-128b-4f33-8c5c-7fd0a6a3a450
+      last_seq_no: 10

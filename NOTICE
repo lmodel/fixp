@@ -1,0 +1,130 @@
+FIX Performance Session Layer LinkML Schema (fixp)
+Copyright 2026 Noel McLoughlin
+
+The code in this repository is licensed under the Apache License,
+Version 2.0 (see LICENSE). The work it models, and the files it copies
+unchanged, are third-party work under their own terms, listed below.
+
+FIX Performance Session Layer
+-----------------------------
+
+src/fixp/schema/*.yaml, src/fixp/datamodel/, project/ and docs/schema/
+model the FIX Performance Session Layer (FIXP), Version 1.0 Technical
+Standard, by FIX Protocol Limited (FIX Trading Community):
+https://github.com/FIXTradingCommunity/fixp-specification. They are this
+project's work, written in its own words. They are not FIX Protocol
+Limited's, and their use does not imply endorsement by FIX Protocol
+Limited. "FIX", "FIX Protocol" and "FIX Trading Community" are marks of FIX
+Protocol Limited, used here to identify the standard.
+
+FIX Protocol Limited licenses the FIXP specification and its resource files
+under the Creative Commons Attribution-NoDerivatives 4.0 International
+Public License (CC BY-ND 4.0,
+https://creativecommons.org/licenses/by-nd/4.0/legalcode). That licence
+lets anyone copy and share the work unchanged, with credit and a link to
+the licence. It does not let anyone share an adapted version.
+
+upstream/fixp-specification/ therefore holds these files whole and
+unchanged, each matched by git object hash in scripts/upstream_pins.tsv:
+
+  (c) Copyright 2014-2021 FIX Protocol Ltd., under CC BY-ND 4.0:
+    v1-0-STANDARD/resources/FixRepositoryForFIXP.xml
+    v1-0-STANDARD/resources/OrchestraForFIXP.xml
+    v1-0-STANDARD/resources/SBEschemaForFIXP.xml
+    at the tag v1.0-STANDARD, commit 6d89f5f.
+
+  LICENSE, the text of CC BY-ND 4.0 as that repository publishes it.
+
+These copies are outside this repository's Apache License, and this project
+claims no right over them.
+
+FIX Protocol Limited also publishes the SBE schema under the Apache
+License, Version 2.0, in its conga repository
+(https://github.com/FIXTradingCommunity/conga), as
+conga-sbe/src/main/resources/SBEschemaForFIXP.xml at commit e26dbd4. That
+copy has the same git object hash as the pinned file, 0719eef, so the SBE
+schema may also be used and adapted under that licence. The project's
+descriptions remain its own all the same.
+
+One case in tests/test_rules.py follows a scenario of FIX Protocol
+Limited's silverflash repository
+(https://github.com/FIXTradingCommunity/silverflash), under the Apache
+License, Version 2.0:
+behavior/src/test/resources/features/application_messages_are_idempotent.feature.
+
+Nothing else here repeats or adapts FIX's text. What the schema takes from
+FIX is the message, field and value names, their numbers, and the
+structure, which a FIXP implementation must use to work with FIXP at all.
+Copyright protects the way FIX expressed its specification, not the
+methods, procedures and facts it describes, and CC BY-ND 4.0 restricts
+nothing that copyright does not (its section 8(a)).
+
+The project nevertheless takes the stricter reading that European law
+allows (Infopaq, C-5/08), under which even a short extract can be protected
+when it shows its author's own choices. Every title, description and comment
+was written from what the element does, in the project's own words, not by
+rewording FIX's sentences. tests/test_own_words.py finds any run of four
+words shared with the text in the three resource files, and the same check
+was run against the specification's chapters, which stay out of this
+repository. The specification remains the authority on what FIXP says.
+
+The site fixtrading.org has terms of its own, which bar automated copying of
+its content. Nothing here was taken from that site, and the upstream watch
+reads only GitHub.
+
+The schema's free-text slots, such as reason_text and description, hold
+whatever their user writes into them. Fill them only with text you have the
+right to use. The Apache License of this repository does not cover FIX's
+text.
+
+linkml-project-copier
+---------------------
+
+This project was generated from linkml-project-copier
+(https://github.com/linkml/linkml-project-copier), and its justfile,
+configuration and documentation scaffolding derive from that template:
+
+  The MIT License (MIT)
+  Copyright (c) 2025 David Linke
+
+  Permission is hereby granted, free of charge, to any person obtaining a
+  copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to permit
+  persons to whom the Software is furnished to do so, subject to the
+  following conditions:
+
+  The above copyright notice and this permission notice shall be included
+  in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+  NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+  USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Knowledge bundle
+----------------
+
+This product maintains its documentation as a Linked Open Knowledge Format
+(LOKF) bundle under .lokf/: https://lokf.nolan-nichols.com/specification/
+The concepts under .lokf/knowledge/ are this project's work, licensed under
+the Creative Commons Attribution 4.0 International Public License (CC BY 4.0,
+https://creativecommons.org/licenses/by/4.0/), as .lokf/lokf.yaml states.
+
+LOKF is a semantic profile of the Open Knowledge Format (OKF) specification
+by Google Cloud Platform:
+https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md
+
+The scripts under .lokf/scripts/ and .lokf/m365/ and the
+knowledge-librarian, knowledge-registrar, knowledge-release and
+knowledge-sync workflows under .github/workflows/ are copies of the
+ktl-sidecar templates in knowledge-trust-ladder
+(https://github.com/noelmcloughlin/knowledge-trust-ladder). The site under
+website/ and the knowledge-website workflow derive from the ktl-website
+templates in the same repository, and website/NOTICE lists the part
+adapted from the LOKF toolkit's site. All of them are licensed under the
+Apache License, Version 2.0.

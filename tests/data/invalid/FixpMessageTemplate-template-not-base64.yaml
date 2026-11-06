@@ -1,0 +1,4 @@
+# Fails at: /template
+message_kind: FixpMessageTemplate
+sofh_encoding_type: 23520
+template: <messageSchema/>

@@ -1,0 +1,159 @@
+---
+id: https://w3id.org/lmodel/fixp/schema/fixp_engagement
+name: fixp_engagement
+title: Rules of engagement for FIXP
+description: >-
+  The checklist in the specification's appendix B, as a record of what a client and a server
+  agree on at each layer of the stack around FIXP.
+version: "1.0"
+source: https://github.com/FIXTradingCommunity/fixp-specification/tree/v1.0-STANDARD/v1-0-STANDARD
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/fixp
+prefixes:
+  fixp: https://w3id.org/lmodel/fixp/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+default_prefix: fixp
+default_range: string
+
+imports:
+  - linkml:types
+  - ./fixp_core
+
+classes:
+
+  FixpRulesOfEngagement:
+    description: >-
+      What two counterparties agree on for one FIXP service, layer by layer, for the client and
+      for the server.
+    comments:
+      - >-
+        Appendix B calls its checklist an aid, and FIXP leaves each of these choices to the
+        counterparties.
+    slots:
+      - id
+      - description
+    attributes:
+      client_stack:
+        description: What the client side uses.
+        range: FixpStackProfile
+        inlined: true
+        required: true
+      server_stack:
+        description: What the server side uses.
+        range: FixpStackProfile
+        inlined: true
+        required: true
+
+  FixpStackProfile:
+    description: >-
+      One side's choices at each layer of the stack: application, presentation, session,
+      security and transport.
+    comments:
+      - >-
+        Beyond appendix B's rows, it holds what sections 3 and 4 leave to the two parties: the
+        form of the credentials, the keep-alive intervals each side accepts, and the most
+        messages one resend may cover.
+    attributes:
+      application_recovery:
+        description: Whether this side's applications recover lost messages themselves.
+        range: boolean
+        annotations:
+          stack_layer: application
+      application_fix_version:
+        description: The FIX version of the application messages, such as FIX.Latest.
+        annotations:
+          stack_layer: application
+      service_pack:
+        description: The FIX service pack, where the version has them.
+        annotations:
+          stack_layer: application
+      extension_packs:
+        description: The FIX extension packs in use.
+        multivalued: true
+        annotations:
+          stack_layer: application
+      message_encoding:
+        description: How messages are encoded, such as Simple Binary Encoding.
+        annotations:
+          stack_layer: presentation
+      encoding_version:
+        description: The version of that encoding.
+        annotations:
+          stack_layer: presentation
+      message_schemas:
+        description: The message schemas or templates the encoding uses.
+        multivalued: true
+        annotations:
+          stack_layer: presentation
+      framing:
+        description: >-
+          What marks where one message ends and the next begins, such as the Simple Open
+          Framing Header.
+        annotations:
+          stack_layer: presentation
+      supported_flow_types:
+        description: The flow types this side accepts or offers.
+        range: FixpFlowType
+        multivalued: true
+        annotations:
+          stack_layer: session
+      shortest_keepalive_interval:
+        description: >-
+          The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.
+        range: fixp_delta_millisecs
+        comments:
+          - An Establish that asks for a shorter one is refused with the KeepaliveInterval code.
+        annotations:
+          stack_layer: session
+          fixp_section: "4"
+      longest_keepalive_interval:
+        description: >-
+          The longest keep-alive interval, in milliseconds, that this side accepts from its peer.
+        range: fixp_delta_millisecs
+        comments:
+          - An Establish that asks for a longer one is refused with the KeepaliveInterval code.
+        annotations:
+          stack_layer: session
+          fixp_section: "4"
+      retransmission_limit:
+        description: The most messages this side resends in answer to one RetransmitRequest.
+        range: fixp_u32
+        minimum_value: 1
+        comments:
+          - A request for more may be refused with the RequestLimitExceeded code.
+        annotations:
+          stack_layer: session
+          fixp_section: "4"
+      tls_version:
+        description: The TLS version that protects the transport.
+        annotations:
+          stack_layer: security
+      authentication_methods:
+        description: How the parties prove who they are.
+        multivalued: true
+        annotations:
+          stack_layer: security
+      credentials_format:
+        description: The form of the credentials this side sends, and how its peer checks them.
+        comments:
+          - FIXP carries credentials as opaque octets and leaves their form to the two parties.
+        annotations:
+          stack_layer: security
+          fixp_section: "3"
+      cipher_suites:
+        description: The cipher suites allowed.
+        multivalued: true
+        annotations:
+          stack_layer: security
+      transports:
+        description: The transports this side can use, for example TCP, or UDP with multicast.
+        multivalued: true
+        annotations:
+          stack_layer: transport
+      network_protocols:
+        description: Any other network protocols in use.
+        multivalued: true
+        annotations:
+          stack_layer: transport

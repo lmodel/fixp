@@ -1,26 +1,13 @@
 {
    "@context": {
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "common_domain_model": "https://w3id.org/lmodel/common-domain-model/elements/",
-      "dc": "http://purl.org/dc/elements/1.1/",
-      "dcterms": "http://purl.org/dc/terms/",
-      "fix_orchestra": "https://w3id.org/lmodel/fix-orchestra/elements/",
-      "fix_sbe": "https://w3id.org/lmodel/fix-sbe/elements/",
+      "fix_orchestra": "https://w3id.org/lmodel/fix-orchestra/",
+      "fix_sbe": "https://w3id.org/lmodel/fix-sbe/",
       "fixp": "https://w3id.org/lmodel/fixp/",
-      "fixr": "http://fixprotocol.io/2020/orchestra/repository/",
-      "fluxnova_bpm_platform": "https://w3id.org/lmodel/fluxnova-bpm-platform/elements/",
-      "gist_linkml": "https://w3id.org/lmodel/gist/",
       "linkml": "https://w3id.org/linkml/",
-      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-      "sbe": "http://fixprotocol.io/2016/sbe/",
       "schema": "http://schema.org/",
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "@vocab": "https://w3id.org/lmodel/fixp/",
-      "classification": {
-         "@type": "fixp:FIXData",
-         "@id": "classification"
-      },
       "client_flow": {
          "@context": {
             "text": "skos:notation",
@@ -29,16 +16,15 @@
          },
          "@id": "client_flow"
       },
-      "count": {
-         "@type": "fixp:FIXInt",
-         "@id": "count"
-      },
       "credentials": {
-         "@type": "fixp:FIXData",
+         "@type": "xsd:base64Binary",
          "@id": "credentials"
       },
+      "description": {
+         "@id": "schema:description"
+      },
       "effective_time": {
-         "@type": "fixp:FIXInt",
+         "@type": "xsd:integer",
          "@id": "effective_time"
       },
       "establishment_reject_code": {
@@ -49,24 +35,108 @@
          },
          "@id": "establishment_reject_code"
       },
-      "creator": {
-         "@id": "dcterms:creator"
-      },
-      "date": {
-         "@id": "dcterms:date"
-      },
-      "messages": {
+      "exchange_steps": {
          "@type": "@id",
-         "@id": "messages"
+         "@id": "exchange_steps"
       },
-      "publisher": {
-         "@id": "dcterms:publisher"
+      "multiplexed": {
+         "@type": "xsd:boolean",
+         "@id": "multiplexed"
       },
-      "rights": {
-         "@id": "dcterms:rights"
+      "session_kind": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "session_kind"
       },
-      "title": {
-         "@id": "dcterms:title"
+      "application_message_count": {
+         "@type": "xsd:integer",
+         "@id": "application_message_count"
+      },
+      "fixp_message": {
+         "@type": "@id",
+         "@id": "fixp_message"
+      },
+      "sent_by": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "sent_by"
+      },
+      "client_stack": {
+         "@type": "@id",
+         "@id": "client_stack"
+      },
+      "server_stack": {
+         "@type": "@id",
+         "@id": "server_stack"
+      },
+      "application_fix_version": {
+         "@id": "application_fix_version"
+      },
+      "application_recovery": {
+         "@type": "xsd:boolean",
+         "@id": "application_recovery"
+      },
+      "authentication_methods": {
+         "@id": "authentication_methods"
+      },
+      "cipher_suites": {
+         "@id": "cipher_suites"
+      },
+      "credentials_format": {
+         "@id": "credentials_format"
+      },
+      "encoding_version": {
+         "@id": "encoding_version"
+      },
+      "extension_packs": {
+         "@id": "extension_packs"
+      },
+      "framing": {
+         "@id": "framing"
+      },
+      "longest_keepalive_interval": {
+         "@type": "xsd:integer",
+         "@id": "longest_keepalive_interval"
+      },
+      "message_encoding": {
+         "@id": "message_encoding"
+      },
+      "message_schemas": {
+         "@id": "message_schemas"
+      },
+      "network_protocols": {
+         "@id": "network_protocols"
+      },
+      "retransmission_limit": {
+         "@type": "xsd:integer",
+         "@id": "retransmission_limit"
+      },
+      "service_pack": {
+         "@id": "service_pack"
+      },
+      "shortest_keepalive_interval": {
+         "@type": "xsd:integer",
+         "@id": "shortest_keepalive_interval"
+      },
+      "supported_flow_types": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "supported_flow_types"
+      },
+      "tls_version": {
+         "@id": "tls_version"
+      },
+      "transports": {
+         "@id": "transports"
       },
       "flow": {
          "@context": {
@@ -77,16 +147,24 @@
          "@id": "flow"
       },
       "from_seq_no": {
-         "@type": "fixp:FIXInt",
+         "@type": "xsd:integer",
          "@id": "from_seq_no"
       },
+      "id": "@id",
       "keepalive_interval": {
-         "@type": "fixp:FIXInt",
+         "@type": "xsd:integer",
          "@id": "keepalive_interval"
       },
       "last_seq_no": {
-         "@type": "fixp:FIXInt",
+         "@type": "xsd:integer",
          "@id": "last_seq_no"
+      },
+      "message_count": {
+         "@type": "xsd:integer",
+         "@id": "message_count"
+      },
+      "message_kind": {
+         "@id": "message_kind"
       },
       "negotiation_reject_code": {
          "@context": {
@@ -97,15 +175,18 @@
          "@id": "negotiation_reject_code"
       },
       "next_seq_no": {
-         "@type": "fixp:FIXInt",
+         "@type": "xsd:integer",
          "@id": "next_seq_no"
       },
-      "reason": {
-         "@type": "fixp:FIXString",
-         "@id": "reason"
+      "reason_text": {
+         "@id": "reason_text"
+      },
+      "request_time": {
+         "@type": "xsd:integer",
+         "@id": "request_time"
       },
       "request_timestamp": {
-         "@type": "fixp:FIXInt",
+         "@type": "xsd:integer",
          "@id": "request_timestamp"
       },
       "retransmit_reject_code": {
@@ -116,30 +197,6 @@
          },
          "@id": "retransmit_reject_code"
       },
-      "length": {
-         "@type": "xsd:integer",
-         "@id": "length"
-      },
-      "var_data": {
-         "@type": "xsd:integer",
-         "@id": "var_data"
-      },
-      "block_length": {
-         "@type": "xsd:integer",
-         "@id": "block_length"
-      },
-      "schema_id": {
-         "@type": "xsd:integer",
-         "@id": "schema_id"
-      },
-      "schema_version": {
-         "@type": "xsd:integer",
-         "@id": "schema_version"
-      },
-      "template_id": {
-         "@type": "xsd:integer",
-         "@id": "template_id"
-      },
       "server_flow": {
          "@context": {
             "text": "skos:notation",
@@ -149,12 +206,19 @@
          "@id": "server_flow"
       },
       "session_id": {
-         "@type": "fixp:FIXString",
          "@id": "session_id"
       },
+      "sofh_encoding_type": {
+         "@type": "xsd:integer",
+         "@id": "sofh_encoding_type"
+      },
       "template": {
-         "@type": "fixp:FIXData",
+         "@type": "xsd:base64Binary",
          "@id": "template"
+      },
+      "template_version": {
+         "@type": "xsd:base64Binary",
+         "@id": "template_version"
       },
       "termination_code": {
          "@context": {
@@ -164,85 +228,81 @@
          },
          "@id": "termination_code"
       },
-      "timestamp": {
-         "@type": "fixp:FIXInt",
-         "@id": "timestamp"
+      "topic_classification": {
+         "@type": "xsd:base64Binary",
+         "@id": "topic_classification"
       },
-      "version": {
-         "@type": "fixp:FIXData",
-         "@id": "version"
+      "FixpApplied": {
+         "@id": "FixpApplied"
       },
-      "Applied": {
-         "@id": "Applied"
+      "FixpContext": {
+         "@id": "FixpContext"
       },
-      "Context": {
-         "@id": "Context"
+      "FixpEstablish": {
+         "@id": "FixpEstablish"
       },
-      "Establish": {
-         "@id": "Establish"
+      "FixpEstablishmentAck": {
+         "@id": "FixpEstablishmentAck"
       },
-      "EstablishmentAck": {
-         "@id": "EstablishmentAck"
+      "FixpEstablishmentReject": {
+         "@id": "FixpEstablishmentReject"
       },
-      "EstablishmentReject": {
-         "@id": "EstablishmentReject"
+      "FixpExchange": {
+         "@id": "FixpExchange"
       },
-      "FinishedReceiving": {
-         "@id": "FinishedReceiving"
+      "FixpExchangeStep": {
+         "@id": "FixpExchangeStep"
       },
-      "FinishedSending": {
-         "@id": "FinishedSending"
+      "FixpFinishedReceiving": {
+         "@id": "FixpFinishedReceiving"
       },
-      "FixpSessionExchange": {
-         "@id": "FixpSessionExchange"
+      "FixpFinishedSending": {
+         "@id": "FixpFinishedSending"
       },
-      "FixpSessionMessage": {
-         "@id": "FixpSessionMessage"
+      "FixpMessage": {
+         "@id": "FixpMessage"
       },
-      "MessageTemplate": {
-         "@id": "MessageTemplate"
+      "FixpMessageTemplate": {
+         "@id": "FixpMessageTemplate"
       },
-      "Negotiate": {
-         "@id": "Negotiate"
+      "FixpNegotiate": {
+         "@id": "FixpNegotiate"
       },
-      "NegotiationReject": {
-         "@id": "NegotiationReject"
+      "FixpNegotiationReject": {
+         "@id": "FixpNegotiationReject"
       },
-      "NegotiationResponse": {
-         "@id": "NegotiationResponse"
+      "FixpNegotiationResponse": {
+         "@id": "FixpNegotiationResponse"
       },
-      "NotApplied": {
-         "@id": "NotApplied"
+      "FixpNotApplied": {
+         "@id": "FixpNotApplied"
       },
-      "RestransmitReject": {
-         "@id": "RestransmitReject"
+      "FixpRetransmission": {
+         "@id": "FixpRetransmission"
       },
-      "Retransmission": {
-         "@id": "Retransmission"
+      "FixpRetransmitReject": {
+         "@id": "FixpRetransmitReject"
       },
-      "RetransmitRequest": {
-         "@id": "RetransmitRequest"
+      "FixpRetransmitRequest": {
+         "@id": "FixpRetransmitRequest"
       },
-      "SbeCharacterStringComposite": {
-         "@id": "SbeCharacterStringComposite"
+      "FixpRulesOfEngagement": {
+         "@id": "FixpRulesOfEngagement"
       },
-      "SbeMessageHeaderComposite": {
-         "@id": "SbeMessageHeaderComposite"
+      "FixpSequence": {
+         "@id": "FixpSequence"
       },
-      "SbeObjectComposite": {
-         "@id": "SbeObjectComposite"
+      "FixpStackProfile": {
+         "@id": "FixpStackProfile"
       },
-      "Sequence": {
-         "@id": "Sequence"
+      "FixpTerminate": {
+         "@id": "FixpTerminate"
       },
-      "Terminate": {
-         "@id": "Terminate"
+      "FixpTopic": {
+         "@id": "FixpTopic"
       },
-      "Topic": {
-         "@id": "Topic"
-      },
-      "UnsequencedHeartbeat": {
-         "@id": "UnsequencedHeartbeat"
+      "FixpUnsequencedHeartbeat": {
+         "@id": "FixpUnsequencedHeartbeat"
       }
    }
 }

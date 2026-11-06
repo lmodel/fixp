@@ -1,9 +1,8 @@
 # Auto generated from fixp.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-05-26T00:41:04
 # Schema: fixp
 #
 # id: https://w3id.org/lmodel/fixp
-# description: LinkML schema for the FIX Performance (FIXP) Session Protocol, auto-generated from the upstream specification artifacts (FixRepositoryForFIXP.xml, SBEschemaForFIXP.xml, OrchestraForFIXP.xml).
+# description: A LinkML model of the FIX Performance Session Layer 1.0, the FIX Trading Community's session protocol for fast trading links. It describes FIXP's session messages, their fields and value lists, exchanges of those messages on one session, and the rules of engagement two parties agree on. A message is described by its fields, so the model works with any encoding.
 # license: Apache-2.0
 
 import dataclasses
@@ -56,1827 +55,1562 @@ from rdflib import (
     URIRef
 )
 
-from linkml_runtime.linkml_model.types import Date, Datetime, Float, Integer, String
-from linkml_runtime.utils.metamodelcore import XSDDate, XSDDateTime
+from linkml_runtime.linkml_model.types import Boolean, Integer, String, Uriorcurie
+from linkml_runtime.utils.metamodelcore import Bool, URIorCURIE
 
-metamodel_version = "1.11.0"
-version = "FIX.5.0SP2"
+metamodel_version = "1.12.0"
+version = "1.0"
 
 # Namespaces
-COMMON_DOMAIN_MODEL = CurieNamespace('common_domain_model', 'https://w3id.org/lmodel/common-domain-model/elements/')
-DC = CurieNamespace('dc', 'http://purl.org/dc/elements/1.1/')
-DCTERMS = CurieNamespace('dcterms', 'http://purl.org/dc/terms/')
-FIX_ORCHESTRA = CurieNamespace('fix_orchestra', 'https://w3id.org/lmodel/fix-orchestra/elements/')
-FIX_SBE = CurieNamespace('fix_sbe', 'https://w3id.org/lmodel/fix-sbe/elements/')
+FIX_ORCHESTRA = CurieNamespace('fix_orchestra', 'https://w3id.org/lmodel/fix-orchestra/')
+FIX_SBE = CurieNamespace('fix_sbe', 'https://w3id.org/lmodel/fix-sbe/')
 FIXP = CurieNamespace('fixp', 'https://w3id.org/lmodel/fixp/')
-FIXR = CurieNamespace('fixr', 'http://fixprotocol.io/2020/orchestra/repository/')
-FLUXNOVA_BPM_PLATFORM = CurieNamespace('fluxnova_bpm_platform', 'https://w3id.org/lmodel/fluxnova-bpm-platform/elements/')
-GIST_LINKML = CurieNamespace('gist_linkml', 'https://w3id.org/lmodel/gist/')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
-RDF = CurieNamespace('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
-RDFS = CurieNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
-SBE = CurieNamespace('sbe', 'http://fixprotocol.io/2016/sbe/')
 SCHEMA = CurieNamespace('schema', 'http://schema.org/')
-SKOS = CurieNamespace('skos', 'http://www.w3.org/2004/02/skos/core#')
 XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
 DEFAULT_ = FIXP
 
 
 # Types
-class FIXInt(Integer):
-    """ FIX int base datatype. Sequence of digits without commas or decimals and optional sign character (ASCII characters "-" and "0" - "9" ). The sign character utilizes one byte (i.e. positive int is "99999" while negative int is "-99999"). Note that int values may contain leading zeros (e.g. "00023" = "23"). Example: 723 in field 21 would be mapped int as |21=723|. -723 in field 12 would be mapped int as |12=-723|. """
-    type_class_uri = FIXP["FIXInt"]
-    type_class_curie = "fixp:FIXInt"
-    type_name = "FIXInt"
-    type_model_uri = FIXP.FIXInt
-
-
-class FIXLength(Integer):
-    """ FIX Length datatype (extends int). int field representing the length in bytes. Value must be positive. """
-    type_class_uri = FIXP["FIXLength"]
-    type_class_curie = "fixp:FIXLength"
-    type_name = "FIXLength"
-    type_model_uri = FIXP.FIXLength
-
-
-class FIXTagNum(Integer):
-    """ FIX TagNum datatype (extends int). int field representing a field's tag number when using FIX "Tag=Value" syntax. Value must be positive and may not contain leading zeros. """
-    type_class_uri = FIXP["FIXTagNum"]
-    type_class_curie = "fixp:FIXTagNum"
-    type_name = "FIXTagNum"
-    type_model_uri = FIXP.FIXTagNum
-
-
-class FIXSeqNum(Integer):
-    """ FIX SeqNum datatype (extends int). int field representing a message sequence number. Value must be positive. """
-    type_class_uri = FIXP["FIXSeqNum"]
-    type_class_curie = "fixp:FIXSeqNum"
-    type_name = "FIXSeqNum"
-    type_model_uri = FIXP.FIXSeqNum
-
-
-class FIXNumInGroup(String):
-    """ FIX NumInGroup datatype (extends int). int field representing the number of entries in a repeating group. Value must be positive. """
-    type_class_uri = FIXP["FIXNumInGroup"]
-    type_class_curie = "fixp:FIXNumInGroup"
-    type_name = "FIXNumInGroup"
-    type_model_uri = FIXP.FIXNumInGroup
-
-
-class FIXDayOfMonth(String):
-    """ FIX DayOfMonth datatype (extends int). int field representing a day during a particular monthy (values 1 to 31). """
-    type_class_uri = FIXP["FIXDayOfMonth"]
-    type_class_curie = "fixp:FIXDayOfMonth"
-    type_name = "FIXDayOfMonth"
-    type_model_uri = FIXP.FIXDayOfMonth
-
-
-class FIXFloat(Float):
-    """ FIX float base datatype. Sequence of digits with optional decimal point and sign character (ASCII characters "-", "0" - "9" and "."); the absence of the decimal point within the string will be interpreted as the float representation of an integer value. All float fields must accommodate up to fifteen significant digits. The number of decimal places used should be a factor of business/market needs and mutual agreement between counterparties. Note that float values may contain leading zeros (e.g. "00023.23" = "23.23") and may contain or omit trailing zeros after the decimal point (e.g. "23.0" = "23.0000" = "23" = "23."). Note that fields which are derived from float may contain negative values unless explicitly specified otherwise. """
-    type_class_uri = FIXP["FIXFloat"]
-    type_class_curie = "fixp:FIXFloat"
-    type_name = "FIXFloat"
-    type_model_uri = FIXP.FIXFloat
-
-
-class FIXQty(Float):
-    """ FIX Qty datatype (extends float). float field capable of storing either a whole number (no decimal places) of "shares" (securities denominated in whole units) or a decimal value containing decimal places for non-share quantity asset classes (securities denominated in fractional units). """
-    type_class_uri = FIXP["FIXQty"]
-    type_class_curie = "fixp:FIXQty"
-    type_name = "FIXQty"
-    type_model_uri = FIXP.FIXQty
-
-
-class FIXPrice(Float):
-    """ FIX Price datatype (extends float). float field representing a price. Note the number of decimal places may vary. For certain asset classes prices may be negative values. For example, prices for options strategies can be negative under certain market conditions. Refer to Volume 7: FIX Usage by Product for asset classes that support negative price values. Example: Strk="47.50" """
-    type_class_uri = FIXP["FIXPrice"]
-    type_class_curie = "fixp:FIXPrice"
-    type_name = "FIXPrice"
-    type_model_uri = FIXP.FIXPrice
-
-
-class FIXPriceOffset(Float):
-    """ FIX PriceOffset datatype (extends float). float field representing a price offset, which can be mathematically added to a "Price". Note the number of decimal places may vary and some fields such as LastForwardPoints may be negative. """
-    type_class_uri = FIXP["FIXPriceOffset"]
-    type_class_curie = "fixp:FIXPriceOffset"
-    type_name = "FIXPriceOffset"
-    type_model_uri = FIXP.FIXPriceOffset
-
-
-class FIXAmt(Float):
-    """ FIX Amt datatype (extends float). float field typically representing a Price times a Qty Example: Amt="6847.00" """
-    type_class_uri = FIXP["FIXAmt"]
-    type_class_curie = "fixp:FIXAmt"
-    type_name = "FIXAmt"
-    type_model_uri = FIXP.FIXAmt
-
-
-class FIXPercentage(Float):
-    """ FIX Percentage datatype (extends float). float field representing a percentage (e.g. 0.05 represents 5% and 0.9525 represents 95.25%). Note the number of decimal places may vary. """
-    type_class_uri = FIXP["FIXPercentage"]
-    type_class_curie = "fixp:FIXPercentage"
-    type_name = "FIXPercentage"
-    type_model_uri = FIXP.FIXPercentage
-
-
-class FIXChar(String):
-    """ FIX char base datatype. Single character value, can include any alphanumeric character or punctuation except the delimiter. All char fields are case sensitive (i.e. m != M). """
-    type_class_uri = FIXP["FIXChar"]
-    type_class_curie = "fixp:FIXChar"
-    type_name = "FIXChar"
-    type_model_uri = FIXP.FIXChar
-
-
-class FIXBoolean(String):
-    """ FIX Boolean datatype (extends char). char field containing one of two values: 'Y' = True/Yes 'N' = False/No """
-    type_class_uri = FIXP["FIXBoolean"]
-    type_class_curie = "fixp:FIXBoolean"
-    type_name = "FIXBoolean"
-    type_model_uri = FIXP.FIXBoolean
-
-
-class FIXString(String):
-    """ FIX String base datatype. Alpha-numeric free format strings, can include any character or punctuation except the delimiter. All String fields are case sensitive (i.e. morstatt != Morstatt). """
-    type_class_uri = FIXP["FIXString"]
-    type_class_curie = "fixp:FIXString"
-    type_name = "FIXString"
-    type_model_uri = FIXP.FIXString
-
-
-class FIXMultipleCharValue(String):
-    """ FIX MultipleCharValue datatype (extends String). string field containing one or more space delimited single character values (e.g. |18=2 A F| ). """
-    type_class_uri = FIXP["FIXMultipleCharValue"]
-    type_class_curie = "fixp:FIXMultipleCharValue"
-    type_name = "FIXMultipleCharValue"
-    type_model_uri = FIXP.FIXMultipleCharValue
-
-
-class FIXMultipleStringValue(String):
-    """ FIX MultipleStringValue datatype (extends String). string field containing one or more space delimited multiple character values (e.g. |277=AV AN A| ). """
-    type_class_uri = FIXP["FIXMultipleStringValue"]
-    type_class_curie = "fixp:FIXMultipleStringValue"
-    type_name = "FIXMultipleStringValue"
-    type_model_uri = FIXP.FIXMultipleStringValue
-
-
-class FIXCountry(String):
-    """ FIX Country datatype (extends String). string field representing a country using ISO 3166 Country code (2 character) values (see Appendix 6-B). """
-    type_class_uri = FIXP["FIXCountry"]
-    type_class_curie = "fixp:FIXCountry"
-    type_name = "FIXCountry"
-    type_model_uri = FIXP.FIXCountry
-
-
-class FIXCurrency(String):
-    """ FIX Currency datatype (extends String). string field representing a currency type using ISO 4217 Currency code (3 character) values (see Appendix 6-A). Example: StrkCcy="USD" """
-    type_class_uri = FIXP["FIXCurrency"]
-    type_class_curie = "fixp:FIXCurrency"
-    type_name = "FIXCurrency"
-    type_model_uri = FIXP.FIXCurrency
-
-
-class FIXExchange(String):
-    """ FIX Exchange datatype (extends String). string field representing a market or exchange using ISO 10383 Market Identifier Code (MIC) values (see"Appendix 6-C). """
-    type_class_uri = FIXP["FIXExchange"]
-    type_class_curie = "fixp:FIXExchange"
-    type_name = "FIXExchange"
-    type_model_uri = FIXP.FIXExchange
-
-
-class FIXMonthYear(String):
-    """ FIX MonthYear datatype (extends String). string field representing month of a year. An optional day of the month can be appended or an optional week code. Valid formats: YYYYMM YYYYMMDD YYYYMMWW Valid values: YYYY = 0000-9999; MM = 01-12; DD = 01-31; WW = w1, w2, w3, w4, w5. Example: MonthYear="200303", MonthYear="20030320", MonthYear="200303w2" """
-    type_class_uri = FIXP["FIXMonthYear"]
-    type_class_curie = "fixp:FIXMonthYear"
-    type_name = "FIXMonthYear"
-    type_model_uri = FIXP.FIXMonthYear
-
-
-class FIXUTCTimestamp(Datetime):
-    """ FIX UTCTimestamp datatype (extends String). string field representing time/date combination represented in UTC (Universal Time Coordinated, also known as "GMT") in either YYYYMMDD-HH:MM:SS (whole seconds) or YYYYMMDD-HH:MM:SS.sss* format, colons, dash, and period required. Valid values: YYYY = 0000-9999, MM = 01-12, DD = 01-31, HH = 00-23, MM = 00-59, SS = 00-60 (60 only if UTC leap second), sss* fractions of seconds. The fractions of seconds may be empty when no fractions of seconds are conveyed (in such a case the period is not conveyed), it may include 3 digits to convey milliseconds, 6 digits to convey microseconds, 9 digits to convey nanoseconds, 12 digits to convey picoseconds; Other number of digits may be used with bilateral agreement. Leap Seconds: Note that UTC includes corrections for leap seconds, which are inserted to account for slowing of the rotation of the earth. Leap second insertion is declared by the International Earth Rotation Service (IERS) and has, since 1972, only occurred on the night of Dec. 31 or Jun 30. The IERS considers March 31 and September 30 as secondary dates for leap second insertion, but has never utilized these dates. During a leap second insertion, a UTCTimestamp field may read "19981231-23:59:59", "19981231-23:59:60", "19990101-00:00:00". (see http://tycho.usno.navy.mil/leapsec.html) Example: TransactTime(60)="20011217-09:30:47.123" millisecond TransactTime(60)="20011217-09:30:47.123456" microseconds TransactTime(60)="20011217-09:30:47.123456789" nanoseconds TransactTime(60)="20011217-09:30:47.123456789123" picoseconds """
-    type_class_uri = FIXP["FIXUTCTimestamp"]
-    type_class_curie = "fixp:FIXUTCTimestamp"
-    type_name = "FIXUTCTimestamp"
-    type_model_uri = FIXP.FIXUTCTimestamp
-
-
-class FIXUTCTimeOnly(String):
-    """ FIX UTCTimeOnly datatype (extends String). string field representing time-only represented in UTC (Universal Time Coordinated, also known as "GMT") in either HH:MM:SS (whole seconds) or HH:MM:SS.sss* (milliseconds) format, colons, and period required. This special-purpose field is paired with UTCDateOnly to form a proper UTCTimestamp for bandwidth-sensitive messages. Valid values: HH = 00-23, MM = 00-59, SS = 00-60 (60 only if UTC leap second), sss* fractions of seconds. The fractions of seconds may be empty when no fractions of seconds are conveyed (in such a case the period is not conveyed), it may include 3 digits to convey milliseconds, 6 digits to convey microseconds, 9 digits to convey nanoseconds, 12 digits to convey picoseconds; Other number of digits may be used with bilateral agreement. Example: MDEntryTime(273)="13:20:00.123"milliseconds MDEntryTime(273)="13:20:00.123456" microseconds MDEntryTime(273)="13:20:00.123456789" nanoseconds MDEntryTime(273)="13:20:00.123456789123" picoseconds """
-    type_class_uri = FIXP["FIXUTCTimeOnly"]
-    type_class_curie = "fixp:FIXUTCTimeOnly"
-    type_name = "FIXUTCTimeOnly"
-    type_model_uri = FIXP.FIXUTCTimeOnly
-
-
-class FIXUTCDateOnly(Date):
-    """ FIX UTCDateOnly datatype (extends String). string field representing Date represented in UTC (Universal Time Coordinated, also known as "GMT") in YYYYMMDD format. This special-purpose field is paired with UTCTimeOnly to form a proper UTCTimestamp for bandwidth-sensitive messages. Valid values: YYYY = 0000-9999, MM = 01-12, DD = 01-31. Example: MDEntryDate="20030910" """
-    type_class_uri = FIXP["FIXUTCDateOnly"]
-    type_class_curie = "fixp:FIXUTCDateOnly"
-    type_name = "FIXUTCDateOnly"
-    type_model_uri = FIXP.FIXUTCDateOnly
-
-
-class FIXLocalMktDate(Date):
-    """ FIX LocalMktDate datatype (extends String). string field representing a Date of Local Market (as opposed to UTC) in YYYYMMDD format. This is the "normal" date field used by the FIX Protocol. Valid values: YYYY = 0000-9999, MM = 01-12, DD = 01-31 Example: MaturityDate(541)="20150724" """
-    type_class_uri = FIXP["FIXLocalMktDate"]
-    type_class_curie = "fixp:FIXLocalMktDate"
-    type_name = "FIXLocalMktDate"
-    type_model_uri = FIXP.FIXLocalMktDate
-
-
-class FIXTZTimeOnly(String):
-    """ FIX TZTimeOnly datatype (extends String). string field representing the time represented based on ISO 8601. This is the time with a UTC offset to allow identification of local time and timezone of that time. Format is HH:MM[:SS][Z | [ + | - hh[:mm]]] where HH = 00-23 hours, MM = 00-59 minutes, SS = 00-59 seconds, hh = 01-12 offset hours, mm = 00-59 offset minutes. Example: "07:39Z" is 07:39 UTC "02:39-05" is five hours behind UTC, thus Eastern Time "15:39+08" is eight hours ahead of UTC, Hong Kong/Singapore time "13:09+05:30" is 5.5 hours ahead of UTC, India time """
-    type_class_uri = FIXP["FIXTZTimeOnly"]
-    type_class_curie = "fixp:FIXTZTimeOnly"
-    type_name = "FIXTZTimeOnly"
-    type_model_uri = FIXP.FIXTZTimeOnly
-
-
-class FIXTZTimestamp(Datetime):
-    """ FIX TZTimestamp datatype (extends String). string field representing a time/date combination representing local time with an offset to UTC to allow identification of local time and timezone offset of that time. The representation is based on ISO 8601. Format is YYYYMMDD-HH:MM:SS.sss*[Z | [ + | - hh[:mm]]] where YYYY = 0000 to 9999, MM = 01-12, DD = 01-31 HH = 00-23 hours, MM = 00-59 minutes, SS = 00-59 seconds, hh = 01-12 offset hours, mm = 00-59 offset minutes, sss* fractions of seconds. The fractions of seconds may be empty when no fractions of seconds are conveyed (in such a case the period is not conveyed), it may include 3 digits to convey milliseconds, 6 digits to convey microseconds, 9 digits to convey nanoseconds, 12 digits to convey picoseconds; Other number of digits may be used with bilateral agreement Example: "20060901-07:39Z" is 07:39 UTC on 1st of September 2006 "20060901-02:39-05" is five hours behind UTC, thus Eastern Time on 1st of September 2006 "20060901-15:39+08" is eight hours ahead of UTC, Hong Kong/Singapore time on 1st of September 2006 "20060901-13:09+05:30" is 5.5 hours ahead of UTC, India time on 1st of September 2006 Using decimal seconds: "20060901-13:09.123+05:30" milliseconds "20060901-13:09.123456+05:30" microseconds "20060901-13:09.123456789+05:30" nanoseconds "20060901-13:09.123456789123+05:30" picoseconds "20060901-13:09.123456789Z" nanoseconds UTC timezone """
-    type_class_uri = FIXP["FIXTZTimestamp"]
-    type_class_curie = "fixp:FIXTZTimestamp"
-    type_name = "FIXTZTimestamp"
-    type_model_uri = FIXP.FIXTZTimestamp
-
-
-class FIXData(String):
-    """ FIX data datatype (extends String). string field containing raw data with no format or content restrictions. Data fields are always immediately preceded by a length field. The length field should specify the number of bytes of the value of the data field (up to but not including the terminating SOH). Caution: the value of one of these fields may contain the delimiter (SOH) character. Note that the value specified for this field should be followed by the delimiter (SOH) character as all fields are terminated with an "SOH". """
-    type_class_uri = FIXP["FIXData"]
-    type_class_curie = "fixp:FIXData"
-    type_name = "FIXData"
-    type_model_uri = FIXP.FIXData
-
-
-class FIXPattern(String):
-    """ FIX Pattern base datatype. Used to build on and provide some restrictions on what is allowed as valid values in fields that uses a base FIX data type and a pattern data type. The universe of allowable valid values for the field would then be the union of the base set of valid values and what is defined by the pattern data type. The pattern data type used by the field will retain its base FIX data type (e.g. String, int, char). """
-    type_class_uri = FIXP["FIXPattern"]
-    type_class_curie = "fixp:FIXPattern"
-    type_name = "FIXPattern"
-    type_model_uri = FIXP.FIXPattern
-
-
-class FIXTenor(String):
-    """ FIX Tenor datatype (extends Pattern). used to allow the expression of FX standard tenors in addition to the base valid enumerations defined for the field that uses this pattern data type. This pattern data type is defined as follows: Dx = tenor expression for "days", e.g. "D5", where "x" is any integer > 0 Mx = tenor expression for "months", e.g. "M3", where "x" is any integer > 0 Wx = tenor expression for "weeks", e.g. "W13", where "x" is any integer > 0 Yx = tenor expression for "years", e.g. "Y1", where "x" is any integer > 0 """
-    type_class_uri = FIXP["FIXTenor"]
-    type_class_curie = "fixp:FIXTenor"
-    type_name = "FIXTenor"
-    type_model_uri = FIXP.FIXTenor
-
-
-class FIXReserved100Plus(Integer):
-    """ FIX Reserved100Plus datatype (extends Pattern). Values "100" and above are reserved for bilaterally agreed upon user defined enumerations. """
-    type_class_uri = FIXP["FIXReserved100Plus"]
-    type_class_curie = "fixp:FIXReserved100Plus"
-    type_name = "FIXReserved100Plus"
-    type_model_uri = FIXP.FIXReserved100Plus
-
-
-class FIXReserved1000Plus(Integer):
-    """ FIX Reserved1000Plus datatype (extends Pattern). Values "1000" and above are reserved for bilaterally agreed upon user defined enumerations. """
-    type_class_uri = FIXP["FIXReserved1000Plus"]
-    type_class_curie = "fixp:FIXReserved1000Plus"
-    type_name = "FIXReserved1000Plus"
-    type_model_uri = FIXP.FIXReserved1000Plus
-
-
-class FIXReserved4000Plus(Integer):
-    """ FIX Reserved4000Plus datatype (extends Pattern). Values "4000" and above are reserved for bilaterally agreed upon user defined enumerations. """
-    type_class_uri = FIXP["FIXReserved4000Plus"]
-    type_class_curie = "fixp:FIXReserved4000Plus"
-    type_name = "FIXReserved4000Plus"
-    type_model_uri = FIXP.FIXReserved4000Plus
-
-
-class FIXXMLData(String):
-    """ FIX XMLData datatype (extends String). Contains an XML document raw data with no format or content restrictions. XMLData fields are always immediately preceded by a length field. The length field should specify the number of bytes of the value of the data field (up to but not including the terminating SOH). """
-    type_class_uri = FIXP["FIXXMLData"]
-    type_class_curie = "fixp:FIXXMLData"
-    type_name = "FIXXMLData"
-    type_model_uri = FIXP.FIXXMLData
-
-
-class FIXLanguage(String):
-    """ FIX Language datatype (extends String). Identifier for a national language - uses ISO 639-1 standard Example: en (English), es (spanish), etc. """
-    type_class_uri = FIXP["FIXLanguage"]
-    type_class_curie = "fixp:FIXLanguage"
-    type_name = "FIXLanguage"
-    type_model_uri = FIXP.FIXLanguage
-
-
-class FIXLocalMktTime(String):
-    """ FIX LocalMktTime datatype (extends String). string field representing the time local to a particular market center. Used where offset to UTC varies throughout the year and the defining market center is identified in a corresponding field. Format is HH:MM:SS where HH = 00-23 hours, MM = 00-59 minutes, SS = 00-59 seconds. In general only the hour token is non-zero. Example: Example: 07:00:00 """
-    type_class_uri = FIXP["FIXLocalMktTime"]
-    type_class_curie = "fixp:FIXLocalMktTime"
-    type_name = "FIXLocalMktTime"
-    type_model_uri = FIXP.FIXLocalMktTime
-
-
-class FIXXID(String):
-    """ FIX XID datatype (extends String). The purpose of the XID datatype is to define a unique identifier that is global to a FIX message. An identifier defined using this datatype uniquely identifies its containing element, whatever its type and name is. The constraint added by this datatype is that the values of all the fields that have an ID datatype in a FIX message must be unique. """
-    type_class_uri = FIXP["FIXXID"]
-    type_class_curie = "fixp:FIXXID"
-    type_name = "FIXXID"
-    type_model_uri = FIXP.FIXXID
-
-
-class FIXXIDREF(String):
-    """ FIX XIDREF datatype (extends String). The XIDREF datatype defines a reference to an identifier defined by the XID datatype. """
-    type_class_uri = FIXP["FIXXIDREF"]
-    type_class_curie = "fixp:FIXXIDREF"
-    type_name = "FIXXIDREF"
-    type_model_uri = FIXP.FIXXIDREF
-
-
-class SbeUUID(Integer):
-    """ RFC 4122 version 4 compliant unique identifier SBE primitive 'UUID' (primitiveType=uint8). """
-    type_class_uri = FIXP["SbeUUID"]
-    type_class_curie = "fixp:SbeUUID"
-    type_name = "SbeUUID"
-    type_model_uri = FIXP.SbeUUID
-
-
-class SbeNanotime(Integer):
-    """ Time in nanoseconds SBE primitive 'nanotime' (primitiveType=uint64). """
-    type_class_uri = FIXP["SbeNanotime"]
-    type_class_curie = "fixp:SbeNanotime"
-    type_name = "SbeNanotime"
-    type_model_uri = FIXP.SbeNanotime
-
-
-class SbeDeltaMillisecs(Integer):
-    """ Time interval in milliseconds SBE primitive 'DeltaMillisecs' (primitiveType=uint32). """
-    type_class_uri = FIXP["SbeDeltaMillisecs"]
-    type_class_curie = "fixp:SbeDeltaMillisecs"
-    type_name = "SbeDeltaMillisecs"
-    type_model_uri = FIXP.SbeDeltaMillisecs
-
-
-class SbeOrdinal(Integer):
-    """ SBE primitive 'ordinal' (primitiveType=uint64). """
-    type_class_uri = FIXP["SbeOrdinal"]
-    type_class_curie = "fixp:SbeOrdinal"
-    type_name = "SbeOrdinal"
-    type_model_uri = FIXP.SbeOrdinal
-
-
-class SbeCardinal(Integer):
-    """ SBE primitive 'cardinal' (primitiveType=uint32). """
-    type_class_uri = FIXP["SbeCardinal"]
-    type_class_curie = "fixp:SbeCardinal"
-    type_name = "SbeCardinal"
-    type_model_uri = FIXP.SbeCardinal
+class FixpU8(Integer):
+    """ A whole number from 0 to 255, held in eight unsigned bits. """
+    type_class_uri = XSD["integer"]
+    type_class_curie = "xsd:integer"
+    type_name = "fixp_u8"
+    type_model_uri = FIXP.FixpU8
+
+
+class FixpU16(Integer):
+    """ A whole number from 0 to 65,535, held in 16 unsigned bits. """
+    type_class_uri = XSD["integer"]
+    type_class_curie = "xsd:integer"
+    type_name = "fixp_u16"
+    type_model_uri = FIXP.FixpU16
+
+
+class FixpU32(Integer):
+    """ A whole number from 0 to 4,294,967,295, held in 32 unsigned bits. """
+    type_class_uri = XSD["integer"]
+    type_class_curie = "xsd:integer"
+    type_name = "fixp_u32"
+    type_model_uri = FIXP.FixpU32
+
+
+class FixpU64(Integer):
+    """ A whole number from 0 to 18,446,744,073,709,551,615, held in 64 unsigned bits. """
+    type_class_uri = XSD["integer"]
+    type_class_curie = "xsd:integer"
+    type_name = "fixp_u64"
+    type_model_uri = FIXP.FixpU64
+
+
+class FixpUuid(String):
+    """ A random UUID of RFC 4122's version 4, written as 32 hexadecimal digits in five groups joined by hyphens. """
+    type_class_uri = XSD["string"]
+    type_class_curie = "xsd:string"
+    type_name = "fixp_uuid"
+    type_model_uri = FIXP.FixpUuid
+
+
+class FixpNanotime(Integer):
+    """ A moment, counted in nanoseconds since the Unix epoch and held in 64 unsigned bits. """
+    type_class_uri = XSD["integer"]
+    type_class_curie = "xsd:integer"
+    type_name = "fixp_nanotime"
+    type_model_uri = FIXP.FixpNanotime
+
+
+class FixpDeltaMillisecs(Integer):
+    """ A length of time in whole milliseconds, held in 32 unsigned bits. """
+    type_class_uri = XSD["integer"]
+    type_class_curie = "xsd:integer"
+    type_name = "fixp_delta_millisecs"
+    type_model_uri = FIXP.FixpDeltaMillisecs
+
+
+class FixpObject(String):
+    """ Octets that FIXP passes through without reading them, written here in base64. """
+    type_class_uri = XSD["base64Binary"]
+    type_class_curie = "xsd:base64Binary"
+    type_name = "fixp_object"
+    type_model_uri = FIXP.FixpObject
+
+
+class FixpString(String):
+    """ Text, in UTF-8. """
+    type_class_uri = XSD["string"]
+    type_class_curie = "xsd:string"
+    type_name = "fixp_string"
+    type_model_uri = FIXP.FixpString
 
 
 # Class references
+class FixpExchangeId(URIorCURIE):
+    pass
 
+
+class FixpRulesOfEngagementId(URIorCURIE):
+    pass
 
 
 @dataclass(repr=False)
-class FixpSessionExchange(YAMLRoot):
+class FixpMessage(YAMLRoot):
     """
-    Top-level container for a FIXP session exchange - holds an ordered list of session messages plus optional metadata.
+    One FIXP message, as its fields would be read from the wire before or after encoding.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["FixpSessionExchange"]
-    class_class_curie: ClassVar[str] = "fixp:FixpSessionExchange"
-    class_name: ClassVar[str] = "FixpSessionExchange"
-    class_model_uri: ClassVar[URIRef] = FIXP.FixpSessionExchange
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpMessage"]
+    class_class_curie: ClassVar[str] = "fixp:FixpMessage"
+    class_name: ClassVar[str] = "FixpMessage"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpMessage
 
-    messages: Optional[Union[Union[dict, "FixpSessionMessage"], list[Union[dict, "FixpSessionMessage"]]]] = empty_list()
-    title: Optional[str] = None
-    creator: Optional[str] = None
-    publisher: Optional[str] = None
-    rights: Optional[str] = None
-    date: Optional[str] = None
+    message_kind: str = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if not isinstance(self.messages, list):
-            self.messages = [self.messages] if self.messages is not None else []
-        self.messages = [v if isinstance(v, FixpSessionMessage) else FixpSessionMessage(**as_dict(v)) for v in self.messages]
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
-
-        if self.creator is not None and not isinstance(self.creator, str):
-            self.creator = str(self.creator)
-
-        if self.publisher is not None and not isinstance(self.publisher, str):
-            self.publisher = str(self.publisher)
-
-        if self.rights is not None and not isinstance(self.rights, str):
-            self.rights = str(self.rights)
-
-        if self.date is not None and not isinstance(self.date, str):
-            self.date = str(self.date)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
         super().__post_init__(**kwargs)
 
 
-class FixpSessionMessage(YAMLRoot):
-    """
-    Abstract base class for every FIXP session message.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
+    def __new__(cls, *args, **kwargs):
 
-    class_class_uri: ClassVar[URIRef] = FIXP["FixpSessionMessage"]
-    class_class_curie: ClassVar[str] = "fixp:FixpSessionMessage"
-    class_name: ClassVar[str] = "FixpSessionMessage"
-    class_model_uri: ClassVar[URIRef] = FIXP.FixpSessionMessage
+        type_designator = "message_kind"
+        if not type_designator in kwargs:
+            return super().__new__(cls,*args,**kwargs)
+        else:
+            type_designator_value = kwargs[type_designator]
+            target_cls = cls._class_for("class_name", type_designator_value)
 
 
-@dataclass(repr=False)
-class SbeObjectComposite(YAMLRoot):
-    """
-    Variable length data, also know as octect string
-    """
-    _inherited_slots: ClassVar[list[str]] = []
+            if target_cls is None:
+                raise ValueError(f"Wrong type designator value: class {cls.__name__} "
+                                 f"has no subclass with ['class_name']='{kwargs[type_designator]}'")
+            return super().__new__(target_cls,*args,**kwargs)
 
-    class_class_uri: ClassVar[URIRef] = FIXP["SbeObjectComposite"]
-    class_class_curie: ClassVar[str] = "fixp:SbeObjectComposite"
-    class_name: ClassVar[str] = "SbeObjectComposite"
-    class_model_uri: ClassVar[URIRef] = FIXP.SbeObjectComposite
-
-    length: Optional[int] = None
-    var_data: Optional[int] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.length is not None and not isinstance(self.length, int):
-            self.length = int(self.length)
-
-        if self.var_data is not None and not isinstance(self.var_data, int):
-            self.var_data = int(self.var_data)
-
-        super().__post_init__(**kwargs)
 
 
 @dataclass(repr=False)
-class SbeCharacterStringComposite(YAMLRoot):
+class FixpNegotiate(FixpMessage):
     """
-    Variable length text
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = FIXP["SbeCharacterStringComposite"]
-    class_class_curie: ClassVar[str] = "fixp:SbeCharacterStringComposite"
-    class_name: ClassVar[str] = "SbeCharacterStringComposite"
-    class_model_uri: ClassVar[URIRef] = FIXP.SbeCharacterStringComposite
-
-    length: Optional[int] = None
-    var_data: Optional[str] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.length is not None and not isinstance(self.length, int):
-            self.length = int(self.length)
-
-        if self.var_data is not None and not isinstance(self.var_data, str):
-            self.var_data = str(self.var_data)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class SbeMessageHeaderComposite(YAMLRoot):
-    """
-    Message identifiers and length of message root
+    A client's request to create a session under an identifier it has never used, stating the flow type it will send.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["SbeMessageHeaderComposite"]
-    class_class_curie: ClassVar[str] = "fixp:SbeMessageHeaderComposite"
-    class_name: ClassVar[str] = "SbeMessageHeaderComposite"
-    class_model_uri: ClassVar[URIRef] = FIXP.SbeMessageHeaderComposite
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpNegotiate"]
+    class_class_curie: ClassVar[str] = "fixp:FixpNegotiate"
+    class_name: ClassVar[str] = "FixpNegotiate"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpNegotiate
 
-    block_length: Optional[int] = None
-    template_id: Optional[int] = None
-    schema_id: Optional[int] = None
-    schema_version: Optional[int] = None
-
-    def __post_init__(self, *_: str, **kwargs: Any):
-        if self.block_length is not None and not isinstance(self.block_length, int):
-            self.block_length = int(self.block_length)
-
-        if self.template_id is not None and not isinstance(self.template_id, int):
-            self.template_id = int(self.template_id)
-
-        if self.schema_id is not None and not isinstance(self.schema_id, int):
-            self.schema_id = int(self.schema_id)
-
-        if self.schema_version is not None and not isinstance(self.schema_version, int):
-            self.schema_version = int(self.schema_version)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass(repr=False)
-class Negotiate(FixpSessionMessage):
-    """
-    FIXP session message 'Negotiate'.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = FIXP["Negotiate"]
-    class_class_curie: ClassVar[str] = "fixp:Negotiate"
-    class_name: ClassVar[str] = "Negotiate"
-    class_model_uri: ClassVar[URIRef] = FIXP.Negotiate
-
-    session_id: Union[str, FIXString] = None
-    timestamp: Union[int, FIXInt] = None
-    client_flow: Union[str, "ClientFlowFieldEnum"] = None
-    credentials: Optional[Union[str, FIXData]] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_time: Union[int, FixpNanotime] = None
+    client_flow: Union[str, "FixpFlowType"] = None
+    credentials: Optional[Union[str, FixpObject]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
-        if self._is_empty(self.timestamp):
-            self.MissingRequiredField("timestamp")
-        if not isinstance(self.timestamp, FIXInt):
-            self.timestamp = FIXInt(self.timestamp)
+        if self._is_empty(self.request_time):
+            self.MissingRequiredField("request_time")
+        if not isinstance(self.request_time, FixpNanotime):
+            self.request_time = FixpNanotime(self.request_time)
 
         if self._is_empty(self.client_flow):
             self.MissingRequiredField("client_flow")
-        if not isinstance(self.client_flow, ClientFlowFieldEnum):
-            self.client_flow = ClientFlowFieldEnum(self.client_flow)
+        if not isinstance(self.client_flow, FixpFlowType):
+            self.client_flow = FixpFlowType(self.client_flow)
 
-        if self.credentials is not None and not isinstance(self.credentials, FIXData):
-            self.credentials = FIXData(self.credentials)
+        if self.credentials is not None and not isinstance(self.credentials, FixpObject):
+            self.credentials = FixpObject(self.credentials)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class NegotiationResponse(FixpSessionMessage):
+class FixpNegotiationResponse(FixpMessage):
     """
-    FIXP session message 'NegotiationResponse'.
+    A server's acceptance of a new session, stating the flow type it will send back.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["NegotiationResponse"]
-    class_class_curie: ClassVar[str] = "fixp:NegotiationResponse"
-    class_name: ClassVar[str] = "NegotiationResponse"
-    class_model_uri: ClassVar[URIRef] = FIXP.NegotiationResponse
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpNegotiationResponse"]
+    class_class_curie: ClassVar[str] = "fixp:FixpNegotiationResponse"
+    class_name: ClassVar[str] = "FixpNegotiationResponse"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpNegotiationResponse
 
-    session_id: Union[str, FIXString] = None
-    request_timestamp: Union[int, FIXInt] = None
-    server_flow: Union[str, "ClientFlowCodeSet"] = None
-    credentials: Optional[Union[str, FIXData]] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_timestamp: Union[int, FixpNanotime] = None
+    server_flow: Union[str, "FixpFlowType"] = None
+    credentials: Optional[Union[str, FixpObject]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         if self._is_empty(self.request_timestamp):
             self.MissingRequiredField("request_timestamp")
-        if not isinstance(self.request_timestamp, FIXInt):
-            self.request_timestamp = FIXInt(self.request_timestamp)
+        if not isinstance(self.request_timestamp, FixpNanotime):
+            self.request_timestamp = FixpNanotime(self.request_timestamp)
 
         if self._is_empty(self.server_flow):
             self.MissingRequiredField("server_flow")
-        if not isinstance(self.server_flow, ClientFlowCodeSet):
-            self.server_flow = ClientFlowCodeSet(self.server_flow)
+        if not isinstance(self.server_flow, FixpFlowType):
+            self.server_flow = FixpFlowType(self.server_flow)
 
-        if self.credentials is not None and not isinstance(self.credentials, FIXData):
-            self.credentials = FIXData(self.credentials)
+        if self.credentials is not None and not isinstance(self.credentials, FixpObject):
+            self.credentials = FixpObject(self.credentials)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class NegotiationReject(FixpSessionMessage):
+class FixpNegotiationReject(FixpMessage):
     """
-    FIXP session message 'NegotiationReject'.
+    A server's refusal to create a session. The server sends nothing more and closes the transport.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["NegotiationReject"]
-    class_class_curie: ClassVar[str] = "fixp:NegotiationReject"
-    class_name: ClassVar[str] = "NegotiationReject"
-    class_model_uri: ClassVar[URIRef] = FIXP.NegotiationReject
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpNegotiationReject"]
+    class_class_curie: ClassVar[str] = "fixp:FixpNegotiationReject"
+    class_name: ClassVar[str] = "FixpNegotiationReject"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpNegotiationReject
 
-    session_id: Union[str, FIXString] = None
-    request_timestamp: Union[int, FIXInt] = None
-    negotiation_reject_code: Union[str, "NegotiationRejectCodeFieldEnum"] = None
-    reason: Optional[Union[str, FIXString]] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_timestamp: Union[int, FixpNanotime] = None
+    negotiation_reject_code: Union[str, "FixpNegotiationRejectCode"] = None
+    reason_text: Optional[Union[str, FixpString]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         if self._is_empty(self.request_timestamp):
             self.MissingRequiredField("request_timestamp")
-        if not isinstance(self.request_timestamp, FIXInt):
-            self.request_timestamp = FIXInt(self.request_timestamp)
+        if not isinstance(self.request_timestamp, FixpNanotime):
+            self.request_timestamp = FixpNanotime(self.request_timestamp)
 
         if self._is_empty(self.negotiation_reject_code):
             self.MissingRequiredField("negotiation_reject_code")
-        if not isinstance(self.negotiation_reject_code, NegotiationRejectCodeFieldEnum):
-            self.negotiation_reject_code = NegotiationRejectCodeFieldEnum(self.negotiation_reject_code)
+        if not isinstance(self.negotiation_reject_code, FixpNegotiationRejectCode):
+            self.negotiation_reject_code = FixpNegotiationRejectCode(self.negotiation_reject_code)
 
-        if self.reason is not None and not isinstance(self.reason, FIXString):
-            self.reason = FIXString(self.reason)
+        if self.reason_text is not None and not isinstance(self.reason_text, FixpString):
+            self.reason_text = FixpString(self.reason_text)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class Topic(FixpSessionMessage):
+class FixpTopic(FixpMessage):
     """
-    FIXP session message 'Topic'.
+    A multicast publisher's notice that starts a flow and ties the session's short-lived identifier to a lasting
+    subject. It is repeated so that late listeners can join.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["Topic"]
-    class_class_curie: ClassVar[str] = "fixp:Topic"
-    class_name: ClassVar[str] = "Topic"
-    class_model_uri: ClassVar[URIRef] = FIXP.Topic
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpTopic"]
+    class_class_curie: ClassVar[str] = "fixp:FixpTopic"
+    class_name: ClassVar[str] = "FixpTopic"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpTopic
 
-    session_id: Union[str, FIXString] = None
-    flow: Union[str, "FlowFieldEnum"] = None
-    keepalive_interval: Union[int, FIXInt] = None
-    classification: Union[str, FIXData] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    flow: Union[str, "FixpMulticastFlowType"] = None
+    topic_classification: Union[str, FixpObject] = None
+    keepalive_interval: Optional[Union[int, FixpDeltaMillisecs]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         if self._is_empty(self.flow):
             self.MissingRequiredField("flow")
-        if not isinstance(self.flow, FlowFieldEnum):
-            self.flow = FlowFieldEnum(self.flow)
+        if not isinstance(self.flow, FixpMulticastFlowType):
+            self.flow = FixpMulticastFlowType(self.flow)
 
-        if self._is_empty(self.keepalive_interval):
-            self.MissingRequiredField("keepalive_interval")
-        if not isinstance(self.keepalive_interval, FIXInt):
-            self.keepalive_interval = FIXInt(self.keepalive_interval)
+        if self._is_empty(self.topic_classification):
+            self.MissingRequiredField("topic_classification")
+        if not isinstance(self.topic_classification, FixpObject):
+            self.topic_classification = FixpObject(self.topic_classification)
 
-        if self._is_empty(self.classification):
-            self.MissingRequiredField("classification")
-        if not isinstance(self.classification, FIXData):
-            self.classification = FIXData(self.classification)
+        if self.keepalive_interval is not None and not isinstance(self.keepalive_interval, FixpDeltaMillisecs):
+            self.keepalive_interval = FixpDeltaMillisecs(self.keepalive_interval)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class Establish(FixpSessionMessage):
+class FixpEstablish(FixpMessage):
     """
-    FIXP session message 'Establish'.
+    A client's request to tie a negotiated session to the very transport this message arrives on. After a
+    disconnection it is sent again to re-bind.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["Establish"]
-    class_class_curie: ClassVar[str] = "fixp:Establish"
-    class_name: ClassVar[str] = "Establish"
-    class_model_uri: ClassVar[URIRef] = FIXP.Establish
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpEstablish"]
+    class_class_curie: ClassVar[str] = "fixp:FixpEstablish"
+    class_name: ClassVar[str] = "FixpEstablish"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpEstablish
 
-    session_id: Union[str, FIXString] = None
-    timestamp: Union[int, FIXInt] = None
-    keepalive_interval: Union[int, FIXInt] = None
-    next_seq_no: Optional[Union[int, FIXInt]] = None
-    credentials: Optional[Union[str, FIXData]] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_time: Union[int, FixpNanotime] = None
+    keepalive_interval: Union[int, FixpDeltaMillisecs] = None
+    next_seq_no: Optional[Union[int, FixpU64]] = None
+    credentials: Optional[Union[str, FixpObject]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
-        if self._is_empty(self.timestamp):
-            self.MissingRequiredField("timestamp")
-        if not isinstance(self.timestamp, FIXInt):
-            self.timestamp = FIXInt(self.timestamp)
+        if self._is_empty(self.request_time):
+            self.MissingRequiredField("request_time")
+        if not isinstance(self.request_time, FixpNanotime):
+            self.request_time = FixpNanotime(self.request_time)
 
         if self._is_empty(self.keepalive_interval):
             self.MissingRequiredField("keepalive_interval")
-        if not isinstance(self.keepalive_interval, FIXInt):
-            self.keepalive_interval = FIXInt(self.keepalive_interval)
+        if not isinstance(self.keepalive_interval, FixpDeltaMillisecs):
+            self.keepalive_interval = FixpDeltaMillisecs(self.keepalive_interval)
 
-        if self.next_seq_no is not None and not isinstance(self.next_seq_no, FIXInt):
-            self.next_seq_no = FIXInt(self.next_seq_no)
+        if self.next_seq_no is not None and not isinstance(self.next_seq_no, FixpU64):
+            self.next_seq_no = FixpU64(self.next_seq_no)
 
-        if self.credentials is not None and not isinstance(self.credentials, FIXData):
-            self.credentials = FIXData(self.credentials)
+        if self.credentials is not None and not isinstance(self.credentials, FixpObject):
+            self.credentials = FixpObject(self.credentials)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class EstablishmentAck(FixpSessionMessage):
+class FixpEstablishmentAck(FixpMessage):
     """
-    FIXP session message 'EstablishmentAck'.
+    A server's acceptance of the binding. From here, application messages may flow.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["EstablishmentAck"]
-    class_class_curie: ClassVar[str] = "fixp:EstablishmentAck"
-    class_name: ClassVar[str] = "EstablishmentAck"
-    class_model_uri: ClassVar[URIRef] = FIXP.EstablishmentAck
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpEstablishmentAck"]
+    class_class_curie: ClassVar[str] = "fixp:FixpEstablishmentAck"
+    class_name: ClassVar[str] = "FixpEstablishmentAck"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpEstablishmentAck
 
-    session_id: Union[str, FIXString] = None
-    request_timestamp: Union[int, FIXInt] = None
-    keepalive_interval: Union[int, FIXInt] = None
-    next_seq_no: Optional[Union[int, FIXInt]] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_timestamp: Union[int, FixpNanotime] = None
+    keepalive_interval: Union[int, FixpDeltaMillisecs] = None
+    next_seq_no: Optional[Union[int, FixpU64]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         if self._is_empty(self.request_timestamp):
             self.MissingRequiredField("request_timestamp")
-        if not isinstance(self.request_timestamp, FIXInt):
-            self.request_timestamp = FIXInt(self.request_timestamp)
+        if not isinstance(self.request_timestamp, FixpNanotime):
+            self.request_timestamp = FixpNanotime(self.request_timestamp)
 
         if self._is_empty(self.keepalive_interval):
             self.MissingRequiredField("keepalive_interval")
-        if not isinstance(self.keepalive_interval, FIXInt):
-            self.keepalive_interval = FIXInt(self.keepalive_interval)
+        if not isinstance(self.keepalive_interval, FixpDeltaMillisecs):
+            self.keepalive_interval = FixpDeltaMillisecs(self.keepalive_interval)
 
-        if self.next_seq_no is not None and not isinstance(self.next_seq_no, FIXInt):
-            self.next_seq_no = FIXInt(self.next_seq_no)
+        if self.next_seq_no is not None and not isinstance(self.next_seq_no, FixpU64):
+            self.next_seq_no = FixpU64(self.next_seq_no)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class EstablishmentReject(FixpSessionMessage):
+class FixpEstablishmentReject(FixpMessage):
     """
-    FIXP session message 'EstablishmentReject'.
+    A server's refusal of the binding.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["EstablishmentReject"]
-    class_class_curie: ClassVar[str] = "fixp:EstablishmentReject"
-    class_name: ClassVar[str] = "EstablishmentReject"
-    class_model_uri: ClassVar[URIRef] = FIXP.EstablishmentReject
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpEstablishmentReject"]
+    class_class_curie: ClassVar[str] = "fixp:FixpEstablishmentReject"
+    class_name: ClassVar[str] = "FixpEstablishmentReject"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpEstablishmentReject
 
-    session_id: Union[str, FIXString] = None
-    request_timestamp: Union[int, FIXInt] = None
-    establishment_reject_code: Union[str, "EstablishmentRejectCodeFieldEnum"] = None
-    reason: Optional[Union[str, FIXString]] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_timestamp: Union[int, FixpNanotime] = None
+    establishment_reject_code: Union[str, "FixpEstablishmentRejectCode"] = None
+    reason_text: Optional[Union[str, FixpString]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         if self._is_empty(self.request_timestamp):
             self.MissingRequiredField("request_timestamp")
-        if not isinstance(self.request_timestamp, FIXInt):
-            self.request_timestamp = FIXInt(self.request_timestamp)
+        if not isinstance(self.request_timestamp, FixpNanotime):
+            self.request_timestamp = FixpNanotime(self.request_timestamp)
 
         if self._is_empty(self.establishment_reject_code):
             self.MissingRequiredField("establishment_reject_code")
-        if not isinstance(self.establishment_reject_code, EstablishmentRejectCodeFieldEnum):
-            self.establishment_reject_code = EstablishmentRejectCodeFieldEnum(self.establishment_reject_code)
+        if not isinstance(self.establishment_reject_code, FixpEstablishmentRejectCode):
+            self.establishment_reject_code = FixpEstablishmentRejectCode(self.establishment_reject_code)
 
-        if self.reason is not None and not isinstance(self.reason, FIXString):
-            self.reason = FIXString(self.reason)
+        if self.reason_text is not None and not isinstance(self.reason_text, FixpString):
+            self.reason_text = FixpString(self.reason_text)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class Sequence(FixpSessionMessage):
+class FixpSequence(FixpMessage):
     """
-    FIXP session message 'Sequence'.
+    Starts the numbering of a sequenced flow, so that the application messages after it are numbered by counting up
+    from the value it carries. Sent when idle, it is also the heartbeat.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["Sequence"]
-    class_class_curie: ClassVar[str] = "fixp:Sequence"
-    class_name: ClassVar[str] = "Sequence"
-    class_model_uri: ClassVar[URIRef] = FIXP.Sequence
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpSequence"]
+    class_class_curie: ClassVar[str] = "fixp:FixpSequence"
+    class_name: ClassVar[str] = "FixpSequence"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpSequence
 
-    next_seq_no: Union[int, FIXInt] = None
+    message_kind: str = None
+    next_seq_no: Union[int, FixpU64] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.next_seq_no):
             self.MissingRequiredField("next_seq_no")
-        if not isinstance(self.next_seq_no, FIXInt):
-            self.next_seq_no = FIXInt(self.next_seq_no)
+        if not isinstance(self.next_seq_no, FixpU64):
+            self.next_seq_no = FixpU64(self.next_seq_no)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class Context(FixpSessionMessage):
+class FixpContext(FixpMessage):
     """
-    FIXP session message 'Context'.
+    On a transport that several sessions share, names the session the following messages belong to and, when the flow
+    is sequenced, where its numbering continues.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["Context"]
-    class_class_curie: ClassVar[str] = "fixp:Context"
-    class_name: ClassVar[str] = "Context"
-    class_model_uri: ClassVar[URIRef] = FIXP.Context
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpContext"]
+    class_class_curie: ClassVar[str] = "fixp:FixpContext"
+    class_name: ClassVar[str] = "FixpContext"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpContext
 
-    session_id: Union[str, FIXString] = None
-    next_seq_no: Union[int, FIXInt] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    next_seq_no: Optional[Union[int, FixpU64]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
-        if self._is_empty(self.next_seq_no):
-            self.MissingRequiredField("next_seq_no")
-        if not isinstance(self.next_seq_no, FIXInt):
-            self.next_seq_no = FIXInt(self.next_seq_no)
+        if self.next_seq_no is not None and not isinstance(self.next_seq_no, FixpU64):
+            self.next_seq_no = FixpU64(self.next_seq_no)
 
         super().__post_init__(**kwargs)
-
-
-class UnsequencedHeartbeat(FixpSessionMessage):
-    """
-    FIXP session message 'UnsequencedHeartbeat'.
-    """
-    _inherited_slots: ClassVar[list[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = FIXP["UnsequencedHeartbeat"]
-    class_class_curie: ClassVar[str] = "fixp:UnsequencedHeartbeat"
-    class_name: ClassVar[str] = "UnsequencedHeartbeat"
-    class_model_uri: ClassVar[URIRef] = FIXP.UnsequencedHeartbeat
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class RetransmitRequest(FixpSessionMessage):
+class FixpUnsequencedHeartbeat(FixpMessage):
     """
-    FIXP session message 'RetransmitRequest'.
+    Shows the peer that the session and transport are alive when the sender's flow is unsequenced or empty. It has no
+    fields.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["RetransmitRequest"]
-    class_class_curie: ClassVar[str] = "fixp:RetransmitRequest"
-    class_name: ClassVar[str] = "RetransmitRequest"
-    class_model_uri: ClassVar[URIRef] = FIXP.RetransmitRequest
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpUnsequencedHeartbeat"]
+    class_class_curie: ClassVar[str] = "fixp:FixpUnsequencedHeartbeat"
+    class_name: ClassVar[str] = "FixpUnsequencedHeartbeat"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpUnsequencedHeartbeat
 
-    session_id: Union[str, FIXString] = None
-    timestamp: Union[int, FIXInt] = None
-    from_seq_no: Union[int, FIXInt] = None
-    count: Union[int, FIXInt] = None
+    message_kind: str = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+
+        super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
+
+
+@dataclass(repr=False)
+class FixpRetransmitRequest(FixpMessage):
+    """
+    Asks the peer to resend some messages of its recoverable flow. A party has at most one such request open at a time.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpRetransmitRequest"]
+    class_class_curie: ClassVar[str] = "fixp:FixpRetransmitRequest"
+    class_name: ClassVar[str] = "FixpRetransmitRequest"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpRetransmitRequest
+
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_time: Union[int, FixpNanotime] = None
+    from_seq_no: Union[int, FixpU64] = None
+    message_count: Union[int, FixpU32] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
-        if self._is_empty(self.timestamp):
-            self.MissingRequiredField("timestamp")
-        if not isinstance(self.timestamp, FIXInt):
-            self.timestamp = FIXInt(self.timestamp)
+        if self._is_empty(self.request_time):
+            self.MissingRequiredField("request_time")
+        if not isinstance(self.request_time, FixpNanotime):
+            self.request_time = FixpNanotime(self.request_time)
 
         if self._is_empty(self.from_seq_no):
             self.MissingRequiredField("from_seq_no")
-        if not isinstance(self.from_seq_no, FIXInt):
-            self.from_seq_no = FIXInt(self.from_seq_no)
+        if not isinstance(self.from_seq_no, FixpU64):
+            self.from_seq_no = FixpU64(self.from_seq_no)
 
-        if self._is_empty(self.count):
-            self.MissingRequiredField("count")
-        if not isinstance(self.count, FIXInt):
-            self.count = FIXInt(self.count)
+        if self._is_empty(self.message_count):
+            self.MissingRequiredField("message_count")
+        if not isinstance(self.message_count, FixpU32):
+            self.message_count = FixpU32(self.message_count)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class Retransmission(FixpSessionMessage):
+class FixpRetransmission(FixpMessage):
     """
-    FIXP session message 'Retransmission'.
+    Introduces a batch of resent messages, which are numbered by counting from the number it gives. A request may be
+    answered in several batches.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["Retransmission"]
-    class_class_curie: ClassVar[str] = "fixp:Retransmission"
-    class_name: ClassVar[str] = "Retransmission"
-    class_model_uri: ClassVar[URIRef] = FIXP.Retransmission
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpRetransmission"]
+    class_class_curie: ClassVar[str] = "fixp:FixpRetransmission"
+    class_name: ClassVar[str] = "FixpRetransmission"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpRetransmission
 
-    session_id: Union[str, FIXString] = None
-    request_timestamp: Union[int, FIXInt] = None
-    next_seq_no: Union[int, FIXInt] = None
-    count: Union[int, FIXInt] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_timestamp: Union[int, FixpNanotime] = None
+    next_seq_no: Union[int, FixpU64] = None
+    message_count: Union[int, FixpU32] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         if self._is_empty(self.request_timestamp):
             self.MissingRequiredField("request_timestamp")
-        if not isinstance(self.request_timestamp, FIXInt):
-            self.request_timestamp = FIXInt(self.request_timestamp)
+        if not isinstance(self.request_timestamp, FixpNanotime):
+            self.request_timestamp = FixpNanotime(self.request_timestamp)
 
         if self._is_empty(self.next_seq_no):
             self.MissingRequiredField("next_seq_no")
-        if not isinstance(self.next_seq_no, FIXInt):
-            self.next_seq_no = FIXInt(self.next_seq_no)
+        if not isinstance(self.next_seq_no, FixpU64):
+            self.next_seq_no = FixpU64(self.next_seq_no)
 
-        if self._is_empty(self.count):
-            self.MissingRequiredField("count")
-        if not isinstance(self.count, FIXInt):
-            self.count = FIXInt(self.count)
+        if self._is_empty(self.message_count):
+            self.MissingRequiredField("message_count")
+        if not isinstance(self.message_count, FixpU32):
+            self.message_count = FixpU32(self.message_count)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class RestransmitReject(FixpSessionMessage):
+class FixpRetransmitReject(FixpMessage):
     """
-    FIXP session message 'RestransmitReject'.
+    Refuses a RetransmitRequest, with a code saying why.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["RestransmitReject"]
-    class_class_curie: ClassVar[str] = "fixp:RestransmitReject"
-    class_name: ClassVar[str] = "RestransmitReject"
-    class_model_uri: ClassVar[URIRef] = FIXP.RestransmitReject
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpRetransmitReject"]
+    class_class_curie: ClassVar[str] = "fixp:FixpRetransmitReject"
+    class_name: ClassVar[str] = "FixpRetransmitReject"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpRetransmitReject
 
-    session_id: Union[str, FIXString] = None
-    request_timestamp: Union[int, FIXInt] = None
-    retransmit_reject_code: Union[str, "RetransmitRejectCodeFieldEnum"] = None
-    reason: Optional[Union[str, FIXString]] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    request_timestamp: Union[int, FixpNanotime] = None
+    retransmit_reject_code: Union[str, "FixpRetransmitRejectCode"] = None
+    reason_text: Optional[Union[str, FixpString]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         if self._is_empty(self.request_timestamp):
             self.MissingRequiredField("request_timestamp")
-        if not isinstance(self.request_timestamp, FIXInt):
-            self.request_timestamp = FIXInt(self.request_timestamp)
+        if not isinstance(self.request_timestamp, FixpNanotime):
+            self.request_timestamp = FixpNanotime(self.request_timestamp)
 
         if self._is_empty(self.retransmit_reject_code):
             self.MissingRequiredField("retransmit_reject_code")
-        if not isinstance(self.retransmit_reject_code, RetransmitRejectCodeFieldEnum):
-            self.retransmit_reject_code = RetransmitRejectCodeFieldEnum(self.retransmit_reject_code)
+        if not isinstance(self.retransmit_reject_code, FixpRetransmitRejectCode):
+            self.retransmit_reject_code = FixpRetransmitRejectCode(self.retransmit_reject_code)
 
-        if self.reason is not None and not isinstance(self.reason, FIXString):
-            self.reason = FIXString(self.reason)
+        if self.reason_text is not None and not isinstance(self.reason_text, FixpString):
+            self.reason_text = FixpString(self.reason_text)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class Terminate(FixpSessionMessage):
+class FixpTerminate(FixpMessage):
     """
-    FIXP session message 'Terminate'.
+    Releases the session from its transport without ending the session, which can be bound again later. The peer
+    answers with a Terminate, and after its own Terminate a party sends nothing more.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["Terminate"]
-    class_class_curie: ClassVar[str] = "fixp:Terminate"
-    class_name: ClassVar[str] = "Terminate"
-    class_model_uri: ClassVar[URIRef] = FIXP.Terminate
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpTerminate"]
+    class_class_curie: ClassVar[str] = "fixp:FixpTerminate"
+    class_name: ClassVar[str] = "FixpTerminate"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpTerminate
 
-    session_id: Union[str, FIXString] = None
-    termination_code: Union[str, "TerminationCodeFieldEnum"] = None
-    reason: Optional[Union[str, FIXString]] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    termination_code: Union[str, "FixpTerminationCode"] = None
+    reason_text: Optional[Union[str, FixpString]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         if self._is_empty(self.termination_code):
             self.MissingRequiredField("termination_code")
-        if not isinstance(self.termination_code, TerminationCodeFieldEnum):
-            self.termination_code = TerminationCodeFieldEnum(self.termination_code)
+        if not isinstance(self.termination_code, FixpTerminationCode):
+            self.termination_code = FixpTerminationCode(self.termination_code)
 
-        if self.reason is not None and not isinstance(self.reason, FIXString):
-            self.reason = FIXString(self.reason)
+        if self.reason_text is not None and not isinstance(self.reason_text, FixpString):
+            self.reason_text = FixpString(self.reason_text)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class FinishedSending(FixpSessionMessage):
+class FixpFinishedSending(FixpMessage):
     """
-    FIXP session message 'FinishedSending'.
+    Says that the sender's flow has carried its last application message, which begins finalization. It is repeated as
+    the heartbeat until the answer comes.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["FinishedSending"]
-    class_class_curie: ClassVar[str] = "fixp:FinishedSending"
-    class_name: ClassVar[str] = "FinishedSending"
-    class_model_uri: ClassVar[URIRef] = FIXP.FinishedSending
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpFinishedSending"]
+    class_class_curie: ClassVar[str] = "fixp:FixpFinishedSending"
+    class_name: ClassVar[str] = "FixpFinishedSending"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpFinishedSending
 
-    session_id: Union[str, FIXString] = None
-    last_seq_no: Union[int, FIXInt] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
+    last_seq_no: Optional[Union[int, FixpU64]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
-        if self._is_empty(self.last_seq_no):
-            self.MissingRequiredField("last_seq_no")
-        if not isinstance(self.last_seq_no, FIXInt):
-            self.last_seq_no = FIXInt(self.last_seq_no)
+        if self.last_seq_no is not None and not isinstance(self.last_seq_no, FixpU64):
+            self.last_seq_no = FixpU64(self.last_seq_no)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class FinishedReceiving(FixpSessionMessage):
+class FixpFinishedReceiving(FixpMessage):
     """
-    FIXP session message 'FinishedReceiving'.
+    Answers FinishedSending once the last message of the peer's flow has been processed. After it the session is
+    finalized and its identifier is spent.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["FinishedReceiving"]
-    class_class_curie: ClassVar[str] = "fixp:FinishedReceiving"
-    class_name: ClassVar[str] = "FinishedReceiving"
-    class_model_uri: ClassVar[URIRef] = FIXP.FinishedReceiving
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpFinishedReceiving"]
+    class_class_curie: ClassVar[str] = "fixp:FixpFinishedReceiving"
+    class_name: ClassVar[str] = "FixpFinishedReceiving"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpFinishedReceiving
 
-    session_id: Union[str, FIXString] = None
+    message_kind: str = None
+    session_id: Union[str, FixpUuid] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.session_id):
             self.MissingRequiredField("session_id")
-        if not isinstance(self.session_id, FIXString):
-            self.session_id = FIXString(self.session_id)
+        if not isinstance(self.session_id, FixpUuid):
+            self.session_id = FixpUuid(self.session_id)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class Applied(FixpSessionMessage):
+class FixpApplied(FixpMessage):
     """
-    FIXP session message 'Applied'.
+    An optional application message telling the party that sends an idempotent flow which of its operations took
+    effect, where no business message already says so.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["Applied"]
-    class_class_curie: ClassVar[str] = "fixp:Applied"
-    class_name: ClassVar[str] = "Applied"
-    class_model_uri: ClassVar[URIRef] = FIXP.Applied
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpApplied"]
+    class_class_curie: ClassVar[str] = "fixp:FixpApplied"
+    class_name: ClassVar[str] = "FixpApplied"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpApplied
 
-    from_seq_no: Union[int, FIXInt] = None
-    count: Union[int, FIXInt] = None
+    message_kind: str = None
+    from_seq_no: Union[int, FixpU64] = None
+    message_count: Union[int, FixpU32] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.from_seq_no):
             self.MissingRequiredField("from_seq_no")
-        if not isinstance(self.from_seq_no, FIXInt):
-            self.from_seq_no = FIXInt(self.from_seq_no)
+        if not isinstance(self.from_seq_no, FixpU64):
+            self.from_seq_no = FixpU64(self.from_seq_no)
 
-        if self._is_empty(self.count):
-            self.MissingRequiredField("count")
-        if not isinstance(self.count, FIXInt):
-            self.count = FIXInt(self.count)
+        if self._is_empty(self.message_count):
+            self.MissingRequiredField("message_count")
+        if not isinstance(self.message_count, FixpU32):
+            self.message_count = FixpU32(self.message_count)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class NotApplied(FixpSessionMessage):
+class FixpNotApplied(FixpMessage):
     """
-    FIXP session message 'NotApplied'.
+    An application message telling the party that sends an idempotent flow about a gap: a run of operations that did
+    not take effect. That party's application decides what to do.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["NotApplied"]
-    class_class_curie: ClassVar[str] = "fixp:NotApplied"
-    class_name: ClassVar[str] = "NotApplied"
-    class_model_uri: ClassVar[URIRef] = FIXP.NotApplied
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpNotApplied"]
+    class_class_curie: ClassVar[str] = "fixp:FixpNotApplied"
+    class_name: ClassVar[str] = "FixpNotApplied"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpNotApplied
 
-    from_seq_no: Union[int, FIXInt] = None
-    count: Union[int, FIXInt] = None
+    message_kind: str = None
+    from_seq_no: Union[int, FixpU64] = None
+    message_count: Union[int, FixpU32] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.from_seq_no):
             self.MissingRequiredField("from_seq_no")
-        if not isinstance(self.from_seq_no, FIXInt):
-            self.from_seq_no = FIXInt(self.from_seq_no)
+        if not isinstance(self.from_seq_no, FixpU64):
+            self.from_seq_no = FixpU64(self.from_seq_no)
 
-        if self._is_empty(self.count):
-            self.MissingRequiredField("count")
-        if not isinstance(self.count, FIXInt):
-            self.count = FIXInt(self.count)
+        if self._is_empty(self.message_count):
+            self.MissingRequiredField("message_count")
+        if not isinstance(self.message_count, FixpU32):
+            self.message_count = FixpU32(self.message_count)
 
         super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
 
 
 @dataclass(repr=False)
-class MessageTemplate(FixpSessionMessage):
+class FixpMessageTemplate(FixpMessage):
     """
-    FIXP session message 'MessageTemplate'.
+    Hands the peer a template or schema it needs to read messages in an encoding that templates drive. There is no
+    fixed moment for sending it.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FIXP["MessageTemplate"]
-    class_class_curie: ClassVar[str] = "fixp:MessageTemplate"
-    class_name: ClassVar[str] = "MessageTemplate"
-    class_model_uri: ClassVar[URIRef] = FIXP.MessageTemplate
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpMessageTemplate"]
+    class_class_curie: ClassVar[str] = "fixp:FixpMessageTemplate"
+    class_name: ClassVar[str] = "FixpMessageTemplate"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpMessageTemplate
 
-    flow: Union[str, "FlowFieldEnum"] = None
-    effective_time: Union[int, FIXInt] = None
-    template: Union[str, FIXData] = None
-    version: Optional[Union[str, FIXData]] = None
+    message_kind: str = None
+    sofh_encoding_type: Union[int, FixpU32] = None
+    template: Union[str, FixpObject] = None
+    effective_time: Optional[Union[int, FixpNanotime]] = None
+    template_version: Optional[Union[str, FixpObject]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.flow):
-            self.MissingRequiredField("flow")
-        if not isinstance(self.flow, FlowFieldEnum):
-            self.flow = FlowFieldEnum(self.flow)
-
-        if self._is_empty(self.effective_time):
-            self.MissingRequiredField("effective_time")
-        if not isinstance(self.effective_time, FIXInt):
-            self.effective_time = FIXInt(self.effective_time)
+        if self._is_empty(self.sofh_encoding_type):
+            self.MissingRequiredField("sofh_encoding_type")
+        if not isinstance(self.sofh_encoding_type, FixpU32):
+            self.sofh_encoding_type = FixpU32(self.sofh_encoding_type)
 
         if self._is_empty(self.template):
             self.MissingRequiredField("template")
-        if not isinstance(self.template, FIXData):
-            self.template = FIXData(self.template)
+        if not isinstance(self.template, FixpObject):
+            self.template = FixpObject(self.template)
 
-        if self.version is not None and not isinstance(self.version, FIXData):
-            self.version = FIXData(self.version)
+        if self.effective_time is not None and not isinstance(self.effective_time, FixpNanotime):
+            self.effective_time = FixpNanotime(self.effective_time)
 
-        if self.template is not None and not isinstance(self.template, FIXData):
-            self.template = FIXData(self.template)
+        if self.template_version is not None and not isinstance(self.template_version, FixpObject):
+            self.template_version = FixpObject(self.template_version)
+
+        super().__post_init__(**kwargs)
+        if self._is_empty(self.message_kind):
+            self.MissingRequiredField("message_kind")
+        self.message_kind = str(self.class_name)
+
+
+@dataclass(repr=False)
+class FixpExchange(YAMLRoot):
+    """
+    The messages of one session in the order they were sent, as a test case, a worked example or a captured log.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpExchange"]
+    class_class_curie: ClassVar[str] = "fixp:FixpExchange"
+    class_name: ClassVar[str] = "FixpExchange"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpExchange
+
+    id: Union[str, FixpExchangeId] = None
+    session_kind: Union[str, "FixpSessionKind"] = None
+    exchange_steps: Union[Union[dict, "FixpExchangeStep"], list[Union[dict, "FixpExchangeStep"]]] = None
+    description: Optional[str] = None
+    multiplexed: Optional[Union[bool, Bool]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.id):
+            self.MissingRequiredField("id")
+        if not isinstance(self.id, FixpExchangeId):
+            self.id = FixpExchangeId(self.id)
+
+        if self._is_empty(self.session_kind):
+            self.MissingRequiredField("session_kind")
+        if not isinstance(self.session_kind, FixpSessionKind):
+            self.session_kind = FixpSessionKind(self.session_kind)
+
+        if self._is_empty(self.exchange_steps):
+            self.MissingRequiredField("exchange_steps")
+        self._normalize_inlined_as_list(slot_name="exchange_steps", slot_type=FixpExchangeStep, key_name="sent_by", keyed=False)
+
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.multiplexed is not None and not isinstance(self.multiplexed, Bool):
+            self.multiplexed = Bool(self.multiplexed)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class FixpExchangeStep(YAMLRoot):
+    """
+    One step: a FIXP message, or a run of application messages whose content FIXP does not define, and the side that
+    sent it.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpExchangeStep"]
+    class_class_curie: ClassVar[str] = "fixp:FixpExchangeStep"
+    class_name: ClassVar[str] = "FixpExchangeStep"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpExchangeStep
+
+    sent_by: Union[str, "FixpParty"] = None
+    fixp_message: Optional[Union[dict, FixpMessage]] = None
+    application_message_count: Optional[Union[int, FixpU32]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.sent_by):
+            self.MissingRequiredField("sent_by")
+        if not isinstance(self.sent_by, FixpParty):
+            self.sent_by = FixpParty(self.sent_by)
+
+        if self.fixp_message is not None and not isinstance(self.fixp_message, FixpMessage):
+            self.fixp_message = FixpMessage(**as_dict(self.fixp_message))
+
+        if self.application_message_count is not None and not isinstance(self.application_message_count, FixpU32):
+            self.application_message_count = FixpU32(self.application_message_count)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class FixpRulesOfEngagement(YAMLRoot):
+    """
+    What two counterparties agree on for one FIXP service, layer by layer, for the client and for the server.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpRulesOfEngagement"]
+    class_class_curie: ClassVar[str] = "fixp:FixpRulesOfEngagement"
+    class_name: ClassVar[str] = "FixpRulesOfEngagement"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpRulesOfEngagement
+
+    id: Union[str, FixpRulesOfEngagementId] = None
+    client_stack: Union[dict, "FixpStackProfile"] = None
+    server_stack: Union[dict, "FixpStackProfile"] = None
+    description: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.id):
+            self.MissingRequiredField("id")
+        if not isinstance(self.id, FixpRulesOfEngagementId):
+            self.id = FixpRulesOfEngagementId(self.id)
+
+        if self._is_empty(self.client_stack):
+            self.MissingRequiredField("client_stack")
+        if not isinstance(self.client_stack, FixpStackProfile):
+            self.client_stack = FixpStackProfile(**as_dict(self.client_stack))
+
+        if self._is_empty(self.server_stack):
+            self.MissingRequiredField("server_stack")
+        if not isinstance(self.server_stack, FixpStackProfile):
+            self.server_stack = FixpStackProfile(**as_dict(self.server_stack))
+
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class FixpStackProfile(YAMLRoot):
+    """
+    One side's choices at each layer of the stack: application, presentation, session, security and transport.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FIXP["FixpStackProfile"]
+    class_class_curie: ClassVar[str] = "fixp:FixpStackProfile"
+    class_name: ClassVar[str] = "FixpStackProfile"
+    class_model_uri: ClassVar[URIRef] = FIXP.FixpStackProfile
+
+    application_recovery: Optional[Union[bool, Bool]] = None
+    application_fix_version: Optional[str] = None
+    service_pack: Optional[str] = None
+    extension_packs: Optional[Union[str, list[str]]] = empty_list()
+    message_encoding: Optional[str] = None
+    encoding_version: Optional[str] = None
+    message_schemas: Optional[Union[str, list[str]]] = empty_list()
+    framing: Optional[str] = None
+    supported_flow_types: Optional[Union[Union[str, "FixpFlowType"], list[Union[str, "FixpFlowType"]]]] = empty_list()
+    shortest_keepalive_interval: Optional[Union[int, FixpDeltaMillisecs]] = None
+    longest_keepalive_interval: Optional[Union[int, FixpDeltaMillisecs]] = None
+    retransmission_limit: Optional[Union[int, FixpU32]] = None
+    tls_version: Optional[str] = None
+    authentication_methods: Optional[Union[str, list[str]]] = empty_list()
+    credentials_format: Optional[str] = None
+    cipher_suites: Optional[Union[str, list[str]]] = empty_list()
+    transports: Optional[Union[str, list[str]]] = empty_list()
+    network_protocols: Optional[Union[str, list[str]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.application_recovery is not None and not isinstance(self.application_recovery, Bool):
+            self.application_recovery = Bool(self.application_recovery)
+
+        if self.application_fix_version is not None and not isinstance(self.application_fix_version, str):
+            self.application_fix_version = str(self.application_fix_version)
+
+        if self.service_pack is not None and not isinstance(self.service_pack, str):
+            self.service_pack = str(self.service_pack)
+
+        if not isinstance(self.extension_packs, list):
+            self.extension_packs = [self.extension_packs] if self.extension_packs is not None else []
+        self.extension_packs = [v if isinstance(v, str) else str(v) for v in self.extension_packs]
+
+        if self.message_encoding is not None and not isinstance(self.message_encoding, str):
+            self.message_encoding = str(self.message_encoding)
+
+        if self.encoding_version is not None and not isinstance(self.encoding_version, str):
+            self.encoding_version = str(self.encoding_version)
+
+        if not isinstance(self.message_schemas, list):
+            self.message_schemas = [self.message_schemas] if self.message_schemas is not None else []
+        self.message_schemas = [v if isinstance(v, str) else str(v) for v in self.message_schemas]
+
+        if self.framing is not None and not isinstance(self.framing, str):
+            self.framing = str(self.framing)
+
+        if not isinstance(self.supported_flow_types, list):
+            self.supported_flow_types = [self.supported_flow_types] if self.supported_flow_types is not None else []
+        self.supported_flow_types = [v if isinstance(v, FixpFlowType) else FixpFlowType(v) for v in self.supported_flow_types]
+
+        if self.shortest_keepalive_interval is not None and not isinstance(self.shortest_keepalive_interval, FixpDeltaMillisecs):
+            self.shortest_keepalive_interval = FixpDeltaMillisecs(self.shortest_keepalive_interval)
+
+        if self.longest_keepalive_interval is not None and not isinstance(self.longest_keepalive_interval, FixpDeltaMillisecs):
+            self.longest_keepalive_interval = FixpDeltaMillisecs(self.longest_keepalive_interval)
+
+        if self.retransmission_limit is not None and not isinstance(self.retransmission_limit, FixpU32):
+            self.retransmission_limit = FixpU32(self.retransmission_limit)
+
+        if self.tls_version is not None and not isinstance(self.tls_version, str):
+            self.tls_version = str(self.tls_version)
+
+        if not isinstance(self.authentication_methods, list):
+            self.authentication_methods = [self.authentication_methods] if self.authentication_methods is not None else []
+        self.authentication_methods = [v if isinstance(v, str) else str(v) for v in self.authentication_methods]
+
+        if self.credentials_format is not None and not isinstance(self.credentials_format, str):
+            self.credentials_format = str(self.credentials_format)
+
+        if not isinstance(self.cipher_suites, list):
+            self.cipher_suites = [self.cipher_suites] if self.cipher_suites is not None else []
+        self.cipher_suites = [v if isinstance(v, str) else str(v) for v in self.cipher_suites]
+
+        if not isinstance(self.transports, list):
+            self.transports = [self.transports] if self.transports is not None else []
+        self.transports = [v if isinstance(v, str) else str(v) for v in self.transports]
+
+        if not isinstance(self.network_protocols, list):
+            self.network_protocols = [self.network_protocols] if self.network_protocols is not None else []
+        self.network_protocols = [v if isinstance(v, str) else str(v) for v in self.network_protocols]
 
         super().__post_init__(**kwargs)
 
 
 # Enumerations
-class ClientFlowCodeSet(EnumDefinitionImpl):
+class FixpFlowType(EnumDefinitionImpl):
     """
-    FIX Orchestra codeSet 'ClientFlowCodeSet' (id=3, type=int).
+    How surely a flow is delivered. A flow is what one side of a session sends the other, leaving out session messages.
     """
-    RECOVERABLE = PermissibleValue(
-        text="RECOVERABLE",
-        title="Recoverable")
-    IDEMPOTENT = PermissibleValue(
-        text="IDEMPOTENT",
-        title="Idempotent")
-    UNSEQUENCED = PermissibleValue(
-        text="UNSEQUENCED",
-        title="Unsequenced")
-    NONE = PermissibleValue(
-        text="NONE",
-        title="None")
+    Recoverable = PermissibleValue(
+        text="Recoverable",
+        description="Every message arrives once and in order; the receiver asks for any gap to be sent again.")
+    Idempotent = PermissibleValue(
+        text="Idempotent",
+        description="""No message takes effect twice; the sender hears of a gap and its application decides what to resend.""")
+    Unsequenced = PermissibleValue(
+        text="Unsequenced",
+        description="Messages carry no sequence number, and none is ever resent.")
 
     _defn = EnumDefinition(
-        name="ClientFlowCodeSet",
-        description="FIX Orchestra codeSet 'ClientFlowCodeSet' (id=3, type=int).",
+        name="FixpFlowType",
+        description="""How surely a flow is delivered. A flow is what one side of a session sends the other, leaving out session messages.""",
     )
 
-class NegotiationRejectCodeCodeSet(EnumDefinitionImpl):
+    @classmethod
+    def _addvals(cls):
+        setattr(cls, "None",
+            PermissibleValue(
+                text="None",
+                description="This side sends no application messages at all."))
+
+class FixpMulticastFlowType(EnumDefinitionImpl):
     """
-    FIX Orchestra codeSet 'NegotiationRejectCodeCodeSet' (id=7, type=int).
+    The delivery guarantee a multicast topic announces for its flow.
     """
-    CREDENTIALS = PermissibleValue(
-        text="CREDENTIALS",
-        title="Credentials")
-    FLOW_TYPE_NOT_SUPPORTED = PermissibleValue(
-        text="FLOW_TYPE_NOT_SUPPORTED",
-        title="FlowTypeNotSupported")
-    DUPLICATE_ID = PermissibleValue(
-        text="DUPLICATE_ID",
-        title="DuplicateId")
-    UNSPECIFIED = PermissibleValue(
-        text="UNSPECIFIED",
-        title="Unspecified")
+    Recoverable = PermissibleValue(
+        text="Recoverable",
+        description="Sequenced; a listener gets a lost message back over a separate unicast session.")
+    Idempotent = PermissibleValue(
+        text="Idempotent",
+        description="Sequenced, so a listener can see a loss, but nothing lost comes back.")
 
     _defn = EnumDefinition(
-        name="NegotiationRejectCodeCodeSet",
-        description="FIX Orchestra codeSet 'NegotiationRejectCodeCodeSet' (id=7, type=int).",
+        name="FixpMulticastFlowType",
+        description="The delivery guarantee a multicast topic announces for its flow.",
     )
 
-class EstablishmentRejectCodeCodeSet(EnumDefinitionImpl):
+class FixpNegotiationRejectCode(EnumDefinitionImpl):
     """
-    FIX Orchestra codeSet 'EstablishmentRejectCodeCodeSet' (id=12, type=int).
+    Why a server refused to create a session.
     """
-    UNNEGOTIATED = PermissibleValue(
-        text="UNNEGOTIATED",
-        title="Unnegotiated")
-    ALREADY_ESTABLISHED = PermissibleValue(
-        text="ALREADY_ESTABLISHED",
-        title="AlreadyEstablished")
-    SESSION_BLOCKED = PermissibleValue(
-        text="SESSION_BLOCKED",
-        title="SessionBlocked")
-    KEEPALIVE_INTERVAL = PermissibleValue(
-        text="KEEPALIVE_INTERVAL",
-        title="KeepaliveInterval")
-    CREDENTIALS = PermissibleValue(
-        text="CREDENTIALS",
-        title="Credentials")
-    UNSPECIFIED = PermissibleValue(
-        text="UNSPECIFIED",
-        title="Unspecified")
+    Credentials = PermissibleValue(
+        text="Credentials",
+        description="The server could not identify the client, or would not let it in.")
+    FlowTypeNotSupported = PermissibleValue(
+        text="FlowTypeNotSupported",
+        description="The server does not offer the flow type the client asked to send.")
+    DuplicateId = PermissibleValue(
+        text="DuplicateId",
+        description="The client chose a session identifier that is not new.")
+    Unspecified = PermissibleValue(
+        text="Unspecified",
+        description="Some reason the other values do not name.")
 
     _defn = EnumDefinition(
-        name="EstablishmentRejectCodeCodeSet",
-        description="FIX Orchestra codeSet 'EstablishmentRejectCodeCodeSet' (id=12, type=int).",
+        name="FixpNegotiationRejectCode",
+        description="Why a server refused to create a session.",
     )
 
-class RetransmitRejectCodeCodeSet(EnumDefinitionImpl):
+class FixpEstablishmentRejectCode(EnumDefinitionImpl):
     """
-    FIX Orchestra codeSet 'RetransmitRejectCodeCodeSet' (id=15, type=int).
+    Why a server would not bind the session to this transport.
     """
-    OUT_OF_RANGE = PermissibleValue(
-        text="OUT_OF_RANGE",
-        title="OutOfRange")
-    INVALID_SESSION = PermissibleValue(
-        text="INVALID_SESSION",
-        title="InvalidSession")
-    REQUEST_LIMIT_EXCEEDED = PermissibleValue(
-        text="REQUEST_LIMIT_EXCEEDED",
-        title="RequestLimitExceeded")
+    Unnegotiated = PermissibleValue(
+        text="Unnegotiated",
+        description="The session was never negotiated, or it has been finalized and needs a new negotiation.")
+    AlreadyEstablished = PermissibleValue(
+        text="AlreadyEstablished",
+        description="The server had already acknowledged a binding, so this request repeats it.")
+    SessionBlocked = PermissibleValue(
+        text="SessionBlocked",
+        description="The client may not use this session.")
+    KeepaliveInterval = PermissibleValue(
+        text="KeepaliveInterval",
+        description="The client's keep-alive interval is outside what the server accepts.")
+    Credentials = PermissibleValue(
+        text="Credentials",
+        description="The server could not identify the client, or would not let it in.")
+    Unspecified = PermissibleValue(
+        text="Unspecified",
+        description="Some reason the other values do not name.")
 
     _defn = EnumDefinition(
-        name="RetransmitRejectCodeCodeSet",
-        description="FIX Orchestra codeSet 'RetransmitRejectCodeCodeSet' (id=15, type=int).",
+        name="FixpEstablishmentRejectCode",
+        description="Why a server would not bind the session to this transport.",
     )
 
-class TerminationCodeCodeSet(EnumDefinitionImpl):
+class FixpRetransmitRejectCode(EnumDefinitionImpl):
     """
-    FIX Orchestra codeSet 'TerminationCodeCodeSet' (id=16, type=int).
+    Why a party will not resend the messages its peer asked for.
     """
-    FINISHED = PermissibleValue(
-        text="FINISHED",
-        title="Finished")
-    UNSPECIFIED_ERROR = PermissibleValue(
-        text="UNSPECIFIED_ERROR",
-        title="UnspecifiedError")
-    RE_REQUEST_OUT_OF_BOUNDS = PermissibleValue(
-        text="RE_REQUEST_OUT_OF_BOUNDS",
-        title="ReRequestOutOfBounds")
-    RE_REQUEST_IN_PROGRESS = PermissibleValue(
-        text="RE_REQUEST_IN_PROGRESS",
-        title="ReRequestInProgress")
+    OutOfRange = PermissibleValue(
+        text="OutOfRange",
+        description="The range asked for runs past the sequence numbers sent so far.")
+    InvalidSession = PermissibleValue(
+        text="InvalidSession",
+        description="The session is unknown, or the one asking may not read it.")
+    RequestLimitExceeded = PermissibleValue(
+        text="RequestLimitExceeded",
+        description="The request asks for more messages than the sender resends at once.")
 
     _defn = EnumDefinition(
-        name="TerminationCodeCodeSet",
-        description="FIX Orchestra codeSet 'TerminationCodeCodeSet' (id=16, type=int).",
+        name="FixpRetransmitRejectCode",
+        description="Why a party will not resend the messages its peer asked for.",
     )
 
-class FlowCodeSet(EnumDefinitionImpl):
+class FixpTerminationCode(EnumDefinitionImpl):
     """
-    FIX Orchestra codeSet 'FlowCodeSet' (id=18, type=int).
+    Why a party releases a session from its transport.
     """
-    RECOVERABLE = PermissibleValue(
-        text="RECOVERABLE",
-        title="Recoverable")
-    IDEMPOTENT = PermissibleValue(
-        text="IDEMPOTENT",
-        title="Idempotent")
+    Finished = PermissibleValue(
+        text="Finished",
+        description="An ordinary release, with no error.")
+    UnspecifiedError = PermissibleValue(
+        text="UnspecifiedError",
+        description="An error that the other values do not name.")
+    ReRequestOutOfBounds = PermissibleValue(
+        text="ReRequestOutOfBounds",
+        description="The peer asked again for messages outside the range sent.")
+    ReRequestInProgress = PermissibleValue(
+        text="ReRequestInProgress",
+        description="The peer asked again for messages while its earlier request was unanswered.")
 
     _defn = EnumDefinition(
-        name="FlowCodeSet",
-        description="FIX Orchestra codeSet 'FlowCodeSet' (id=18, type=int).",
+        name="FixpTerminationCode",
+        description="Why a party releases a session from its transport.",
     )
 
-class SbeFlowType(EnumDefinitionImpl):
+class FixpSessionKind(EnumDefinitionImpl):
     """
-    SBE enum 'FlowType' (encodingType=uint8).
+    The two forms of FIXP session.
     """
-    RECOVERABLE = PermissibleValue(
-        text="RECOVERABLE",
-        title="Recoverable",
-        description="Guarantees exactly-once message delivery")
-    IDEMPOTENT = PermissibleValue(
-        text="IDEMPOTENT",
-        title="Idempotent",
-        description="Guarantees at-most-once delivery")
-    UNSEQUENCED = PermissibleValue(
-        text="UNSEQUENCED",
-        title="Unsequenced",
-        description="Best effort delivery")
-    NONE = PermissibleValue(
-        text="NONE",
-        title="None",
-        description="No application messages should be sent in one direction of a session")
+    point_to_point = PermissibleValue(
+        text="point_to_point",
+        description="""A client and a server over a transport that carries messages both ways, with one flow each way.""")
+    multicast = PermissibleValue(
+        text="multicast",
+        description="One publisher, one flow and many listeners, on a transport that only carries messages outward.")
 
     _defn = EnumDefinition(
-        name="SbeFlowType",
-        description="SBE enum 'FlowType' (encodingType=uint8).",
+        name="FixpSessionKind",
+        description="The two forms of FIXP session.",
     )
 
-class SbeNegotiationRejectCode(EnumDefinitionImpl):
+class FixpParty(EnumDefinitionImpl):
     """
-    SBE enum 'NegotiationRejectCode' (encodingType=uint8).
+    The side that sends a step.
     """
-    CREDENTIALS = PermissibleValue(
-        text="CREDENTIALS",
-        title="Credentials",
-        description="""Failed authentication because identity is not recognized, or the user is not authorized to use a particular service""")
-    FLOW_TYPE_NOT_SUPPORTED = PermissibleValue(
-        text="FLOW_TYPE_NOT_SUPPORTED",
-        title="FlowTypeNotSupported",
-        description="Server does not support requested client flow type")
-    DUPLICATE_ID = PermissibleValue(
-        text="DUPLICATE_ID",
-        title="DuplicateId",
-        description="Session ID is non-unique")
-    UNSPECIFIED = PermissibleValue(
-        text="UNSPECIFIED",
-        title="Unspecified")
+    client = PermissibleValue(
+        text="client",
+        description="The party that opens a session with a server.")
+    server = PermissibleValue(
+        text="server",
+        description="The party that accepts the client's session.")
+    publisher = PermissibleValue(
+        text="publisher",
+        description="The only party that sends in a multicast.")
 
     _defn = EnumDefinition(
-        name="SbeNegotiationRejectCode",
-        description="SBE enum 'NegotiationRejectCode' (encodingType=uint8).",
-    )
-
-class SbeEstablishmentRejectCode(EnumDefinitionImpl):
-    """
-    SBE enum 'EstablishmentRejectCode' (encodingType=uint8).
-    """
-    UNNEGOTIATED = PermissibleValue(
-        text="UNNEGOTIATED",
-        title="Unnegotiated",
-        description="""Establish request was not preceded by a Negotiation or session was finalized, requiring renegotiation""")
-    ALREADY_ESTABLISHED = PermissibleValue(
-        text="ALREADY_ESTABLISHED",
-        title="AlreadyEstablished",
-        description="EstablishmentAck was already sent; Establish was redundant")
-    SESSION_BLOCKED = PermissibleValue(
-        text="SESSION_BLOCKED",
-        title="SessionBlocked",
-        description="User is not authorized")
-    KEEPALIVE_INTERVAL = PermissibleValue(
-        text="KEEPALIVE_INTERVAL",
-        title="KeepaliveInterval",
-        description="Value is out of accepted range")
-    CREDENTIALS = PermissibleValue(
-        text="CREDENTIALS",
-        title="Credentials",
-        description="""Failed authentication because identity is not recognized, or the user is not authorized to use a particular service""")
-    UNSPECIFIED = PermissibleValue(
-        text="UNSPECIFIED",
-        title="Unspecified")
-
-    _defn = EnumDefinition(
-        name="SbeEstablishmentRejectCode",
-        description="SBE enum 'EstablishmentRejectCode' (encodingType=uint8).",
-    )
-
-class SbeRetransmitRejectCode(EnumDefinitionImpl):
-    """
-    SBE enum 'RetransmitRejectCode' (encodingType=uint8).
-    """
-    OUT_OF_RANGE = PermissibleValue(
-        text="OUT_OF_RANGE",
-        title="OutOfRange",
-        description="NextSeqNo + Count is beyond the range of sequence numbers")
-    INVALID_SESSION = PermissibleValue(
-        text="INVALID_SESSION",
-        title="InvalidSession",
-        description="The specified SessionId is unknown or is not authorized for the requester to access")
-    REQUEST_LIMIT_EXCEEDED = PermissibleValue(
-        text="REQUEST_LIMIT_EXCEEDED",
-        title="RequestLimitExceeded",
-        description="The message Count exceeds a local rule for maximum retransmission size")
-
-    _defn = EnumDefinition(
-        name="SbeRetransmitRejectCode",
-        description="SBE enum 'RetransmitRejectCode' (encodingType=uint8).",
-    )
-
-class SbeTerminationCode(EnumDefinitionImpl):
-    """
-    SBE enum 'TerminationCode' (encodingType=uint8).
-    """
-    FINISHED = PermissibleValue(
-        text="FINISHED",
-        title="Finished")
-    UNSPECIFIED_ERROR = PermissibleValue(
-        text="UNSPECIFIED_ERROR",
-        title="UnspecifiedError")
-    RE_REQUEST_OUT_OF_BOUNDS = PermissibleValue(
-        text="RE_REQUEST_OUT_OF_BOUNDS",
-        title="ReRequestOutOfBounds")
-    RE_REQUEST_IN_PROGRESS = PermissibleValue(
-        text="RE_REQUEST_IN_PROGRESS",
-        title="ReRequestInProgress")
-
-    _defn = EnumDefinition(
-        name="SbeTerminationCode",
-        description="SBE enum 'TerminationCode' (encodingType=uint8).",
-    )
-
-class ClientFlowFieldEnum(EnumDefinitionImpl):
-    """
-    Inline FIX field enumeration for field 'ClientFlow' (id=3).
-    """
-    RECOVERABLE = PermissibleValue(
-        text="RECOVERABLE",
-        title="Recoverable")
-    IDEMPOTENT = PermissibleValue(
-        text="IDEMPOTENT",
-        title="Idempotent")
-    UNSEQUENCED = PermissibleValue(
-        text="UNSEQUENCED",
-        title="Unsequenced")
-    NONE = PermissibleValue(
-        text="NONE",
-        title="None")
-
-    _defn = EnumDefinition(
-        name="ClientFlowFieldEnum",
-        description="Inline FIX field enumeration for field 'ClientFlow' (id=3).",
-    )
-
-class NegotiationRejectCodeFieldEnum(EnumDefinitionImpl):
-    """
-    Inline FIX field enumeration for field 'NegotiationRejectCode' (id=7).
-    """
-    CREDENTIALS = PermissibleValue(
-        text="CREDENTIALS",
-        title="Credentials")
-    FLOW_TYPE_NOT_SUPPORTED = PermissibleValue(
-        text="FLOW_TYPE_NOT_SUPPORTED",
-        title="FlowTypeNotSupported")
-    DUPLICATE_ID = PermissibleValue(
-        text="DUPLICATE_ID",
-        title="DuplicateId")
-    UNSPECIFIED = PermissibleValue(
-        text="UNSPECIFIED",
-        title="Unspecified")
-
-    _defn = EnumDefinition(
-        name="NegotiationRejectCodeFieldEnum",
-        description="Inline FIX field enumeration for field 'NegotiationRejectCode' (id=7).",
-    )
-
-class EstablishmentRejectCodeFieldEnum(EnumDefinitionImpl):
-    """
-    Inline FIX field enumeration for field 'EstablishmentRejectCode' (id=12).
-    """
-    UNNEGOTIATED = PermissibleValue(
-        text="UNNEGOTIATED",
-        title="Unnegotiated")
-    ALREADY_ESTABLISHED = PermissibleValue(
-        text="ALREADY_ESTABLISHED",
-        title="AlreadyEstablished")
-    SESSION_BLOCKED = PermissibleValue(
-        text="SESSION_BLOCKED",
-        title="SessionBlocked")
-    KEEPALIVE_INTERVAL = PermissibleValue(
-        text="KEEPALIVE_INTERVAL",
-        title="KeepaliveInterval")
-    CREDENTIALS = PermissibleValue(
-        text="CREDENTIALS",
-        title="Credentials")
-    UNSPECIFIED = PermissibleValue(
-        text="UNSPECIFIED",
-        title="Unspecified")
-
-    _defn = EnumDefinition(
-        name="EstablishmentRejectCodeFieldEnum",
-        description="Inline FIX field enumeration for field 'EstablishmentRejectCode' (id=12).",
-    )
-
-class RetransmitRejectCodeFieldEnum(EnumDefinitionImpl):
-    """
-    Inline FIX field enumeration for field 'RetransmitRejectCode' (id=15).
-    """
-    OUT_OF_RANGE = PermissibleValue(
-        text="OUT_OF_RANGE",
-        title="OutOfRange")
-    INVALID_SESSION = PermissibleValue(
-        text="INVALID_SESSION",
-        title="InvalidSession")
-    REQUEST_LIMIT_EXCEEDED = PermissibleValue(
-        text="REQUEST_LIMIT_EXCEEDED",
-        title="RequestLimitExceeded")
-
-    _defn = EnumDefinition(
-        name="RetransmitRejectCodeFieldEnum",
-        description="Inline FIX field enumeration for field 'RetransmitRejectCode' (id=15).",
-    )
-
-class TerminationCodeFieldEnum(EnumDefinitionImpl):
-    """
-    Inline FIX field enumeration for field 'TerminationCode' (id=16).
-    """
-    FINISHED = PermissibleValue(
-        text="FINISHED",
-        title="Finished")
-    UNSPECIFIED_ERROR = PermissibleValue(
-        text="UNSPECIFIED_ERROR",
-        title="UnspecifiedError")
-    RE_REQUEST_OUT_OF_BOUNDS = PermissibleValue(
-        text="RE_REQUEST_OUT_OF_BOUNDS",
-        title="ReRequestOutOfBounds")
-    RE_REQUEST_IN_PROGRESS = PermissibleValue(
-        text="RE_REQUEST_IN_PROGRESS",
-        title="ReRequestInProgress")
-
-    _defn = EnumDefinition(
-        name="TerminationCodeFieldEnum",
-        description="Inline FIX field enumeration for field 'TerminationCode' (id=16).",
-    )
-
-class FlowFieldEnum(EnumDefinitionImpl):
-    """
-    Inline FIX field enumeration for field 'Flow' (id=18).
-    """
-    RECOVERABLE = PermissibleValue(
-        text="RECOVERABLE",
-        title="Recoverable")
-    IDEMPOTENT = PermissibleValue(
-        text="IDEMPOTENT",
-        title="Idempotent")
-
-    _defn = EnumDefinition(
-        name="FlowFieldEnum",
-        description="Inline FIX field enumeration for field 'Flow' (id=18).",
+        name="FixpParty",
+        description="The side that sends a step.",
     )
 
 # Slots
 class slots:
     pass
 
-slots.session_id = Slot(uri=FIXP.session_id, name="session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.session_id, domain=None, range=Optional[Union[str, FIXString]])
+slots.id = Slot(uri=FIXP.id, name="id", curie=FIXP.curie('id'),
+                   model_uri=FIXP.id, domain=None, range=URIRef)
 
-slots.timestamp = Slot(uri=FIXP.timestamp, name="timestamp", curie=FIXP.curie('timestamp'),
-                   model_uri=FIXP.timestamp, domain=None, range=Optional[Union[int, FIXInt]])
+slots.description = Slot(uri=SCHEMA.description, name="description", curie=SCHEMA.curie('description'),
+                   model_uri=FIXP.description, domain=None, range=Optional[str])
+
+slots.message_kind = Slot(uri=FIXP.message_kind, name="message_kind", curie=FIXP.curie('message_kind'),
+                   model_uri=FIXP.message_kind, domain=None, range=str)
+
+slots.session_id = Slot(uri=FIXP.session_id, name="session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.session_id, domain=None, range=Optional[Union[str, FixpUuid]])
+
+slots.request_time = Slot(uri=FIXP.request_time, name="request_time", curie=FIXP.curie('request_time'),
+                   model_uri=FIXP.request_time, domain=None, range=Optional[Union[int, FixpNanotime]])
 
 slots.client_flow = Slot(uri=FIXP.client_flow, name="client_flow", curie=FIXP.curie('client_flow'),
-                   model_uri=FIXP.client_flow, domain=None, range=Optional[Union[str, "ClientFlowFieldEnum"]])
+                   model_uri=FIXP.client_flow, domain=None, range=Optional[Union[str, "FixpFlowType"]])
 
 slots.credentials = Slot(uri=FIXP.credentials, name="credentials", curie=FIXP.curie('credentials'),
-                   model_uri=FIXP.credentials, domain=None, range=Optional[Union[str, FIXData]])
+                   model_uri=FIXP.credentials, domain=None, range=Optional[Union[str, FixpObject]])
 
 slots.request_timestamp = Slot(uri=FIXP.request_timestamp, name="request_timestamp", curie=FIXP.curie('request_timestamp'),
-                   model_uri=FIXP.request_timestamp, domain=None, range=Optional[Union[int, FIXInt]])
+                   model_uri=FIXP.request_timestamp, domain=None, range=Optional[Union[int, FixpNanotime]])
 
 slots.server_flow = Slot(uri=FIXP.server_flow, name="server_flow", curie=FIXP.curie('server_flow'),
-                   model_uri=FIXP.server_flow, domain=None, range=Optional[Union[str, "ClientFlowCodeSet"]])
+                   model_uri=FIXP.server_flow, domain=None, range=Optional[Union[str, "FixpFlowType"]])
 
 slots.negotiation_reject_code = Slot(uri=FIXP.negotiation_reject_code, name="negotiation_reject_code", curie=FIXP.curie('negotiation_reject_code'),
-                   model_uri=FIXP.negotiation_reject_code, domain=None, range=Optional[Union[str, "NegotiationRejectCodeFieldEnum"]])
+                   model_uri=FIXP.negotiation_reject_code, domain=None, range=Optional[Union[str, "FixpNegotiationRejectCode"]])
 
-slots.reason = Slot(uri=FIXP.reason, name="reason", curie=FIXP.curie('reason'),
-                   model_uri=FIXP.reason, domain=None, range=Optional[Union[str, FIXString]])
+slots.reason_text = Slot(uri=FIXP.reason_text, name="reason_text", curie=FIXP.curie('reason_text'),
+                   model_uri=FIXP.reason_text, domain=None, range=Optional[Union[str, FixpString]])
 
 slots.keepalive_interval = Slot(uri=FIXP.keepalive_interval, name="keepalive_interval", curie=FIXP.curie('keepalive_interval'),
-                   model_uri=FIXP.keepalive_interval, domain=None, range=Optional[Union[int, FIXInt]])
+                   model_uri=FIXP.keepalive_interval, domain=None, range=Optional[Union[int, FixpDeltaMillisecs]])
 
-slots.classification = Slot(uri=FIXP.classification, name="classification", curie=FIXP.curie('classification'),
-                   model_uri=FIXP.classification, domain=None, range=Optional[Union[str, FIXData]])
+slots.topic_classification = Slot(uri=FIXP.topic_classification, name="topic_classification", curie=FIXP.curie('topic_classification'),
+                   model_uri=FIXP.topic_classification, domain=None, range=Optional[Union[str, FixpObject]])
 
 slots.next_seq_no = Slot(uri=FIXP.next_seq_no, name="next_seq_no", curie=FIXP.curie('next_seq_no'),
-                   model_uri=FIXP.next_seq_no, domain=None, range=Optional[Union[int, FIXInt]])
+                   model_uri=FIXP.next_seq_no, domain=None, range=Optional[Union[int, FixpU64]])
 
 slots.establishment_reject_code = Slot(uri=FIXP.establishment_reject_code, name="establishment_reject_code", curie=FIXP.curie('establishment_reject_code'),
-                   model_uri=FIXP.establishment_reject_code, domain=None, range=Optional[Union[str, "EstablishmentRejectCodeFieldEnum"]])
+                   model_uri=FIXP.establishment_reject_code, domain=None, range=Optional[Union[str, "FixpEstablishmentRejectCode"]])
 
 slots.from_seq_no = Slot(uri=FIXP.from_seq_no, name="from_seq_no", curie=FIXP.curie('from_seq_no'),
-                   model_uri=FIXP.from_seq_no, domain=None, range=Optional[Union[int, FIXInt]])
+                   model_uri=FIXP.from_seq_no, domain=None, range=Optional[Union[int, FixpU64]])
 
-slots.count = Slot(uri=FIXP.count, name="count", curie=FIXP.curie('count'),
-                   model_uri=FIXP.count, domain=None, range=Optional[Union[int, FIXInt]])
+slots.message_count = Slot(uri=FIXP.message_count, name="message_count", curie=FIXP.curie('message_count'),
+                   model_uri=FIXP.message_count, domain=None, range=Optional[Union[int, FixpU32]])
 
 slots.retransmit_reject_code = Slot(uri=FIXP.retransmit_reject_code, name="retransmit_reject_code", curie=FIXP.curie('retransmit_reject_code'),
-                   model_uri=FIXP.retransmit_reject_code, domain=None, range=Optional[Union[str, "RetransmitRejectCodeFieldEnum"]])
+                   model_uri=FIXP.retransmit_reject_code, domain=None, range=Optional[Union[str, "FixpRetransmitRejectCode"]])
 
 slots.termination_code = Slot(uri=FIXP.termination_code, name="termination_code", curie=FIXP.curie('termination_code'),
-                   model_uri=FIXP.termination_code, domain=None, range=Optional[Union[str, "TerminationCodeFieldEnum"]])
+                   model_uri=FIXP.termination_code, domain=None, range=Optional[Union[str, "FixpTerminationCode"]])
 
 slots.last_seq_no = Slot(uri=FIXP.last_seq_no, name="last_seq_no", curie=FIXP.curie('last_seq_no'),
-                   model_uri=FIXP.last_seq_no, domain=None, range=Optional[Union[int, FIXInt]])
+                   model_uri=FIXP.last_seq_no, domain=None, range=Optional[Union[int, FixpU64]])
 
 slots.flow = Slot(uri=FIXP.flow, name="flow", curie=FIXP.curie('flow'),
-                   model_uri=FIXP.flow, domain=None, range=Optional[Union[str, "FlowFieldEnum"]])
+                   model_uri=FIXP.flow, domain=None, range=Optional[Union[str, "FixpMulticastFlowType"]])
+
+slots.sofh_encoding_type = Slot(uri=FIXP.sofh_encoding_type, name="sofh_encoding_type", curie=FIXP.curie('sofh_encoding_type'),
+                   model_uri=FIXP.sofh_encoding_type, domain=None, range=Optional[Union[int, FixpU32]])
 
 slots.effective_time = Slot(uri=FIXP.effective_time, name="effective_time", curie=FIXP.curie('effective_time'),
-                   model_uri=FIXP.effective_time, domain=None, range=Optional[Union[int, FIXInt]])
+                   model_uri=FIXP.effective_time, domain=None, range=Optional[Union[int, FixpNanotime]])
 
-slots.version = Slot(uri=FIXP.version, name="version", curie=FIXP.curie('version'),
-                   model_uri=FIXP.version, domain=None, range=Optional[Union[str, FIXData]])
+slots.template_version = Slot(uri=FIXP.template_version, name="template_version", curie=FIXP.curie('template_version'),
+                   model_uri=FIXP.template_version, domain=None, range=Optional[Union[str, FixpObject]])
 
 slots.template = Slot(uri=FIXP.template, name="template", curie=FIXP.curie('template'),
-                   model_uri=FIXP.template, domain=None, range=Optional[Union[str, FIXData]])
+                   model_uri=FIXP.template, domain=None, range=Optional[Union[str, FixpObject]])
 
-slots.fixpSessionExchange__messages = Slot(uri=FIXP.messages, name="fixpSessionExchange__messages", curie=FIXP.curie('messages'),
-                   model_uri=FIXP.fixpSessionExchange__messages, domain=None, range=Optional[Union[Union[dict, FixpSessionMessage], list[Union[dict, FixpSessionMessage]]]])
+slots.fixpExchange__session_kind = Slot(uri=FIXP.session_kind, name="fixpExchange__session_kind", curie=FIXP.curie('session_kind'),
+                   model_uri=FIXP.fixpExchange__session_kind, domain=None, range=Union[str, "FixpSessionKind"])
 
-slots.fixpSessionExchange__title = Slot(uri=DCTERMS.title, name="fixpSessionExchange__title", curie=DCTERMS.curie('title'),
-                   model_uri=FIXP.fixpSessionExchange__title, domain=None, range=Optional[str])
+slots.fixpExchange__multiplexed = Slot(uri=FIXP.multiplexed, name="fixpExchange__multiplexed", curie=FIXP.curie('multiplexed'),
+                   model_uri=FIXP.fixpExchange__multiplexed, domain=None, range=Optional[Union[bool, Bool]])
 
-slots.fixpSessionExchange__creator = Slot(uri=DCTERMS.creator, name="fixpSessionExchange__creator", curie=DCTERMS.curie('creator'),
-                   model_uri=FIXP.fixpSessionExchange__creator, domain=None, range=Optional[str])
+slots.fixpExchange__exchange_steps = Slot(uri=FIXP.exchange_steps, name="fixpExchange__exchange_steps", curie=FIXP.curie('exchange_steps'),
+                   model_uri=FIXP.fixpExchange__exchange_steps, domain=None, range=Union[Union[dict, FixpExchangeStep], list[Union[dict, FixpExchangeStep]]])
 
-slots.fixpSessionExchange__publisher = Slot(uri=DCTERMS.publisher, name="fixpSessionExchange__publisher", curie=DCTERMS.curie('publisher'),
-                   model_uri=FIXP.fixpSessionExchange__publisher, domain=None, range=Optional[str])
+slots.fixpExchangeStep__sent_by = Slot(uri=FIXP.sent_by, name="fixpExchangeStep__sent_by", curie=FIXP.curie('sent_by'),
+                   model_uri=FIXP.fixpExchangeStep__sent_by, domain=None, range=Union[str, "FixpParty"])
 
-slots.fixpSessionExchange__rights = Slot(uri=DCTERMS.rights, name="fixpSessionExchange__rights", curie=DCTERMS.curie('rights'),
-                   model_uri=FIXP.fixpSessionExchange__rights, domain=None, range=Optional[str])
+slots.fixpExchangeStep__fixp_message = Slot(uri=FIXP.fixp_message, name="fixpExchangeStep__fixp_message", curie=FIXP.curie('fixp_message'),
+                   model_uri=FIXP.fixpExchangeStep__fixp_message, domain=None, range=Optional[Union[dict, FixpMessage]])
 
-slots.fixpSessionExchange__date = Slot(uri=DCTERMS.date, name="fixpSessionExchange__date", curie=DCTERMS.curie('date'),
-                   model_uri=FIXP.fixpSessionExchange__date, domain=None, range=Optional[str])
+slots.fixpExchangeStep__application_message_count = Slot(uri=FIXP.application_message_count, name="fixpExchangeStep__application_message_count", curie=FIXP.curie('application_message_count'),
+                   model_uri=FIXP.fixpExchangeStep__application_message_count, domain=None, range=Optional[Union[int, FixpU32]])
 
-slots.sbeObjectComposite__length = Slot(uri=FIXP.length, name="sbeObjectComposite__length", curie=FIXP.curie('length'),
-                   model_uri=FIXP.sbeObjectComposite__length, domain=None, range=Optional[int])
+slots.fixpRulesOfEngagement__client_stack = Slot(uri=FIXP.client_stack, name="fixpRulesOfEngagement__client_stack", curie=FIXP.curie('client_stack'),
+                   model_uri=FIXP.fixpRulesOfEngagement__client_stack, domain=None, range=Union[dict, FixpStackProfile])
 
-slots.sbeObjectComposite__var_data = Slot(uri=FIXP.var_data, name="sbeObjectComposite__var_data", curie=FIXP.curie('var_data'),
-                   model_uri=FIXP.sbeObjectComposite__var_data, domain=None, range=Optional[int])
+slots.fixpRulesOfEngagement__server_stack = Slot(uri=FIXP.server_stack, name="fixpRulesOfEngagement__server_stack", curie=FIXP.curie('server_stack'),
+                   model_uri=FIXP.fixpRulesOfEngagement__server_stack, domain=None, range=Union[dict, FixpStackProfile])
 
-slots.sbeCharacterStringComposite__length = Slot(uri=FIXP.length, name="sbeCharacterStringComposite__length", curie=FIXP.curie('length'),
-                   model_uri=FIXP.sbeCharacterStringComposite__length, domain=None, range=Optional[int])
+slots.fixpStackProfile__application_recovery = Slot(uri=FIXP.application_recovery, name="fixpStackProfile__application_recovery", curie=FIXP.curie('application_recovery'),
+                   model_uri=FIXP.fixpStackProfile__application_recovery, domain=None, range=Optional[Union[bool, Bool]])
 
-slots.sbeCharacterStringComposite__var_data = Slot(uri=FIXP.var_data, name="sbeCharacterStringComposite__var_data", curie=FIXP.curie('var_data'),
-                   model_uri=FIXP.sbeCharacterStringComposite__var_data, domain=None, range=Optional[str])
+slots.fixpStackProfile__application_fix_version = Slot(uri=FIXP.application_fix_version, name="fixpStackProfile__application_fix_version", curie=FIXP.curie('application_fix_version'),
+                   model_uri=FIXP.fixpStackProfile__application_fix_version, domain=None, range=Optional[str])
 
-slots.sbeMessageHeaderComposite__block_length = Slot(uri=FIXP.block_length, name="sbeMessageHeaderComposite__block_length", curie=FIXP.curie('block_length'),
-                   model_uri=FIXP.sbeMessageHeaderComposite__block_length, domain=None, range=Optional[int])
+slots.fixpStackProfile__service_pack = Slot(uri=FIXP.service_pack, name="fixpStackProfile__service_pack", curie=FIXP.curie('service_pack'),
+                   model_uri=FIXP.fixpStackProfile__service_pack, domain=None, range=Optional[str])
 
-slots.sbeMessageHeaderComposite__template_id = Slot(uri=FIXP.template_id, name="sbeMessageHeaderComposite__template_id", curie=FIXP.curie('template_id'),
-                   model_uri=FIXP.sbeMessageHeaderComposite__template_id, domain=None, range=Optional[int])
+slots.fixpStackProfile__extension_packs = Slot(uri=FIXP.extension_packs, name="fixpStackProfile__extension_packs", curie=FIXP.curie('extension_packs'),
+                   model_uri=FIXP.fixpStackProfile__extension_packs, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.sbeMessageHeaderComposite__schema_id = Slot(uri=FIXP.schema_id, name="sbeMessageHeaderComposite__schema_id", curie=FIXP.curie('schema_id'),
-                   model_uri=FIXP.sbeMessageHeaderComposite__schema_id, domain=None, range=Optional[int])
+slots.fixpStackProfile__message_encoding = Slot(uri=FIXP.message_encoding, name="fixpStackProfile__message_encoding", curie=FIXP.curie('message_encoding'),
+                   model_uri=FIXP.fixpStackProfile__message_encoding, domain=None, range=Optional[str])
 
-slots.sbeMessageHeaderComposite__schema_version = Slot(uri=FIXP.schema_version, name="sbeMessageHeaderComposite__schema_version", curie=FIXP.curie('schema_version'),
-                   model_uri=FIXP.sbeMessageHeaderComposite__schema_version, domain=None, range=Optional[int])
+slots.fixpStackProfile__encoding_version = Slot(uri=FIXP.encoding_version, name="fixpStackProfile__encoding_version", curie=FIXP.curie('encoding_version'),
+                   model_uri=FIXP.fixpStackProfile__encoding_version, domain=None, range=Optional[str])
 
-slots.Negotiate_session_id = Slot(uri=FIXP.session_id, name="Negotiate_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.Negotiate_session_id, domain=Negotiate, range=Union[str, FIXString])
+slots.fixpStackProfile__message_schemas = Slot(uri=FIXP.message_schemas, name="fixpStackProfile__message_schemas", curie=FIXP.curie('message_schemas'),
+                   model_uri=FIXP.fixpStackProfile__message_schemas, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.Negotiate_timestamp = Slot(uri=FIXP.timestamp, name="Negotiate_timestamp", curie=FIXP.curie('timestamp'),
-                   model_uri=FIXP.Negotiate_timestamp, domain=Negotiate, range=Union[int, FIXInt])
+slots.fixpStackProfile__framing = Slot(uri=FIXP.framing, name="fixpStackProfile__framing", curie=FIXP.curie('framing'),
+                   model_uri=FIXP.fixpStackProfile__framing, domain=None, range=Optional[str])
 
-slots.Negotiate_client_flow = Slot(uri=FIXP.client_flow, name="Negotiate_client_flow", curie=FIXP.curie('client_flow'),
-                   model_uri=FIXP.Negotiate_client_flow, domain=Negotiate, range=Union[str, "ClientFlowFieldEnum"])
+slots.fixpStackProfile__supported_flow_types = Slot(uri=FIXP.supported_flow_types, name="fixpStackProfile__supported_flow_types", curie=FIXP.curie('supported_flow_types'),
+                   model_uri=FIXP.fixpStackProfile__supported_flow_types, domain=None, range=Optional[Union[Union[str, "FixpFlowType"], list[Union[str, "FixpFlowType"]]]])
 
-slots.Negotiate_credentials = Slot(uri=FIXP.credentials, name="Negotiate_credentials", curie=FIXP.curie('credentials'),
-                   model_uri=FIXP.Negotiate_credentials, domain=Negotiate, range=Optional[Union[str, FIXData]])
+slots.fixpStackProfile__shortest_keepalive_interval = Slot(uri=FIXP.shortest_keepalive_interval, name="fixpStackProfile__shortest_keepalive_interval", curie=FIXP.curie('shortest_keepalive_interval'),
+                   model_uri=FIXP.fixpStackProfile__shortest_keepalive_interval, domain=None, range=Optional[Union[int, FixpDeltaMillisecs]])
 
-slots.NegotiationResponse_session_id = Slot(uri=FIXP.session_id, name="NegotiationResponse_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.NegotiationResponse_session_id, domain=NegotiationResponse, range=Union[str, FIXString])
+slots.fixpStackProfile__longest_keepalive_interval = Slot(uri=FIXP.longest_keepalive_interval, name="fixpStackProfile__longest_keepalive_interval", curie=FIXP.curie('longest_keepalive_interval'),
+                   model_uri=FIXP.fixpStackProfile__longest_keepalive_interval, domain=None, range=Optional[Union[int, FixpDeltaMillisecs]])
 
-slots.NegotiationResponse_request_timestamp = Slot(uri=FIXP.request_timestamp, name="NegotiationResponse_request_timestamp", curie=FIXP.curie('request_timestamp'),
-                   model_uri=FIXP.NegotiationResponse_request_timestamp, domain=NegotiationResponse, range=Union[int, FIXInt])
+slots.fixpStackProfile__retransmission_limit = Slot(uri=FIXP.retransmission_limit, name="fixpStackProfile__retransmission_limit", curie=FIXP.curie('retransmission_limit'),
+                   model_uri=FIXP.fixpStackProfile__retransmission_limit, domain=None, range=Optional[Union[int, FixpU32]])
 
-slots.NegotiationResponse_server_flow = Slot(uri=FIXP.server_flow, name="NegotiationResponse_server_flow", curie=FIXP.curie('server_flow'),
-                   model_uri=FIXP.NegotiationResponse_server_flow, domain=NegotiationResponse, range=Union[str, "ClientFlowCodeSet"])
+slots.fixpStackProfile__tls_version = Slot(uri=FIXP.tls_version, name="fixpStackProfile__tls_version", curie=FIXP.curie('tls_version'),
+                   model_uri=FIXP.fixpStackProfile__tls_version, domain=None, range=Optional[str])
 
-slots.NegotiationResponse_credentials = Slot(uri=FIXP.credentials, name="NegotiationResponse_credentials", curie=FIXP.curie('credentials'),
-                   model_uri=FIXP.NegotiationResponse_credentials, domain=NegotiationResponse, range=Optional[Union[str, FIXData]])
+slots.fixpStackProfile__authentication_methods = Slot(uri=FIXP.authentication_methods, name="fixpStackProfile__authentication_methods", curie=FIXP.curie('authentication_methods'),
+                   model_uri=FIXP.fixpStackProfile__authentication_methods, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.NegotiationReject_session_id = Slot(uri=FIXP.session_id, name="NegotiationReject_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.NegotiationReject_session_id, domain=NegotiationReject, range=Union[str, FIXString])
+slots.fixpStackProfile__credentials_format = Slot(uri=FIXP.credentials_format, name="fixpStackProfile__credentials_format", curie=FIXP.curie('credentials_format'),
+                   model_uri=FIXP.fixpStackProfile__credentials_format, domain=None, range=Optional[str])
 
-slots.NegotiationReject_request_timestamp = Slot(uri=FIXP.request_timestamp, name="NegotiationReject_request_timestamp", curie=FIXP.curie('request_timestamp'),
-                   model_uri=FIXP.NegotiationReject_request_timestamp, domain=NegotiationReject, range=Union[int, FIXInt])
+slots.fixpStackProfile__cipher_suites = Slot(uri=FIXP.cipher_suites, name="fixpStackProfile__cipher_suites", curie=FIXP.curie('cipher_suites'),
+                   model_uri=FIXP.fixpStackProfile__cipher_suites, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.NegotiationReject_negotiation_reject_code = Slot(uri=FIXP.negotiation_reject_code, name="NegotiationReject_negotiation_reject_code", curie=FIXP.curie('negotiation_reject_code'),
-                   model_uri=FIXP.NegotiationReject_negotiation_reject_code, domain=NegotiationReject, range=Union[str, "NegotiationRejectCodeFieldEnum"])
+slots.fixpStackProfile__transports = Slot(uri=FIXP.transports, name="fixpStackProfile__transports", curie=FIXP.curie('transports'),
+                   model_uri=FIXP.fixpStackProfile__transports, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.NegotiationReject_reason = Slot(uri=FIXP.reason, name="NegotiationReject_reason", curie=FIXP.curie('reason'),
-                   model_uri=FIXP.NegotiationReject_reason, domain=NegotiationReject, range=Optional[Union[str, FIXString]])
+slots.fixpStackProfile__network_protocols = Slot(uri=FIXP.network_protocols, name="fixpStackProfile__network_protocols", curie=FIXP.curie('network_protocols'),
+                   model_uri=FIXP.fixpStackProfile__network_protocols, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.Topic_session_id = Slot(uri=FIXP.session_id, name="Topic_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.Topic_session_id, domain=Topic, range=Union[str, FIXString])
+slots.FixpNegotiate_session_id = Slot(uri=FIXP.session_id, name="FixpNegotiate_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpNegotiate_session_id, domain=FixpNegotiate, range=Union[str, FixpUuid])
 
-slots.Topic_flow = Slot(uri=FIXP.flow, name="Topic_flow", curie=FIXP.curie('flow'),
-                   model_uri=FIXP.Topic_flow, domain=Topic, range=Union[str, "FlowFieldEnum"])
+slots.FixpNegotiate_request_time = Slot(uri=FIXP.request_time, name="FixpNegotiate_request_time", curie=FIXP.curie('request_time'),
+                   model_uri=FIXP.FixpNegotiate_request_time, domain=FixpNegotiate, range=Union[int, FixpNanotime])
 
-slots.Topic_keepalive_interval = Slot(uri=FIXP.keepalive_interval, name="Topic_keepalive_interval", curie=FIXP.curie('keepalive_interval'),
-                   model_uri=FIXP.Topic_keepalive_interval, domain=Topic, range=Union[int, FIXInt])
+slots.FixpNegotiate_client_flow = Slot(uri=FIXP.client_flow, name="FixpNegotiate_client_flow", curie=FIXP.curie('client_flow'),
+                   model_uri=FIXP.FixpNegotiate_client_flow, domain=FixpNegotiate, range=Union[str, "FixpFlowType"])
 
-slots.Topic_classification = Slot(uri=FIXP.classification, name="Topic_classification", curie=FIXP.curie('classification'),
-                   model_uri=FIXP.Topic_classification, domain=Topic, range=Union[str, FIXData])
+slots.FixpNegotiate_credentials = Slot(uri=FIXP.credentials, name="FixpNegotiate_credentials", curie=FIXP.curie('credentials'),
+                   model_uri=FIXP.FixpNegotiate_credentials, domain=FixpNegotiate, range=Optional[Union[str, FixpObject]])
 
-slots.Establish_session_id = Slot(uri=FIXP.session_id, name="Establish_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.Establish_session_id, domain=Establish, range=Union[str, FIXString])
+slots.FixpNegotiationResponse_session_id = Slot(uri=FIXP.session_id, name="FixpNegotiationResponse_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpNegotiationResponse_session_id, domain=FixpNegotiationResponse, range=Union[str, FixpUuid])
 
-slots.Establish_timestamp = Slot(uri=FIXP.timestamp, name="Establish_timestamp", curie=FIXP.curie('timestamp'),
-                   model_uri=FIXP.Establish_timestamp, domain=Establish, range=Union[int, FIXInt])
+slots.FixpNegotiationResponse_request_timestamp = Slot(uri=FIXP.request_timestamp, name="FixpNegotiationResponse_request_timestamp", curie=FIXP.curie('request_timestamp'),
+                   model_uri=FIXP.FixpNegotiationResponse_request_timestamp, domain=FixpNegotiationResponse, range=Union[int, FixpNanotime])
 
-slots.Establish_keepalive_interval = Slot(uri=FIXP.keepalive_interval, name="Establish_keepalive_interval", curie=FIXP.curie('keepalive_interval'),
-                   model_uri=FIXP.Establish_keepalive_interval, domain=Establish, range=Union[int, FIXInt])
+slots.FixpNegotiationResponse_server_flow = Slot(uri=FIXP.server_flow, name="FixpNegotiationResponse_server_flow", curie=FIXP.curie('server_flow'),
+                   model_uri=FIXP.FixpNegotiationResponse_server_flow, domain=FixpNegotiationResponse, range=Union[str, "FixpFlowType"])
 
-slots.Establish_credentials = Slot(uri=FIXP.credentials, name="Establish_credentials", curie=FIXP.curie('credentials'),
-                   model_uri=FIXP.Establish_credentials, domain=Establish, range=Optional[Union[str, FIXData]])
+slots.FixpNegotiationResponse_credentials = Slot(uri=FIXP.credentials, name="FixpNegotiationResponse_credentials", curie=FIXP.curie('credentials'),
+                   model_uri=FIXP.FixpNegotiationResponse_credentials, domain=FixpNegotiationResponse, range=Optional[Union[str, FixpObject]])
 
-slots.EstablishmentAck_session_id = Slot(uri=FIXP.session_id, name="EstablishmentAck_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.EstablishmentAck_session_id, domain=EstablishmentAck, range=Union[str, FIXString])
+slots.FixpNegotiationReject_session_id = Slot(uri=FIXP.session_id, name="FixpNegotiationReject_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpNegotiationReject_session_id, domain=FixpNegotiationReject, range=Union[str, FixpUuid])
 
-slots.EstablishmentAck_request_timestamp = Slot(uri=FIXP.request_timestamp, name="EstablishmentAck_request_timestamp", curie=FIXP.curie('request_timestamp'),
-                   model_uri=FIXP.EstablishmentAck_request_timestamp, domain=EstablishmentAck, range=Union[int, FIXInt])
+slots.FixpNegotiationReject_request_timestamp = Slot(uri=FIXP.request_timestamp, name="FixpNegotiationReject_request_timestamp", curie=FIXP.curie('request_timestamp'),
+                   model_uri=FIXP.FixpNegotiationReject_request_timestamp, domain=FixpNegotiationReject, range=Union[int, FixpNanotime])
 
-slots.EstablishmentAck_keepalive_interval = Slot(uri=FIXP.keepalive_interval, name="EstablishmentAck_keepalive_interval", curie=FIXP.curie('keepalive_interval'),
-                   model_uri=FIXP.EstablishmentAck_keepalive_interval, domain=EstablishmentAck, range=Union[int, FIXInt])
+slots.FixpNegotiationReject_negotiation_reject_code = Slot(uri=FIXP.negotiation_reject_code, name="FixpNegotiationReject_negotiation_reject_code", curie=FIXP.curie('negotiation_reject_code'),
+                   model_uri=FIXP.FixpNegotiationReject_negotiation_reject_code, domain=FixpNegotiationReject, range=Union[str, "FixpNegotiationRejectCode"])
 
-slots.EstablishmentReject_session_id = Slot(uri=FIXP.session_id, name="EstablishmentReject_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.EstablishmentReject_session_id, domain=EstablishmentReject, range=Union[str, FIXString])
+slots.FixpTopic_session_id = Slot(uri=FIXP.session_id, name="FixpTopic_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpTopic_session_id, domain=FixpTopic, range=Union[str, FixpUuid])
 
-slots.EstablishmentReject_request_timestamp = Slot(uri=FIXP.request_timestamp, name="EstablishmentReject_request_timestamp", curie=FIXP.curie('request_timestamp'),
-                   model_uri=FIXP.EstablishmentReject_request_timestamp, domain=EstablishmentReject, range=Union[int, FIXInt])
+slots.FixpTopic_flow = Slot(uri=FIXP.flow, name="FixpTopic_flow", curie=FIXP.curie('flow'),
+                   model_uri=FIXP.FixpTopic_flow, domain=FixpTopic, range=Union[str, "FixpMulticastFlowType"])
 
-slots.EstablishmentReject_establishment_reject_code = Slot(uri=FIXP.establishment_reject_code, name="EstablishmentReject_establishment_reject_code", curie=FIXP.curie('establishment_reject_code'),
-                   model_uri=FIXP.EstablishmentReject_establishment_reject_code, domain=EstablishmentReject, range=Union[str, "EstablishmentRejectCodeFieldEnum"])
+slots.FixpTopic_keepalive_interval = Slot(uri=FIXP.keepalive_interval, name="FixpTopic_keepalive_interval", curie=FIXP.curie('keepalive_interval'),
+                   model_uri=FIXP.FixpTopic_keepalive_interval, domain=FixpTopic, range=Optional[Union[int, FixpDeltaMillisecs]])
 
-slots.EstablishmentReject_reason = Slot(uri=FIXP.reason, name="EstablishmentReject_reason", curie=FIXP.curie('reason'),
-                   model_uri=FIXP.EstablishmentReject_reason, domain=EstablishmentReject, range=Optional[Union[str, FIXString]])
+slots.FixpTopic_topic_classification = Slot(uri=FIXP.topic_classification, name="FixpTopic_topic_classification", curie=FIXP.curie('topic_classification'),
+                   model_uri=FIXP.FixpTopic_topic_classification, domain=FixpTopic, range=Union[str, FixpObject])
 
-slots.Sequence_next_seq_no = Slot(uri=FIXP.next_seq_no, name="Sequence_next_seq_no", curie=FIXP.curie('next_seq_no'),
-                   model_uri=FIXP.Sequence_next_seq_no, domain=Sequence, range=Union[int, FIXInt])
+slots.FixpEstablish_session_id = Slot(uri=FIXP.session_id, name="FixpEstablish_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpEstablish_session_id, domain=FixpEstablish, range=Union[str, FixpUuid])
 
-slots.Context_session_id = Slot(uri=FIXP.session_id, name="Context_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.Context_session_id, domain=Context, range=Union[str, FIXString])
+slots.FixpEstablish_request_time = Slot(uri=FIXP.request_time, name="FixpEstablish_request_time", curie=FIXP.curie('request_time'),
+                   model_uri=FIXP.FixpEstablish_request_time, domain=FixpEstablish, range=Union[int, FixpNanotime])
 
-slots.Context_next_seq_no = Slot(uri=FIXP.next_seq_no, name="Context_next_seq_no", curie=FIXP.curie('next_seq_no'),
-                   model_uri=FIXP.Context_next_seq_no, domain=Context, range=Union[int, FIXInt])
+slots.FixpEstablish_keepalive_interval = Slot(uri=FIXP.keepalive_interval, name="FixpEstablish_keepalive_interval", curie=FIXP.curie('keepalive_interval'),
+                   model_uri=FIXP.FixpEstablish_keepalive_interval, domain=FixpEstablish, range=Union[int, FixpDeltaMillisecs])
 
-slots.RetransmitRequest_session_id = Slot(uri=FIXP.session_id, name="RetransmitRequest_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.RetransmitRequest_session_id, domain=RetransmitRequest, range=Union[str, FIXString])
+slots.FixpEstablish_next_seq_no = Slot(uri=FIXP.next_seq_no, name="FixpEstablish_next_seq_no", curie=FIXP.curie('next_seq_no'),
+                   model_uri=FIXP.FixpEstablish_next_seq_no, domain=FixpEstablish, range=Optional[Union[int, FixpU64]])
 
-slots.RetransmitRequest_timestamp = Slot(uri=FIXP.timestamp, name="RetransmitRequest_timestamp", curie=FIXP.curie('timestamp'),
-                   model_uri=FIXP.RetransmitRequest_timestamp, domain=RetransmitRequest, range=Union[int, FIXInt])
+slots.FixpEstablish_credentials = Slot(uri=FIXP.credentials, name="FixpEstablish_credentials", curie=FIXP.curie('credentials'),
+                   model_uri=FIXP.FixpEstablish_credentials, domain=FixpEstablish, range=Optional[Union[str, FixpObject]])
 
-slots.RetransmitRequest_from_seq_no = Slot(uri=FIXP.from_seq_no, name="RetransmitRequest_from_seq_no", curie=FIXP.curie('from_seq_no'),
-                   model_uri=FIXP.RetransmitRequest_from_seq_no, domain=RetransmitRequest, range=Union[int, FIXInt])
+slots.FixpEstablishmentAck_session_id = Slot(uri=FIXP.session_id, name="FixpEstablishmentAck_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpEstablishmentAck_session_id, domain=FixpEstablishmentAck, range=Union[str, FixpUuid])
 
-slots.RetransmitRequest_count = Slot(uri=FIXP.count, name="RetransmitRequest_count", curie=FIXP.curie('count'),
-                   model_uri=FIXP.RetransmitRequest_count, domain=RetransmitRequest, range=Union[int, FIXInt])
+slots.FixpEstablishmentAck_request_timestamp = Slot(uri=FIXP.request_timestamp, name="FixpEstablishmentAck_request_timestamp", curie=FIXP.curie('request_timestamp'),
+                   model_uri=FIXP.FixpEstablishmentAck_request_timestamp, domain=FixpEstablishmentAck, range=Union[int, FixpNanotime])
 
-slots.Retransmission_session_id = Slot(uri=FIXP.session_id, name="Retransmission_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.Retransmission_session_id, domain=Retransmission, range=Union[str, FIXString])
+slots.FixpEstablishmentAck_keepalive_interval = Slot(uri=FIXP.keepalive_interval, name="FixpEstablishmentAck_keepalive_interval", curie=FIXP.curie('keepalive_interval'),
+                   model_uri=FIXP.FixpEstablishmentAck_keepalive_interval, domain=FixpEstablishmentAck, range=Union[int, FixpDeltaMillisecs])
 
-slots.Retransmission_request_timestamp = Slot(uri=FIXP.request_timestamp, name="Retransmission_request_timestamp", curie=FIXP.curie('request_timestamp'),
-                   model_uri=FIXP.Retransmission_request_timestamp, domain=Retransmission, range=Union[int, FIXInt])
+slots.FixpEstablishmentAck_next_seq_no = Slot(uri=FIXP.next_seq_no, name="FixpEstablishmentAck_next_seq_no", curie=FIXP.curie('next_seq_no'),
+                   model_uri=FIXP.FixpEstablishmentAck_next_seq_no, domain=FixpEstablishmentAck, range=Optional[Union[int, FixpU64]])
 
-slots.Retransmission_next_seq_no = Slot(uri=FIXP.next_seq_no, name="Retransmission_next_seq_no", curie=FIXP.curie('next_seq_no'),
-                   model_uri=FIXP.Retransmission_next_seq_no, domain=Retransmission, range=Union[int, FIXInt])
+slots.FixpEstablishmentReject_session_id = Slot(uri=FIXP.session_id, name="FixpEstablishmentReject_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpEstablishmentReject_session_id, domain=FixpEstablishmentReject, range=Union[str, FixpUuid])
 
-slots.Retransmission_count = Slot(uri=FIXP.count, name="Retransmission_count", curie=FIXP.curie('count'),
-                   model_uri=FIXP.Retransmission_count, domain=Retransmission, range=Union[int, FIXInt])
+slots.FixpEstablishmentReject_request_timestamp = Slot(uri=FIXP.request_timestamp, name="FixpEstablishmentReject_request_timestamp", curie=FIXP.curie('request_timestamp'),
+                   model_uri=FIXP.FixpEstablishmentReject_request_timestamp, domain=FixpEstablishmentReject, range=Union[int, FixpNanotime])
 
-slots.RestransmitReject_session_id = Slot(uri=FIXP.session_id, name="RestransmitReject_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.RestransmitReject_session_id, domain=RestransmitReject, range=Union[str, FIXString])
+slots.FixpEstablishmentReject_establishment_reject_code = Slot(uri=FIXP.establishment_reject_code, name="FixpEstablishmentReject_establishment_reject_code", curie=FIXP.curie('establishment_reject_code'),
+                   model_uri=FIXP.FixpEstablishmentReject_establishment_reject_code, domain=FixpEstablishmentReject, range=Union[str, "FixpEstablishmentRejectCode"])
 
-slots.RestransmitReject_request_timestamp = Slot(uri=FIXP.request_timestamp, name="RestransmitReject_request_timestamp", curie=FIXP.curie('request_timestamp'),
-                   model_uri=FIXP.RestransmitReject_request_timestamp, domain=RestransmitReject, range=Union[int, FIXInt])
+slots.FixpSequence_next_seq_no = Slot(uri=FIXP.next_seq_no, name="FixpSequence_next_seq_no", curie=FIXP.curie('next_seq_no'),
+                   model_uri=FIXP.FixpSequence_next_seq_no, domain=FixpSequence, range=Union[int, FixpU64])
 
-slots.RestransmitReject_retransmit_reject_code = Slot(uri=FIXP.retransmit_reject_code, name="RestransmitReject_retransmit_reject_code", curie=FIXP.curie('retransmit_reject_code'),
-                   model_uri=FIXP.RestransmitReject_retransmit_reject_code, domain=RestransmitReject, range=Union[str, "RetransmitRejectCodeFieldEnum"])
+slots.FixpContext_session_id = Slot(uri=FIXP.session_id, name="FixpContext_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpContext_session_id, domain=FixpContext, range=Union[str, FixpUuid])
 
-slots.RestransmitReject_reason = Slot(uri=FIXP.reason, name="RestransmitReject_reason", curie=FIXP.curie('reason'),
-                   model_uri=FIXP.RestransmitReject_reason, domain=RestransmitReject, range=Optional[Union[str, FIXString]])
+slots.FixpContext_next_seq_no = Slot(uri=FIXP.next_seq_no, name="FixpContext_next_seq_no", curie=FIXP.curie('next_seq_no'),
+                   model_uri=FIXP.FixpContext_next_seq_no, domain=FixpContext, range=Optional[Union[int, FixpU64]])
 
-slots.Terminate_session_id = Slot(uri=FIXP.session_id, name="Terminate_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.Terminate_session_id, domain=Terminate, range=Union[str, FIXString])
+slots.FixpRetransmitRequest_session_id = Slot(uri=FIXP.session_id, name="FixpRetransmitRequest_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpRetransmitRequest_session_id, domain=FixpRetransmitRequest, range=Union[str, FixpUuid])
 
-slots.Terminate_termination_code = Slot(uri=FIXP.termination_code, name="Terminate_termination_code", curie=FIXP.curie('termination_code'),
-                   model_uri=FIXP.Terminate_termination_code, domain=Terminate, range=Union[str, "TerminationCodeFieldEnum"])
+slots.FixpRetransmitRequest_request_time = Slot(uri=FIXP.request_time, name="FixpRetransmitRequest_request_time", curie=FIXP.curie('request_time'),
+                   model_uri=FIXP.FixpRetransmitRequest_request_time, domain=FixpRetransmitRequest, range=Union[int, FixpNanotime])
 
-slots.Terminate_reason = Slot(uri=FIXP.reason, name="Terminate_reason", curie=FIXP.curie('reason'),
-                   model_uri=FIXP.Terminate_reason, domain=Terminate, range=Optional[Union[str, FIXString]])
+slots.FixpRetransmitRequest_from_seq_no = Slot(uri=FIXP.from_seq_no, name="FixpRetransmitRequest_from_seq_no", curie=FIXP.curie('from_seq_no'),
+                   model_uri=FIXP.FixpRetransmitRequest_from_seq_no, domain=FixpRetransmitRequest, range=Union[int, FixpU64])
 
-slots.FinishedSending_session_id = Slot(uri=FIXP.session_id, name="FinishedSending_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.FinishedSending_session_id, domain=FinishedSending, range=Union[str, FIXString])
+slots.FixpRetransmitRequest_message_count = Slot(uri=FIXP.message_count, name="FixpRetransmitRequest_message_count", curie=FIXP.curie('message_count'),
+                   model_uri=FIXP.FixpRetransmitRequest_message_count, domain=FixpRetransmitRequest, range=Union[int, FixpU32])
 
-slots.FinishedSending_last_seq_no = Slot(uri=FIXP.last_seq_no, name="FinishedSending_last_seq_no", curie=FIXP.curie('last_seq_no'),
-                   model_uri=FIXP.FinishedSending_last_seq_no, domain=FinishedSending, range=Union[int, FIXInt])
+slots.FixpRetransmission_session_id = Slot(uri=FIXP.session_id, name="FixpRetransmission_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpRetransmission_session_id, domain=FixpRetransmission, range=Union[str, FixpUuid])
 
-slots.FinishedReceiving_session_id = Slot(uri=FIXP.session_id, name="FinishedReceiving_session_id", curie=FIXP.curie('session_id'),
-                   model_uri=FIXP.FinishedReceiving_session_id, domain=FinishedReceiving, range=Union[str, FIXString])
+slots.FixpRetransmission_request_timestamp = Slot(uri=FIXP.request_timestamp, name="FixpRetransmission_request_timestamp", curie=FIXP.curie('request_timestamp'),
+                   model_uri=FIXP.FixpRetransmission_request_timestamp, domain=FixpRetransmission, range=Union[int, FixpNanotime])
 
-slots.Applied_from_seq_no = Slot(uri=FIXP.from_seq_no, name="Applied_from_seq_no", curie=FIXP.curie('from_seq_no'),
-                   model_uri=FIXP.Applied_from_seq_no, domain=Applied, range=Union[int, FIXInt])
+slots.FixpRetransmission_next_seq_no = Slot(uri=FIXP.next_seq_no, name="FixpRetransmission_next_seq_no", curie=FIXP.curie('next_seq_no'),
+                   model_uri=FIXP.FixpRetransmission_next_seq_no, domain=FixpRetransmission, range=Union[int, FixpU64])
 
-slots.Applied_count = Slot(uri=FIXP.count, name="Applied_count", curie=FIXP.curie('count'),
-                   model_uri=FIXP.Applied_count, domain=Applied, range=Union[int, FIXInt])
+slots.FixpRetransmission_message_count = Slot(uri=FIXP.message_count, name="FixpRetransmission_message_count", curie=FIXP.curie('message_count'),
+                   model_uri=FIXP.FixpRetransmission_message_count, domain=FixpRetransmission, range=Union[int, FixpU32])
 
-slots.NotApplied_from_seq_no = Slot(uri=FIXP.from_seq_no, name="NotApplied_from_seq_no", curie=FIXP.curie('from_seq_no'),
-                   model_uri=FIXP.NotApplied_from_seq_no, domain=NotApplied, range=Union[int, FIXInt])
+slots.FixpRetransmitReject_session_id = Slot(uri=FIXP.session_id, name="FixpRetransmitReject_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpRetransmitReject_session_id, domain=FixpRetransmitReject, range=Union[str, FixpUuid])
 
-slots.NotApplied_count = Slot(uri=FIXP.count, name="NotApplied_count", curie=FIXP.curie('count'),
-                   model_uri=FIXP.NotApplied_count, domain=NotApplied, range=Union[int, FIXInt])
+slots.FixpRetransmitReject_request_timestamp = Slot(uri=FIXP.request_timestamp, name="FixpRetransmitReject_request_timestamp", curie=FIXP.curie('request_timestamp'),
+                   model_uri=FIXP.FixpRetransmitReject_request_timestamp, domain=FixpRetransmitReject, range=Union[int, FixpNanotime])
 
-slots.MessageTemplate_flow = Slot(uri=FIXP.flow, name="MessageTemplate_flow", curie=FIXP.curie('flow'),
-                   model_uri=FIXP.MessageTemplate_flow, domain=MessageTemplate, range=Union[str, "FlowFieldEnum"])
+slots.FixpRetransmitReject_retransmit_reject_code = Slot(uri=FIXP.retransmit_reject_code, name="FixpRetransmitReject_retransmit_reject_code", curie=FIXP.curie('retransmit_reject_code'),
+                   model_uri=FIXP.FixpRetransmitReject_retransmit_reject_code, domain=FixpRetransmitReject, range=Union[str, "FixpRetransmitRejectCode"])
 
-slots.MessageTemplate_effective_time = Slot(uri=FIXP.effective_time, name="MessageTemplate_effective_time", curie=FIXP.curie('effective_time'),
-                   model_uri=FIXP.MessageTemplate_effective_time, domain=MessageTemplate, range=Union[int, FIXInt])
+slots.FixpTerminate_session_id = Slot(uri=FIXP.session_id, name="FixpTerminate_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpTerminate_session_id, domain=FixpTerminate, range=Union[str, FixpUuid])
 
-slots.MessageTemplate_template = Slot(uri=FIXP.template, name="MessageTemplate_template", curie=FIXP.curie('template'),
-                   model_uri=FIXP.MessageTemplate_template, domain=MessageTemplate, range=Union[str, FIXData])
+slots.FixpTerminate_termination_code = Slot(uri=FIXP.termination_code, name="FixpTerminate_termination_code", curie=FIXP.curie('termination_code'),
+                   model_uri=FIXP.FixpTerminate_termination_code, domain=FixpTerminate, range=Union[str, "FixpTerminationCode"])
 
-slots.MessageTemplate_version = Slot(uri=FIXP.version, name="MessageTemplate_version", curie=FIXP.curie('version'),
-                   model_uri=FIXP.MessageTemplate_version, domain=MessageTemplate, range=Optional[Union[str, FIXData]])
+slots.FixpFinishedSending_session_id = Slot(uri=FIXP.session_id, name="FixpFinishedSending_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpFinishedSending_session_id, domain=FixpFinishedSending, range=Union[str, FixpUuid])
+
+slots.FixpFinishedSending_last_seq_no = Slot(uri=FIXP.last_seq_no, name="FixpFinishedSending_last_seq_no", curie=FIXP.curie('last_seq_no'),
+                   model_uri=FIXP.FixpFinishedSending_last_seq_no, domain=FixpFinishedSending, range=Optional[Union[int, FixpU64]])
+
+slots.FixpFinishedReceiving_session_id = Slot(uri=FIXP.session_id, name="FixpFinishedReceiving_session_id", curie=FIXP.curie('session_id'),
+                   model_uri=FIXP.FixpFinishedReceiving_session_id, domain=FixpFinishedReceiving, range=Union[str, FixpUuid])
+
+slots.FixpApplied_from_seq_no = Slot(uri=FIXP.from_seq_no, name="FixpApplied_from_seq_no", curie=FIXP.curie('from_seq_no'),
+                   model_uri=FIXP.FixpApplied_from_seq_no, domain=FixpApplied, range=Union[int, FixpU64])
+
+slots.FixpApplied_message_count = Slot(uri=FIXP.message_count, name="FixpApplied_message_count", curie=FIXP.curie('message_count'),
+                   model_uri=FIXP.FixpApplied_message_count, domain=FixpApplied, range=Union[int, FixpU32])
+
+slots.FixpNotApplied_from_seq_no = Slot(uri=FIXP.from_seq_no, name="FixpNotApplied_from_seq_no", curie=FIXP.curie('from_seq_no'),
+                   model_uri=FIXP.FixpNotApplied_from_seq_no, domain=FixpNotApplied, range=Union[int, FixpU64])
+
+slots.FixpNotApplied_message_count = Slot(uri=FIXP.message_count, name="FixpNotApplied_message_count", curie=FIXP.curie('message_count'),
+                   model_uri=FIXP.FixpNotApplied_message_count, domain=FixpNotApplied, range=Union[int, FixpU32])
+
+slots.FixpMessageTemplate_sofh_encoding_type = Slot(uri=FIXP.sofh_encoding_type, name="FixpMessageTemplate_sofh_encoding_type", curie=FIXP.curie('sofh_encoding_type'),
+                   model_uri=FIXP.FixpMessageTemplate_sofh_encoding_type, domain=FixpMessageTemplate, range=Union[int, FixpU32])
+
+slots.FixpMessageTemplate_template = Slot(uri=FIXP.template, name="FixpMessageTemplate_template", curie=FIXP.curie('template'),
+                   model_uri=FIXP.FixpMessageTemplate_template, domain=FixpMessageTemplate, range=Union[str, FixpObject])

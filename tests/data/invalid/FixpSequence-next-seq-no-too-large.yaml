@@ -1,0 +1,3 @@
+# Fails at: /next_seq_no
+message_kind: FixpSequence
+next_seq_no: 18446744073709551616

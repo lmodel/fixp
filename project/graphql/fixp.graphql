@@ -1,304 +1,265 @@
-# metamodel_version: 1.11.0
-# version: FIX.5.0SP2
-enum ClientFlowCodeSet
+# metamodel_version: 1.12.0
+# version: 1.0
+enum FixpEstablishmentRejectCode
   {
-    RECOVERABLE
-    IDEMPOTENT
-    UNSEQUENCED
-    NONE
+    Unnegotiated
+    AlreadyEstablished
+    SessionBlocked
+    KeepaliveInterval
+    Credentials
+    Unspecified
   }
 
-enum ClientFlowFieldEnum
+enum FixpFlowType
   {
-    RECOVERABLE
-    IDEMPOTENT
-    UNSEQUENCED
-    NONE
+    Recoverable
+    Idempotent
+    Unsequenced
+    None
   }
 
-enum EstablishmentRejectCodeCodeSet
+enum FixpMulticastFlowType
   {
-    UNNEGOTIATED
-    ALREADY_ESTABLISHED
-    SESSION_BLOCKED
-    KEEPALIVE_INTERVAL
-    CREDENTIALS
-    UNSPECIFIED
+    Recoverable
+    Idempotent
   }
 
-enum EstablishmentRejectCodeFieldEnum
+enum FixpNegotiationRejectCode
   {
-    UNNEGOTIATED
-    ALREADY_ESTABLISHED
-    SESSION_BLOCKED
-    KEEPALIVE_INTERVAL
-    CREDENTIALS
-    UNSPECIFIED
+    Credentials
+    FlowTypeNotSupported
+    DuplicateId
+    Unspecified
   }
 
-enum FlowCodeSet
+enum FixpParty
   {
-    RECOVERABLE
-    IDEMPOTENT
+    client
+    server
+    publisher
   }
 
-enum FlowFieldEnum
+enum FixpRetransmitRejectCode
   {
-    RECOVERABLE
-    IDEMPOTENT
+    OutOfRange
+    InvalidSession
+    RequestLimitExceeded
   }
 
-enum NegotiationRejectCodeCodeSet
+enum FixpSessionKind
   {
-    CREDENTIALS
-    FLOW_TYPE_NOT_SUPPORTED
-    DUPLICATE_ID
-    UNSPECIFIED
+    point_to_point
+    multicast
   }
 
-enum NegotiationRejectCodeFieldEnum
+enum FixpTerminationCode
   {
-    CREDENTIALS
-    FLOW_TYPE_NOT_SUPPORTED
-    DUPLICATE_ID
-    UNSPECIFIED
+    Finished
+    UnspecifiedError
+    ReRequestOutOfBounds
+    ReRequestInProgress
   }
 
-enum RetransmitRejectCodeCodeSet
+type FixpApplied
   {
-    OUT_OF_RANGE
-    INVALID_SESSION
-    REQUEST_LIMIT_EXCEEDED
+    messageKind: String!
+    fromSeqNo: FixpU64!
+    messageCount: FixpU32!
   }
 
-enum RetransmitRejectCodeFieldEnum
+type FixpContext
   {
-    OUT_OF_RANGE
-    INVALID_SESSION
-    REQUEST_LIMIT_EXCEEDED
+    messageKind: String!
+    sessionId: FixpUuid!
+    nextSeqNo: FixpU64
   }
 
-enum SbeEstablishmentRejectCode
+type FixpEstablish
   {
-    UNNEGOTIATED
-    ALREADY_ESTABLISHED
-    SESSION_BLOCKED
-    KEEPALIVE_INTERVAL
-    CREDENTIALS
-    UNSPECIFIED
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTime: FixpNanotime!
+    keepaliveInterval: FixpDeltaMillisecs!
+    nextSeqNo: FixpU64
+    credentials: FixpObject
   }
 
-enum SbeFlowType
+type FixpEstablishmentAck
   {
-    RECOVERABLE
-    IDEMPOTENT
-    UNSEQUENCED
-    NONE
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    keepaliveInterval: FixpDeltaMillisecs!
+    nextSeqNo: FixpU64
   }
 
-enum SbeNegotiationRejectCode
+type FixpEstablishmentReject
   {
-    CREDENTIALS
-    FLOW_TYPE_NOT_SUPPORTED
-    DUPLICATE_ID
-    UNSPECIFIED
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    establishmentRejectCode: FixpEstablishmentRejectCode!
+    reasonText: FixpString
   }
 
-enum SbeRetransmitRejectCode
+type FixpExchange
   {
-    OUT_OF_RANGE
-    INVALID_SESSION
-    REQUEST_LIMIT_EXCEEDED
+    id: String!
+    description: String
+    sessionKind: FixpSessionKind!
+    multiplexed: Boolean
+    exchangeSteps: [FixpExchangeStep]!
   }
 
-enum SbeTerminationCode
+type FixpExchangeStep
   {
-    FINISHED
-    UNSPECIFIED_ERROR
-    RE_REQUEST_OUT_OF_BOUNDS
-    RE_REQUEST_IN_PROGRESS
+    sentBy: FixpParty!
+    fixpMessage: FixpMessage
+    applicationMessageCount: FixpU32
   }
 
-enum TerminationCodeCodeSet
+type FixpFinishedReceiving
   {
-    FINISHED
-    UNSPECIFIED_ERROR
-    RE_REQUEST_OUT_OF_BOUNDS
-    RE_REQUEST_IN_PROGRESS
+    messageKind: String!
+    sessionId: FixpUuid!
   }
 
-enum TerminationCodeFieldEnum
+type FixpFinishedSending
   {
-    FINISHED
-    UNSPECIFIED_ERROR
-    RE_REQUEST_OUT_OF_BOUNDS
-    RE_REQUEST_IN_PROGRESS
+    messageKind: String!
+    sessionId: FixpUuid!
+    lastSeqNo: FixpU64
   }
 
-type Applied
+interface FixpMessage
   {
-    fromSeqNo: FIXInt!
-    count: FIXInt!
+    messageKind: String!
   }
 
-type Context
+type FixpMessageTemplate
   {
-    sessionId: FIXString!
-    nextSeqNo: FIXInt!
+    messageKind: String!
+    sofhEncodingType: FixpU32!
+    effectiveTime: FixpNanotime
+    templateVersion: FixpObject
+    template: FixpObject!
   }
 
-type Establish
+type FixpNegotiate
   {
-    sessionId: FIXString!
-    timestamp: FIXInt!
-    keepaliveInterval: FIXInt!
-    nextSeqNo: FIXInt
-    credentials: FIXData
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTime: FixpNanotime!
+    clientFlow: FixpFlowType!
+    credentials: FixpObject
   }
 
-type EstablishmentAck
+type FixpNegotiationReject
   {
-    sessionId: FIXString!
-    requestTimestamp: FIXInt!
-    keepaliveInterval: FIXInt!
-    nextSeqNo: FIXInt
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    negotiationRejectCode: FixpNegotiationRejectCode!
+    reasonText: FixpString
   }
 
-type EstablishmentReject
+type FixpNegotiationResponse
   {
-    sessionId: FIXString!
-    requestTimestamp: FIXInt!
-    establishmentRejectCode: EstablishmentRejectCodeFieldEnum!
-    reason: FIXString
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    serverFlow: FixpFlowType!
+    credentials: FixpObject
   }
 
-type FinishedReceiving
+type FixpNotApplied
   {
-    sessionId: FIXString!
+    messageKind: String!
+    fromSeqNo: FixpU64!
+    messageCount: FixpU32!
   }
 
-type FinishedSending
+type FixpRetransmission
   {
-    sessionId: FIXString!
-    lastSeqNo: FIXInt!
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    nextSeqNo: FixpU64!
+    messageCount: FixpU32!
   }
 
-type FixpSessionExchange
+type FixpRetransmitReject
   {
-    messages: [FixpSessionMessage]
-    title: String
-    creator: String
-    publisher: String
-    rights: String
-    date: String
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTimestamp: FixpNanotime!
+    retransmitRejectCode: FixpRetransmitRejectCode!
+    reasonText: FixpString
   }
 
-interface FixpSessionMessage
+type FixpRetransmitRequest
   {
+    messageKind: String!
+    sessionId: FixpUuid!
+    requestTime: FixpNanotime!
+    fromSeqNo: FixpU64!
+    messageCount: FixpU32!
   }
 
-type MessageTemplate
+type FixpRulesOfEngagement
   {
-    flow: FlowFieldEnum!
-    effectiveTime: FIXInt!
-    version: FIXData
-    template: FIXData!
+    id: String!
+    description: String
+    clientStack: FixpStackProfile!
+    serverStack: FixpStackProfile!
   }
 
-type Negotiate
+type FixpSequence
   {
-    sessionId: FIXString!
-    timestamp: FIXInt!
-    clientFlow: ClientFlowFieldEnum!
-    credentials: FIXData
+    messageKind: String!
+    nextSeqNo: FixpU64!
   }
 
-type NegotiationReject
+type FixpStackProfile
   {
-    sessionId: FIXString!
-    requestTimestamp: FIXInt!
-    negotiationRejectCode: NegotiationRejectCodeFieldEnum!
-    reason: FIXString
+    applicationRecovery: Boolean
+    applicationFixVersion: String
+    servicePack: String
+    extensionPacks: [String]
+    messageEncoding: String
+    encodingVersion: String
+    messageSchemas: [String]
+    framing: String
+    supportedFlowTypes: [FixpFlowType]
+    shortestKeepaliveInterval: FixpDeltaMillisecs
+    longestKeepaliveInterval: FixpDeltaMillisecs
+    retransmissionLimit: FixpU32
+    tlsVersion: String
+    authenticationMethods: [String]
+    credentialsFormat: String
+    cipherSuites: [String]
+    transports: [String]
+    networkProtocols: [String]
   }
 
-type NegotiationResponse
+type FixpTerminate
   {
-    sessionId: FIXString!
-    requestTimestamp: FIXInt!
-    serverFlow: ClientFlowCodeSet!
-    credentials: FIXData
+    messageKind: String!
+    sessionId: FixpUuid!
+    terminationCode: FixpTerminationCode!
+    reasonText: FixpString
   }
 
-type NotApplied
+type FixpTopic
   {
-    fromSeqNo: FIXInt!
-    count: FIXInt!
+    messageKind: String!
+    sessionId: FixpUuid!
+    flow: FixpMulticastFlowType!
+    keepaliveInterval: FixpDeltaMillisecs
+    topicClassification: FixpObject!
   }
 
-type RestransmitReject
+type FixpUnsequencedHeartbeat
   {
-    sessionId: FIXString!
-    requestTimestamp: FIXInt!
-    retransmitRejectCode: RetransmitRejectCodeFieldEnum!
-    reason: FIXString
-  }
-
-type Retransmission
-  {
-    sessionId: FIXString!
-    requestTimestamp: FIXInt!
-    nextSeqNo: FIXInt!
-    count: FIXInt!
-  }
-
-type RetransmitRequest
-  {
-    sessionId: FIXString!
-    timestamp: FIXInt!
-    fromSeqNo: FIXInt!
-    count: FIXInt!
-  }
-
-type SbeCharacterStringComposite
-  {
-    length: Int
-    varData: String
-  }
-
-type SbeMessageHeaderComposite
-  {
-    blockLength: Int
-    templateId: Int
-    schemaId: Int
-    schemaVersion: Int
-  }
-
-type SbeObjectComposite
-  {
-    length: Int
-    varData: Int
-  }
-
-type Sequence
-  {
-    nextSeqNo: FIXInt!
-  }
-
-type Terminate
-  {
-    sessionId: FIXString!
-    terminationCode: TerminationCodeFieldEnum!
-    reason: FIXString
-  }
-
-type Topic
-  {
-    sessionId: FIXString!
-    flow: FlowFieldEnum!
-    keepaliveInterval: FIXInt!
-    classification: FIXData!
-  }
-
-type UnsequencedHeartbeat
-  {
+    messageKind: String!
   }

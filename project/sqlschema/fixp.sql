@@ -1,337 +1,478 @@
--- # Class: FixpSessionExchange Description: Top-level container for a FIXP session exchange - holds an ordered list of session messages plus optional metadata.
+-- # Abstract Class: FixpMessage Description: One FIXP message, as its fields would be read from the wire before or after encoding.
 --     * Slot: id
---     * Slot: title Description: Title of this exchange document.
---     * Slot: creator Description: Creator of this exchange document.
---     * Slot: publisher Description: Publisher of this exchange document.
---     * Slot: rights Description: Rights statement for this exchange document.
---     * Slot: date Description: Date associated with this exchange document.
--- # Abstract Class: FixpSessionMessage Description: Abstract base class for every FIXP session message.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpNegotiate Description: A client's request to create a session under an identifier it has never used, stating the flow type it will send.
 --     * Slot: id
---     * Slot: FixpSessionExchange_id Description: Autocreated FK slot
--- # Class: SbeObjectComposite Description: Variable length data, also know as octect string
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_time Description: When the sender made this request. The answer repeats it, to show what it answers.
+--     * Slot: client_flow Description: The flow type of the application messages the client will send.
+--     * Slot: credentials Description: Data that identifies the client, in a form the two parties agree on.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpNegotiationResponse Description: A server's acceptance of a new session, stating the flow type it will send back.
 --     * Slot: id
---     * Slot: length Description: SBE member 'length' (primitiveType=uint16, semanticType=Length).
---     * Slot: var_data Description: SBE member 'varData' (primitiveType=uint8, semanticType=data).
--- # Class: SbeCharacterStringComposite Description: Variable length text
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_timestamp Description: The request_time of the Negotiate this message accepts.
+--     * Slot: server_flow Description: The flow type of the application messages the server will send.
+--     * Slot: credentials Description: Data that identifies the server to the client, for mutual authentication.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpNegotiationReject Description: A server's refusal to create a session. The server sends nothing more and closes the transport.
 --     * Slot: id
---     * Slot: length Description: SBE member 'length' (primitiveType=uint16, semanticType=Length).
---     * Slot: var_data Description: SBE member 'varData' (primitiveType=char, semanticType=String).
--- # Class: SbeMessageHeaderComposite Description: Message identifiers and length of message root
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_timestamp Description: The request_time of the Negotiate this message refuses.
+--     * Slot: negotiation_reject_code Description: Why the server refused to create the session.
+--     * Slot: reason_text Description: Free text that says more about the code beside it.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpTopic Description: A multicast publisher's notice that starts a flow and ties the session's short-lived identifier to a lasting subject. It is repeated so that late listeners can join.
 --     * Slot: id
---     * Slot: block_length Description: SBE member 'blockLength' (primitiveType=uint16).
---     * Slot: template_id Description: SBE member 'templateId' (primitiveType=uint16).
---     * Slot: schema_id Description: SBE member 'schemaId' (primitiveType=uint16).
---     * Slot: schema_version Description: SBE member 'version' (primitiveType=uint16).
--- # Class: Negotiate Description: FIXP session message 'Negotiate'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: flow Description: The flow type of a multicast topic's messages.
+--     * Slot: keepalive_interval Description: The publisher's heartbeat interval, in milliseconds.
+--     * Slot: topic_classification Description: The lasting subject of a topic's messages, such as a product type or a market symbol.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpEstablish Description: A client's request to tie a negotiated session to the very transport this message arrives on. After a disconnection it is sent again to re-bind.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: timestamp Description: FIX field 'Timestamp' (tag 2).
---     * Slot: client_flow Description: FIX field 'ClientFlow' (tag 3).
---     * Slot: credentials Description: FIX field 'Credentials' (tag 4).
--- # Class: NegotiationResponse Description: FIXP session message 'NegotiationResponse'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_time Description: When the sender made this request. The answer repeats it, to show what it answers.
+--     * Slot: keepalive_interval Description: The longest the client stays silent, in milliseconds, before a heartbeat.
+--     * Slot: next_seq_no Description: When the client's recoverable flow is bound again, the number its next application message will carry.
+--     * Slot: credentials Description: Data that identifies the client, in a form the two parties agree on.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpEstablishmentAck Description: A server's acceptance of the binding. From here, application messages may flow.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: request_timestamp Description: FIX field 'RequestTimestamp' (tag 5).
---     * Slot: server_flow Description: FIX field 'ServerFlow' (tag 6).
---     * Slot: credentials Description: FIX field 'Credentials' (tag 4).
--- # Class: NegotiationReject Description: FIXP session message 'NegotiationReject'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_timestamp Description: The request_time of the Establish this message accepts.
+--     * Slot: keepalive_interval Description: The longest the server stays silent, in milliseconds, before a heartbeat.
+--     * Slot: next_seq_no Description: If the server's flow is recoverable, the number its next application message will carry, so the client can ask for what it missed.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpEstablishmentReject Description: A server's refusal of the binding.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: request_timestamp Description: FIX field 'RequestTimestamp' (tag 5).
---     * Slot: negotiation_reject_code Description: FIX field 'NegotiationRejectCode' (tag 7).
---     * Slot: reason Description: FIX field 'Reason' (tag 8).
--- # Class: Topic Description: FIXP session message 'Topic'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_timestamp Description: The request_time of the Establish this message refuses.
+--     * Slot: establishment_reject_code Description: Why the server refused to bind the session.
+--     * Slot: reason_text Description: Free text that says more about the code beside it.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpSequence Description: Starts the numbering of a sequenced flow, so that the application messages after it are numbered by counting up from the value it carries. Sent when idle, it is also the heartbeat.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: flow Description: FIX field 'Flow' (tag 18).
---     * Slot: keepalive_interval Description: FIX field 'KeepaliveInterval' (tag 9).
---     * Slot: classification Description: FIX field 'Classification' (tag 10).
--- # Class: Establish Description: FIXP session message 'Establish'.
+--     * Slot: next_seq_no Description: The number the sender's next application message will carry.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpContext Description: On a transport that several sessions share, names the session the following messages belong to and, when the flow is sequenced, where its numbering continues.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: timestamp Description: FIX field 'Timestamp' (tag 2).
---     * Slot: keepalive_interval Description: FIX field 'KeepaliveInterval' (tag 9).
---     * Slot: next_seq_no Description: FIX field 'NextSeqNo' (tag 11).
---     * Slot: credentials Description: FIX field 'Credentials' (tag 4).
--- # Class: EstablishmentAck Description: FIXP session message 'EstablishmentAck'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: next_seq_no Description: The number the sender's next application message will carry.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpUnsequencedHeartbeat Description: Shows the peer that the session and transport are alive when the sender's flow is unsequenced or empty. It has no fields.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: request_timestamp Description: FIX field 'RequestTimestamp' (tag 5).
---     * Slot: keepalive_interval Description: FIX field 'KeepaliveInterval' (tag 9).
---     * Slot: next_seq_no Description: FIX field 'NextSeqNo' (tag 11).
--- # Class: EstablishmentReject Description: FIXP session message 'EstablishmentReject'.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpRetransmitRequest Description: Asks the peer to resend some messages of its recoverable flow. A party has at most one such request open at a time.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: request_timestamp Description: FIX field 'RequestTimestamp' (tag 5).
---     * Slot: establishment_reject_code Description: FIX field 'EstablishmentRejectCode' (tag 12).
---     * Slot: reason Description: FIX field 'Reason' (tag 8).
--- # Class: Sequence Description: FIXP session message 'Sequence'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_time Description: When the request was made, which also tells this request apart from others.
+--     * Slot: from_seq_no Description: Where the requested run starts, by sequence number.
+--     * Slot: message_count Description: How many messages are asked for.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpRetransmission Description: Introduces a batch of resent messages, which are numbered by counting from the number it gives. A request may be answered in several batches.
 --     * Slot: id
---     * Slot: next_seq_no Description: FIX field 'NextSeqNo' (tag 11).
--- # Class: Context Description: FIXP session message 'Context'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_timestamp Description: The request_time of the RetransmitRequest this batch answers.
+--     * Slot: next_seq_no Description: The number the batch's first message carries.
+--     * Slot: message_count Description: How many resent messages the batch holds.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpRetransmitReject Description: Refuses a RetransmitRequest, with a code saying why.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: next_seq_no Description: FIX field 'NextSeqNo' (tag 11).
--- # Class: UnsequencedHeartbeat Description: FIXP session message 'UnsequencedHeartbeat'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: request_timestamp Description: The request_time of the RetransmitRequest this message refuses.
+--     * Slot: retransmit_reject_code Description: Why the sender will not resend the range.
+--     * Slot: reason_text Description: Free text that says more about the code beside it.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpTerminate Description: Releases the session from its transport without ending the session, which can be bound again later. The peer answers with a Terminate, and after its own Terminate a party sends nothing more.
 --     * Slot: id
--- # Class: RetransmitRequest Description: FIXP session message 'RetransmitRequest'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: termination_code Description: Why the party releases the session from the transport.
+--     * Slot: reason_text Description: Free text that says more about the code beside it.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpFinishedSending Description: Says that the sender's flow has carried its last application message, which begins finalization. It is repeated as the heartbeat until the answer comes.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: timestamp Description: FIX field 'Timestamp' (tag 2).
---     * Slot: from_seq_no Description: FIX field 'FromSeqNo' (tag 13).
---     * Slot: count Description: FIX field 'Count' (tag 14).
--- # Class: Retransmission Description: FIXP session message 'Retransmission'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: last_seq_no Description: The number carried by the flow's final application message.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpFinishedReceiving Description: Answers FinishedSending once the last message of the peer's flow has been processed. After it the session is finalized and its identifier is spent.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: request_timestamp Description: FIX field 'RequestTimestamp' (tag 5).
---     * Slot: next_seq_no Description: FIX field 'NextSeqNo' (tag 11).
---     * Slot: count Description: FIX field 'Count' (tag 14).
--- # Class: RestransmitReject Description: FIXP session message 'RestransmitReject'.
+--     * Slot: session_id Description: The session's identifier, which the client chooses and never uses again.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpApplied Description: An optional application message telling the party that sends an idempotent flow which of its operations took effect, where no business message already says so.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: request_timestamp Description: FIX field 'RequestTimestamp' (tag 5).
---     * Slot: retransmit_reject_code Description: FIX field 'RetransmitRejectCode' (tag 15).
---     * Slot: reason Description: FIX field 'Reason' (tag 8).
--- # Class: Terminate Description: FIXP session message 'Terminate'.
+--     * Slot: from_seq_no Description: Where the run of operations that took effect starts.
+--     * Slot: message_count Description: How many operations in a row took effect.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpNotApplied Description: An application message telling the party that sends an idempotent flow about a gap: a run of operations that did not take effect. That party's application decides what to do.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: termination_code Description: FIX field 'TerminationCode' (tag 16).
---     * Slot: reason Description: FIX field 'Reason' (tag 8).
--- # Class: FinishedSending Description: FIXP session message 'FinishedSending'.
+--     * Slot: from_seq_no Description: Where the run of operations that failed to take effect starts.
+--     * Slot: message_count Description: How many operations in a row did not take effect.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpMessageTemplate Description: Hands the peer a template or schema it needs to read messages in an encoding that templates drive. There is no fixed moment for sending it.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
---     * Slot: last_seq_no Description: FIX field 'LastSeqNo' (tag 17).
--- # Class: FinishedReceiving Description: FIXP session message 'FinishedReceiving'.
+--     * Slot: sofh_encoding_type Description: The code that the Simple Open Framing Header registers for the encoding a template is written for.
+--     * Slot: effective_time Description: When the template comes into force. Without it, the template applies at once.
+--     * Slot: template_version Description: The template's version and format, for an encoding whose templates do not state them.
+--     * Slot: template Description: The template itself, as octets.
+--     * Slot: message_kind Description: The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.
+-- # Class: FixpExchange Description: The messages of one session in the order they were sent, as a test case, a worked example or a captured log.
+--     * Slot: id Description: The identifier of an exchange or a rules-of-engagement record.
+--     * Slot: description Description: Free text about a record, for the people who read it.
+--     * Slot: session_kind Description: Which of the two forms the session takes.
+--     * Slot: multiplexed Description: Whether the transport carries other sessions too, so that Context takes the place of Sequence.
+-- # Class: FixpExchangeStep Description: One step: a FIXP message, or a run of application messages whose content FIXP does not define, and the side that sent it.
 --     * Slot: id
---     * Slot: session_id Description: FIX field 'SessionId' (tag 1).
--- # Class: Applied Description: FIXP session message 'Applied'.
+--     * Slot: sent_by Description: The side that sent this step.
+--     * Slot: application_message_count Description: How many application messages went out one after another. On a sequenced flow each takes the next sequence number.
+--     * Slot: FixpExchange_id Description: Autocreated FK slot
+--     * Slot: fixp_message_id Description: The FIXP message sent.
+-- # Class: FixpRulesOfEngagement Description: What two counterparties agree on for one FIXP service, layer by layer, for the client and for the server.
+--     * Slot: id Description: The identifier of an exchange or a rules-of-engagement record.
+--     * Slot: description Description: Free text about a record, for the people who read it.
+--     * Slot: client_stack_id Description: What the client side uses.
+--     * Slot: server_stack_id Description: What the server side uses.
+-- # Class: FixpStackProfile Description: One side's choices at each layer of the stack: application, presentation, session, security and transport.
 --     * Slot: id
---     * Slot: from_seq_no Description: FIX field 'FromSeqNo' (tag 13).
---     * Slot: count Description: FIX field 'Count' (tag 14).
--- # Class: NotApplied Description: FIXP session message 'NotApplied'.
---     * Slot: id
---     * Slot: from_seq_no Description: FIX field 'FromSeqNo' (tag 13).
---     * Slot: count Description: FIX field 'Count' (tag 14).
--- # Class: MessageTemplate Description: FIXP session message 'MessageTemplate'.
---     * Slot: id
---     * Slot: flow Description: FIX field 'Flow' (tag 18).
---     * Slot: effective_time Description: FIX field 'EffectiveTime' (tag 19).
---     * Slot: version Description: FIX field 'Version' (tag 20).
---     * Slot: template Description: FIX field 'Template' (tag 22).
+--     * Slot: application_recovery Description: Whether this side's applications recover lost messages themselves.
+--     * Slot: application_fix_version Description: The FIX version of the application messages, such as FIX.Latest.
+--     * Slot: service_pack Description: The FIX service pack, where the version has them.
+--     * Slot: message_encoding Description: How messages are encoded, such as Simple Binary Encoding.
+--     * Slot: encoding_version Description: The version of that encoding.
+--     * Slot: framing Description: What marks where one message ends and the next begins, such as the Simple Open Framing Header.
+--     * Slot: shortest_keepalive_interval Description: The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.
+--     * Slot: longest_keepalive_interval Description: The longest keep-alive interval, in milliseconds, that this side accepts from its peer.
+--     * Slot: retransmission_limit Description: The most messages this side resends in answer to one RetransmitRequest.
+--     * Slot: tls_version Description: The TLS version that protects the transport.
+--     * Slot: credentials_format Description: The form of the credentials this side sends, and how its peer checks them.
+-- # Class: FixpStackProfile_extension_packs
+--     * Slot: FixpStackProfile_id Description: Autocreated FK slot
+--     * Slot: extension_packs Description: The FIX extension packs in use.
+-- # Class: FixpStackProfile_message_schemas
+--     * Slot: FixpStackProfile_id Description: Autocreated FK slot
+--     * Slot: message_schemas Description: The message schemas or templates the encoding uses.
+-- # Class: FixpStackProfile_supported_flow_types
+--     * Slot: FixpStackProfile_id Description: Autocreated FK slot
+--     * Slot: supported_flow_types Description: The flow types this side accepts or offers.
+-- # Class: FixpStackProfile_authentication_methods
+--     * Slot: FixpStackProfile_id Description: Autocreated FK slot
+--     * Slot: authentication_methods Description: How the parties prove who they are.
+-- # Class: FixpStackProfile_cipher_suites
+--     * Slot: FixpStackProfile_id Description: Autocreated FK slot
+--     * Slot: cipher_suites Description: The cipher suites allowed.
+-- # Class: FixpStackProfile_transports
+--     * Slot: FixpStackProfile_id Description: Autocreated FK slot
+--     * Slot: transports Description: The transports this side can use, for example TCP, or UDP with multicast.
+-- # Class: FixpStackProfile_network_protocols
+--     * Slot: FixpStackProfile_id Description: Autocreated FK slot
+--     * Slot: network_protocols Description: Any other network protocols in use.
 
-CREATE TABLE "FixpSessionExchange" (
+CREATE TABLE "FixpMessage" (
 	id INTEGER NOT NULL,
-	title TEXT,
-	creator TEXT,
-	publisher TEXT,
-	rights TEXT,
-	date TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_FixpSessionExchange_id" ON "FixpSessionExchange" (id);
+CREATE INDEX "ix_FixpMessage_id" ON "FixpMessage" (id);
 
-CREATE TABLE "SbeObjectComposite" (
-	id INTEGER NOT NULL,
-	length INTEGER,
-	var_data INTEGER,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SbeObjectComposite_id" ON "SbeObjectComposite" (id);
-
-CREATE TABLE "SbeCharacterStringComposite" (
-	id INTEGER NOT NULL,
-	length INTEGER,
-	var_data TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SbeCharacterStringComposite_id" ON "SbeCharacterStringComposite" (id);
-
-CREATE TABLE "SbeMessageHeaderComposite" (
-	id INTEGER NOT NULL,
-	block_length INTEGER,
-	template_id INTEGER,
-	schema_id INTEGER,
-	schema_version INTEGER,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SbeMessageHeaderComposite_id" ON "SbeMessageHeaderComposite" (id);
-
-CREATE TABLE "Negotiate" (
+CREATE TABLE "FixpNegotiate" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
-	timestamp TEXT NOT NULL,
+	request_time TEXT NOT NULL,
 	client_flow VARCHAR(11) NOT NULL,
 	credentials TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Negotiate_id" ON "Negotiate" (id);
+CREATE INDEX "ix_FixpNegotiate_id" ON "FixpNegotiate" (id);
 
-CREATE TABLE "NegotiationResponse" (
+CREATE TABLE "FixpNegotiationResponse" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
 	request_timestamp TEXT NOT NULL,
 	server_flow VARCHAR(11) NOT NULL,
 	credentials TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_NegotiationResponse_id" ON "NegotiationResponse" (id);
+CREATE INDEX "ix_FixpNegotiationResponse_id" ON "FixpNegotiationResponse" (id);
 
-CREATE TABLE "NegotiationReject" (
+CREATE TABLE "FixpNegotiationReject" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
 	request_timestamp TEXT NOT NULL,
-	negotiation_reject_code VARCHAR(23) NOT NULL,
-	reason TEXT,
+	negotiation_reject_code VARCHAR(20) NOT NULL,
+	reason_text TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_NegotiationReject_id" ON "NegotiationReject" (id);
+CREATE INDEX "ix_FixpNegotiationReject_id" ON "FixpNegotiationReject" (id);
 
-CREATE TABLE "Topic" (
+CREATE TABLE "FixpTopic" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
 	flow VARCHAR(11) NOT NULL,
-	keepalive_interval TEXT NOT NULL,
-	classification TEXT NOT NULL,
+	keepalive_interval TEXT,
+	topic_classification TEXT NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Topic_id" ON "Topic" (id);
+CREATE INDEX "ix_FixpTopic_id" ON "FixpTopic" (id);
 
-CREATE TABLE "Establish" (
+CREATE TABLE "FixpEstablish" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
-	timestamp TEXT NOT NULL,
+	request_time TEXT NOT NULL,
 	keepalive_interval TEXT NOT NULL,
 	next_seq_no TEXT,
 	credentials TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Establish_id" ON "Establish" (id);
+CREATE INDEX "ix_FixpEstablish_id" ON "FixpEstablish" (id);
 
-CREATE TABLE "EstablishmentAck" (
+CREATE TABLE "FixpEstablishmentAck" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
 	request_timestamp TEXT NOT NULL,
 	keepalive_interval TEXT NOT NULL,
 	next_seq_no TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_EstablishmentAck_id" ON "EstablishmentAck" (id);
+CREATE INDEX "ix_FixpEstablishmentAck_id" ON "FixpEstablishmentAck" (id);
 
-CREATE TABLE "EstablishmentReject" (
+CREATE TABLE "FixpEstablishmentReject" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
 	request_timestamp TEXT NOT NULL,
-	establishment_reject_code VARCHAR(19) NOT NULL,
-	reason TEXT,
+	establishment_reject_code VARCHAR(18) NOT NULL,
+	reason_text TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_EstablishmentReject_id" ON "EstablishmentReject" (id);
+CREATE INDEX "ix_FixpEstablishmentReject_id" ON "FixpEstablishmentReject" (id);
 
-CREATE TABLE "Sequence" (
+CREATE TABLE "FixpSequence" (
 	id INTEGER NOT NULL,
 	next_seq_no TEXT NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Sequence_id" ON "Sequence" (id);
+CREATE INDEX "ix_FixpSequence_id" ON "FixpSequence" (id);
 
-CREATE TABLE "Context" (
+CREATE TABLE "FixpContext" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
-	next_seq_no TEXT NOT NULL,
+	next_seq_no TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Context_id" ON "Context" (id);
+CREATE INDEX "ix_FixpContext_id" ON "FixpContext" (id);
 
-CREATE TABLE "UnsequencedHeartbeat" (
+CREATE TABLE "FixpUnsequencedHeartbeat" (
 	id INTEGER NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_UnsequencedHeartbeat_id" ON "UnsequencedHeartbeat" (id);
+CREATE INDEX "ix_FixpUnsequencedHeartbeat_id" ON "FixpUnsequencedHeartbeat" (id);
 
-CREATE TABLE "RetransmitRequest" (
+CREATE TABLE "FixpRetransmitRequest" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
-	timestamp TEXT NOT NULL,
+	request_time TEXT NOT NULL,
 	from_seq_no TEXT NOT NULL,
-	count TEXT NOT NULL,
+	message_count TEXT NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_RetransmitRequest_id" ON "RetransmitRequest" (id);
+CREATE INDEX "ix_FixpRetransmitRequest_id" ON "FixpRetransmitRequest" (id);
 
-CREATE TABLE "Retransmission" (
+CREATE TABLE "FixpRetransmission" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
 	request_timestamp TEXT NOT NULL,
 	next_seq_no TEXT NOT NULL,
-	count TEXT NOT NULL,
+	message_count TEXT NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Retransmission_id" ON "Retransmission" (id);
+CREATE INDEX "ix_FixpRetransmission_id" ON "FixpRetransmission" (id);
 
-CREATE TABLE "RestransmitReject" (
+CREATE TABLE "FixpRetransmitReject" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
 	request_timestamp TEXT NOT NULL,
-	retransmit_reject_code VARCHAR(22) NOT NULL,
-	reason TEXT,
+	retransmit_reject_code VARCHAR(20) NOT NULL,
+	reason_text TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_RestransmitReject_id" ON "RestransmitReject" (id);
+CREATE INDEX "ix_FixpRetransmitReject_id" ON "FixpRetransmitReject" (id);
 
-CREATE TABLE "Terminate" (
+CREATE TABLE "FixpTerminate" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
-	termination_code VARCHAR(24) NOT NULL,
-	reason TEXT,
+	termination_code VARCHAR(20) NOT NULL,
+	reason_text TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Terminate_id" ON "Terminate" (id);
+CREATE INDEX "ix_FixpTerminate_id" ON "FixpTerminate" (id);
 
-CREATE TABLE "FinishedSending" (
+CREATE TABLE "FixpFinishedSending" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
-	last_seq_no TEXT NOT NULL,
+	last_seq_no TEXT,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_FinishedSending_id" ON "FinishedSending" (id);
+CREATE INDEX "ix_FixpFinishedSending_id" ON "FixpFinishedSending" (id);
 
-CREATE TABLE "FinishedReceiving" (
+CREATE TABLE "FixpFinishedReceiving" (
 	id INTEGER NOT NULL,
 	session_id TEXT NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_FinishedReceiving_id" ON "FinishedReceiving" (id);
+CREATE INDEX "ix_FixpFinishedReceiving_id" ON "FixpFinishedReceiving" (id);
 
-CREATE TABLE "Applied" (
+CREATE TABLE "FixpApplied" (
 	id INTEGER NOT NULL,
 	from_seq_no TEXT NOT NULL,
-	count TEXT NOT NULL,
+	message_count TEXT NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Applied_id" ON "Applied" (id);
+CREATE INDEX "ix_FixpApplied_id" ON "FixpApplied" (id);
 
-CREATE TABLE "NotApplied" (
+CREATE TABLE "FixpNotApplied" (
 	id INTEGER NOT NULL,
 	from_seq_no TEXT NOT NULL,
-	count TEXT NOT NULL,
+	message_count TEXT NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_NotApplied_id" ON "NotApplied" (id);
+CREATE INDEX "ix_FixpNotApplied_id" ON "FixpNotApplied" (id);
 
-CREATE TABLE "MessageTemplate" (
+CREATE TABLE "FixpMessageTemplate" (
 	id INTEGER NOT NULL,
-	flow VARCHAR(11) NOT NULL,
-	effective_time TEXT NOT NULL,
-	version TEXT,
+	sofh_encoding_type TEXT NOT NULL,
+	effective_time TEXT,
+	template_version TEXT,
 	template TEXT NOT NULL,
+	message_kind TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_MessageTemplate_id" ON "MessageTemplate" (id);
+CREATE INDEX "ix_FixpMessageTemplate_id" ON "FixpMessageTemplate" (id);
 
-CREATE TABLE "FixpSessionMessage" (
-	id INTEGER NOT NULL,
-	"FixpSessionExchange_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("FixpSessionExchange_id") REFERENCES "FixpSessionExchange" (id)
+CREATE TABLE "FixpExchange" (
+	id TEXT NOT NULL,
+	description TEXT,
+	session_kind VARCHAR(14) NOT NULL,
+	multiplexed BOOLEAN,
+	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_FixpSessionMessage_id" ON "FixpSessionMessage" (id);
+CREATE INDEX "ix_FixpExchange_id" ON "FixpExchange" (id);
+
+CREATE TABLE "FixpStackProfile" (
+	id INTEGER NOT NULL,
+	application_recovery BOOLEAN,
+	application_fix_version TEXT,
+	service_pack TEXT,
+	message_encoding TEXT,
+	encoding_version TEXT,
+	framing TEXT,
+	shortest_keepalive_interval TEXT,
+	longest_keepalive_interval TEXT,
+	retransmission_limit TEXT,
+	tls_version TEXT,
+	credentials_format TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_FixpStackProfile_id" ON "FixpStackProfile" (id);
+
+CREATE TABLE "FixpExchangeStep" (
+	id INTEGER NOT NULL,
+	sent_by VARCHAR(9) NOT NULL,
+	application_message_count TEXT,
+	"FixpExchange_id" TEXT,
+	fixp_message_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("FixpExchange_id") REFERENCES "FixpExchange" (id),
+	FOREIGN KEY(fixp_message_id) REFERENCES "FixpMessage" (id)
+);
+CREATE INDEX "ix_FixpExchangeStep_id" ON "FixpExchangeStep" (id);
+
+CREATE TABLE "FixpRulesOfEngagement" (
+	id TEXT NOT NULL,
+	description TEXT,
+	client_stack_id INTEGER NOT NULL,
+	server_stack_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(client_stack_id) REFERENCES "FixpStackProfile" (id),
+	FOREIGN KEY(server_stack_id) REFERENCES "FixpStackProfile" (id)
+);
+CREATE INDEX "ix_FixpRulesOfEngagement_id" ON "FixpRulesOfEngagement" (id);
+
+CREATE TABLE "FixpStackProfile_extension_packs" (
+	"FixpStackProfile_id" INTEGER,
+	extension_packs TEXT,
+	PRIMARY KEY ("FixpStackProfile_id", extension_packs),
+	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
+);
+CREATE INDEX "ix_FixpStackProfile_extension_packs_extension_packs" ON "FixpStackProfile_extension_packs" (extension_packs);
+CREATE INDEX "ix_FixpStackProfile_extension_packs_FixpStackProfile_id" ON "FixpStackProfile_extension_packs" ("FixpStackProfile_id");
+
+CREATE TABLE "FixpStackProfile_message_schemas" (
+	"FixpStackProfile_id" INTEGER,
+	message_schemas TEXT,
+	PRIMARY KEY ("FixpStackProfile_id", message_schemas),
+	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
+);
+CREATE INDEX "ix_FixpStackProfile_message_schemas_FixpStackProfile_id" ON "FixpStackProfile_message_schemas" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_message_schemas_message_schemas" ON "FixpStackProfile_message_schemas" (message_schemas);
+
+CREATE TABLE "FixpStackProfile_supported_flow_types" (
+	"FixpStackProfile_id" INTEGER,
+	supported_flow_types VARCHAR(11),
+	PRIMARY KEY ("FixpStackProfile_id", supported_flow_types),
+	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
+);
+CREATE INDEX "ix_FixpStackProfile_supported_flow_types_FixpStackProfile_id" ON "FixpStackProfile_supported_flow_types" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_supported_flow_types_supported_flow_types" ON "FixpStackProfile_supported_flow_types" (supported_flow_types);
+
+CREATE TABLE "FixpStackProfile_authentication_methods" (
+	"FixpStackProfile_id" INTEGER,
+	authentication_methods TEXT,
+	PRIMARY KEY ("FixpStackProfile_id", authentication_methods),
+	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
+);
+CREATE INDEX "ix_FixpStackProfile_authentication_methods_authentication_methods" ON "FixpStackProfile_authentication_methods" (authentication_methods);
+CREATE INDEX "ix_FixpStackProfile_authentication_methods_FixpStackProfile_id" ON "FixpStackProfile_authentication_methods" ("FixpStackProfile_id");
+
+CREATE TABLE "FixpStackProfile_cipher_suites" (
+	"FixpStackProfile_id" INTEGER,
+	cipher_suites TEXT,
+	PRIMARY KEY ("FixpStackProfile_id", cipher_suites),
+	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
+);
+CREATE INDEX "ix_FixpStackProfile_cipher_suites_FixpStackProfile_id" ON "FixpStackProfile_cipher_suites" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_cipher_suites_cipher_suites" ON "FixpStackProfile_cipher_suites" (cipher_suites);
+
+CREATE TABLE "FixpStackProfile_transports" (
+	"FixpStackProfile_id" INTEGER,
+	transports TEXT,
+	PRIMARY KEY ("FixpStackProfile_id", transports),
+	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
+);
+CREATE INDEX "ix_FixpStackProfile_transports_FixpStackProfile_id" ON "FixpStackProfile_transports" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_transports_transports" ON "FixpStackProfile_transports" (transports);
+
+CREATE TABLE "FixpStackProfile_network_protocols" (
+	"FixpStackProfile_id" INTEGER,
+	network_protocols TEXT,
+	PRIMARY KEY ("FixpStackProfile_id", network_protocols),
+	FOREIGN KEY("FixpStackProfile_id") REFERENCES "FixpStackProfile" (id)
+);
+CREATE INDEX "ix_FixpStackProfile_network_protocols_FixpStackProfile_id" ON "FixpStackProfile_network_protocols" ("FixpStackProfile_id");
+CREATE INDEX "ix_FixpStackProfile_network_protocols_network_protocols" ON "FixpStackProfile_network_protocols" (network_protocols);

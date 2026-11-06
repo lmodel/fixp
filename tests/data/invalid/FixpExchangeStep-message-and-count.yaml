@@ -1,0 +1,6 @@
+# Fails at: /
+sent_by: client
+fixp_message:
+  message_kind: FixpSequence
+  next_seq_no: 1
+application_message_count: 3

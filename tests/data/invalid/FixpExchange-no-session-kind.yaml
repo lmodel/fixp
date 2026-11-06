@@ -1,0 +1,5 @@
+# Fails at: /
+id: https://example.org/fixp/exchanges/unknown
+exchange_steps:
+  - sent_by: client
+    application_message_count: 1

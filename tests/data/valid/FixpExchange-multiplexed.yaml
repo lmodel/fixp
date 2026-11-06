@@ -1,0 +1,48 @@
+id: https://example.org/fixp/exchanges/multiplexed
+description: >-
+  A session on a transport it shares with other sessions, so each side sends Context before
+  its application messages. The client's flow is unsequenced, so its Context gives no
+  sequence number, and it keeps the session alive with UnsequencedHeartbeat.
+session_kind: point_to_point
+multiplexed: true
+exchange_steps:
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpNegotiate
+      session_id: 9531985d-5d9d-49f8-9818-e811892f902b
+      request_time: 1793865600000000000
+      client_flow: Unsequenced
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpNegotiationResponse
+      session_id: 9531985d-5d9d-49f8-9818-e811892f902b
+      request_timestamp: 1793865600000000000
+      server_flow: Idempotent
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpEstablish
+      session_id: 9531985d-5d9d-49f8-9818-e811892f902b
+      request_time: 1793865600005000000
+      keepalive_interval: 1000
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpEstablishmentAck
+      session_id: 9531985d-5d9d-49f8-9818-e811892f902b
+      request_timestamp: 1793865600005000000
+      keepalive_interval: 1000
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpContext
+      session_id: 9531985d-5d9d-49f8-9818-e811892f902b
+  - sent_by: client
+    application_message_count: 2
+  - sent_by: server
+    fixp_message:
+      message_kind: FixpContext
+      session_id: 9531985d-5d9d-49f8-9818-e811892f902b
+      next_seq_no: 1
+  - sent_by: server
+    application_message_count: 2
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpUnsequencedHeartbeat

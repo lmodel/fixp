@@ -1,0 +1,52 @@
+# Where the schema departs from FIXP 1.0's resource files, and why. tests/test_coverage.py
+# skips exactly these differences, and fails when one of them is no longer there, so a mended
+# file is noticed. docs/about.md explains each one.
+
+# The Orchestra file is not well-formed XML: line 733 closes the UnsequencedHeartbeat message
+# that line 735 closes again. The coverage test reads it in lxml's recovery mode.
+orchestra_not_well_formed: true
+
+# file, message, field: what the file says, and what the schema says instead.
+presence:
+  - file: SBEschemaForFIXP.xml
+    message: Topic
+    field: KeepaliveInterval
+    file_says: required
+    schema_says: optional
+    why: Section 5's table of the Topic message has no KeepaliveInterval.
+  - file: SBEschemaForFIXP.xml
+    message: Context
+    field: NextSeqNo
+    file_says: required
+    schema_says: optional
+    why: Section 3's table of the Context message makes NextSeqNo optional.
+  - file: FixRepositoryForFIXP.xml
+    message: Topic
+    field: KeepaliveInterval
+    file_says: required
+    schema_says: optional
+    why: Section 5's table of the Topic message has no KeepaliveInterval.
+  - file: FixRepositoryForFIXP.xml
+    message: Context
+    field: NextSeqNo
+    file_says: required
+    schema_says: optional
+    why: Section 3's table of the Context message makes NextSeqNo optional.
+  - file: FixRepositoryForFIXP.xml
+    message: FinishedSending
+    field: LastSeqNo
+    file_says: required
+    schema_says: optional
+    why: >-
+      Section 4's table and the SBE schema make LastSeqNo optional; tests/fixp_rules.py asks
+      for it whenever the flow is recoverable or idempotent.
+
+range:
+  - file: SBEschemaForFIXP.xml
+    message: Topic
+    field: Flow
+    file_says: FlowType
+    schema_says: FixpMulticastFlowType
+    why: >-
+      Section 5 and the repository file's FlowCodeSet allow a topic only Recoverable and
+      Idempotent; the SBE schema reuses the four-value FlowType.

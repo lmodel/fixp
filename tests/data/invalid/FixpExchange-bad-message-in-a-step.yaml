@@ -1,0 +1,9 @@
+# Fails at: /exchange_steps/0/fixp_message
+id: https://example.org/fixp/exchanges/bad-message
+session_kind: point_to_point
+exchange_steps:
+  - sent_by: client
+    fixp_message:
+      message_kind: FixpNegotiate
+      session_id: 6513270e-269e-4d37-b2a7-4de452e6b438
+      client_flow: Recoverable

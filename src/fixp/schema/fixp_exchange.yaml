@@ -1,0 +1,106 @@
+---
+id: https://w3id.org/lmodel/fixp/schema/fixp_exchange
+name: fixp_exchange
+title: FIXP exchanges
+description: >-
+  A run of FIXP messages on one session, step by step, such as the dialogs of the
+  specification's appendix A. tests/fixp_rules.py checks an exchange against the protocol's
+  rules, which no single message can show.
+version: "1.0"
+source: https://github.com/FIXTradingCommunity/fixp-specification/tree/v1.0-STANDARD/v1-0-STANDARD
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/fixp
+prefixes:
+  fixp: https://w3id.org/lmodel/fixp/
+  linkml: https://w3id.org/linkml/
+default_prefix: fixp
+default_range: string
+
+imports:
+  - linkml:types
+  - ./fixp_core
+  - ./fixp_messages
+
+enums:
+
+  FixpSessionKind:
+    description: The two forms of FIXP session.
+    permissible_values:
+      point_to_point:
+        description: >-
+          A client and a server over a transport that carries messages both ways, with one flow
+          each way.
+        annotations:
+          fixp_section: "4"
+      multicast:
+        description: >-
+          One publisher, one flow and many listeners, on a transport that only carries messages
+          outward.
+        annotations:
+          fixp_section: "5"
+
+  FixpParty:
+    description: The side that sends a step.
+    permissible_values:
+      client:
+        description: The party that opens a session with a server.
+      server:
+        description: The party that accepts the client's session.
+      publisher:
+        description: The only party that sends in a multicast.
+
+classes:
+
+  FixpExchange:
+    tree_root: true
+    description: >-
+      The messages of one session in the order they were sent, as a test case, a worked
+      example or a captured log.
+    slots:
+      - id
+      - description
+    attributes:
+      session_kind:
+        description: Which of the two forms the session takes.
+        range: FixpSessionKind
+        required: true
+      multiplexed:
+        description: >-
+          Whether the transport carries other sessions too, so that Context takes the place of
+          Sequence.
+        range: boolean
+      exchange_steps:
+        description: Each step of the exchange, in order.
+        range: FixpExchangeStep
+        multivalued: true
+        inlined_as_list: true
+        required: true
+        minimum_cardinality: 1
+
+  FixpExchangeStep:
+    description: >-
+      One step: a FIXP message, or a run of application messages whose content FIXP does not
+      define, and the side that sent it.
+    attributes:
+      sent_by:
+        description: The side that sent this step.
+        range: FixpParty
+        required: true
+      fixp_message:
+        description: The FIXP message sent.
+        range: FixpMessage
+        inlined: true
+      application_message_count:
+        description: >-
+          How many application messages went out one after another. On a sequenced flow each
+          takes the next sequence number.
+        range: fixp_u32
+        minimum_value: 1
+    exactly_one_of:
+      - slot_conditions:
+          fixp_message:
+            value_presence: PRESENT
+      - slot_conditions:
+          application_message_count:
+            value_presence: PRESENT

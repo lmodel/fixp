@@ -1,326 +1,498 @@
 {
     "$defs": {
-        "Applied": {
+        "FixpApplied": {
             "additionalProperties": false,
-            "description": "FIXP session message 'Applied'.",
+            "description": "An optional application message telling the party that sends an idempotent flow which of its operations took effect, where no business message already says so.",
             "properties": {
-                "count": {
-                    "description": "FIX field 'Count' (tag 14).",
+                "from_seq_no": {
+                    "description": "Where the run of operations that took effect starts.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 },
-                "from_seq_no": {
-                    "description": "FIX field 'FromSeqNo' (tag 13).",
+                "message_count": {
+                    "description": "How many operations in a row took effect.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
                     "type": "integer"
+                },
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpApplied"
+                    ],
+                    "type": "string"
                 }
             },
             "required": [
                 "from_seq_no",
-                "count"
+                "message_count",
+                "message_kind"
             ],
-            "title": "Applied",
+            "title": "FixpApplied",
             "type": "object"
         },
-        "ClientFlowCodeSet": {
-            "description": "FIX Orchestra codeSet 'ClientFlowCodeSet' (id=3, type=int).",
-            "enum": [
-                "RECOVERABLE",
-                "IDEMPOTENT",
-                "UNSEQUENCED",
-                "NONE"
-            ],
-            "title": "ClientFlowCodeSet",
-            "type": "string"
-        },
-        "ClientFlowFieldEnum": {
-            "description": "Inline FIX field enumeration for field 'ClientFlow' (id=3).",
-            "enum": [
-                "RECOVERABLE",
-                "IDEMPOTENT",
-                "UNSEQUENCED",
-                "NONE"
-            ],
-            "title": "ClientFlowFieldEnum",
-            "type": "string"
-        },
-        "Context": {
+        "FixpContext": {
             "additionalProperties": false,
-            "description": "FIXP session message 'Context'.",
+            "description": "On a transport that several sessions share, names the session the following messages belong to and, when the flow is sequenced, where its numbering continues.",
             "properties": {
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpContext"
+                    ],
+                    "type": "string"
+                },
                 "next_seq_no": {
-                    "description": "FIX field 'NextSeqNo' (tag 11).",
-                    "type": "integer"
+                    "description": "The number the sender's next application message will carry.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 }
             },
             "required": [
                 "session_id",
-                "next_seq_no"
+                "message_kind"
             ],
-            "title": "Context",
+            "title": "FixpContext",
             "type": "object"
         },
-        "Establish": {
+        "FixpEstablish": {
             "additionalProperties": false,
-            "description": "FIXP session message 'Establish'.",
+            "description": "A client's request to tie a negotiated session to the very transport this message arrives on. After a disconnection it is sent again to re-bind.",
             "properties": {
                 "credentials": {
-                    "description": "FIX field 'Credentials' (tag 4).",
+                    "description": "Data that identifies the client, in a form the two parties agree on.",
+                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "keepalive_interval": {
-                    "description": "FIX field 'KeepaliveInterval' (tag 9).",
+                    "description": "The longest the client stays silent, in milliseconds, before a heartbeat.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
                     "type": "integer"
                 },
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpEstablish"
+                    ],
+                    "type": "string"
+                },
                 "next_seq_no": {
-                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "description": "When the client's recoverable flow is bound again, the number its next application message will carry.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": [
                         "integer",
                         "null"
                     ]
                 },
-                "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
-                    "type": "string"
-                },
-                "timestamp": {
-                    "description": "FIX field 'Timestamp' (tag 2).",
+                "request_time": {
+                    "description": "When the sender made this request. The answer repeats it, to show what it answers.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
+                },
+                "session_id": {
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": "string"
                 }
             },
             "required": [
                 "session_id",
-                "timestamp",
-                "keepalive_interval"
+                "request_time",
+                "keepalive_interval",
+                "message_kind"
             ],
-            "title": "Establish",
+            "title": "FixpEstablish",
             "type": "object"
         },
-        "EstablishmentAck": {
+        "FixpEstablishmentAck": {
             "additionalProperties": false,
-            "description": "FIXP session message 'EstablishmentAck'.",
+            "description": "A server's acceptance of the binding. From here, application messages may flow.",
             "properties": {
                 "keepalive_interval": {
-                    "description": "FIX field 'KeepaliveInterval' (tag 9).",
+                    "description": "The longest the server stays silent, in milliseconds, before a heartbeat.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
                     "type": "integer"
                 },
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpEstablishmentAck"
+                    ],
+                    "type": "string"
+                },
                 "next_seq_no": {
-                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "description": "If the server's flow is recoverable, the number its next application message will carry, so the client can ask for what it missed.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": [
                         "integer",
                         "null"
                     ]
                 },
                 "request_timestamp": {
-                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "description": "The request_time of the Establish this message accepts.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 }
             },
             "required": [
                 "session_id",
                 "request_timestamp",
-                "keepalive_interval"
+                "keepalive_interval",
+                "message_kind"
             ],
-            "title": "EstablishmentAck",
+            "title": "FixpEstablishmentAck",
             "type": "object"
         },
-        "EstablishmentReject": {
+        "FixpEstablishmentReject": {
             "additionalProperties": false,
-            "description": "FIXP session message 'EstablishmentReject'.",
+            "description": "A server's refusal of the binding.",
             "properties": {
                 "establishment_reject_code": {
-                    "$ref": "#/$defs/EstablishmentRejectCodeFieldEnum",
-                    "description": "FIX field 'EstablishmentRejectCode' (tag 12)."
+                    "$ref": "#/$defs/FixpEstablishmentRejectCode",
+                    "description": "Why the server refused to bind the session."
                 },
-                "reason": {
-                    "description": "FIX field 'Reason' (tag 8).",
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpEstablishmentReject"
+                    ],
+                    "type": "string"
+                },
+                "reason_text": {
+                    "description": "Free text that says more about the code beside it.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "request_timestamp": {
-                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "description": "The request_time of the Establish this message refuses.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 }
             },
             "required": [
                 "session_id",
                 "request_timestamp",
-                "establishment_reject_code"
+                "establishment_reject_code",
+                "message_kind"
             ],
-            "title": "EstablishmentReject",
+            "title": "FixpEstablishmentReject",
             "type": "object"
         },
-        "EstablishmentRejectCodeCodeSet": {
-            "description": "FIX Orchestra codeSet 'EstablishmentRejectCodeCodeSet' (id=12, type=int).",
+        "FixpEstablishmentRejectCode": {
+            "description": "Why a server would not bind the session to this transport.",
             "enum": [
-                "UNNEGOTIATED",
-                "ALREADY_ESTABLISHED",
-                "SESSION_BLOCKED",
-                "KEEPALIVE_INTERVAL",
-                "CREDENTIALS",
-                "UNSPECIFIED"
+                "Unnegotiated",
+                "AlreadyEstablished",
+                "SessionBlocked",
+                "KeepaliveInterval",
+                "Credentials",
+                "Unspecified"
             ],
-            "title": "EstablishmentRejectCodeCodeSet",
+            "title": "FixpEstablishmentRejectCode",
             "type": "string"
         },
-        "EstablishmentRejectCodeFieldEnum": {
-            "description": "Inline FIX field enumeration for field 'EstablishmentRejectCode' (id=12).",
-            "enum": [
-                "UNNEGOTIATED",
-                "ALREADY_ESTABLISHED",
-                "SESSION_BLOCKED",
-                "KEEPALIVE_INTERVAL",
-                "CREDENTIALS",
-                "UNSPECIFIED"
-            ],
-            "title": "EstablishmentRejectCodeFieldEnum",
-            "type": "string"
-        },
-        "FinishedReceiving": {
+        "FixpExchange": {
             "additionalProperties": false,
-            "description": "FIXP session message 'FinishedReceiving'.",
+            "description": "The messages of one session in the order they were sent, as a test case, a worked example or a captured log.",
             "properties": {
+                "description": {
+                    "description": "Free text about a record, for the people who read it.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "exchange_steps": {
+                    "description": "Each step of the exchange, in order.",
+                    "items": {
+                        "$ref": "#/$defs/FixpExchangeStep"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                },
+                "id": {
+                    "description": "The identifier of an exchange or a rules-of-engagement record.",
+                    "type": "string"
+                },
+                "multiplexed": {
+                    "description": "Whether the transport carries other sessions too, so that Context takes the place of Sequence.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "session_kind": {
+                    "$ref": "#/$defs/FixpSessionKind",
+                    "description": "Which of the two forms the session takes."
+                }
+            },
+            "required": [
+                "id",
+                "session_kind",
+                "exchange_steps"
+            ],
+            "title": "FixpExchange",
+            "type": "object"
+        },
+        "FixpExchangeStep": {
+            "additionalProperties": false,
+            "description": "One step: a FIXP message, or a run of application messages whose content FIXP does not define, and the side that sent it.",
+            "oneOf": [
+                {
+                    "properties": {
+                        "fixp_message": {}
+                    },
+                    "required": [
+                        "fixp_message"
+                    ]
+                },
+                {
+                    "properties": {
+                        "application_message_count": {}
+                    },
+                    "required": [
+                        "application_message_count"
+                    ]
+                }
+            ],
+            "properties": {
+                "application_message_count": {
+                    "description": "How many application messages went out one after another. On a sequenced flow each takes the next sequence number.",
+                    "maximum": 4294967295,
+                    "minimum": 1,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "fixp_message": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/FixpNegotiate"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpNegotiationResponse"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpNegotiationReject"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpTopic"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpEstablish"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpEstablishmentAck"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpEstablishmentReject"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpSequence"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpContext"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpUnsequencedHeartbeat"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpRetransmitRequest"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpRetransmission"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpRetransmitReject"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpTerminate"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpFinishedSending"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpFinishedReceiving"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpApplied"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpNotApplied"
+                        },
+                        {
+                            "$ref": "#/$defs/FixpMessageTemplate"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The FIXP message sent."
+                },
+                "sent_by": {
+                    "$ref": "#/$defs/FixpParty",
+                    "description": "The side that sent this step."
+                }
+            },
+            "required": [
+                "sent_by"
+            ],
+            "title": "FixpExchangeStep",
+            "type": "object"
+        },
+        "FixpFinishedReceiving": {
+            "additionalProperties": false,
+            "description": "Answers FinishedSending once the last message of the peer's flow has been processed. After it the session is finalized and its identifier is spent.",
+            "properties": {
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpFinishedReceiving"
+                    ],
+                    "type": "string"
+                },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 }
             },
             "required": [
-                "session_id"
+                "session_id",
+                "message_kind"
             ],
-            "title": "FinishedReceiving",
+            "title": "FixpFinishedReceiving",
             "type": "object"
         },
-        "FinishedSending": {
+        "FixpFinishedSending": {
             "additionalProperties": false,
-            "description": "FIXP session message 'FinishedSending'.",
+            "description": "Says that the sender's flow has carried its last application message, which begins finalization. It is repeated as the heartbeat until the answer comes.",
             "properties": {
                 "last_seq_no": {
-                    "description": "FIX field 'LastSeqNo' (tag 17).",
-                    "type": "integer"
+                    "description": "The number carried by the flow's final application message.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpFinishedSending"
+                    ],
+                    "type": "string"
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 }
             },
             "required": [
                 "session_id",
-                "last_seq_no"
+                "message_kind"
             ],
-            "title": "FinishedSending",
+            "title": "FixpFinishedSending",
             "type": "object"
         },
-        "FixpSessionExchange": {
+        "FixpFlowType": {
+            "description": "How surely a flow is delivered. A flow is what one side of a session sends the other, leaving out session messages.",
+            "enum": [
+                "Recoverable",
+                "Idempotent",
+                "Unsequenced",
+                "None"
+            ],
+            "title": "FixpFlowType",
+            "type": "string"
+        },
+        "FixpMessage": {
             "additionalProperties": false,
-            "description": "Top-level container for a FIXP session exchange - holds an ordered list of session messages plus optional metadata.",
+            "description": "One FIXP message, as its fields would be read from the wire before or after encoding.",
             "properties": {
-                "creator": {
-                    "description": "Creator of this exchange document.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "date": {
-                    "description": "Date associated with this exchange document.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "messages": {
-                    "description": "Ordered sequence of FIXP session messages.",
-                    "items": {
-                        "$ref": "#/$defs/FixpSessionMessage"
-                    },
-                    "type": [
-                        "array",
-                        "null"
-                    ]
-                },
-                "publisher": {
-                    "description": "Publisher of this exchange document.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "rights": {
-                    "description": "Rights statement for this exchange document.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "title": {
-                    "description": "Title of this exchange document.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpMessage"
+                    ],
+                    "type": "string"
                 }
             },
-            "title": "FixpSessionExchange",
+            "required": [
+                "message_kind"
+            ],
+            "title": "FixpMessage",
             "type": "object"
         },
-        "FixpSessionMessage": {
+        "FixpMessageTemplate": {
             "additionalProperties": false,
-            "description": "Abstract base class for every FIXP session message.",
-            "title": "FixpSessionMessage",
-            "type": "object"
-        },
-        "FlowCodeSet": {
-            "description": "FIX Orchestra codeSet 'FlowCodeSet' (id=18, type=int).",
-            "enum": [
-                "RECOVERABLE",
-                "IDEMPOTENT"
-            ],
-            "title": "FlowCodeSet",
-            "type": "string"
-        },
-        "FlowFieldEnum": {
-            "description": "Inline FIX field enumeration for field 'Flow' (id=18).",
-            "enum": [
-                "RECOVERABLE",
-                "IDEMPOTENT"
-            ],
-            "title": "FlowFieldEnum",
-            "type": "string"
-        },
-        "MessageTemplate": {
-            "additionalProperties": false,
-            "description": "FIXP session message 'MessageTemplate'.",
+            "description": "Hands the peer a template or schema it needs to read messages in an encoding that templates drive. There is no fixed moment for sending it.",
             "properties": {
                 "effective_time": {
-                    "description": "FIX field 'EffectiveTime' (tag 19).",
-                    "type": "integer"
+                    "description": "When the template comes into force. Without it, the template applies at once.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
                 },
-                "flow": {
-                    "$ref": "#/$defs/FlowFieldEnum",
-                    "description": "FIX field 'Flow' (tag 18)."
-                },
-                "template": {
-                    "description": "FIX field 'Template' (tag 22).",
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpMessageTemplate"
+                    ],
                     "type": "string"
                 },
-                "version": {
-                    "description": "FIX field 'Version' (tag 20).",
+                "sofh_encoding_type": {
+                    "description": "The code that the Simple Open Framing Header registers for the encoding a template is written for.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "template": {
+                    "description": "The template itself, as octets.",
+                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+                    "type": "string"
+                },
+                "template_version": {
+                    "description": "The template's version and format, for an encoding whose templates do not state them.",
+                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
                     "type": [
                         "string",
                         "null"
@@ -328,201 +500,238 @@
                 }
             },
             "required": [
-                "flow",
-                "effective_time",
-                "template"
+                "sofh_encoding_type",
+                "template",
+                "message_kind"
             ],
-            "title": "MessageTemplate",
+            "title": "FixpMessageTemplate",
             "type": "object"
         },
-        "Negotiate": {
+        "FixpMulticastFlowType": {
+            "description": "The delivery guarantee a multicast topic announces for its flow.",
+            "enum": [
+                "Recoverable",
+                "Idempotent"
+            ],
+            "title": "FixpMulticastFlowType",
+            "type": "string"
+        },
+        "FixpNegotiate": {
             "additionalProperties": false,
-            "description": "FIXP session message 'Negotiate'.",
+            "description": "A client's request to create a session under an identifier it has never used, stating the flow type it will send.",
             "properties": {
                 "client_flow": {
-                    "$ref": "#/$defs/ClientFlowFieldEnum",
-                    "description": "FIX field 'ClientFlow' (tag 3)."
+                    "$ref": "#/$defs/FixpFlowType",
+                    "description": "The flow type of the application messages the client will send."
                 },
                 "credentials": {
-                    "description": "FIX field 'Credentials' (tag 4).",
+                    "description": "Data that identifies the client, in a form the two parties agree on.",
+                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
-                "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpNegotiate"
+                    ],
                     "type": "string"
                 },
-                "timestamp": {
-                    "description": "FIX field 'Timestamp' (tag 2).",
+                "request_time": {
+                    "description": "When the sender made this request. The answer repeats it, to show what it answers.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
+                },
+                "session_id": {
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": "string"
                 }
             },
             "required": [
                 "session_id",
-                "timestamp",
-                "client_flow"
+                "request_time",
+                "client_flow",
+                "message_kind"
             ],
-            "title": "Negotiate",
+            "title": "FixpNegotiate",
             "type": "object"
         },
-        "NegotiationReject": {
+        "FixpNegotiationReject": {
             "additionalProperties": false,
-            "description": "FIXP session message 'NegotiationReject'.",
+            "description": "A server's refusal to create a session. The server sends nothing more and closes the transport.",
             "properties": {
-                "negotiation_reject_code": {
-                    "$ref": "#/$defs/NegotiationRejectCodeFieldEnum",
-                    "description": "FIX field 'NegotiationRejectCode' (tag 7)."
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpNegotiationReject"
+                    ],
+                    "type": "string"
                 },
-                "reason": {
-                    "description": "FIX field 'Reason' (tag 8).",
+                "negotiation_reject_code": {
+                    "$ref": "#/$defs/FixpNegotiationRejectCode",
+                    "description": "Why the server refused to create the session."
+                },
+                "reason_text": {
+                    "description": "Free text that says more about the code beside it.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "request_timestamp": {
-                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "description": "The request_time of the Negotiate this message refuses.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 }
             },
             "required": [
                 "session_id",
                 "request_timestamp",
-                "negotiation_reject_code"
+                "negotiation_reject_code",
+                "message_kind"
             ],
-            "title": "NegotiationReject",
+            "title": "FixpNegotiationReject",
             "type": "object"
         },
-        "NegotiationRejectCodeCodeSet": {
-            "description": "FIX Orchestra codeSet 'NegotiationRejectCodeCodeSet' (id=7, type=int).",
+        "FixpNegotiationRejectCode": {
+            "description": "Why a server refused to create a session.",
             "enum": [
-                "CREDENTIALS",
-                "FLOW_TYPE_NOT_SUPPORTED",
-                "DUPLICATE_ID",
-                "UNSPECIFIED"
+                "Credentials",
+                "FlowTypeNotSupported",
+                "DuplicateId",
+                "Unspecified"
             ],
-            "title": "NegotiationRejectCodeCodeSet",
+            "title": "FixpNegotiationRejectCode",
             "type": "string"
         },
-        "NegotiationRejectCodeFieldEnum": {
-            "description": "Inline FIX field enumeration for field 'NegotiationRejectCode' (id=7).",
-            "enum": [
-                "CREDENTIALS",
-                "FLOW_TYPE_NOT_SUPPORTED",
-                "DUPLICATE_ID",
-                "UNSPECIFIED"
-            ],
-            "title": "NegotiationRejectCodeFieldEnum",
-            "type": "string"
-        },
-        "NegotiationResponse": {
+        "FixpNegotiationResponse": {
             "additionalProperties": false,
-            "description": "FIXP session message 'NegotiationResponse'.",
+            "description": "A server's acceptance of a new session, stating the flow type it will send back.",
             "properties": {
                 "credentials": {
-                    "description": "FIX field 'Credentials' (tag 4).",
+                    "description": "Data that identifies the server to the client, for mutual authentication.",
+                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpNegotiationResponse"
+                    ],
+                    "type": "string"
+                },
                 "request_timestamp": {
-                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "description": "The request_time of the Negotiate this message accepts.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "server_flow": {
-                    "$ref": "#/$defs/ClientFlowCodeSet",
-                    "description": "FIX field 'ServerFlow' (tag 6)."
+                    "$ref": "#/$defs/FixpFlowType",
+                    "description": "The flow type of the application messages the server will send."
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 }
             },
             "required": [
                 "session_id",
                 "request_timestamp",
-                "server_flow"
+                "server_flow",
+                "message_kind"
             ],
-            "title": "NegotiationResponse",
+            "title": "FixpNegotiationResponse",
             "type": "object"
         },
-        "NotApplied": {
+        "FixpNotApplied": {
             "additionalProperties": false,
-            "description": "FIXP session message 'NotApplied'.",
+            "description": "An application message telling the party that sends an idempotent flow about a gap: a run of operations that did not take effect. That party's application decides what to do.",
             "properties": {
-                "count": {
-                    "description": "FIX field 'Count' (tag 14).",
+                "from_seq_no": {
+                    "description": "Where the run of operations that failed to take effect starts.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 },
-                "from_seq_no": {
-                    "description": "FIX field 'FromSeqNo' (tag 13).",
+                "message_count": {
+                    "description": "How many operations in a row did not take effect.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
                     "type": "integer"
+                },
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpNotApplied"
+                    ],
+                    "type": "string"
                 }
             },
             "required": [
                 "from_seq_no",
-                "count"
+                "message_count",
+                "message_kind"
             ],
-            "title": "NotApplied",
+            "title": "FixpNotApplied",
             "type": "object"
         },
-        "RestransmitReject": {
+        "FixpParty": {
+            "description": "The side that sends a step.",
+            "enum": [
+                "client",
+                "server",
+                "publisher"
+            ],
+            "title": "FixpParty",
+            "type": "string"
+        },
+        "FixpRetransmission": {
             "additionalProperties": false,
-            "description": "FIXP session message 'RestransmitReject'.",
+            "description": "Introduces a batch of resent messages, which are numbered by counting from the number it gives. A request may be answered in several batches.",
             "properties": {
-                "reason": {
-                    "description": "FIX field 'Reason' (tag 8).",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "request_timestamp": {
-                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                "message_count": {
+                    "description": "How many resent messages the batch holds.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
                     "type": "integer"
                 },
-                "retransmit_reject_code": {
-                    "$ref": "#/$defs/RetransmitRejectCodeFieldEnum",
-                    "description": "FIX field 'RetransmitRejectCode' (tag 15)."
-                },
-                "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpRetransmission"
+                    ],
                     "type": "string"
-                }
-            },
-            "required": [
-                "session_id",
-                "request_timestamp",
-                "retransmit_reject_code"
-            ],
-            "title": "RestransmitReject",
-            "type": "object"
-        },
-        "Retransmission": {
-            "additionalProperties": false,
-            "description": "FIXP session message 'Retransmission'.",
-            "properties": {
-                "count": {
-                    "description": "FIX field 'Count' (tag 14).",
-                    "type": "integer"
                 },
                 "next_seq_no": {
-                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "description": "The number the batch's first message carries.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "request_timestamp": {
-                    "description": "FIX field 'RequestTimestamp' (tag 5).",
+                    "description": "The request_time of the RetransmitRequest this batch answers.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 }
             },
@@ -530,351 +739,490 @@
                 "session_id",
                 "request_timestamp",
                 "next_seq_no",
-                "count"
+                "message_count",
+                "message_kind"
             ],
-            "title": "Retransmission",
+            "title": "FixpRetransmission",
             "type": "object"
         },
-        "RetransmitRejectCodeCodeSet": {
-            "description": "FIX Orchestra codeSet 'RetransmitRejectCodeCodeSet' (id=15, type=int).",
-            "enum": [
-                "OUT_OF_RANGE",
-                "INVALID_SESSION",
-                "REQUEST_LIMIT_EXCEEDED"
-            ],
-            "title": "RetransmitRejectCodeCodeSet",
-            "type": "string"
-        },
-        "RetransmitRejectCodeFieldEnum": {
-            "description": "Inline FIX field enumeration for field 'RetransmitRejectCode' (id=15).",
-            "enum": [
-                "OUT_OF_RANGE",
-                "INVALID_SESSION",
-                "REQUEST_LIMIT_EXCEEDED"
-            ],
-            "title": "RetransmitRejectCodeFieldEnum",
-            "type": "string"
-        },
-        "RetransmitRequest": {
+        "FixpRetransmitReject": {
             "additionalProperties": false,
-            "description": "FIXP session message 'RetransmitRequest'.",
+            "description": "Refuses a RetransmitRequest, with a code saying why.",
             "properties": {
-                "count": {
-                    "description": "FIX field 'Count' (tag 14).",
-                    "type": "integer"
-                },
-                "from_seq_no": {
-                    "description": "FIX field 'FromSeqNo' (tag 13).",
-                    "type": "integer"
-                },
-                "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpRetransmitReject"
+                    ],
                     "type": "string"
                 },
-                "timestamp": {
-                    "description": "FIX field 'Timestamp' (tag 2).",
+                "reason_text": {
+                    "description": "Free text that says more about the code beside it.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "request_timestamp": {
+                    "description": "The request_time of the RetransmitRequest this message refuses.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
+                },
+                "retransmit_reject_code": {
+                    "$ref": "#/$defs/FixpRetransmitRejectCode",
+                    "description": "Why the sender will not resend the range."
+                },
+                "session_id": {
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": "string"
                 }
             },
             "required": [
                 "session_id",
-                "timestamp",
-                "from_seq_no",
-                "count"
+                "request_timestamp",
+                "retransmit_reject_code",
+                "message_kind"
             ],
-            "title": "RetransmitRequest",
+            "title": "FixpRetransmitReject",
             "type": "object"
         },
-        "SbeCharacterStringComposite": {
+        "FixpRetransmitRejectCode": {
+            "description": "Why a party will not resend the messages its peer asked for.",
+            "enum": [
+                "OutOfRange",
+                "InvalidSession",
+                "RequestLimitExceeded"
+            ],
+            "title": "FixpRetransmitRejectCode",
+            "type": "string"
+        },
+        "FixpRetransmitRequest": {
             "additionalProperties": false,
-            "description": "Variable length text",
+            "description": "Asks the peer to resend some messages of its recoverable flow. A party has at most one such request open at a time.",
             "properties": {
-                "length": {
-                    "description": "SBE member 'length' (primitiveType=uint16, semanticType=Length).",
-                    "type": [
-                        "integer",
-                        "null"
-                    ]
+                "from_seq_no": {
+                    "description": "Where the requested run starts, by sequence number.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
+                    "type": "integer"
                 },
-                "var_data": {
-                    "description": "SBE member 'varData' (primitiveType=char, semanticType=String).",
+                "message_count": {
+                    "description": "How many messages are asked for.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpRetransmitRequest"
+                    ],
+                    "type": "string"
+                },
+                "request_time": {
+                    "description": "When the request was made, which also tells this request apart from others.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "session_id": {
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "session_id",
+                "request_time",
+                "from_seq_no",
+                "message_count",
+                "message_kind"
+            ],
+            "title": "FixpRetransmitRequest",
+            "type": "object"
+        },
+        "FixpRulesOfEngagement": {
+            "additionalProperties": false,
+            "description": "What two counterparties agree on for one FIXP service, layer by layer, for the client and for the server.",
+            "properties": {
+                "client_stack": {
+                    "$ref": "#/$defs/FixpStackProfile",
+                    "description": "What the client side uses."
+                },
+                "description": {
+                    "description": "Free text about a record, for the people who read it.",
                     "type": [
                         "string",
                         "null"
                     ]
+                },
+                "id": {
+                    "description": "The identifier of an exchange or a rules-of-engagement record.",
+                    "type": "string"
+                },
+                "server_stack": {
+                    "$ref": "#/$defs/FixpStackProfile",
+                    "description": "What the server side uses."
                 }
             },
-            "title": "SbeCharacterStringComposite",
+            "required": [
+                "id",
+                "client_stack",
+                "server_stack"
+            ],
+            "title": "FixpRulesOfEngagement",
             "type": "object"
         },
-        "SbeEstablishmentRejectCode": {
-            "description": "SBE enum 'EstablishmentRejectCode' (encodingType=uint8).",
-            "enum": [
-                "UNNEGOTIATED",
-                "ALREADY_ESTABLISHED",
-                "SESSION_BLOCKED",
-                "KEEPALIVE_INTERVAL",
-                "CREDENTIALS",
-                "UNSPECIFIED"
-            ],
-            "title": "SbeEstablishmentRejectCode",
-            "type": "string"
-        },
-        "SbeFlowType": {
-            "description": "SBE enum 'FlowType' (encodingType=uint8).",
-            "enum": [
-                "RECOVERABLE",
-                "IDEMPOTENT",
-                "UNSEQUENCED",
-                "NONE"
-            ],
-            "title": "SbeFlowType",
-            "type": "string"
-        },
-        "SbeMessageHeaderComposite": {
+        "FixpSequence": {
             "additionalProperties": false,
-            "description": "Message identifiers and length of message root",
+            "description": "Starts the numbering of a sequenced flow, so that the application messages after it are numbered by counting up from the value it carries. Sent when idle, it is also the heartbeat.",
             "properties": {
-                "block_length": {
-                    "description": "SBE member 'blockLength' (primitiveType=uint16).",
-                    "type": [
-                        "integer",
-                        "null"
-                    ]
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpSequence"
+                    ],
+                    "type": "string"
                 },
-                "schema_id": {
-                    "description": "SBE member 'schemaId' (primitiveType=uint16).",
-                    "type": [
-                        "integer",
-                        "null"
-                    ]
-                },
-                "schema_version": {
-                    "description": "SBE member 'version' (primitiveType=uint16).",
-                    "type": [
-                        "integer",
-                        "null"
-                    ]
-                },
-                "template_id": {
-                    "description": "SBE member 'templateId' (primitiveType=uint16).",
-                    "type": [
-                        "integer",
-                        "null"
-                    ]
-                }
-            },
-            "title": "SbeMessageHeaderComposite",
-            "type": "object"
-        },
-        "SbeNegotiationRejectCode": {
-            "description": "SBE enum 'NegotiationRejectCode' (encodingType=uint8).",
-            "enum": [
-                "CREDENTIALS",
-                "FLOW_TYPE_NOT_SUPPORTED",
-                "DUPLICATE_ID",
-                "UNSPECIFIED"
-            ],
-            "title": "SbeNegotiationRejectCode",
-            "type": "string"
-        },
-        "SbeObjectComposite": {
-            "additionalProperties": false,
-            "description": "Variable length data, also know as octect string",
-            "properties": {
-                "length": {
-                    "description": "SBE member 'length' (primitiveType=uint16, semanticType=Length).",
-                    "type": [
-                        "integer",
-                        "null"
-                    ]
-                },
-                "var_data": {
-                    "description": "SBE member 'varData' (primitiveType=uint8, semanticType=data).",
-                    "type": [
-                        "integer",
-                        "null"
-                    ]
-                }
-            },
-            "title": "SbeObjectComposite",
-            "type": "object"
-        },
-        "SbeRetransmitRejectCode": {
-            "description": "SBE enum 'RetransmitRejectCode' (encodingType=uint8).",
-            "enum": [
-                "OUT_OF_RANGE",
-                "INVALID_SESSION",
-                "REQUEST_LIMIT_EXCEEDED"
-            ],
-            "title": "SbeRetransmitRejectCode",
-            "type": "string"
-        },
-        "SbeTerminationCode": {
-            "description": "SBE enum 'TerminationCode' (encodingType=uint8).",
-            "enum": [
-                "FINISHED",
-                "UNSPECIFIED_ERROR",
-                "RE_REQUEST_OUT_OF_BOUNDS",
-                "RE_REQUEST_IN_PROGRESS"
-            ],
-            "title": "SbeTerminationCode",
-            "type": "string"
-        },
-        "Sequence": {
-            "additionalProperties": false,
-            "description": "FIXP session message 'Sequence'.",
-            "properties": {
                 "next_seq_no": {
-                    "description": "FIX field 'NextSeqNo' (tag 11).",
+                    "description": "The number the sender's next application message will carry.",
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
                     "type": "integer"
                 }
             },
             "required": [
-                "next_seq_no"
+                "next_seq_no",
+                "message_kind"
             ],
-            "title": "Sequence",
+            "title": "FixpSequence",
             "type": "object"
         },
-        "Terminate": {
+        "FixpSessionKind": {
+            "description": "The two forms of FIXP session.",
+            "enum": [
+                "point_to_point",
+                "multicast"
+            ],
+            "title": "FixpSessionKind",
+            "type": "string"
+        },
+        "FixpStackProfile": {
             "additionalProperties": false,
-            "description": "FIXP session message 'Terminate'.",
+            "description": "One side's choices at each layer of the stack: application, presentation, session, security and transport.",
             "properties": {
-                "reason": {
-                    "description": "FIX field 'Reason' (tag 8).",
+                "application_fix_version": {
+                    "description": "The FIX version of the application messages, such as FIX.Latest.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "application_recovery": {
+                    "description": "Whether this side's applications recover lost messages themselves.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "authentication_methods": {
+                    "description": "How the parties prove who they are.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "cipher_suites": {
+                    "description": "The cipher suites allowed.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "credentials_format": {
+                    "description": "The form of the credentials this side sends, and how its peer checks them.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "encoding_version": {
+                    "description": "The version of that encoding.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "extension_packs": {
+                    "description": "The FIX extension packs in use.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "framing": {
+                    "description": "What marks where one message ends and the next begins, such as the Simple Open Framing Header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "longest_keepalive_interval": {
+                    "description": "The longest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "message_encoding": {
+                    "description": "How messages are encoded, such as Simple Binary Encoding.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "message_schemas": {
+                    "description": "The message schemas or templates the encoding uses.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "network_protocols": {
+                    "description": "Any other network protocols in use.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "retransmission_limit": {
+                    "description": "The most messages this side resends in answer to one RetransmitRequest.",
+                    "maximum": 4294967295,
+                    "minimum": 1,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "service_pack": {
+                    "description": "The FIX service pack, where the version has them.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "shortest_keepalive_interval": {
+                    "description": "The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "supported_flow_types": {
+                    "description": "The flow types this side accepts or offers.",
+                    "items": {
+                        "$ref": "#/$defs/FixpFlowType"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "tls_version": {
+                    "description": "The TLS version that protects the transport.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "transports": {
+                    "description": "The transports this side can use, for example TCP, or UDP with multicast.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "FixpStackProfile",
+            "type": "object"
+        },
+        "FixpTerminate": {
+            "additionalProperties": false,
+            "description": "Releases the session from its transport without ending the session, which can be bound again later. The peer answers with a Terminate, and after its own Terminate a party sends nothing more.",
+            "properties": {
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpTerminate"
+                    ],
+                    "type": "string"
+                },
+                "reason_text": {
+                    "description": "Free text that says more about the code beside it.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
                     "type": "string"
                 },
                 "termination_code": {
-                    "$ref": "#/$defs/TerminationCodeFieldEnum",
-                    "description": "FIX field 'TerminationCode' (tag 16)."
+                    "$ref": "#/$defs/FixpTerminationCode",
+                    "description": "Why the party releases the session from the transport."
                 }
             },
             "required": [
                 "session_id",
-                "termination_code"
+                "termination_code",
+                "message_kind"
             ],
-            "title": "Terminate",
+            "title": "FixpTerminate",
             "type": "object"
         },
-        "TerminationCodeCodeSet": {
-            "description": "FIX Orchestra codeSet 'TerminationCodeCodeSet' (id=16, type=int).",
+        "FixpTerminationCode": {
+            "description": "Why a party releases a session from its transport.",
             "enum": [
-                "FINISHED",
-                "UNSPECIFIED_ERROR",
-                "RE_REQUEST_OUT_OF_BOUNDS",
-                "RE_REQUEST_IN_PROGRESS"
+                "Finished",
+                "UnspecifiedError",
+                "ReRequestOutOfBounds",
+                "ReRequestInProgress"
             ],
-            "title": "TerminationCodeCodeSet",
+            "title": "FixpTerminationCode",
             "type": "string"
         },
-        "TerminationCodeFieldEnum": {
-            "description": "Inline FIX field enumeration for field 'TerminationCode' (id=16).",
-            "enum": [
-                "FINISHED",
-                "UNSPECIFIED_ERROR",
-                "RE_REQUEST_OUT_OF_BOUNDS",
-                "RE_REQUEST_IN_PROGRESS"
-            ],
-            "title": "TerminationCodeFieldEnum",
-            "type": "string"
-        },
-        "Topic": {
+        "FixpTopic": {
             "additionalProperties": false,
-            "description": "FIXP session message 'Topic'.",
+            "description": "A multicast publisher's notice that starts a flow and ties the session's short-lived identifier to a lasting subject. It is repeated so that late listeners can join.",
             "properties": {
-                "classification": {
-                    "description": "FIX field 'Classification' (tag 10).",
-                    "type": "string"
-                },
                 "flow": {
-                    "$ref": "#/$defs/FlowFieldEnum",
-                    "description": "FIX field 'Flow' (tag 18)."
+                    "$ref": "#/$defs/FixpMulticastFlowType",
+                    "description": "The flow type of a multicast topic's messages."
                 },
                 "keepalive_interval": {
-                    "description": "FIX field 'KeepaliveInterval' (tag 9).",
-                    "type": "integer"
+                    "description": "The publisher's heartbeat interval, in milliseconds.",
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpTopic"
+                    ],
+                    "type": "string"
                 },
                 "session_id": {
-                    "description": "FIX field 'SessionId' (tag 1).",
+                    "description": "The session's identifier, which the client chooses and never uses again.",
+                    "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$",
+                    "type": "string"
+                },
+                "topic_classification": {
+                    "description": "The lasting subject of a topic's messages, such as a product type or a market symbol.",
+                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
                     "type": "string"
                 }
             },
             "required": [
                 "session_id",
                 "flow",
-                "keepalive_interval",
-                "classification"
+                "topic_classification",
+                "message_kind"
             ],
-            "title": "Topic",
+            "title": "FixpTopic",
             "type": "object"
         },
-        "UnsequencedHeartbeat": {
+        "FixpUnsequencedHeartbeat": {
             "additionalProperties": false,
-            "description": "FIXP session message 'UnsequencedHeartbeat'.",
-            "title": "UnsequencedHeartbeat",
+            "description": "Shows the peer that the session and transport are alive when the sender's flow is unsequenced or empty. It has no fields.",
+            "properties": {
+                "message_kind": {
+                    "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+                    "enum": [
+                        "FixpUnsequencedHeartbeat"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message_kind"
+            ],
+            "title": "FixpUnsequencedHeartbeat",
             "type": "object"
         }
     },
     "$id": "https://w3id.org/lmodel/fixp",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "additionalProperties": true,
-    "description": "Top-level container for a FIXP session exchange - holds an ordered list of session messages plus optional metadata.",
-    "metamodel_version": "1.11.0",
+    "additionalProperties": false,
+    "description": "The messages of one session in the order they were sent, as a test case, a worked example or a captured log.",
+    "metamodel_version": "1.12.0",
     "properties": {
-        "creator": {
-            "description": "Creator of this exchange document.",
+        "description": {
+            "description": "Free text about a record, for the people who read it.",
             "type": [
                 "string",
                 "null"
             ]
         },
-        "date": {
-            "description": "Date associated with this exchange document.",
-            "type": [
-                "string",
-                "null"
-            ]
-        },
-        "messages": {
-            "description": "Ordered sequence of FIXP session messages.",
+        "exchange_steps": {
+            "description": "Each step of the exchange, in order.",
             "items": {
-                "$ref": "#/$defs/FixpSessionMessage"
+                "$ref": "#/$defs/FixpExchangeStep"
             },
+            "minItems": 1,
+            "type": "array"
+        },
+        "id": {
+            "description": "The identifier of an exchange or a rules-of-engagement record.",
+            "type": "string"
+        },
+        "multiplexed": {
+            "description": "Whether the transport carries other sessions too, so that Context takes the place of Sequence.",
             "type": [
-                "array",
+                "boolean",
                 "null"
             ]
         },
-        "publisher": {
-            "description": "Publisher of this exchange document.",
-            "type": [
-                "string",
-                "null"
-            ]
-        },
-        "rights": {
-            "description": "Rights statement for this exchange document.",
-            "type": [
-                "string",
-                "null"
-            ]
-        },
-        "title": {
-            "description": "Title of this exchange document.",
-            "type": [
-                "string",
-                "null"
-            ]
+        "session_kind": {
+            "$ref": "#/$defs/FixpSessionKind",
+            "description": "Which of the two forms the session takes."
         }
     },
+    "required": [
+        "id",
+        "session_kind",
+        "exchange_steps"
+    ],
     "title": "fixp",
     "type": "object",
-    "version": "FIX.5.0SP2"
+    "version": "1.0"
 }
