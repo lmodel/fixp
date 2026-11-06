@@ -11,12 +11,12 @@ sources:
     title: the module's description
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T08:48:23Z"
+  at: "2026-11-06T08:52:39Z"
 status: draft
 ---
 
 # lmodel/fix-sbe
 
-Each target and each annotation value is checked against fix-sbe's released copy in `tests/neighbours/`, and the check is skipped until that release.[^test_mappings.py]
+Each target and each annotation value is checked against fix-sbe's released copy in `tests/neighbours/`.[^test_mappings.py]
 
 [^test_mappings.py]: tests/test_mappings.py, the module's description

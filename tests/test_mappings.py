@@ -3,8 +3,7 @@
 A mapping names its target by a CURIE whose prefix the module binds, so a projection raises no
 warning. Each target's class must exist in the copy of lmodel/fix-sbe or lmodel/fix-orchestra
 in tests/neighbours/, which is that repository's released asset. The annotations that name an
-SBE primitive type, byte order or FIX datatype must name a value of fix-sbe's lists. Until the
-siblings release, the checks that need their copies are skipped.
+SBE primitive type, byte order or FIX datatype must name a value of fix-sbe's lists.
 """
 
 import pytest
@@ -50,10 +49,7 @@ def _stated():
 
 
 def _copy(name):
-    path = NEIGHBOURS / name
-    if not path.exists():
-        pytest.skip(f"tests/neighbours/{name} waits for its repository's release")
-    return yaml.safe_load(path.read_text(encoding="utf-8"))
+    return yaml.safe_load((NEIGHBOURS / name).read_text(encoding="utf-8"))
 
 
 def _values(copy, enum):

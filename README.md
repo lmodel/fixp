@@ -20,7 +20,7 @@ The schema renders the [FIX Performance Session Layer](https://github.com/FIXTra
 
 ## Mappings
 
-* **[lmodel/fix-sbe](https://github.com/lmodel/fix-sbe)** and **[lmodel/fix-orchestra](https://github.com/lmodel/fix-orchestra)**: `FixpMessage` is related to `SbeMessageV1` and `OrchestraMessageV10`, the classes of the files that define each message. `tests/test_mappings.py` checks the targets, and the SBE and FIX datatype names, against their released copies once there are any.
+* **[lmodel/fix-sbe](https://github.com/lmodel/fix-sbe)** and **[lmodel/fix-orchestra](https://github.com/lmodel/fix-orchestra)**: `FixpMessage` is related to `SbeMessageV1` and `OrchestraMessageV10`, the classes of the files that define each message. `tests/test_mappings.py` checks the targets, and the SBE and FIX datatype names, against their released copies.
 
 The five SSSOM sets are gone: their rows were the project's guesses, not FIX's statements, and most named classes that no longer exist.
 
