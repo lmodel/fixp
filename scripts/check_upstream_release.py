@@ -68,7 +68,7 @@ KNOWN_FOLDERS = (
     "v1-0-STANDARD",
     "v1-1",
 )
-EDITION_FOLDER = re.compile(r"^v\d+-\d+")
+EDITION_FOLDER = re.compile(r"^v\d+[-.]\d+", re.IGNORECASE)
 
 
 class _ApiRedirect(urllib.request.HTTPRedirectHandler):
@@ -246,13 +246,15 @@ def main(argv: list[str] | None = None) -> int:
         try:
             found, needs = check()
         # OSError covers a refused or failed request and a timeout, HTTPException and EOFError
-        # a connection cut off mid-answer, LookupError and ValueError an answer of another
-        # shape or too large.
+        # a connection cut off mid-answer, and LookupError, TypeError, AttributeError and
+        # ValueError an answer of another shape or too large.
         except (
             OSError,
             http.client.HTTPException,
             EOFError,
             LookupError,
+            TypeError,
+            AttributeError,
             ValueError,
         ) as err:
             found = [f"- **The {label} check could not finish: {_code(err)}.**"]

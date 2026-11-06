@@ -87,14 +87,15 @@ def test_a_new_tag_is_reported_and_quoted(watch, capsys):
     assert "`v1.1-STANDARD`" in report
 
 
-def test_a_new_edition_folder_is_reported(watch, capsys):
+@pytest.mark.parametrize("folder", ["v1-1-STANDARD", "v1.1-STANDARD", "V2-0"])
+def test_a_new_edition_folder_is_reported(watch, capsys, folder):
     answers = _answers(watch)
     answers[f"/{watch.SPEC}/git/trees/{watch.BRANCH}"] = _root(
-        watch, watch.SPEC, (*watch.KNOWN_FOLDERS, "v1-1-STANDARD")
+        watch, watch.SPEC, (*watch.KNOWN_FOLDERS, folder)
     )
     code, report = _run(watch, answers, capsys)
     assert code == 1
-    assert "`v1-1-STANDARD`" in report
+    assert f"`{folder}`" in report
 
 
 def test_a_folder_that_names_no_edition_stays_quiet(watch, capsys):
@@ -189,6 +190,16 @@ def test_a_failed_request_cannot_finish_and_is_quoted(watch, capsys, failure):
     code, report = _run(watch, answers, capsys)
     assert code == 1
     assert "The new editions check could not finish" in report
+
+
+def test_an_answer_of_another_shape_cannot_finish(watch, capsys):
+    """A mapping where the watch expects a list stops one check, and the others still run."""
+    answers = _answers(watch)
+    answers[f"/{watch.SPEC}/tags?per_page=100&page=1"] = {"message": "Moved"}
+    code, report = _run(watch, answers, capsys)
+    assert code == 1
+    assert "The new editions check could not finish" in report
+    assert "The licence on the default branch is the pinned file." in report
 
 
 def test_server_text_cannot_mention_or_link(watch, capsys):
