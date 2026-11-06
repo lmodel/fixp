@@ -2,6 +2,7 @@
 
 ## 2026-11-06
 
+* **Changed**: `lokf.yaml` and `fixp.yaml` moved into `.lokf/schema/`, where KTL v0.62.0 keeps a sidecar's schema files, and the concepts that name them follow.
 * **Changed**: the licence page says FIX also publishes the SBE schema under the Apache License 2.0.
 * **Changed**: the page on what the model leaves out says where a firm's own text goes.
 * **Changed**: the engagement module's page names the credentials' form, the keep-alive range and the resend limit a stack profile now holds.

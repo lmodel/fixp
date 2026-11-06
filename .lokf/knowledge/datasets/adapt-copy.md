@@ -3,8 +3,8 @@ type: Dataset
 id: https://w3id.org/lmodel/fixp/knowledge/datasets/adapt-copy
 genre: reference
 title: The adapt copy
-description: "`.lokf/fixp.yaml`, which `just lokf-adapt` writes from the schema so that it can sit beside LOKF's: the file this bundle validates against, and the file a release attaches as `schema-<tag>-fixp.yaml`."
-resource: .lokf/fixp.yaml
+description: "`.lokf/schema/fixp.yaml`, which `just lokf-adapt` writes from the schema so that it can sit beside LOKF's: the file this bundle validates against, and the file a release attaches as `schema-<tag>-fixp.yaml`."
+resource: .lokf/schema/fixp.yaml
 derivedFrom:
   - https://w3id.org/lmodel/fixp/knowledge/datasets/fixp-linkml-schema
 sources:
@@ -18,7 +18,7 @@ sources:
     title: lokf_adapt_roots
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T08:48:23Z"
+  at: "2026-11-06T21:20:16Z"
 status: draft
 ---
 
