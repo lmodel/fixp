@@ -10,7 +10,15 @@ The schema models FIXP 1.0, the Technical Standard the FIX Trading Community app
 
 FIXP describes a message by its fields and leaves the wire format to the encoding, so a record is those fields as YAML or JSON. Each message is a class with the `Fixp` prefix, and its fields keep the specification's order. `message_kind` names the class, as FIXP's MessageType names the message.
 
-Each field is a snake_case slot, and the slot's aliases give FIXP's name. Seven take a different word, because the plain one is taken elsewhere in the family: `Timestamp` is `request_time`, `Reason` is `reason_text`, `Classification` is `topic_classification`, `Count` is `message_count`, `EncodingType` is `sofh_encoding_type`, `Version` is `template_version`, and each `Code` is named for its list, such as `termination_code`.
+Each field is a snake_case slot, and the slot's aliases give FIXP's name. Seven take a different word, because the plain one is taken elsewhere in the family:
+
+- `Timestamp` is `request_time`;
+- `Reason` is `reason_text`;
+- `Classification` is `topic_classification`;
+- `Count` is `message_count`;
+- `EncodingType` is `sofh_encoding_type`;
+- `Version` is `template_version`;
+- each `Code` is named for its list, such as `termination_code`.
 
 The datatypes are FIXP's own: unsigned numbers of 8 to 64 bits, a version 4 UUID, nanoseconds since the Unix epoch, milliseconds, opaque octets and text. The octets are written in base64, which is this schema's choice.
 
@@ -32,7 +40,7 @@ Where the files and the specification's tables disagree, the schema accepts both
 JSON Schema checks each message by itself. `tests/fixp_rules.py` checks what the specification states about one step against the steps before it, and each rule has a counter-example in `tests/test_rules.py`.
 
 - **Who sends what.** A message comes from the side its class names: Negotiate and Establish from the client, their answers from the server, Topic from a publisher. Only the publisher sends on a multicast, and a message section 6 leaves off a multicast, or off a session between two parties, is refused there.
-- **Flow types.** A message that concerns one flow suits that flow's type, by the summary in section 6: Sequence only on a sequenced flow, UnsequencedHeartbeat only where the flow is unsequenced or empty, RetransmitRequest only towards a recoverable one, Applied and NotApplied only back to an idempotent one. A session's two flows cannot both be None.
+- **Flow types.** A message that concerns one flow suits that flow's type, by the summary in section 6. Sequence goes only on a sequenced flow, UnsequencedHeartbeat only where the flow is unsequenced or empty, RetransmitRequest only towards a recoverable one, and Applied and NotApplied only back to an idempotent one. A session's two flows cannot both be None.
 - **Order.** Establish follows a NegotiationResponse, application messages wait for EstablishmentAck, a multicast flow starts with Topic, and a sequenced flow starts with Sequence, Context or Retransmission.
 - **Answers.** An answer repeats the request_time of the request it answers. A party keeps at most one RetransmitRequest open, and asks only for numbers already sent.
 - **Endings.** FinishedReceiving answers the peer's FinishedSending, no application message follows the sender's own FinishedSending, FinishedSending gives `last_seq_no` on a sequenced flow, and a party sends nothing after its own Terminate.
