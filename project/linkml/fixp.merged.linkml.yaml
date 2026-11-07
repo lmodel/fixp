@@ -1,0 +1,5337 @@
+{
+  "name": "fixp",
+  "annotations": {
+    "upstream_tag": {
+      "tag": "upstream_tag",
+      "value": "v1.0-STANDARD"
+    },
+    "upstream_commit": {
+      "tag": "upstream_commit",
+      "value": "6d89f5fa66d544ea6b41e93853c23292505e49c6"
+    },
+    "sbe_package": {
+      "tag": "sbe_package",
+      "value": "FIXP"
+    },
+    "sbe_schema_id": {
+      "tag": "sbe_schema_id",
+      "value": "2748"
+    },
+    "sbe_schema_version": {
+      "tag": "sbe_schema_version",
+      "value": "0"
+    },
+    "sbe_byte_order": {
+      "tag": "sbe_byte_order",
+      "value": "littleEndian"
+    }
+  },
+  "description": "A LinkML model of the FIX Performance Session Layer 1.0, the FIX Trading Community's session protocol for fast trading links. It describes FIXP's session messages, their fields and value lists, exchanges of those messages on one session, and the rules of engagement two parties agree on. A message is described by its fields, so the model works with any encoding.",
+  "title": "FIX Performance Session Layer (FIXP)",
+  "comments": [
+    "An exchange starts at FixpExchange, the tree root. A single message validates against its own class, such as FixpNegotiate, and a rules-of-engagement record against FixpRulesOfEngagement. upstream/ holds the specification's resource files unchanged, tests/test_coverage.py compares the modules with them, and scripts/check_upstream_release.py reports when they change."
+  ],
+  "source": "https://github.com/FIXTradingCommunity/fixp-specification/tree/v1.0-STANDARD/v1-0-STANDARD",
+  "see_also": [
+    "https://lmodel.github.io/fixp",
+    "https://github.com/FIXTradingCommunity/fixp-specification"
+  ],
+  "keywords": [
+    "FIX",
+    "FIXP",
+    "session layer",
+    "trading"
+  ],
+  "id": "https://w3id.org/lmodel/fixp",
+  "version": "1.0",
+  "license": "Apache-2.0",
+  "prefixes": {
+    "fixp": {
+      "prefix_prefix": "fixp",
+      "prefix_reference": "https://w3id.org/lmodel/fixp/"
+    },
+    "linkml": {
+      "prefix_prefix": "linkml",
+      "prefix_reference": "https://w3id.org/linkml/"
+    },
+    "schema": {
+      "prefix_prefix": "schema",
+      "prefix_reference": "http://schema.org/"
+    },
+    "fix_sbe": {
+      "prefix_prefix": "fix_sbe",
+      "prefix_reference": "https://w3id.org/lmodel/fix-sbe/"
+    },
+    "fix_orchestra": {
+      "prefix_prefix": "fix_orchestra",
+      "prefix_reference": "https://w3id.org/lmodel/fix-orchestra/"
+    },
+    "xsd": {
+      "prefix_prefix": "xsd",
+      "prefix_reference": "http://www.w3.org/2001/XMLSchema#"
+    },
+    "shex": {
+      "prefix_prefix": "shex",
+      "prefix_reference": "http://www.w3.org/ns/shex#"
+    }
+  },
+  "default_prefix": "fixp",
+  "default_range": "string",
+  "subsets": {
+    "fixp_initialization": {
+      "name": "fixp_initialization",
+      "description": "Messages that create a session or announce a flow before any binding.",
+      "from_schema": "https://w3id.org/lmodel/fixp"
+    },
+    "fixp_binding": {
+      "name": "fixp_binding",
+      "description": "Messages that bind a session to a transport.",
+      "from_schema": "https://w3id.org/lmodel/fixp"
+    },
+    "fixp_transferring": {
+      "name": "fixp_transferring",
+      "description": "Messages sent while application messages flow.",
+      "from_schema": "https://w3id.org/lmodel/fixp"
+    },
+    "fixp_unbinding": {
+      "name": "fixp_unbinding",
+      "description": "The message that releases a session from its transport.",
+      "from_schema": "https://w3id.org/lmodel/fixp"
+    },
+    "fixp_finalizing": {
+      "name": "fixp_finalizing",
+      "description": "Messages that close a flow for good.",
+      "from_schema": "https://w3id.org/lmodel/fixp"
+    }
+  },
+  "types": {
+    "string": {
+      "name": "string",
+      "description": "A character string",
+      "notes": [
+        "In RDF serializations, a slot with range of string is treated as a literal or type xsd:string. If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"string\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "exact_mappings": [
+        "schema:Text"
+      ],
+      "base": "str",
+      "uri": "xsd:string"
+    },
+    "integer": {
+      "name": "integer",
+      "description": "An integer",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"integer\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "exact_mappings": [
+        "schema:Integer"
+      ],
+      "base": "int",
+      "uri": "xsd:integer"
+    },
+    "boolean": {
+      "name": "boolean",
+      "description": "A binary (true or false) value",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "exact_mappings": [
+        "schema:Boolean"
+      ],
+      "base": "Bool",
+      "uri": "xsd:boolean",
+      "repr": "bool"
+    },
+    "float": {
+      "name": "float",
+      "description": "A real number that conforms to the xsd:float specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"float\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "exact_mappings": [
+        "schema:Float"
+      ],
+      "base": "float",
+      "uri": "xsd:float"
+    },
+    "double": {
+      "name": "double",
+      "description": "A real number that conforms to the xsd:double specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "close_mappings": [
+        "schema:Float"
+      ],
+      "base": "float",
+      "uri": "xsd:double"
+    },
+    "decimal": {
+      "name": "decimal",
+      "description": "A real number with arbitrary precision that conforms to the xsd:decimal specification",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"decimal\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "broad_mappings": [
+        "schema:Number"
+      ],
+      "base": "Decimal",
+      "uri": "xsd:decimal"
+    },
+    "time": {
+      "name": "time",
+      "description": "A time object represents a (local) time of day, independent of any particular day",
+      "notes": [
+        "URI is dateTime because OWL reasoners do not work with straight date or time",
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"time\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "exact_mappings": [
+        "schema:Time"
+      ],
+      "base": "XSDTime",
+      "uri": "xsd:time",
+      "repr": "str"
+    },
+    "date": {
+      "name": "date",
+      "description": "a date (year, month and day) in an idealized calendar",
+      "notes": [
+        "URI is dateTime because OWL reasoners don't work with straight date or time",
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "exact_mappings": [
+        "schema:Date"
+      ],
+      "base": "XSDDate",
+      "uri": "xsd:date",
+      "repr": "str"
+    },
+    "datetime": {
+      "name": "datetime",
+      "description": "The combination of a date and time",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"datetime\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "exact_mappings": [
+        "schema:DateTime"
+      ],
+      "base": "XSDDateTime",
+      "uri": "xsd:dateTime",
+      "repr": "str"
+    },
+    "date_or_datetime": {
+      "name": "date_or_datetime",
+      "description": "Either a date or a datetime",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date_or_datetime\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "str",
+      "uri": "linkml:DateOrDatetime",
+      "repr": "str"
+    },
+    "uriorcurie": {
+      "name": "uriorcurie",
+      "description": "a URI or a CURIE",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uriorcurie\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "URIorCURIE",
+      "uri": "xsd:anyURI",
+      "repr": "str"
+    },
+    "curie": {
+      "name": "curie",
+      "conforms_to": "https://www.w3.org/TR/curie/",
+      "description": "a compact URI",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"curie\"."
+      ],
+      "comments": [
+        "in RDF serializations this MUST be expanded to a URI",
+        "in non-RDF serializations MAY be serialized as the compact representation"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "Curie",
+      "uri": "xsd:string",
+      "repr": "str"
+    },
+    "uri": {
+      "name": "uri",
+      "conforms_to": "https://www.ietf.org/rfc/rfc3987.txt",
+      "description": "a complete URI",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uri\"."
+      ],
+      "comments": [
+        "in RDF serializations a slot with range of uri is treated as a literal or type xsd:anyURI unless it is an identifier or a reference to an identifier, in which case it is translated directly to a node"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "close_mappings": [
+        "schema:URL"
+      ],
+      "base": "URI",
+      "uri": "xsd:anyURI",
+      "repr": "str"
+    },
+    "ncname": {
+      "name": "ncname",
+      "description": "Prefix part of CURIE",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"ncname\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "NCName",
+      "uri": "xsd:string",
+      "repr": "str"
+    },
+    "objectidentifier": {
+      "name": "objectidentifier",
+      "description": "A URI or CURIE that represents an object in the model.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\"."
+      ],
+      "comments": [
+        "Used for inheritance and type checking"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "ElementIdentifier",
+      "uri": "shex:iri",
+      "repr": "str"
+    },
+    "nodeidentifier": {
+      "name": "nodeidentifier",
+      "description": "A URI, CURIE or BNODE that represents a node in a model.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"nodeidentifier\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "NodeIdentifier",
+      "uri": "shex:nonLiteral",
+      "repr": "str"
+    },
+    "jsonpointer": {
+      "name": "jsonpointer",
+      "conforms_to": "https://datatracker.ietf.org/doc/html/rfc6901",
+      "description": "A string encoding a JSON Pointer. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to a valid object within the current instance document when encoded in tree form.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpointer\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "str",
+      "uri": "xsd:string",
+      "repr": "str"
+    },
+    "jsonpath": {
+      "name": "jsonpath",
+      "conforms_to": "https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html",
+      "description": "A string encoding a JSON Path. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded in tree form.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpath\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "str",
+      "uri": "xsd:string",
+      "repr": "str"
+    },
+    "sparqlpath": {
+      "name": "sparqlpath",
+      "conforms_to": "https://www.w3.org/TR/sparql11-query/#propertypaths",
+      "description": "A string encoding a SPARQL Property Path. The value of the string MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded as RDF.",
+      "notes": [
+        "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"sparqlpath\"."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "base": "str",
+      "uri": "xsd:string",
+      "repr": "str"
+    },
+    "fixp_u8": {
+      "name": "fixp_u8",
+      "description": "A whole number from 0 to 255, held in eight unsigned bits.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "typeof": "integer",
+      "minimum_value": 0,
+      "maximum_value": 255
+    },
+    "fixp_u16": {
+      "name": "fixp_u16",
+      "description": "A whole number from 0 to 65,535, held in 16 unsigned bits.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "typeof": "integer",
+      "minimum_value": 0,
+      "maximum_value": 65535
+    },
+    "fixp_u32": {
+      "name": "fixp_u32",
+      "annotations": {
+        "sbe_type": {
+          "tag": "sbe_type",
+          "value": "cardinal"
+        },
+        "sbe_primitive_type": {
+          "tag": "sbe_primitive_type",
+          "value": "uint32"
+        }
+      },
+      "description": "A whole number from 0 to 4,294,967,295, held in 32 unsigned bits.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "typeof": "integer",
+      "minimum_value": 0,
+      "maximum_value": 4294967295
+    },
+    "fixp_u64": {
+      "name": "fixp_u64",
+      "annotations": {
+        "sbe_type": {
+          "tag": "sbe_type",
+          "value": "ordinal"
+        },
+        "sbe_primitive_type": {
+          "tag": "sbe_primitive_type",
+          "value": "uint64"
+        }
+      },
+      "description": "A whole number from 0 to 18,446,744,073,709,551,615, held in 64 unsigned bits.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "typeof": "integer",
+      "minimum_value": 0,
+      "maximum_value": 18446744073709551615
+    },
+    "fixp_uuid": {
+      "name": "fixp_uuid",
+      "annotations": {
+        "sbe_type": {
+          "tag": "sbe_type",
+          "value": "UUID"
+        },
+        "sbe_primitive_type": {
+          "tag": "sbe_primitive_type",
+          "value": "uint8"
+        }
+      },
+      "description": "A random UUID of RFC 4122's version 4, written as 32 hexadecimal digits in five groups joined by hyphens.",
+      "comments": [
+        "On the wire it is 16 octets. The pattern checks the version digit and the variant bits that RFC 4122 sets for a random UUID."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "see_also": [
+        "https://www.rfc-editor.org/rfc/rfc4122"
+      ],
+      "typeof": "string",
+      "pattern": "^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$"
+    },
+    "fixp_nanotime": {
+      "name": "fixp_nanotime",
+      "annotations": {
+        "sbe_type": {
+          "tag": "sbe_type",
+          "value": "nanotime"
+        },
+        "sbe_primitive_type": {
+          "tag": "sbe_primitive_type",
+          "value": "uint64"
+        }
+      },
+      "description": "A moment, counted in nanoseconds since the Unix epoch and held in 64 unsigned bits.",
+      "comments": [
+        "The datatype table names no epoch; the usage examples in the specification's appendix A use the Unix epoch."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "typeof": "integer",
+      "unit": {
+        "ucum_code": "ns"
+      },
+      "minimum_value": 0,
+      "maximum_value": 18446744073709551615
+    },
+    "fixp_delta_millisecs": {
+      "name": "fixp_delta_millisecs",
+      "annotations": {
+        "sbe_type": {
+          "tag": "sbe_type",
+          "value": "DeltaMillisecs"
+        },
+        "sbe_primitive_type": {
+          "tag": "sbe_primitive_type",
+          "value": "uint32"
+        }
+      },
+      "description": "A length of time in whole milliseconds, held in 32 unsigned bits.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "typeof": "integer",
+      "unit": {
+        "ucum_code": "ms"
+      },
+      "minimum_value": 0,
+      "maximum_value": 4294967295
+    },
+    "fixp_object": {
+      "name": "fixp_object",
+      "annotations": {
+        "sbe_type": {
+          "tag": "sbe_type",
+          "value": "Object"
+        }
+      },
+      "description": "Octets that FIXP passes through without reading them, written here in base64.",
+      "comments": [
+        "FIXP leaves the wire form to the encoding. Base64 (RFC 4648, section 4) is this schema's choice for writing the octets in YAML and JSON."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "typeof": "string",
+      "uri": "xsd:base64Binary",
+      "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+    },
+    "fixp_string": {
+      "name": "fixp_string",
+      "annotations": {
+        "sbe_type": {
+          "tag": "sbe_type",
+          "value": "CharacterString"
+        }
+      },
+      "description": "Text, in UTF-8.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "typeof": "string"
+    }
+  },
+  "enums": {
+    "FixpFlowType": {
+      "name": "FixpFlowType",
+      "annotations": {
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "FlowType"
+        },
+        "sbe_encoding_type": {
+          "tag": "sbe_encoding_type",
+          "value": "uint8"
+        }
+      },
+      "description": "How surely a flow is delivered. A flow is what one side of a session sends the other, leaving out session messages.",
+      "comments": [
+        "The values are listed from the strongest guarantee to none."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "permissible_values": {
+        "Recoverable": {
+          "text": "Recoverable",
+          "description": "Every message arrives once and in order; the receiver asks for any gap to be sent again.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "0"
+            }
+          }
+        },
+        "Idempotent": {
+          "text": "Idempotent",
+          "description": "No message takes effect twice; the sender hears of a gap and its application decides what to resend.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "1"
+            }
+          }
+        },
+        "Unsequenced": {
+          "text": "Unsequenced",
+          "description": "Messages carry no sequence number, and none is ever resent.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "2"
+            }
+          }
+        },
+        "None": {
+          "text": "None",
+          "description": "This side sends no application messages at all.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "3"
+            }
+          }
+        }
+      }
+    },
+    "FixpMulticastFlowType": {
+      "name": "FixpMulticastFlowType",
+      "annotations": {
+        "repository_code_set": {
+          "tag": "repository_code_set",
+          "value": "FlowCodeSet"
+        }
+      },
+      "description": "The delivery guarantee a multicast topic announces for its flow.",
+      "comments": [
+        "Section 5 and the repository file allow these two values. Section 3 allows a multicast Idempotent alone, and the SBE schema reuses the four-value FlowType, which tests/upstream_departures.yaml records."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "permissible_values": {
+        "Recoverable": {
+          "text": "Recoverable",
+          "description": "Sequenced; a listener gets a lost message back over a separate unicast session.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "0"
+            }
+          }
+        },
+        "Idempotent": {
+          "text": "Idempotent",
+          "description": "Sequenced, so a listener can see a loss, but nothing lost comes back.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "FixpNegotiationRejectCode": {
+      "name": "FixpNegotiationRejectCode",
+      "annotations": {
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "NegotiationRejectCode"
+        },
+        "sbe_encoding_type": {
+          "tag": "sbe_encoding_type",
+          "value": "uint8"
+        }
+      },
+      "description": "Why a server refused to create a session.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "permissible_values": {
+        "Credentials": {
+          "text": "Credentials",
+          "description": "The server could not identify the client, or would not let it in.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "0"
+            }
+          }
+        },
+        "FlowTypeNotSupported": {
+          "text": "FlowTypeNotSupported",
+          "description": "The server does not offer the flow type the client asked to send.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "1"
+            }
+          }
+        },
+        "DuplicateId": {
+          "text": "DuplicateId",
+          "description": "The client chose a session identifier that is not new.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "2"
+            }
+          }
+        },
+        "Unspecified": {
+          "text": "Unspecified",
+          "description": "Some reason the other values do not name.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "3"
+            }
+          }
+        }
+      }
+    },
+    "FixpEstablishmentRejectCode": {
+      "name": "FixpEstablishmentRejectCode",
+      "annotations": {
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "EstablishmentRejectCode"
+        },
+        "sbe_encoding_type": {
+          "tag": "sbe_encoding_type",
+          "value": "uint8"
+        }
+      },
+      "description": "Why a server would not bind the session to this transport.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "permissible_values": {
+        "Unnegotiated": {
+          "text": "Unnegotiated",
+          "description": "The session was never negotiated, or it has been finalized and needs a new negotiation.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "0"
+            }
+          }
+        },
+        "AlreadyEstablished": {
+          "text": "AlreadyEstablished",
+          "description": "The server had already acknowledged a binding, so this request repeats it.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "1"
+            }
+          }
+        },
+        "SessionBlocked": {
+          "text": "SessionBlocked",
+          "description": "The client may not use this session.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "2"
+            }
+          }
+        },
+        "KeepaliveInterval": {
+          "text": "KeepaliveInterval",
+          "description": "The client's keep-alive interval is outside what the server accepts.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "3"
+            }
+          }
+        },
+        "Credentials": {
+          "text": "Credentials",
+          "description": "The server could not identify the client, or would not let it in.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "4"
+            }
+          }
+        },
+        "Unspecified": {
+          "text": "Unspecified",
+          "description": "Some reason the other values do not name.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "5"
+            }
+          }
+        }
+      }
+    },
+    "FixpRetransmitRejectCode": {
+      "name": "FixpRetransmitRejectCode",
+      "annotations": {
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "RetransmitRejectCode"
+        },
+        "sbe_encoding_type": {
+          "tag": "sbe_encoding_type",
+          "value": "uint8"
+        }
+      },
+      "description": "Why a party will not resend the messages its peer asked for.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "permissible_values": {
+        "OutOfRange": {
+          "text": "OutOfRange",
+          "description": "The range asked for runs past the sequence numbers sent so far.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "0"
+            }
+          }
+        },
+        "InvalidSession": {
+          "text": "InvalidSession",
+          "description": "The session is unknown, or the one asking may not read it.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "1"
+            }
+          }
+        },
+        "RequestLimitExceeded": {
+          "text": "RequestLimitExceeded",
+          "description": "The request asks for more messages than the sender resends at once.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "2"
+            }
+          }
+        }
+      }
+    },
+    "FixpTerminationCode": {
+      "name": "FixpTerminationCode",
+      "annotations": {
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "TerminationCode"
+        },
+        "sbe_encoding_type": {
+          "tag": "sbe_encoding_type",
+          "value": "uint8"
+        }
+      },
+      "description": "Why a party releases a session from its transport.",
+      "comments": [
+        "The specification lists these values without saying what each one means, apart from ReRequestInProgress, so the descriptions read their names."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "permissible_values": {
+        "Finished": {
+          "text": "Finished",
+          "description": "An ordinary release, with no error.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "0"
+            }
+          }
+        },
+        "UnspecifiedError": {
+          "text": "UnspecifiedError",
+          "description": "An error that the other values do not name.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "1"
+            }
+          }
+        },
+        "ReRequestOutOfBounds": {
+          "text": "ReRequestOutOfBounds",
+          "description": "The peer asked again for messages outside the range sent.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "2"
+            }
+          }
+        },
+        "ReRequestInProgress": {
+          "text": "ReRequestInProgress",
+          "description": "The peer asked again for messages while its earlier request was unanswered.",
+          "annotations": {
+            "sbe_value": {
+              "tag": "sbe_value",
+              "value": "3"
+            }
+          }
+        }
+      }
+    },
+    "FixpSessionKind": {
+      "name": "FixpSessionKind",
+      "description": "The two forms of FIXP session.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "permissible_values": {
+        "point_to_point": {
+          "text": "point_to_point",
+          "description": "A client and a server over a transport that carries messages both ways, with one flow each way.",
+          "annotations": {
+            "fixp_section": {
+              "tag": "fixp_section",
+              "value": "4"
+            }
+          }
+        },
+        "multicast": {
+          "text": "multicast",
+          "description": "One publisher, one flow and many listeners, on a transport that only carries messages outward.",
+          "annotations": {
+            "fixp_section": {
+              "tag": "fixp_section",
+              "value": "5"
+            }
+          }
+        }
+      }
+    },
+    "FixpParty": {
+      "name": "FixpParty",
+      "description": "The side that sends a step.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "permissible_values": {
+        "client": {
+          "text": "client",
+          "description": "The party that opens a session with a server."
+        },
+        "server": {
+          "text": "server",
+          "description": "The party that accepts the client's session."
+        },
+        "publisher": {
+          "text": "publisher",
+          "description": "The only party that sends in a multicast."
+        }
+      }
+    }
+  },
+  "slots": {
+    "id": {
+      "name": "id",
+      "description": "The identifier of an exchange or a rules-of-engagement record.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "identifier": true,
+      "domain_of": [
+        "FixpExchange",
+        "FixpRulesOfEngagement"
+      ],
+      "range": "uriorcurie"
+    },
+    "description": {
+      "name": "description",
+      "description": "Free text about a record, for the people who read it.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "slot_uri": "schema:description",
+      "domain_of": [
+        "FixpExchange",
+        "FixpRulesOfEngagement"
+      ]
+    },
+    "message_kind": {
+      "name": "message_kind",
+      "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "MessageType"
+      ],
+      "designates_type": true,
+      "domain_of": [
+        "FixpMessage"
+      ],
+      "range": "string",
+      "required": true
+    },
+    "session_id": {
+      "name": "session_id",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "1"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "1"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "String"
+        }
+      },
+      "description": "The session's identifier, which the client chooses and never uses again.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "SessionId"
+      ],
+      "domain_of": [
+        "FixpNegotiate",
+        "FixpNegotiationResponse",
+        "FixpNegotiationReject",
+        "FixpTopic",
+        "FixpEstablish",
+        "FixpEstablishmentAck",
+        "FixpEstablishmentReject",
+        "FixpContext",
+        "FixpRetransmitRequest",
+        "FixpRetransmission",
+        "FixpRetransmitReject",
+        "FixpTerminate",
+        "FixpFinishedSending",
+        "FixpFinishedReceiving"
+      ],
+      "range": "fixp_uuid"
+    },
+    "request_time": {
+      "name": "request_time",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "2"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "2"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "When the sender made this request. The answer repeats it, to show what it answers.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Timestamp"
+      ],
+      "domain_of": [
+        "FixpNegotiate",
+        "FixpEstablish",
+        "FixpRetransmitRequest"
+      ],
+      "range": "fixp_nanotime"
+    },
+    "client_flow": {
+      "name": "client_flow",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "3"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "3"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "The flow type of the application messages the client will send.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "ClientFlow"
+      ],
+      "domain_of": [
+        "FixpNegotiate"
+      ],
+      "range": "FixpFlowType"
+    },
+    "credentials": {
+      "name": "credentials",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "4"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "4"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "data"
+        }
+      },
+      "description": "Data that identifies the sender, in a form the two parties agree on.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Credentials"
+      ],
+      "domain_of": [
+        "FixpNegotiate",
+        "FixpNegotiationResponse",
+        "FixpEstablish"
+      ],
+      "range": "fixp_object"
+    },
+    "request_timestamp": {
+      "name": "request_timestamp",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "5"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "5"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "The request_time of the request this message answers.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "RequestTimestamp"
+      ],
+      "domain_of": [
+        "FixpNegotiationResponse",
+        "FixpNegotiationReject",
+        "FixpEstablishmentAck",
+        "FixpEstablishmentReject",
+        "FixpRetransmission",
+        "FixpRetransmitReject"
+      ],
+      "range": "fixp_nanotime"
+    },
+    "server_flow": {
+      "name": "server_flow",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "6"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "6"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "The flow type of the application messages the server will send.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "ServerFlow"
+      ],
+      "domain_of": [
+        "FixpNegotiationResponse"
+      ],
+      "range": "FixpFlowType"
+    },
+    "negotiation_reject_code": {
+      "name": "negotiation_reject_code",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "7"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "7"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "Why the server refused to create the session.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Code",
+        "NegotiationRejectCode"
+      ],
+      "domain_of": [
+        "FixpNegotiationReject"
+      ],
+      "range": "FixpNegotiationRejectCode"
+    },
+    "reason_text": {
+      "name": "reason_text",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "8"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "8"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "String"
+        }
+      },
+      "description": "Free text that says more about the code beside it.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Reason"
+      ],
+      "domain_of": [
+        "FixpNegotiationReject",
+        "FixpEstablishmentReject",
+        "FixpRetransmitReject",
+        "FixpTerminate"
+      ],
+      "range": "fixp_string"
+    },
+    "keepalive_interval": {
+      "name": "keepalive_interval",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "9"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "9"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "The most milliseconds the sender lets pass without sending anything before it sends a heartbeat.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "KeepaliveInterval"
+      ],
+      "domain_of": [
+        "FixpTopic",
+        "FixpEstablish",
+        "FixpEstablishmentAck"
+      ],
+      "range": "fixp_delta_millisecs"
+    },
+    "topic_classification": {
+      "name": "topic_classification",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "10"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "10"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "data"
+        }
+      },
+      "description": "The lasting subject of a topic's messages, such as a product type or a market symbol.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Classification"
+      ],
+      "domain_of": [
+        "FixpTopic"
+      ],
+      "range": "fixp_object"
+    },
+    "next_seq_no": {
+      "name": "next_seq_no",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "11"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "11"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "The number the sender's next application message will carry.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "NextSeqNo"
+      ],
+      "domain_of": [
+        "FixpEstablish",
+        "FixpEstablishmentAck",
+        "FixpSequence",
+        "FixpContext",
+        "FixpRetransmission"
+      ],
+      "range": "fixp_u64"
+    },
+    "establishment_reject_code": {
+      "name": "establishment_reject_code",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "12"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "12"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "Why the server refused to bind the session.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Code",
+        "EstablishmentRejectCode"
+      ],
+      "domain_of": [
+        "FixpEstablishmentReject"
+      ],
+      "range": "FixpEstablishmentRejectCode"
+    },
+    "from_seq_no": {
+      "name": "from_seq_no",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "13"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "13"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "Where a run of messages starts, by sequence number.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "FromSeqNo"
+      ],
+      "domain_of": [
+        "FixpRetransmitRequest",
+        "FixpApplied",
+        "FixpNotApplied"
+      ],
+      "range": "fixp_u64"
+    },
+    "message_count": {
+      "name": "message_count",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "14"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "14"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "How many messages a range holds.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Count"
+      ],
+      "domain_of": [
+        "FixpRetransmitRequest",
+        "FixpRetransmission",
+        "FixpApplied",
+        "FixpNotApplied"
+      ],
+      "range": "fixp_u32"
+    },
+    "retransmit_reject_code": {
+      "name": "retransmit_reject_code",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "15"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "15"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "Why the sender will not resend the range.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Code",
+        "RetransmitRejectCode"
+      ],
+      "domain_of": [
+        "FixpRetransmitReject"
+      ],
+      "range": "FixpRetransmitRejectCode"
+    },
+    "termination_code": {
+      "name": "termination_code",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "16"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "16"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "Why the party releases the session from the transport.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Code",
+        "TerminationCode"
+      ],
+      "domain_of": [
+        "FixpTerminate"
+      ],
+      "range": "FixpTerminationCode"
+    },
+    "last_seq_no": {
+      "name": "last_seq_no",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "17"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "17"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "The number carried by the flow's final application message.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "LastSeqNo"
+      ],
+      "domain_of": [
+        "FixpFinishedSending"
+      ],
+      "range": "fixp_u64"
+    },
+    "flow": {
+      "name": "flow",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "8"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "18"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "The flow type of a multicast topic's messages.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Flow"
+      ],
+      "domain_of": [
+        "FixpTopic"
+      ],
+      "range": "FixpMulticastFlowType"
+    },
+    "sofh_encoding_type": {
+      "name": "sofh_encoding_type",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "18"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "19"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "The code that the Simple Open Framing Header registers for the encoding a template is written for.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "EncodingType"
+      ],
+      "domain_of": [
+        "FixpMessageTemplate"
+      ],
+      "range": "fixp_u32"
+    },
+    "effective_time": {
+      "name": "effective_time",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "19"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "20"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "int"
+        }
+      },
+      "description": "When the template comes into force. Without it, the template applies at once.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "EffectiveTime"
+      ],
+      "domain_of": [
+        "FixpMessageTemplate"
+      ],
+      "range": "fixp_nanotime"
+    },
+    "template_version": {
+      "name": "template_version",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "20"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "21"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "data"
+        }
+      },
+      "description": "The template's version and format, for an encoding whose templates do not state them.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Version"
+      ],
+      "domain_of": [
+        "FixpMessageTemplate"
+      ],
+      "range": "fixp_object"
+    },
+    "template": {
+      "name": "template",
+      "annotations": {
+        "sbe_field_id": {
+          "tag": "sbe_field_id",
+          "value": "21"
+        },
+        "repository_field_id": {
+          "tag": "repository_field_id",
+          "value": "22"
+        },
+        "repository_datatype": {
+          "tag": "repository_datatype",
+          "value": "data"
+        }
+      },
+      "description": "The template itself, as octets.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "aliases": [
+        "Template"
+      ],
+      "domain_of": [
+        "FixpMessageTemplate"
+      ],
+      "range": "fixp_object"
+    }
+  },
+  "classes": {
+    "FixpMessage": {
+      "name": "FixpMessage",
+      "description": "One FIXP message, as its fields would be read from the wire before or after encoding.",
+      "comments": [
+        "The FIXP files define each message as an SBE message template, which lmodel/fix-sbe models as SbeMessageV1, and as an Orchestra message, which lmodel/fix-orchestra models as OrchestraMessageV10. A record of those classes defines a kind of message; an instance of this class is one message of that kind."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "related_mappings": [
+        "fix_sbe:SbeMessageV1",
+        "fix_orchestra:OrchestraMessageV10"
+      ],
+      "abstract": true,
+      "slots": [
+        "message_kind"
+      ],
+      "attributes": {
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpMessage",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpNegotiate": {
+      "name": "FixpNegotiate",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "1"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "Negotiate"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "client"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        }
+      },
+      "description": "A client's request to create a session under an identifier it has never used, stating the flow type it will send.",
+      "in_subset": [
+        "fixp_initialization"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_time",
+        "client_flow",
+        "credentials"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_time": {
+          "name": "request_time",
+          "required": true
+        },
+        "client_flow": {
+          "name": "client_flow",
+          "required": true
+        },
+        "credentials": {
+          "name": "credentials",
+          "description": "Data that identifies the client, in a form the two parties agree on."
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpNegotiate",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_time": {
+          "name": "request_time",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "2"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "2"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "When the sender made this request. The answer repeats it, to show what it answers.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Timestamp"
+          ],
+          "owner": "FixpNegotiate",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpEstablish",
+            "FixpRetransmitRequest"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "client_flow": {
+          "name": "client_flow",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "3"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "3"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The flow type of the application messages the client will send.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "ClientFlow"
+          ],
+          "owner": "FixpNegotiate",
+          "domain_of": [
+            "FixpNegotiate"
+          ],
+          "range": "FixpFlowType",
+          "required": true
+        },
+        "credentials": {
+          "name": "credentials",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "4"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "4"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "data"
+            }
+          },
+          "description": "Data that identifies the client, in a form the two parties agree on.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Credentials"
+          ],
+          "owner": "FixpNegotiate",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpEstablish"
+          ],
+          "range": "fixp_object"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpNegotiate",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpNegotiationResponse": {
+      "name": "FixpNegotiationResponse",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "2"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "NegotiationResponse"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "server"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        }
+      },
+      "description": "A server's acceptance of a new session, stating the flow type it will send back.",
+      "in_subset": [
+        "fixp_initialization"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_timestamp",
+        "server_flow",
+        "credentials"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "description": "The request_time of the Negotiate this message accepts.",
+          "required": true
+        },
+        "server_flow": {
+          "name": "server_flow",
+          "required": true
+        },
+        "credentials": {
+          "name": "credentials",
+          "description": "Data that identifies the server to the client, for mutual authentication."
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpNegotiationResponse",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "5"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "5"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The request_time of the Negotiate this message accepts.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "RequestTimestamp"
+          ],
+          "owner": "FixpNegotiationResponse",
+          "domain_of": [
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpRetransmission",
+            "FixpRetransmitReject"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "server_flow": {
+          "name": "server_flow",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "6"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "6"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The flow type of the application messages the server will send.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "ServerFlow"
+          ],
+          "owner": "FixpNegotiationResponse",
+          "domain_of": [
+            "FixpNegotiationResponse"
+          ],
+          "range": "FixpFlowType",
+          "required": true
+        },
+        "credentials": {
+          "name": "credentials",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "4"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "4"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "data"
+            }
+          },
+          "description": "Data that identifies the server to the client, for mutual authentication.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Credentials"
+          ],
+          "owner": "FixpNegotiationResponse",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpEstablish"
+          ],
+          "range": "fixp_object"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpNegotiationResponse",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpNegotiationReject": {
+      "name": "FixpNegotiationReject",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "3"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "NegotiationReject"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "server"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        }
+      },
+      "description": "A server's refusal to create a session. The server sends nothing more and closes the transport.",
+      "in_subset": [
+        "fixp_initialization"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_timestamp",
+        "negotiation_reject_code",
+        "reason_text"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "description": "The request_time of the Negotiate this message refuses.",
+          "required": true
+        },
+        "negotiation_reject_code": {
+          "name": "negotiation_reject_code",
+          "required": true
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpNegotiationReject",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "5"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "5"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The request_time of the Negotiate this message refuses.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "RequestTimestamp"
+          ],
+          "owner": "FixpNegotiationReject",
+          "domain_of": [
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpRetransmission",
+            "FixpRetransmitReject"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "negotiation_reject_code": {
+          "name": "negotiation_reject_code",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "7"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "7"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "Why the server refused to create the session.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Code",
+            "NegotiationRejectCode"
+          ],
+          "owner": "FixpNegotiationReject",
+          "domain_of": [
+            "FixpNegotiationReject"
+          ],
+          "range": "FixpNegotiationRejectCode",
+          "required": true
+        },
+        "reason_text": {
+          "name": "reason_text",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "8"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "8"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "Free text that says more about the code beside it.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Reason"
+          ],
+          "owner": "FixpNegotiationReject",
+          "domain_of": [
+            "FixpNegotiationReject",
+            "FixpEstablishmentReject",
+            "FixpRetransmitReject",
+            "FixpTerminate"
+          ],
+          "range": "fixp_string"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpNegotiationReject",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpTopic": {
+      "name": "FixpTopic",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "4"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "Topic"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "publisher"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "true"
+        }
+      },
+      "description": "A multicast publisher's notice that starts a flow and ties the session's short-lived identifier to a lasting subject. It is repeated so that late listeners can join.",
+      "in_subset": [
+        "fixp_initialization"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "flow",
+        "keepalive_interval",
+        "topic_classification"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "flow": {
+          "name": "flow",
+          "required": true
+        },
+        "keepalive_interval": {
+          "name": "keepalive_interval",
+          "description": "The publisher's heartbeat interval, in milliseconds.",
+          "comments": [
+            "The SBE schema and the repository file give Topic this field, as a required one. Section 5's table leaves it out, so the schema accepts a Topic with or without it."
+          ]
+        },
+        "topic_classification": {
+          "name": "topic_classification",
+          "required": true
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpTopic",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "flow": {
+          "name": "flow",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "8"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "18"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The flow type of a multicast topic's messages.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Flow"
+          ],
+          "owner": "FixpTopic",
+          "domain_of": [
+            "FixpTopic"
+          ],
+          "range": "FixpMulticastFlowType",
+          "required": true
+        },
+        "keepalive_interval": {
+          "name": "keepalive_interval",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "9"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "9"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The publisher's heartbeat interval, in milliseconds.",
+          "comments": [
+            "The SBE schema and the repository file give Topic this field, as a required one. Section 5's table leaves it out, so the schema accepts a Topic with or without it."
+          ],
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "KeepaliveInterval"
+          ],
+          "owner": "FixpTopic",
+          "domain_of": [
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck"
+          ],
+          "range": "fixp_delta_millisecs"
+        },
+        "topic_classification": {
+          "name": "topic_classification",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "10"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "10"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "data"
+            }
+          },
+          "description": "The lasting subject of a topic's messages, such as a product type or a market symbol.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Classification"
+          ],
+          "owner": "FixpTopic",
+          "domain_of": [
+            "FixpTopic"
+          ],
+          "range": "fixp_object",
+          "required": true
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpTopic",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpEstablish": {
+      "name": "FixpEstablish",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "5"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "Establish"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "client"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        }
+      },
+      "description": "A client's request to tie a negotiated session to the very transport this message arrives on. After a disconnection it is sent again to re-bind.",
+      "in_subset": [
+        "fixp_binding"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_time",
+        "keepalive_interval",
+        "next_seq_no",
+        "credentials"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_time": {
+          "name": "request_time",
+          "required": true
+        },
+        "keepalive_interval": {
+          "name": "keepalive_interval",
+          "description": "The longest the client stays silent, in milliseconds, before a heartbeat.",
+          "required": true
+        },
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "description": "When the client's recoverable flow is bound again, the number its next application message will carry."
+        },
+        "credentials": {
+          "name": "credentials",
+          "description": "Data that identifies the client, in a form the two parties agree on."
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpEstablish",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_time": {
+          "name": "request_time",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "2"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "2"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "When the sender made this request. The answer repeats it, to show what it answers.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Timestamp"
+          ],
+          "owner": "FixpEstablish",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpEstablish",
+            "FixpRetransmitRequest"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "keepalive_interval": {
+          "name": "keepalive_interval",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "9"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "9"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The longest the client stays silent, in milliseconds, before a heartbeat.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "KeepaliveInterval"
+          ],
+          "owner": "FixpEstablish",
+          "domain_of": [
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck"
+          ],
+          "range": "fixp_delta_millisecs",
+          "required": true
+        },
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "11"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "11"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "When the client's recoverable flow is bound again, the number its next application message will carry.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "NextSeqNo"
+          ],
+          "owner": "FixpEstablish",
+          "domain_of": [
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpSequence",
+            "FixpContext",
+            "FixpRetransmission"
+          ],
+          "range": "fixp_u64"
+        },
+        "credentials": {
+          "name": "credentials",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "4"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "4"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "data"
+            }
+          },
+          "description": "Data that identifies the client, in a form the two parties agree on.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Credentials"
+          ],
+          "owner": "FixpEstablish",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpEstablish"
+          ],
+          "range": "fixp_object"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpEstablish",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpEstablishmentAck": {
+      "name": "FixpEstablishmentAck",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "6"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "EstablishmentAck"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "server"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        }
+      },
+      "description": "A server's acceptance of the binding. From here, application messages may flow.",
+      "in_subset": [
+        "fixp_binding"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_timestamp",
+        "keepalive_interval",
+        "next_seq_no"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "description": "The request_time of the Establish this message accepts.",
+          "required": true
+        },
+        "keepalive_interval": {
+          "name": "keepalive_interval",
+          "description": "The longest the server stays silent, in milliseconds, before a heartbeat.",
+          "required": true
+        },
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "description": "If the server's flow is recoverable, the number its next application message will carry, so the client can ask for what it missed."
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpEstablishmentAck",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "5"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "5"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The request_time of the Establish this message accepts.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "RequestTimestamp"
+          ],
+          "owner": "FixpEstablishmentAck",
+          "domain_of": [
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpRetransmission",
+            "FixpRetransmitReject"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "keepalive_interval": {
+          "name": "keepalive_interval",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "9"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "9"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The longest the server stays silent, in milliseconds, before a heartbeat.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "KeepaliveInterval"
+          ],
+          "owner": "FixpEstablishmentAck",
+          "domain_of": [
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck"
+          ],
+          "range": "fixp_delta_millisecs",
+          "required": true
+        },
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "11"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "11"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "If the server's flow is recoverable, the number its next application message will carry, so the client can ask for what it missed.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "NextSeqNo"
+          ],
+          "owner": "FixpEstablishmentAck",
+          "domain_of": [
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpSequence",
+            "FixpContext",
+            "FixpRetransmission"
+          ],
+          "range": "fixp_u64"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpEstablishmentAck",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpEstablishmentReject": {
+      "name": "FixpEstablishmentReject",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "7"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "EstablishmentReject"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "server"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        }
+      },
+      "description": "A server's refusal of the binding.",
+      "in_subset": [
+        "fixp_binding"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_timestamp",
+        "establishment_reject_code",
+        "reason_text"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "description": "The request_time of the Establish this message refuses.",
+          "required": true
+        },
+        "establishment_reject_code": {
+          "name": "establishment_reject_code",
+          "required": true
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpEstablishmentReject",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "5"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "5"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The request_time of the Establish this message refuses.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "RequestTimestamp"
+          ],
+          "owner": "FixpEstablishmentReject",
+          "domain_of": [
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpRetransmission",
+            "FixpRetransmitReject"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "establishment_reject_code": {
+          "name": "establishment_reject_code",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "12"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "12"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "Why the server refused to bind the session.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Code",
+            "EstablishmentRejectCode"
+          ],
+          "owner": "FixpEstablishmentReject",
+          "domain_of": [
+            "FixpEstablishmentReject"
+          ],
+          "range": "FixpEstablishmentRejectCode",
+          "required": true
+        },
+        "reason_text": {
+          "name": "reason_text",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "8"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "8"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "Free text that says more about the code beside it.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Reason"
+          ],
+          "owner": "FixpEstablishmentReject",
+          "domain_of": [
+            "FixpNegotiationReject",
+            "FixpEstablishmentReject",
+            "FixpRetransmitReject",
+            "FixpTerminate"
+          ],
+          "range": "fixp_string"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpEstablishmentReject",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpSequence": {
+      "name": "FixpSequence",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "8"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "Sequence"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "true"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "own"
+        }
+      },
+      "description": "Starts the numbering of a sequenced flow, so that the application messages after it are numbered by counting up from the value it carries. Sent when idle, it is also the heartbeat.",
+      "comments": [
+        "It is used on a transport that carries one session; Context replaces it on a shared one."
+      ],
+      "in_subset": [
+        "fixp_transferring"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "next_seq_no"
+      ],
+      "slot_usage": {
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "required": true
+        }
+      },
+      "attributes": {
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "11"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "11"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The number the sender's next application message will carry.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "NextSeqNo"
+          ],
+          "owner": "FixpSequence",
+          "domain_of": [
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpSequence",
+            "FixpContext",
+            "FixpRetransmission"
+          ],
+          "range": "fixp_u64",
+          "required": true
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpSequence",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpContext": {
+      "name": "FixpContext",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "9"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "Context"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "true"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "own"
+        }
+      },
+      "description": "On a transport that several sessions share, names the session the following messages belong to and, when the flow is sequenced, where its numbering continues.",
+      "in_subset": [
+        "fixp_transferring"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "next_seq_no"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "comments": [
+            "Section 3's table makes it optional, and both resource files make it required, so the schema accepts a Context with or without it."
+          ]
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpContext",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "11"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "11"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The number the sender's next application message will carry.",
+          "comments": [
+            "Section 3's table makes it optional, and both resource files make it required, so the schema accepts a Context with or without it."
+          ],
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "NextSeqNo"
+          ],
+          "owner": "FixpContext",
+          "domain_of": [
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpSequence",
+            "FixpContext",
+            "FixpRetransmission"
+          ],
+          "range": "fixp_u64"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpContext",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpUnsequencedHeartbeat": {
+      "name": "FixpUnsequencedHeartbeat",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "10"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "UnsequencedHeartbeat"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "own"
+        }
+      },
+      "description": "Shows the peer that the session and transport are alive when the sender's flow is unsequenced or empty. It has no fields.",
+      "in_subset": [
+        "fixp_transferring"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "attributes": {
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpUnsequencedHeartbeat",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpRetransmitRequest": {
+      "name": "FixpRetransmitRequest",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "11"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "RetransmitRequest"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "peer"
+        }
+      },
+      "description": "Asks the peer to resend some messages of its recoverable flow. A party has at most one such request open at a time.",
+      "in_subset": [
+        "fixp_transferring"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_time",
+        "from_seq_no",
+        "message_count"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_time": {
+          "name": "request_time",
+          "description": "When the request was made, which also tells this request apart from others.",
+          "required": true
+        },
+        "from_seq_no": {
+          "name": "from_seq_no",
+          "description": "Where the requested run starts, by sequence number.",
+          "required": true
+        },
+        "message_count": {
+          "name": "message_count",
+          "description": "How many messages are asked for.",
+          "required": true
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpRetransmitRequest",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_time": {
+          "name": "request_time",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "2"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "2"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "When the request was made, which also tells this request apart from others.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Timestamp"
+          ],
+          "owner": "FixpRetransmitRequest",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpEstablish",
+            "FixpRetransmitRequest"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "from_seq_no": {
+          "name": "from_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "13"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "13"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "Where the requested run starts, by sequence number.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "FromSeqNo"
+          ],
+          "owner": "FixpRetransmitRequest",
+          "domain_of": [
+            "FixpRetransmitRequest",
+            "FixpApplied",
+            "FixpNotApplied"
+          ],
+          "range": "fixp_u64",
+          "required": true
+        },
+        "message_count": {
+          "name": "message_count",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "14"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "14"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "How many messages are asked for.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Count"
+          ],
+          "owner": "FixpRetransmitRequest",
+          "domain_of": [
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpApplied",
+            "FixpNotApplied"
+          ],
+          "range": "fixp_u32",
+          "required": true
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpRetransmitRequest",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpRetransmission": {
+      "name": "FixpRetransmission",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "12"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "Retransmission"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "own"
+        }
+      },
+      "description": "Introduces a batch of resent messages, which are numbered by counting from the number it gives. A request may be answered in several batches.",
+      "in_subset": [
+        "fixp_transferring"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_timestamp",
+        "next_seq_no",
+        "message_count"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "description": "The request_time of the RetransmitRequest this batch answers.",
+          "required": true
+        },
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "description": "The number the batch's first message carries.",
+          "required": true
+        },
+        "message_count": {
+          "name": "message_count",
+          "description": "How many resent messages the batch holds.",
+          "required": true
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpRetransmission",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "5"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "5"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The request_time of the RetransmitRequest this batch answers.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "RequestTimestamp"
+          ],
+          "owner": "FixpRetransmission",
+          "domain_of": [
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpRetransmission",
+            "FixpRetransmitReject"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "next_seq_no": {
+          "name": "next_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "11"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "11"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The number the batch's first message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "NextSeqNo"
+          ],
+          "owner": "FixpRetransmission",
+          "domain_of": [
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpSequence",
+            "FixpContext",
+            "FixpRetransmission"
+          ],
+          "range": "fixp_u64",
+          "required": true
+        },
+        "message_count": {
+          "name": "message_count",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "14"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "14"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "How many resent messages the batch holds.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Count"
+          ],
+          "owner": "FixpRetransmission",
+          "domain_of": [
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpApplied",
+            "FixpNotApplied"
+          ],
+          "range": "fixp_u32",
+          "required": true
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpRetransmission",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpRetransmitReject": {
+      "name": "FixpRetransmitReject",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "13"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "RestransmitReject"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "own"
+        }
+      },
+      "description": "Refuses a RetransmitRequest, with a code saying why.",
+      "comments": [
+        "The resource files and section 4's table spell its name RestransmitReject. The summary in section 6 does not list it; it answers a RetransmitRequest, so it belongs to recoverable flows."
+      ],
+      "in_subset": [
+        "fixp_transferring"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "request_timestamp",
+        "retransmit_reject_code",
+        "reason_text"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "description": "The request_time of the RetransmitRequest this message refuses.",
+          "required": true
+        },
+        "retransmit_reject_code": {
+          "name": "retransmit_reject_code",
+          "required": true
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpRetransmitReject",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "request_timestamp": {
+          "name": "request_timestamp",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "5"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "5"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The request_time of the RetransmitRequest this message refuses.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "RequestTimestamp"
+          ],
+          "owner": "FixpRetransmitReject",
+          "domain_of": [
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpRetransmission",
+            "FixpRetransmitReject"
+          ],
+          "range": "fixp_nanotime",
+          "required": true
+        },
+        "retransmit_reject_code": {
+          "name": "retransmit_reject_code",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "15"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "15"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "Why the sender will not resend the range.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Code",
+            "RetransmitRejectCode"
+          ],
+          "owner": "FixpRetransmitReject",
+          "domain_of": [
+            "FixpRetransmitReject"
+          ],
+          "range": "FixpRetransmitRejectCode",
+          "required": true
+        },
+        "reason_text": {
+          "name": "reason_text",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "8"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "8"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "Free text that says more about the code beside it.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Reason"
+          ],
+          "owner": "FixpRetransmitReject",
+          "domain_of": [
+            "FixpNegotiationReject",
+            "FixpEstablishmentReject",
+            "FixpRetransmitReject",
+            "FixpTerminate"
+          ],
+          "range": "fixp_string"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpRetransmitReject",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpTerminate": {
+      "name": "FixpTerminate",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "14"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "Terminate"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        }
+      },
+      "description": "Releases the session from its transport without ending the session, which can be bound again later. The peer answers with a Terminate, and after its own Terminate a party sends nothing more.",
+      "in_subset": [
+        "fixp_unbinding"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "termination_code",
+        "reason_text"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "termination_code": {
+          "name": "termination_code",
+          "required": true
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpTerminate",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "termination_code": {
+          "name": "termination_code",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "16"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "16"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "Why the party releases the session from the transport.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Code",
+            "TerminationCode"
+          ],
+          "owner": "FixpTerminate",
+          "domain_of": [
+            "FixpTerminate"
+          ],
+          "range": "FixpTerminationCode",
+          "required": true
+        },
+        "reason_text": {
+          "name": "reason_text",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "8"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "8"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "Free text that says more about the code beside it.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Reason"
+          ],
+          "owner": "FixpTerminate",
+          "domain_of": [
+            "FixpNegotiationReject",
+            "FixpEstablishmentReject",
+            "FixpRetransmitReject",
+            "FixpTerminate"
+          ],
+          "range": "fixp_string"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpTerminate",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpFinishedSending": {
+      "name": "FixpFinishedSending",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "15"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "FinishedSending"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "true"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "own"
+        }
+      },
+      "description": "Says that the sender's flow has carried its last application message, which begins finalization. It is repeated as the heartbeat until the answer comes.",
+      "in_subset": [
+        "fixp_finalizing"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id",
+        "last_seq_no"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        },
+        "last_seq_no": {
+          "name": "last_seq_no",
+          "comments": [
+            "Optional in section 4's table and in the SBE schema, required in the repository file. Section 4 asks for it whenever the flow is recoverable or idempotent, which tests/fixp_rules.py checks in an exchange."
+          ]
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpFinishedSending",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "last_seq_no": {
+          "name": "last_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "17"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "17"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The number carried by the flow's final application message.",
+          "comments": [
+            "Optional in section 4's table and in the SBE schema, required in the repository file. Section 4 asks for it whenever the flow is recoverable or idempotent, which tests/fixp_rules.py checks in an exchange."
+          ],
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "LastSeqNo"
+          ],
+          "owner": "FixpFinishedSending",
+          "domain_of": [
+            "FixpFinishedSending"
+          ],
+          "range": "fixp_u64"
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpFinishedSending",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpFinishedReceiving": {
+      "name": "FixpFinishedReceiving",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "16"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "FinishedReceiving"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "true"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "peer"
+        }
+      },
+      "description": "Answers FinishedSending once the last message of the peer's flow has been processed. After it the session is finalized and its identifier is spent.",
+      "in_subset": [
+        "fixp_finalizing"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "session_id"
+      ],
+      "slot_usage": {
+        "session_id": {
+          "name": "session_id",
+          "required": true
+        }
+      },
+      "attributes": {
+        "session_id": {
+          "name": "session_id",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "1"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "1"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "String"
+            }
+          },
+          "description": "The session's identifier, which the client chooses and never uses again.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "SessionId"
+          ],
+          "owner": "FixpFinishedReceiving",
+          "domain_of": [
+            "FixpNegotiate",
+            "FixpNegotiationResponse",
+            "FixpNegotiationReject",
+            "FixpTopic",
+            "FixpEstablish",
+            "FixpEstablishmentAck",
+            "FixpEstablishmentReject",
+            "FixpContext",
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpRetransmitReject",
+            "FixpTerminate",
+            "FixpFinishedSending",
+            "FixpFinishedReceiving"
+          ],
+          "range": "fixp_uuid",
+          "required": true
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpFinishedReceiving",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpApplied": {
+      "name": "FixpApplied",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "17"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "Applied"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Idempotent"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "peer"
+        }
+      },
+      "description": "An optional application message telling the party that sends an idempotent flow which of its operations took effect, where no business message already says so.",
+      "comments": [
+        "Like any application message, it uses up one number in the sequence of the flow it travels on."
+      ],
+      "in_subset": [
+        "fixp_transferring"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "from_seq_no",
+        "message_count"
+      ],
+      "slot_usage": {
+        "from_seq_no": {
+          "name": "from_seq_no",
+          "description": "Where the run of operations that took effect starts.",
+          "required": true
+        },
+        "message_count": {
+          "name": "message_count",
+          "description": "How many operations in a row took effect.",
+          "required": true
+        }
+      },
+      "attributes": {
+        "from_seq_no": {
+          "name": "from_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "13"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "13"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "Where the run of operations that took effect starts.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "FromSeqNo"
+          ],
+          "owner": "FixpApplied",
+          "domain_of": [
+            "FixpRetransmitRequest",
+            "FixpApplied",
+            "FixpNotApplied"
+          ],
+          "range": "fixp_u64",
+          "required": true
+        },
+        "message_count": {
+          "name": "message_count",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "14"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "14"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "How many operations in a row took effect.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Count"
+          ],
+          "owner": "FixpApplied",
+          "domain_of": [
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpApplied",
+            "FixpNotApplied"
+          ],
+          "range": "fixp_u32",
+          "required": true
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpApplied",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpNotApplied": {
+      "name": "FixpNotApplied",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "18"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "NotApplied"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Idempotent"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "false"
+        },
+        "fixp_flow_of": {
+          "tag": "fixp_flow_of",
+          "value": "peer"
+        }
+      },
+      "description": "An application message telling the party that sends an idempotent flow about a gap: a run of operations that did not take effect. That party's application decides what to do.",
+      "comments": [
+        "Like any application message, it uses up one number in the sequence of the flow it travels on."
+      ],
+      "in_subset": [
+        "fixp_transferring"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "from_seq_no",
+        "message_count"
+      ],
+      "slot_usage": {
+        "from_seq_no": {
+          "name": "from_seq_no",
+          "description": "Where the run of operations that failed to take effect starts.",
+          "required": true
+        },
+        "message_count": {
+          "name": "message_count",
+          "description": "How many operations in a row did not take effect.",
+          "required": true
+        }
+      },
+      "attributes": {
+        "from_seq_no": {
+          "name": "from_seq_no",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "13"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "13"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "Where the run of operations that failed to take effect starts.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "FromSeqNo"
+          ],
+          "owner": "FixpNotApplied",
+          "domain_of": [
+            "FixpRetransmitRequest",
+            "FixpApplied",
+            "FixpNotApplied"
+          ],
+          "range": "fixp_u64",
+          "required": true
+        },
+        "message_count": {
+          "name": "message_count",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "14"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "14"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "How many operations in a row did not take effect.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Count"
+          ],
+          "owner": "FixpNotApplied",
+          "domain_of": [
+            "FixpRetransmitRequest",
+            "FixpRetransmission",
+            "FixpApplied",
+            "FixpNotApplied"
+          ],
+          "range": "fixp_u32",
+          "required": true
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpNotApplied",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpMessageTemplate": {
+      "name": "FixpMessageTemplate",
+      "annotations": {
+        "sbe_template_id": {
+          "tag": "sbe_template_id",
+          "value": "19"
+        },
+        "sbe_name": {
+          "tag": "sbe_name",
+          "value": "MessageTemplate"
+        },
+        "fixp_sent_by": {
+          "tag": "fixp_sent_by",
+          "value": "any"
+        },
+        "fixp_flow_types": {
+          "tag": "fixp_flow_types",
+          "value": "Recoverable Idempotent Unsequenced None"
+        },
+        "fixp_multicast": {
+          "tag": "fixp_multicast",
+          "value": "true"
+        }
+      },
+      "description": "Hands the peer a template or schema it needs to read messages in an encoding that templates drive. There is no fixed moment for sending it.",
+      "comments": [
+        "A publisher does well to repeat it for late listeners. On a shared transport it applies to every session there."
+      ],
+      "in_subset": [
+        "fixp_initialization"
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "is_a": "FixpMessage",
+      "slots": [
+        "sofh_encoding_type",
+        "effective_time",
+        "template_version",
+        "template"
+      ],
+      "slot_usage": {
+        "sofh_encoding_type": {
+          "name": "sofh_encoding_type",
+          "required": true
+        },
+        "template": {
+          "name": "template",
+          "required": true
+        }
+      },
+      "attributes": {
+        "sofh_encoding_type": {
+          "name": "sofh_encoding_type",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "18"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "19"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "The code that the Simple Open Framing Header registers for the encoding a template is written for.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "EncodingType"
+          ],
+          "owner": "FixpMessageTemplate",
+          "domain_of": [
+            "FixpMessageTemplate"
+          ],
+          "range": "fixp_u32",
+          "required": true
+        },
+        "effective_time": {
+          "name": "effective_time",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "19"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "20"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "int"
+            }
+          },
+          "description": "When the template comes into force. Without it, the template applies at once.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "EffectiveTime"
+          ],
+          "owner": "FixpMessageTemplate",
+          "domain_of": [
+            "FixpMessageTemplate"
+          ],
+          "range": "fixp_nanotime"
+        },
+        "template_version": {
+          "name": "template_version",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "20"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "21"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "data"
+            }
+          },
+          "description": "The template's version and format, for an encoding whose templates do not state them.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Version"
+          ],
+          "owner": "FixpMessageTemplate",
+          "domain_of": [
+            "FixpMessageTemplate"
+          ],
+          "range": "fixp_object"
+        },
+        "template": {
+          "name": "template",
+          "annotations": {
+            "sbe_field_id": {
+              "tag": "sbe_field_id",
+              "value": "21"
+            },
+            "repository_field_id": {
+              "tag": "repository_field_id",
+              "value": "22"
+            },
+            "repository_datatype": {
+              "tag": "repository_datatype",
+              "value": "data"
+            }
+          },
+          "description": "The template itself, as octets.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "Template"
+          ],
+          "owner": "FixpMessageTemplate",
+          "domain_of": [
+            "FixpMessageTemplate"
+          ],
+          "range": "fixp_object",
+          "required": true
+        },
+        "message_kind": {
+          "name": "message_kind",
+          "description": "The class of this message, such as FixpNegotiate. It stands for FIXP's MessageType, which every message carries.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "aliases": [
+            "MessageType"
+          ],
+          "designates_type": true,
+          "owner": "FixpMessageTemplate",
+          "domain_of": [
+            "FixpMessage"
+          ],
+          "range": "string",
+          "required": true
+        }
+      }
+    },
+    "FixpExchange": {
+      "name": "FixpExchange",
+      "description": "The messages of one session in the order they were sent, as a test case, a worked example or a captured log.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "slots": [
+        "id",
+        "description"
+      ],
+      "attributes": {
+        "session_kind": {
+          "name": "session_kind",
+          "description": "Which of the two forms the session takes.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_exchange",
+          "owner": "FixpExchange",
+          "domain_of": [
+            "FixpExchange"
+          ],
+          "range": "FixpSessionKind",
+          "required": true
+        },
+        "multiplexed": {
+          "name": "multiplexed",
+          "description": "Whether the transport carries other sessions too, so that Context takes the place of Sequence.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_exchange",
+          "owner": "FixpExchange",
+          "domain_of": [
+            "FixpExchange"
+          ],
+          "range": "boolean"
+        },
+        "exchange_steps": {
+          "name": "exchange_steps",
+          "description": "Each step of the exchange, in order.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_exchange",
+          "owner": "FixpExchange",
+          "domain_of": [
+            "FixpExchange"
+          ],
+          "range": "FixpExchangeStep",
+          "required": true,
+          "multivalued": true,
+          "inlined": true,
+          "inlined_as_list": true,
+          "minimum_cardinality": 1
+        },
+        "id": {
+          "name": "id",
+          "description": "The identifier of an exchange or a rules-of-engagement record.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "identifier": true,
+          "owner": "FixpExchange",
+          "domain_of": [
+            "FixpExchange",
+            "FixpRulesOfEngagement"
+          ],
+          "range": "uriorcurie",
+          "required": true
+        },
+        "description": {
+          "name": "description",
+          "description": "Free text about a record, for the people who read it.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "slot_uri": "schema:description",
+          "owner": "FixpExchange",
+          "domain_of": [
+            "FixpExchange",
+            "FixpRulesOfEngagement"
+          ],
+          "range": "string"
+        }
+      },
+      "tree_root": true
+    },
+    "FixpExchangeStep": {
+      "name": "FixpExchangeStep",
+      "description": "One step: a FIXP message, or a run of application messages whose content FIXP does not define, and the side that sent it.",
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "attributes": {
+        "sent_by": {
+          "name": "sent_by",
+          "description": "The side that sent this step.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_exchange",
+          "owner": "FixpExchangeStep",
+          "domain_of": [
+            "FixpExchangeStep"
+          ],
+          "range": "FixpParty",
+          "required": true
+        },
+        "fixp_message": {
+          "name": "fixp_message",
+          "description": "The FIXP message sent.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_exchange",
+          "owner": "FixpExchangeStep",
+          "domain_of": [
+            "FixpExchangeStep"
+          ],
+          "range": "FixpMessage",
+          "inlined": true
+        },
+        "application_message_count": {
+          "name": "application_message_count",
+          "description": "How many application messages went out one after another. On a sequenced flow each takes the next sequence number.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_exchange",
+          "owner": "FixpExchangeStep",
+          "domain_of": [
+            "FixpExchangeStep"
+          ],
+          "range": "fixp_u32",
+          "minimum_value": 1
+        }
+      },
+      "exactly_one_of": [
+        {
+          "slot_conditions": {
+            "fixp_message": {
+              "name": "fixp_message",
+              "value_presence": "PRESENT"
+            }
+          }
+        },
+        {
+          "slot_conditions": {
+            "application_message_count": {
+              "name": "application_message_count",
+              "value_presence": "PRESENT"
+            }
+          }
+        }
+      ]
+    },
+    "FixpRulesOfEngagement": {
+      "name": "FixpRulesOfEngagement",
+      "description": "What two counterparties agree on for one FIXP service, layer by layer, for the client and for the server.",
+      "comments": [
+        "Appendix B calls its checklist an aid, and FIXP leaves each of these choices to the counterparties."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "slots": [
+        "id",
+        "description"
+      ],
+      "attributes": {
+        "client_stack": {
+          "name": "client_stack",
+          "description": "What the client side uses.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpRulesOfEngagement",
+          "domain_of": [
+            "FixpRulesOfEngagement"
+          ],
+          "range": "FixpStackProfile",
+          "required": true,
+          "inlined": true
+        },
+        "server_stack": {
+          "name": "server_stack",
+          "description": "What the server side uses.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpRulesOfEngagement",
+          "domain_of": [
+            "FixpRulesOfEngagement"
+          ],
+          "range": "FixpStackProfile",
+          "required": true,
+          "inlined": true
+        },
+        "id": {
+          "name": "id",
+          "description": "The identifier of an exchange or a rules-of-engagement record.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "identifier": true,
+          "owner": "FixpRulesOfEngagement",
+          "domain_of": [
+            "FixpExchange",
+            "FixpRulesOfEngagement"
+          ],
+          "range": "uriorcurie",
+          "required": true
+        },
+        "description": {
+          "name": "description",
+          "description": "Free text about a record, for the people who read it.",
+          "from_schema": "https://w3id.org/lmodel/fixp",
+          "slot_uri": "schema:description",
+          "owner": "FixpRulesOfEngagement",
+          "domain_of": [
+            "FixpExchange",
+            "FixpRulesOfEngagement"
+          ],
+          "range": "string"
+        }
+      }
+    },
+    "FixpStackProfile": {
+      "name": "FixpStackProfile",
+      "description": "One side's choices at each layer of the stack: application, presentation, session, security and transport.",
+      "comments": [
+        "Beyond appendix B's rows, it holds what sections 3 and 4 leave to the two parties: the form of the credentials, the keep-alive intervals each side accepts, and the most messages one resend may cover."
+      ],
+      "from_schema": "https://w3id.org/lmodel/fixp",
+      "attributes": {
+        "application_recovery": {
+          "name": "application_recovery",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "application"
+            }
+          },
+          "description": "Whether this side's applications recover lost messages themselves.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "boolean"
+        },
+        "application_fix_version": {
+          "name": "application_fix_version",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "application"
+            }
+          },
+          "description": "The FIX version of the application messages, such as FIX.Latest.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string"
+        },
+        "service_pack": {
+          "name": "service_pack",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "application"
+            }
+          },
+          "description": "The FIX service pack, where the version has them.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string"
+        },
+        "extension_packs": {
+          "name": "extension_packs",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "application"
+            }
+          },
+          "description": "The FIX extension packs in use.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string",
+          "multivalued": true
+        },
+        "message_encoding": {
+          "name": "message_encoding",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "presentation"
+            }
+          },
+          "description": "How messages are encoded, such as Simple Binary Encoding.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string"
+        },
+        "encoding_version": {
+          "name": "encoding_version",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "presentation"
+            }
+          },
+          "description": "The version of that encoding.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string"
+        },
+        "message_schemas": {
+          "name": "message_schemas",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "presentation"
+            }
+          },
+          "description": "The message schemas or templates the encoding uses.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string",
+          "multivalued": true
+        },
+        "framing": {
+          "name": "framing",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "presentation"
+            }
+          },
+          "description": "What marks where one message ends and the next begins, such as the Simple Open Framing Header.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string"
+        },
+        "supported_flow_types": {
+          "name": "supported_flow_types",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "session"
+            }
+          },
+          "description": "The flow types this side accepts or offers.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "FixpFlowType",
+          "multivalued": true
+        },
+        "shortest_keepalive_interval": {
+          "name": "shortest_keepalive_interval",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "session"
+            },
+            "fixp_section": {
+              "tag": "fixp_section",
+              "value": "4"
+            }
+          },
+          "description": "The shortest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+          "comments": [
+            "An Establish that asks for a shorter one is refused with the KeepaliveInterval code."
+          ],
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "fixp_delta_millisecs"
+        },
+        "longest_keepalive_interval": {
+          "name": "longest_keepalive_interval",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "session"
+            },
+            "fixp_section": {
+              "tag": "fixp_section",
+              "value": "4"
+            }
+          },
+          "description": "The longest keep-alive interval, in milliseconds, that this side accepts from its peer.",
+          "comments": [
+            "An Establish that asks for a longer one is refused with the KeepaliveInterval code."
+          ],
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "fixp_delta_millisecs"
+        },
+        "retransmission_limit": {
+          "name": "retransmission_limit",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "session"
+            },
+            "fixp_section": {
+              "tag": "fixp_section",
+              "value": "4"
+            }
+          },
+          "description": "The most messages this side resends in answer to one RetransmitRequest.",
+          "comments": [
+            "A request for more may be refused with the RequestLimitExceeded code."
+          ],
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "fixp_u32",
+          "minimum_value": 1
+        },
+        "tls_version": {
+          "name": "tls_version",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "security"
+            }
+          },
+          "description": "The TLS version that protects the transport.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string"
+        },
+        "authentication_methods": {
+          "name": "authentication_methods",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "security"
+            }
+          },
+          "description": "How the parties prove who they are.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string",
+          "multivalued": true
+        },
+        "credentials_format": {
+          "name": "credentials_format",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "security"
+            },
+            "fixp_section": {
+              "tag": "fixp_section",
+              "value": "3"
+            }
+          },
+          "description": "The form of the credentials this side sends, and how its peer checks them.",
+          "comments": [
+            "FIXP carries credentials as opaque octets and leaves their form to the two parties."
+          ],
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string"
+        },
+        "cipher_suites": {
+          "name": "cipher_suites",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "security"
+            }
+          },
+          "description": "The cipher suites allowed.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string",
+          "multivalued": true
+        },
+        "transports": {
+          "name": "transports",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "transport"
+            }
+          },
+          "description": "The transports this side can use, for example TCP, or UDP with multicast.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string",
+          "multivalued": true
+        },
+        "network_protocols": {
+          "name": "network_protocols",
+          "annotations": {
+            "stack_layer": {
+              "tag": "stack_layer",
+              "value": "transport"
+            }
+          },
+          "description": "Any other network protocols in use.",
+          "from_schema": "https://w3id.org/lmodel/fixp/schema/fixp_engagement",
+          "owner": "FixpStackProfile",
+          "domain_of": [
+            "FixpStackProfile"
+          ],
+          "range": "string",
+          "multivalued": true
+        }
+      }
+    }
+  },
+  "metamodel_version": "1.12.0",
+  "source_file": "src/fixp/schema/fixp.yaml",
+  "@type": "SchemaDefinition"
+}
