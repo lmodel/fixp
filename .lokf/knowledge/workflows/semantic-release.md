@@ -10,13 +10,13 @@ sources:
     resource: SECURITY.md
     title: What executes here
   - resource: .releaserc.json
-  - resource: .github/release
+  - resource: .release
   - resource: .github/scripts/changelog-release.mjs
 references:
   - https://w3id.org/lmodel/fixp/knowledge/playbooks/release
 generated:
   by: process:ktl-librarian
-  at: "2026-11-06T08:48:23Z"
+  at: "2026-11-15T20:57:11Z"
 status: draft
 ---
 
