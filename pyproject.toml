@@ -74,7 +74,7 @@ skip = [
   "website/uv.lock",
 ]
 
-ignore-words-list = "linke,nd"
+ignore-words-list = "linke,nd,intoto"
 quiet-level = 3
 
 # Ref.: https://github.com/crate-ci/typos (spell checker)
