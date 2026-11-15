@@ -33,7 +33,7 @@ The five SSSOM sets are gone: their rows were the project's guesses, not FIX's s
 * [src/fixp/datamodel/](src/fixp/datamodel): the generated Python datamodel
 * [tests/](tests/): Python tests, with example data in [data/](tests/data) and the neighbours' adapt copies in [neighbours/](tests/neighbours)
 * [upstream/](upstream/): FIXP 1.0's resource files and their licence, unchanged
-* [website/](website/): the Astro Starlight site built from the README, `docs/`, the schema's pages and the knowledge bundle
+* [website/](website/): the Hugo site built from the README, `docs/`, the schema's pages and the knowledge bundle
 
 ## Developer Tools
 
