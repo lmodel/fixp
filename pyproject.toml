@@ -13,7 +13,7 @@ authors = [
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dynamic = ["version"]
 
 dependencies = [
@@ -52,7 +52,7 @@ exclude = [
     "src/fixp/_version.py",
 ]
 # Set oldest supported Python version
-target-version = "py310"
+target-version = "py311"
 
 # Ref.: https://github.com/codespell-project/codespell
 [tool.codespell]
@@ -71,10 +71,10 @@ skip = [
   "tests/neighbours/*",
   "tests/upstream/*",
   ".lokf/scripts/*",
-  "website/package-lock.json",
+  "website/uv.lock",
 ]
 
-ignore-words-list = "linke,nd"
+ignore-words-list = "linke,nd,intoto"
 quiet-level = 3
 
 # Ref.: https://github.com/crate-ci/typos (spell checker)
@@ -97,5 +97,5 @@ extend-exclude = [
   "tests/neighbours/*",
   "tests/upstream/*",
   ".lokf/scripts/*",
-  "website/package-lock.json",
+  "website/uv.lock",
 ]

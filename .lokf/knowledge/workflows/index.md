@@ -1,6 +1,6 @@
 # Workflows
 
-* [Build and test (main.yaml)](main.md) - The Build and test workflow: on every pull request and push to `main`, it runs `just test` on Python 3.10 to 3.14, and lints the schema and checks the adapt copy on 3.13.
+* [Build and test (main.yaml)](main.md) - The Build and test workflow: on every pull request and push to `main`, it runs `just test` on Python 3.11 to 3.14, and lints the schema and checks the adapt copy on 3.13.
 * [Lint and docs (lint-and-docs.yaml)](lint-and-docs.md) - The static checks on pull requests and on `main`: ShellCheck, actionlint, the governance files' word budgets, markdownlint, lychee and codespell.
 * [Semantic release (semantic-release.yml)](semantic-release.md) - The workflow that computes the next version from Conventional Commits on `main`, promotes the changelog, tags and publishes the GitHub Release, and dispatches the knowledge release.
 * [Knowledge registrar (knowledge-registrar.yaml)](knowledge-registrar.md) - The gate on the bundle: it validates the bundle on each pull request that touches it, and checks who vouched for what.

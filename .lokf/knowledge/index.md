@@ -58,7 +58,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for fixp. Every Markdown
 
 # Services
 
-* [Documentation site](services/documentation-site.md) - The knowledge website in `website/`, an Astro Starlight site that the Knowledge website workflow publishes to GitHub Pages at `https://lmodel.github.io/fixp`, built from the README, `docs/`, the schema's pages and this bundle.
+* [Documentation site](services/documentation-site.md) - The knowledge website in `website/`, a Hugo site that the Knowledge website workflow publishes to GitHub Pages at `https://lmodel.github.io/fixp`, built from the README, `docs/`, the schema's pages and this bundle.
 * [The upstream check](services/upstream-check.md) - `scripts/check_upstream_release.py`: lists FIX's FIXP repository through GitHub's API and reports a new tag or edition folder, a moved tag, a changed or missing pinned file, or a changed licence.
 
 # Playbooks
@@ -77,7 +77,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for fixp. Every Markdown
 
 # Workflows
 
-* [Build and test (main.yaml)](workflows/main.md) - The Build and test workflow: on every pull request and push to `main`, it runs `just test` on Python 3.10 to 3.14, and lints the schema and checks the adapt copy on 3.13.
+* [Build and test (main.yaml)](workflows/main.md) - The Build and test workflow: on every pull request and push to `main`, it runs `just test` on Python 3.11 to 3.14, and lints the schema and checks the adapt copy on 3.13.
 * [Lint and docs (lint-and-docs.yaml)](workflows/lint-and-docs.md) - The static checks on pull requests and on `main`: ShellCheck, actionlint, the governance files' word budgets, markdownlint, lychee and codespell.
 * [Semantic release (semantic-release.yml)](workflows/semantic-release.md) - The workflow that computes the next version from Conventional Commits on `main`, promotes the changelog, tags and publishes the GitHub Release, and dispatches the knowledge release.
 * [Knowledge registrar (knowledge-registrar.yaml)](workflows/knowledge-registrar.md) - The gate on the bundle: it validates the bundle on each pull request that touches it, and checks who vouched for what.
