@@ -148,5 +148,5 @@ dmypy.json
 .claude/
 skills-lock.json
 
-# The release job's tools, installed from .github/release/package-lock.json
-/.github/release/node_modules/
+# The release job's tools, installed from .release/package-lock.json
+/.release/node_modules/
